@@ -1,12 +1,30 @@
 #!/usr/bin/env bash
 set -eux
+
 jlpm
+
 cd drawio-export
 jlpm
+
 cd ..
+
 jlpm clean
+
 jlpm build
+
 npm pack
-jupyter labextension install ./jupyterlab-drawio-*.tgz --no-build --debug
-jupyter lab build --dev-build=False --minimize=True --debug
+
+jupyter labextension list
+
+jupyter labextension install \
+    ./jupyterlab-drawio-*.tgz \
+    $(cat labextensions.txt) \
+    --no-build \
+    --debug
+
+jupyter lab build \
+    --dev-build=False \
+    --minimize=True \
+    --debug
+
 jupyter labextension list

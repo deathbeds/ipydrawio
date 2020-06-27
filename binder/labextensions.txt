@@ -1,0 +1,3 @@
+@jupyterlab/toc
+@jupyter-widgets/jupyterlab-manager
+bqplot
