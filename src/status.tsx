@@ -42,10 +42,13 @@ namespace DrawioStatusComponent {
 function DrawioStatusComponent(
   props: DrawioStatusComponent.IProps
 ): React.ReactElement<DrawioStatusComponent.IProps> {
+  if (!props.status?.length) {
+    return <span></span>;
+  }
   return (
     <TextItem
       onClick={props.handleClick}
-      source={`drawio: ${status}`}
+      source={`drawio: ${props.status || "ready"}`}
       title={`TBD…`}
     />
   );
@@ -67,7 +70,7 @@ export class DrawioStatus extends VDomRenderer<DrawioStatus.Model> {
    * Render the TabSpace status item.
    */
   render(): React.ReactElement<DrawioStatusComponent.IProps> | null {
-    if (!this.model?.status?.length) {
+    if (this.model == null) {
       return null;
     } else {
       return (
@@ -107,7 +110,8 @@ export class DrawioStatus extends VDomRenderer<DrawioStatus.Model> {
 
 export namespace DrawioStatus {
   export class Model extends VDomModel {
-    _status: string;
+    _status: string = "";
+
     get status() {
       return this._status;
     }
@@ -115,6 +119,7 @@ export namespace DrawioStatus {
     set status(status) {
       if (this._status != status) {
         this._status = status;
+        this.stateChanged.emit(void 0);
       }
     }
   }

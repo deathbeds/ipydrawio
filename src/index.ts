@@ -103,7 +103,7 @@ function activate(
       item: statusItem,
       align: "right",
       rank: 3,
-      isActive: isEnabled,
+      isActive: () => true,
     });
   }
 
@@ -243,18 +243,22 @@ function activate(
   // Function to create a new untitled diagram file, given
   // the current working directory.
   const createNewDIO = (cwd: string) => {
-    return commands
+    statusItem && (statusItem.model.status = `Creating Diagram in ${cwd}...`);
+
+    const result = commands
       .execute("docmanager:new-untitled", {
         path: cwd,
         type: "file",
         ext: IO.XML_NATIVE.ext,
       })
       .then((model: Contents.IModel) => {
+        statusItem && (statusItem.model.status = `Opening Diagram...`);
         return commands.execute("docmanager:open", {
           path: model.path,
           factory: TEXT_FACTORY,
         });
       });
+    return result;
   };
 
   /**
