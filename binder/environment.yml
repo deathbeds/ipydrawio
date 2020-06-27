@@ -15,5 +15,6 @@ dependencies:
   - pygraphviz
   - python >=3.8,<3.9.0a0
   - xorg-libxaw
+  - xorg-libx11
   - pip:
     - graphviz2drawio
