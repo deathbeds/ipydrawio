@@ -67,6 +67,16 @@ export const XML_NATIVE: IDrawioFormat = {
   name: "dio",
 };
 
+export const XML_LEGACY: IDrawioFormat = {
+  ext: ".drawio",
+  format: "text",
+  icon: drawioIcon,
+  key: "dio",
+  label: "Diagram (mxgraph)",
+  mimetype: "application/mxgraph",
+  name: "dio-legacy",
+};
+
 export const SVG_PLAIN: IDrawioFormat = {
   ext: ".svg",
   format: "text",
@@ -168,16 +178,21 @@ export const PDF_PLAIN: IDrawioFormat = {
   },
 };
 
+export const PDF_BRANDED = {
+  ...PDF_PLAIN,
+  ext: ".dio.pdf"
+}
+
 export const EXPORT_FORMATS = [
   // HTML_EDITABLE,
   PNG_EDITABLE,
   PNG_PLAIN,
   SVG_EDITABLE,
   SVG_PLAIN,
-  PDF_PLAIN,
+  PDF_BRANDED
 ];
 
-export const ALL_BINARY_FORMATS = [PNG_PLAIN, PNG_EDITABLE, PDF_PLAIN];
+export const ALL_BINARY_FORMATS = [PNG_PLAIN, PNG_EDITABLE, PDF_PLAIN, PDF_BRANDED];
 
 export const ALL_TEXT_FORMATS = [
   // HTML_EDITABLE,
@@ -185,12 +200,14 @@ export const ALL_TEXT_FORMATS = [
   SVG_EDITABLE,
   SVG_PLAIN,
   XML_NATIVE,
+  XML_LEGACY,
 ];
 
 export const DEFAULT_TEXT_FORMATS = [
   // HTML_EDITABLE,
   SVG_EDITABLE,
   XML_NATIVE,
+  XML_LEGACY,
 ];
 export const DEFAULT_BINARY_FORMATS = [PNG_EDITABLE];
 export const ALL_FORMATS = [...ALL_BINARY_FORMATS, ...ALL_TEXT_FORMATS];
@@ -200,4 +217,5 @@ export const EXPORT_MIME_MAP = new Map<string, IDrawioFormat>([
   [SVG_EDITABLE.mimetype, SVG_EDITABLE],
   // [HTML_EDITABLE.mimetype, HTML_EDITABLE],
   [PDF_PLAIN.mimetype, PDF_PLAIN],
+  [PDF_BRANDED.mimetype, PDF_BRANDED],
 ]);

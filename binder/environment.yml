@@ -16,6 +16,7 @@ dependencies:
   - pip
   - pygraphviz
   - python >=3.8,<3.9.0a0
+  - requests_cache
   - shapely
   - pip:
     - graphviz2drawio
