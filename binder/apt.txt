@@ -1,7 +1,6 @@
 dbus
 fluxbox
 fontconfig
-lib32asound2
 lib32gcc1
 lib32ncurses5
 lib32stdc++6
@@ -9,8 +8,6 @@ lib32z1
 libasound2
 libaudio2
 libc6-i386
-liblcms1
-libmng1
 libpython2.7
 libqt4-dbus
 libqt4-network
