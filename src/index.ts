@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { Token, PromiseDelegate } from "@lumino/coreutils";
+import { Widget } from "@lumino/widgets";
 
 import { IStatusBar } from "@jupyterlab/statusbar";
 
@@ -220,12 +221,23 @@ function activate(
    * Whether there is an active DrawIO editor.
    */
   function isEnabled(): boolean {
-    return (
-      (textTracker.currentWidget !== null &&
-        textTracker.currentWidget === app.shell.currentWidget) ||
-      (binaryTracker.currentWidget !== null &&
-        binaryTracker.currentWidget === app.shell.currentWidget)
-    );
+    try {
+      const { currentWidget } = app.shell;
+      if (currentWidget == null) {
+        return false;
+      }
+
+      const tracked: Widget[] = [
+        textTracker.currentWidget,
+        binaryTracker.currentWidget,
+      ];
+
+      return tracked.indexOf(currentWidget) >= 0;
+    } catch (err) {
+      console.warn(err);
+    }
+
+    return false;
   }
 
   // Function to create a new untitled diagram file, given
@@ -301,7 +313,7 @@ function activate(
         });
       }
 
-      statusItem && (statusItem.model.status = '');
+      statusItem && (statusItem.model.status = "");
     };
 
     commands.addCommand(`drawio:export-${key}`, {
