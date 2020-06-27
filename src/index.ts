@@ -103,7 +103,7 @@ function activate(
       item: statusItem,
       align: "right",
       rank: 3,
-      isActive: () => true,
+      isActive: () => isEnabled(),
     });
   }
 
@@ -147,6 +147,8 @@ function activate(
     });
 
     factory.widgetCreated.connect((sender, widget) => {
+      statusItem && (statusItem.model.status = `Loading Diagram...`);
+
       // initialize icon
       widget.title.icon = IO.drawioIcon;
 
@@ -156,6 +158,8 @@ function activate(
       // capture clicks inside the frame
       widget.frameClicked.connect((widget) => {
         app.shell.activateById(widget.id);
+        statusItem &&
+          (statusItem.model.status = `Editing ${widget.context.path}`);
       });
 
       // complete initialization once context is ready;
@@ -165,6 +169,8 @@ function activate(
         if (icon != null) {
           widget.title.icon = icon;
         }
+        statusItem &&
+          (statusItem.model.status = `${widget.context.path} ready`);
       });
 
       // add to tracker
@@ -184,6 +190,7 @@ function activate(
   }
 
   function settingsChanged() {
+    statusItem && (statusItem.model.status = `settings changed`);
     for (const tracker of [textTracker, binaryTracker]) {
       tracker.forEach(updateSettings);
     }
@@ -271,7 +278,8 @@ function activate(
       let drawio = app.shell.currentWidget as DrawioWidget;
       let stem = PathExt.basename(drawio.context.path).replace(/\.dio$/, "");
 
-      statusItem && (statusItem.model.status = `Exporting ${label}...`);
+      statusItem &&
+        (statusItem.model.status = `Exporting Diagram ${stem} to ${label}...`);
 
       const rawContent = await (exportFormat.exporter || defaultExporter)(
         drawio,
@@ -279,7 +287,7 @@ function activate(
         settings
       );
 
-      statusItem && (statusItem.model.status = `${label} ready, saving...`);
+      statusItem && (statusItem.model.status = `${stem} ready, saving...`);
 
       let model: Contents.IModel = await commands.execute(
         "docmanager:new-untitled",
@@ -290,10 +298,8 @@ function activate(
         }
       );
 
-      model = await app.serviceManager.contents.rename(
-        model.path,
-        PathExt.join(cwd, `${stem}-${+new Date()}${ext}`)
-      );
+      const newPath = PathExt.join(cwd, `${stem}-${+new Date()}${ext}`);
+      model = await app.serviceManager.contents.rename(model.path, newPath);
 
       await app.serviceManager.contents.save(model.path, {
         ...model,
@@ -302,7 +308,10 @@ function activate(
         content: save(rawContent),
       });
 
-      statusItem && (statusItem.model.status = `${label} saved, launching...`);
+      statusItem &&
+        (statusItem.model.status = `${stem} ${label} saved as ${PathExt.basename(
+          newPath
+        )}, launching...`);
 
       // TODO: make this behavior configurable
 
@@ -317,7 +326,8 @@ function activate(
         });
       }
 
-      statusItem && (statusItem.model.status = "");
+      statusItem &&
+        (statusItem.model.status = `${PathExt.basename(newPath)} launched`);
     };
 
     commands.addCommand(`drawio:export-${key}`, {
