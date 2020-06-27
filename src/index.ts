@@ -14,6 +14,8 @@
 
 import { Token, PromiseDelegate } from "@lumino/coreutils";
 
+import { IStatusBar } from "@jupyterlab/statusbar";
+
 import { Contents } from "@jupyterlab/services";
 import { PathExt } from "@jupyterlab/coreutils";
 
@@ -40,6 +42,7 @@ import { IMainMenu } from "@jupyterlab/mainmenu";
 import { DrawioWidget, DrawioFactory, DEBUG } from "./editor";
 
 import * as IO from "./io";
+import { DrawioStatus } from "./status";
 
 /**
  * The name of the factory that creates text editor widgets.
@@ -64,7 +67,7 @@ const plugin: JupyterFrontEndPlugin<IDrawioTracker[]> = {
     ICommandPalette,
     ISettingRegistry,
   ],
-  optional: [ILauncher],
+  optional: [ILauncher, IStatusBar],
   provides: IDrawioTracker,
   autoStart: true,
 };
@@ -86,9 +89,22 @@ function activate(
   menu: IMainMenu,
   palette: ICommandPalette,
   settingsRegistry: ISettingRegistry,
-  launcher: ILauncher | null
+  launcher: ILauncher | null,
+  statusBar: IStatusBar | null
 ): IDrawioTracker[] {
   const { commands } = app;
+
+  let statusItem: DrawioStatus = null;
+
+  if (statusBar) {
+    statusItem = new DrawioStatus({ menu });
+    statusBar.registerStatusItem("jupyterlab-drawio:status", {
+      item: statusItem,
+      align: "right",
+      rank: 3,
+      isActive: isEnabled,
+    });
+  }
 
   // add file types
   for (const format of IO.ALL_FORMATS) {
@@ -233,17 +249,21 @@ function activate(
    * Create commands for all of the known export formats.
    */
   IO.EXPORT_FORMATS.map((exportFormat) => {
-    const { ext, key, format, label, mimetype } = exportFormat;
+    const { ext, key, format, label, mimetype, icon } = exportFormat;
     const save = exportFormat.save || String;
     const _exporter = async (cwd: string) => {
       let drawio = app.shell.currentWidget as DrawioWidget;
       let stem = PathExt.basename(drawio.context.path).replace(/\.dio$/, "");
+
+      statusItem && (statusItem.model.status = `Exporting ${label}...`);
 
       const rawContent = await (exportFormat.exporter || defaultExporter)(
         drawio,
         key,
         settings
       );
+
+      statusItem && (statusItem.model.status = `${label} ready, saving...`);
 
       let model: Contents.IModel = await commands.execute(
         "docmanager:new-untitled",
@@ -265,10 +285,28 @@ function activate(
         mimetype,
         content: save(rawContent),
       });
+
+      statusItem && (statusItem.model.status = `${label} saved, launching...`);
+
+      // TODO: make this behavior configurable
+
+      const factories = app.docRegistry
+        .preferredWidgetFactories(model.path)
+        .map((f) => f.name);
+
+      if (factories.length) {
+        await app.commands.execute("docmanager:open", {
+          factory: factories[0],
+          path: model.path,
+        });
+      }
+
+      statusItem && (statusItem.model.status = '');
     };
 
     commands.addCommand(`drawio:export-${key}`, {
       label: `Export ${IO.XML_NATIVE.label} as ${label}`,
+      icon,
       execute: () => {
         let cwd = browserFactory.defaultBrowser.model.path;
         return _exporter(cwd);

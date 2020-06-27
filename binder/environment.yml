@@ -17,7 +17,5 @@ dependencies:
   - pygraphviz
   - python >=3.8,<3.9.0a0
   - shapely
-  - xorg-libx11
-  - xorg-libxaw
   - pip:
     - graphviz2drawio
