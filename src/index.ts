@@ -236,6 +236,15 @@ function activate(
     const { ext, key, format, label, mimetype } = exportFormat;
     const save = exportFormat.save || String;
     const _exporter = async (cwd: string) => {
+      let drawio = app.shell.currentWidget as DrawioWidget;
+      let stem = PathExt.basename(drawio.context.path).replace(/\.dio$/, "");
+
+      const rawContent = await (exportFormat.exporter || defaultExporter)(
+        drawio,
+        key,
+        settings
+      );
+
       let model: Contents.IModel = await commands.execute(
         "docmanager:new-untitled",
         {
@@ -244,17 +253,10 @@ function activate(
           ext,
         }
       );
-      let drawio = app.shell.currentWidget as DrawioWidget;
-      let stem = PathExt.basename(drawio.context.path).replace(/\.dio$/, "");
+
       model = await app.serviceManager.contents.rename(
         model.path,
-        PathExt.join(cwd, `${stem}-${+(new Date())}-${ext}`)
-      );
-
-      const rawContent = await (exportFormat.exporter || defaultExporter)(
-        drawio,
-        key,
-        settings
+        PathExt.join(cwd, `${stem}-${+new Date()}${ext}`)
       );
 
       await app.serviceManager.contents.save(model.path, {

@@ -4,6 +4,16 @@ channels:
   - conda-forge
 
 dependencies:
-  - jupyterlab >=2.1.5,<3.0.0a0
-  - nodejs >=12,<13.0.0a0
+  - json-e
   - jupyter-server-proxy
+  - jupyterlab >=2.1.5,<3.0.0a0
+  - lxml
+  - networkx
+  - nodejs >=12,<13.0.0a0
+  - pandas
+  - pip
+  - pygraphviz
+  - python >=3.8,<3.9.0a0
+  - xorg-libxaw
+  - pip:
+    - graphviz2drawio

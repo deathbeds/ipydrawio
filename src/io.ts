@@ -42,6 +42,11 @@ export const drawioPngIcon = new LabIcon({
   svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, "jp-icon-contrast0"),
 });
 
+export const drawioPdfIcon = new LabIcon({
+  name: "drawio:pdf",
+  svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, "jp-icon-contrast2"),
+});
+
 // basically works, but needs a really solid story about where it will be published
 // export const drawioHtmlIcon = new LabIcon({
 //   name: "drawio:html",
@@ -126,7 +131,7 @@ export const PNG_EDITABLE: IDrawioFormat = {
 export const PDF_PLAIN: IDrawioFormat = {
   ext: ".pdf",
   format: "base64",
-  icon: drawioPngIcon,
+  icon: drawioPdfIcon,
   key: "pdf",
   label: "PDF",
   mimetype: "application/pdf",
