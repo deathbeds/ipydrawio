@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eux
 jlpm
-cd drawio-image-export2
+cd drawio-export
 jlpm
 cd ..
 jlpm clean
