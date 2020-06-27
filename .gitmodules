@@ -1,3 +1,6 @@
 [submodule "src/drawio"]
 	path = drawio
 	url = https://github.com/jgraph/drawio.git
+[submodule "drawio-export"]
+	path = drawio-export
+	url = https://github.com/jgraph/draw-image-export2.git

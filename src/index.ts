@@ -71,6 +71,14 @@ const plugin: JupyterFrontEndPlugin<IDrawioTracker[]> = {
 
 export default plugin;
 
+const defaultExporter = async (
+  drawio: DrawioWidget,
+  key: string,
+  settings: any = null
+) => {
+  return await drawio.exportAs(key);
+};
+
 function activate(
   app: JupyterLab,
   browserFactory: IFileBrowserFactory,
@@ -110,7 +118,7 @@ function activate(
       name,
       fileTypes: fileTypes.map(({ name }) => name),
       defaultFor: defaultFor.map(({ name }) => name),
-      getSettings: () => settings.composite
+      getSettings: () => settings.composite,
     });
     const tracker = new WidgetTracker<DrawioWidget>({ namespace });
 
@@ -167,7 +175,7 @@ function activate(
   settingsRegistry
     .load(plugin.id)
     .then((loadedSettings) => {
-      DEBUG && console.warn('settings loaded', loadedSettings.composite);
+      DEBUG && console.warn("settings loaded", loadedSettings.composite);
       settings = loadedSettings;
       settings.changed.connect(() => settingsChanged());
       settingsChanged();
@@ -240,10 +248,14 @@ function activate(
       let stem = PathExt.basename(drawio.context.path).replace(/\.dio$/, "");
       model = await app.serviceManager.contents.rename(
         model.path,
-        PathExt.join(cwd, `${stem}${ext}`)
+        PathExt.join(cwd, `${stem}-${+(new Date())}-${ext}`)
       );
 
-      const rawContent = await drawio.exportAs(key);
+      const rawContent = await (exportFormat.exporter || defaultExporter)(
+        drawio,
+        key,
+        settings
+      );
 
       await app.serviceManager.contents.save(model.path, {
         ...model,

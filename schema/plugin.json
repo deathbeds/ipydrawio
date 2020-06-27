@@ -6,28 +6,109 @@
   "description": "Drawio settings.",
   "type": "object",
   "properties": {
-    "drawioUrlParams": {
-      "description": "URL parameters for the drawio iframe https://desk.draw.io/support/solutions/articles/16000042546-supported-url-parameters",
-      "$ref": "#/definitions/drawio-url-params",
-      "default": {
-        "gapi": 0,
-        "gl": 0,
-        "noExitBtn": 1,
-        "noSaveBtn": 1,
-        "od": 0,
-        "stealth": 1,
-        "tr": 0,
-        "ui": "min"
+    "drawioExportDemo": {
+      "properties": {
+        "url": {
+          "description": "URL for (local) drawio-export server https://github.com/jgraph/draw-image-export2",
+          "type": "string",
+          "default": "./drawio-export-demo"
+        },
+        "params": {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "description": "The renderering format for the diagram png pdf"
+            },
+            "w": {
+              "type": "number",
+              "description": "Set the view port height 0 10"
+            },
+            "h": {
+              "type": "number",
+              "description": "Set the view port width 0 10"
+            },
+            "embedXml": {
+              "type": "string",
+              "description": "Embed the diagram data in the png 0 or 1"
+            },
+            "base64": {
+              "type": "string",
+              "description": "Whether the response data should be base64 (and png embedded data) encoded 0 or 1"
+            },
+            "bg": {
+              "type": "string",
+              "description": "The background colour for the image #ff8888"
+            },
+            "embedData": {
+              "type": "string",
+              "description": "Embed data in the png with the dataHeader key null 0 or 1"
+            },
+            "data": {
+              "type": "string",
+              "description": "The data to embed into the png -"
+            },
+            "dataHeader": {
+              "type": "string",
+              "description": "The key to use when embedding the data into the png myKey"
+            },
+            "filename": {
+              "type": "string",
+              "description": "The filename to included in the content-disposition header myFile.png"
+            },
+            "border": {
+              "type": "number",
+              "description": "The size of the border for the page 0 10"
+            },
+            "from": {
+              "type": "number",
+              "description": "The index of the page to start rendering from 1"
+            },
+            "to": {
+              "type": "number",
+              "description": "The index of the page to finish rendering at 2"
+            },
+            "pageId": {
+              "type": "string",
+              "description": "The id of the page to render page id"
+            },
+            "allPages": {
+              "type": "string",
+              "description": "Whether all pages should be rendered 0 0 1"
+            },
+            "scale": {
+              "type": "number",
+              "description": "The scale for the rendered diagram 1 1.5"
+            },
+            "extras": {
+              "description": "Additional detail how what should be rendered, e.g. layer-names"
+            }
+          }
+        }
       }
-    },
-    "drawioConfig": {
-      "description": "Configuration options sent to each drawio editor. https://desk.draw.io/support/solutions/articles/16000058316",
-      "$ref": "#/definitions/drawio-config",
-      "default": {
-        "compressXml": false,
-        "showStartScreen": false,
-        "override": true
-      }
+    }
+  },
+  "drawioUrlParams": {
+    "description": "URL parameters for the drawio iframe https://desk.draw.io/support/solutions/articles/16000042546-supported-url-parameters",
+    "$ref": "#/definitions/drawio-url-params",
+    "default": {
+      "gapi": 0,
+      "gl": 0,
+      "noExitBtn": 1,
+      "noSaveBtn": 1,
+      "od": 0,
+      "stealth": 1,
+      "tr": 0,
+      "ui": "min"
+    }
+  },
+  "drawioConfig": {
+    "description": "Configuration options sent to each drawio editor. https://desk.draw.io/support/solutions/articles/16000058316",
+    "$ref": "#/definitions/drawio-config",
+    "default": {
+      "compressXml": false,
+      "showStartScreen": false,
+      "override": true
     }
   },
   "definitions": {
