@@ -4,17 +4,20 @@ channels:
   - conda-forge
 
 dependencies:
+  - babel
   - bqplot
   - ipywidgets
   - json-e
   - jupyter-server-proxy
   - jupyterlab >=2.1.5,<3.0.0a0
   - lxml
+  - matplotlib
   - networkx
   - nodejs >=12,<13.0.0a0
   - pandas
   - pip
   - pygraphviz
+  - pypdf2
   - python >=3.8,<3.9.0a0
   - requests_cache
   - shapely
