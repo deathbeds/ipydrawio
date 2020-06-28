@@ -1,12 +1,11 @@
-import atexit
-import os
-import socket
 import subprocess
+import os
 import sys
-
 from pathlib import Path
-
 from jupyterlab.commands import get_app_dir
+import socket
+import atexit
+
 
 HERE = Path(__file__).parent
 APP = HERE.parent / "drawio-export"
@@ -38,20 +37,26 @@ def main():
 
     env = dict(os.environ)
 
+    if env.get("PORT") is None:
+        env["PORT"] = "8000"
+
     if env.get("DRAWIO_SERVER_URL") is None:
         port = get_unused_port()
+        env["DRAWIO_SERVER_URL"] = f"http://localhost:{port}"
+        print("Starting local drawio asset server\n\t", env["DRAWIO_SERVER_URL"], flush=True)
         local_files = subprocess.Popen(
             [sys.executable, "-m", "http.server", str(port), "--bind", "127.0.0.1"],
             cwd=str(DRAWIO_STATIC)
         )
-        env["DRAWIO_SERVER_URL"] = f"http://localhost:{port}"
 
-    exporter = subprocess.Popen(["jlpm", "devstart"], cwd=str(APP), env=env)
+    exporter = subprocess.Popen(["jlpm", "start"], cwd=str(APP), env=env)
+    print("Starting drawio-export server\n\t", f"""http://localhost:{env["PORT"]}""", flush=True)
 
     def stop():
-        exporter.terminate(kill=True)
+        exporter.terminate()
         if local_files is not None:
-            local_files.terminate(kill=True)
+            local_files.terminate()
+            local_files.wait()
         exporter.wait()
 
     atexit.register(stop)
