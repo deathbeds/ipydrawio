@@ -27,20 +27,21 @@ def get_unused_port():
 
 def main():
     """ start the drawio-export, and (usually) a local http server to serve the assets
-
-        - drawio-export assumes PORT has been set, or defaults to 8000
     """
     local_files = None
 
     if not (APP / "node_modules").exists():
+        print("Installing drawio-export deps in:\n\t", str(APP), flush=True)
         subprocess.check_call(["jlpm"], cwd=str(APP))
 
     env = dict(os.environ)
 
     if env.get("PORT") is None:
+        # drawio-export assumes PORT has been set, and defaults to 8000, but explicit is...
         env["PORT"] = "8000"
 
     if env.get("DRAWIO_SERVER_URL") is None:
+        # assuming we're running in a jupyterlab-drawio setup
         port = get_unused_port()
         env["DRAWIO_SERVER_URL"] = f"http://localhost:{port}"
         print("Starting local drawio asset server\n\t", env["DRAWIO_SERVER_URL"], flush=True)
