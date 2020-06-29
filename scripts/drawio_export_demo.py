@@ -12,6 +12,8 @@ APP = HERE.parent / "drawio-export"
 DRAWIO_STATIC = Path(get_app_dir()) / (
     "static/node_modules/jupyterlab-drawio/drawio/src/main/webapp"
 )
+DRAWIO_SERVER_URL = os.environ.get("DRAWIO_SERVER_URL")
+PORT = os.environ.get("PORT")
 
 def get_unused_port():
     """ Get an unused port by trying to listen to any random port.
@@ -36,11 +38,11 @@ def main():
 
     env = dict(os.environ)
 
-    if env.get("PORT") is None:
+    if PORT is None:
         # drawio-export assumes PORT has been set, and defaults to 8000, but explicit is...
         env["PORT"] = "8000"
 
-    if env.get("DRAWIO_SERVER_URL") is None:
+    if DRAWIO_SERVER_URL is None:
         # assuming we're running in a jupyterlab-drawio setup
         port = get_unused_port()
         env["DRAWIO_SERVER_URL"] = f"http://localhost:{port}"
