@@ -7,7 +7,8 @@ import socket
 import atexit
 
 
-HERE = Path(__file__).parent
+HERE = Path(__file__).parent.resolve()
+TORNADIC = HERE / "tornadic.py"
 APP = HERE.parent / "drawio-export"
 DRAWIO_STATIC = Path(get_app_dir()) / (
     "static/node_modules/jupyterlab-drawio/drawio/src/main/webapp"
@@ -48,7 +49,7 @@ def main():
         env["DRAWIO_SERVER_URL"] = f"http://localhost:{port}"
         print("Starting local drawio asset server for", str(DRAWIO_STATIC), "\n\t", env["DRAWIO_SERVER_URL"], flush=True)
         local_files = subprocess.Popen(
-            [sys.executable, "-m", "http.server", str(port), "--bind", "127.0.0.1"],
+            [sys.executable, TORNADIC, f"--port={port}", "--host=127.0.0.1"],
             cwd=str(DRAWIO_STATIC)
         )
 
