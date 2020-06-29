@@ -5,6 +5,7 @@
     
     This file generated from https://github.com/jgraph/drawio
 */
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/export3.html';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/favicon.ico';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/1x1.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/2x2.png';

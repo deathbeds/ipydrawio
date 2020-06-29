@@ -44,7 +44,7 @@ def main():
         # assuming we're running in a jupyterlab-drawio setup
         port = get_unused_port()
         env["DRAWIO_SERVER_URL"] = f"http://localhost:{port}"
-        print("Starting local drawio asset server\n\t", env["DRAWIO_SERVER_URL"], flush=True)
+        print("Starting local drawio asset server for", str(DRAWIO_STATIC), "\n\t", env["DRAWIO_SERVER_URL"], flush=True)
         local_files = subprocess.Popen(
             [sys.executable, "-m", "http.server", str(port), "--bind", "127.0.0.1"],
             cwd=str(DRAWIO_STATIC)

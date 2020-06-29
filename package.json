@@ -21,6 +21,7 @@
   "files": [
     "{lib,schema,style}/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css}",
     "LICENSE.txt",
+    "drawio/src/main/webapp/export3.html",
     "drawio/src/main/webapp/favicon.ico",
     "drawio/src/main/webapp/images/1x1.png",
     "drawio/src/main/webapp/images/2x2.png",
