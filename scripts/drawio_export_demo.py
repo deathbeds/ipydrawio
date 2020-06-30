@@ -16,23 +16,10 @@ DRAWIO_STATIC = Path(get_app_dir()) / (
 DRAWIO_SERVER_URL = os.environ.get("DRAWIO_SERVER_URL")
 PORT = os.environ.get("PORT")
 
-def get_unused_port():
-    """ Get an unused port by trying to listen to any random port.
-        Probably could introduce race conditions if inside a tight loop.
-    """
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(("localhost", 0))
-    sock.listen(1)
-    port = sock.getsockname()[1]
-    sock.close()
-    return port
-
 
 def main():
     """ start the drawio-export, and (usually) a local http server to serve the assets
     """
-    local_files = None
-
     if not (APP / "node_modules").exists():
         print("Installing drawio-export deps in:\n\t", str(APP), flush=True)
         subprocess.check_call(["jlpm"], cwd=str(APP))
@@ -51,9 +38,6 @@ def main():
 
     def stop():
         exporter.terminate()
-        if local_files is not None:
-            local_files.terminate()
-            local_files.wait()
         exporter.wait()
 
     atexit.register(stop)
