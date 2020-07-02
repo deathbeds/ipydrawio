@@ -8,7 +8,6 @@ import atexit
 
 
 HERE = Path(__file__).parent.resolve()
-TORNADIC = HERE / "tornadic.py"
 APP = HERE.parent / "drawio-export"
 DRAWIO_STATIC = Path(get_app_dir()) / (
     "static/node_modules/jupyterlab-drawio/drawio/src/main/webapp"
