@@ -6,6 +6,7 @@ channels:
 dependencies:
   - babel
   - bqplot
+  - escapism
   - httpx
   - ipywidgets
   - json-e
@@ -26,3 +27,4 @@ dependencies:
   - tabulate
   - pip:
     - graphviz2drawio
+    - jupyter_videochat

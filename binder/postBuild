@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -eux
 
+jupyter serverextension list
+
+jupyter serverextension enable --py jupyter_videochat --sys-prefix
+
+jupyter serverextension list
+
 jlpm
 
 cd drawio-export

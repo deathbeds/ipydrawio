@@ -1,3 +1,4 @@
-@jupyterlab/toc
 @jupyter-widgets/jupyterlab-manager
+@jupyterlab/toc
 bqplot
+jupyterlab-videochat
