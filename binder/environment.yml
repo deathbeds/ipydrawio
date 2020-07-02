@@ -16,6 +16,7 @@ dependencies:
   - networkx
   - nodejs >=12,<13.0.0a0
   - pandas
+  - pillow
   - pip
   - pygraphviz
   - pypdf2
