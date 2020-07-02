@@ -146,8 +146,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
           break;
         }
         this._lastEmitted = msg.xml;
-        this.context.model.fromString(msg.xml);
-        this.context.save();
+        this.save(msg.xml, true);
         break;
       case "autosave":
         if (this._saveNeedsExport) {
@@ -155,7 +154,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
           break;
         }
         this._lastEmitted = msg.xml;
-        this.context.model.fromString(msg.xml);
+        this.save(msg.xml);
         break;
       case "export":
         if (this._exportPromise != null) {
@@ -191,12 +190,25 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     this.maybeReloadFrame();
   }
 
+  private save(xml: string, hardSave: boolean = false) {
+    const { format } = this;
+    if (format?.fromXML) {
+      format.fromXML(this.context.model, xml);
+    } else {
+      this.context.model.fromString(xml);
+    }
+
+    if (hardSave) {
+      this.context.save();
+    }
+  }
+
   /**
    * Handle round-tripping to formats that require an export
    */
   private saveWithExport(hardSave: boolean = false) {
     const { mimetype } = this.context.contentsModel;
-    const format = IO.EXPORT_MIME_MAP.get(mimetype);
+    const { format } = this;
     if (format?.save == null) {
       console.error(`Unexpected save with export of ${mimetype}`);
       return;
@@ -213,10 +225,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
           return;
         }
         this._lastEmitted = stripped;
-        this.context.model.fromString(stripped);
-        if (hardSave) {
-          this.context.save();
-        }
+        this.save(stripped, hardSave);
       })
       .catch((err) => {
         console.error(err);
@@ -294,6 +303,17 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     this.title.label = PathExt.basename(this.context.localPath);
   }
 
+  get format(): IO.IDrawioFormat {
+    const { mimetype } = this.context.contentsModel;
+    let format = IO.EXPORT_MIME_MAP.get(mimetype);
+    if (format == null) {
+      if (this.context.contentsModel.type === "notebook") {
+        return IO.IPYNB_EDITABLE;
+      }
+    }
+    return format;
+  }
+
   /**
    * Handle a change to the raw document
    */
@@ -302,7 +322,15 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       return;
     }
     const { model, contentsModel } = this.context;
-    let xml = model.toString();
+    const { format } = this;
+
+    let xml: string = "";
+
+    if (format?.toXML) {
+      xml = format.toXML(model);
+    } else {
+      xml = model.toString();
+    }
 
     if (xml === this._lastEmitted) {
       return;

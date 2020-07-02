@@ -4,8 +4,13 @@ import { LabIcon } from "@jupyterlab/ui-components";
 
 import DRAWIO_ICON_SVG from "../style/img/drawio.svg";
 import { DrawioWidget } from "./editor";
+import { ReadonlyPartialJSONObject } from "@lumino/coreutils";
 import { PageConfig } from "@jupyterlab/coreutils";
 import { ISettingRegistry } from "@jupyterlab/settingregistry";
+import { DocumentRegistry } from "@jupyterlab/docregistry";
+import { NotebookModel } from "@jupyterlab/notebook";
+
+export const DRAWIO_METADATA = "jupyterlab-drawio";
 
 export interface IDrawioFormat {
   key: string;
@@ -16,8 +21,11 @@ export interface IDrawioFormat {
   format: Contents.FileFormat;
   mimetype: string;
   pattern?: string;
+  contentType?: Contents.ContentType;
   save?: (raw: string) => string;
   load?: (raw: string) => string;
+  toXML?: (model: DocumentRegistry.IModel) => string;
+  fromXML?: (model: DocumentRegistry.IModel, xml: string) => void;
   exporter?: (
     drawio: DrawioWidget,
     key: string,
@@ -47,11 +55,10 @@ export const drawioPdfIcon = new LabIcon({
   svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, "jp-icon-contrast2"),
 });
 
-// basically works, but needs a really solid story about where it will be published
-// export const drawioHtmlIcon = new LabIcon({
-//   name: "drawio:html",
-//   svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, "jp-icon-brand0"),
-// });
+export const drawioIpynbIcon = new LabIcon({
+  name: "drawio:ipynb",
+  svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, "jp-icon-contrast3"),
+});
 
 const stripDataURI = (raw: string) => raw.split(",")[1];
 
@@ -97,27 +104,6 @@ export const SVG_EDITABLE: IDrawioFormat = {
   pattern: "^.*.dio.svg$",
 };
 
-// export const HTML_PLAIN: IDrawioFormat = {
-//   ext: ".html",
-//   format: "text",
-//   icon: drawioHtmlIcon,
-//   key: "html2",
-//   label: "HTML",
-//   mimetype: "text/html",
-//   name: "html"
-// }
-
-// export const HTML_EDITABLE: IDrawioFormat = {
-//   ...HTML_PLAIN,
-//   ext: ".dio.html",
-//   icon: drawioHtmlIcon,
-//   key: "html2",
-//   label: "HTML (Editable)",
-//   name: "diohtml",
-//   pattern: "^.*.dio.html$",
-//   save: String
-// };
-
 export const PNG_PLAIN: IDrawioFormat = {
   ext: ".png",
   format: "base64",
@@ -136,6 +122,30 @@ export const PNG_EDITABLE: IDrawioFormat = {
   label: "PNG (Editable)",
   name: "diopng",
   pattern: "^.*.dio.png$",
+};
+
+export const IPYNB_EDITABLE: IDrawioFormat = {
+  ext: ".dio.ipynb",
+  key: "ipynb",
+  format: "json",
+  icon: drawioIpynbIcon,
+  label: "Diagram Notebook",
+  mimetype: "application/x-ipynb+json",
+  name: "dionotebook",
+  pattern: ".*.dio.ipynb$",
+  contentType: "notebook",
+  fromXML: (model: NotebookModel, xml) => {
+    const meta = model.metadata.get(
+      DRAWIO_METADATA
+    ) as ReadonlyPartialJSONObject;
+    model.metadata.set(DRAWIO_METADATA, { ...(meta || {}), xml });
+  },
+  toXML: (model: NotebookModel) => {
+    const meta = model.metadata.get(
+      DRAWIO_METADATA
+    ) as ReadonlyPartialJSONObject;
+    return meta?.xml ? `${meta.xml}` : "";
+  },
 };
 
 export const PDF_PLAIN: IDrawioFormat = {
@@ -158,7 +168,12 @@ export const PDF_PLAIN: IDrawioFormat = {
       console.error(`don't know how to handle non-relative URLs`);
       return;
     }
-    const xml = widget.context.model.toString();
+    const currentFormat = widget.format;
+
+    const xml = currentFormat?.toXML
+      ? currentFormat.toXML(widget.context.model)
+      : widget.context.model.toString();
+
     let url = `${PageConfig.getBaseUrl()}${drawioExportUrl.slice(2)}`;
     url += url.endsWith("/") ? "" : "/";
     const query = new URLSearchParams();
@@ -180,42 +195,41 @@ export const PDF_PLAIN: IDrawioFormat = {
 
 export const PDF_BRANDED = {
   ...PDF_PLAIN,
-  ext: ".dio.pdf"
-}
+  ext: ".dio.pdf",
+};
 
 export const EXPORT_FORMATS = [
-  // HTML_EDITABLE,
   PNG_EDITABLE,
   PNG_PLAIN,
   SVG_EDITABLE,
   SVG_PLAIN,
-  PDF_BRANDED
+  PDF_BRANDED,
 ];
 
-export const ALL_BINARY_FORMATS = [PNG_PLAIN, PNG_EDITABLE, PDF_PLAIN, PDF_BRANDED];
+export const ALL_BINARY_FORMATS = [PNG_PLAIN, PNG_EDITABLE];
 
 export const ALL_TEXT_FORMATS = [
-  // HTML_EDITABLE,
-  // HTML_PLAIN,
   SVG_EDITABLE,
   SVG_PLAIN,
   XML_NATIVE,
   XML_LEGACY,
 ];
 
-export const DEFAULT_TEXT_FORMATS = [
-  // HTML_EDITABLE,
-  SVG_EDITABLE,
-  XML_NATIVE,
-  XML_LEGACY,
-];
+export const ALL_JSON_FORMATS = [IPYNB_EDITABLE];
+
+export const DEFAULT_TEXT_FORMATS = [SVG_EDITABLE, XML_NATIVE, XML_LEGACY];
 export const DEFAULT_BINARY_FORMATS = [PNG_EDITABLE];
-export const ALL_FORMATS = [...ALL_BINARY_FORMATS, ...ALL_TEXT_FORMATS];
+export const DEFAULT_JSON_FORMATS = [IPYNB_EDITABLE];
+export const ALL_FORMATS = [
+  ...ALL_BINARY_FORMATS,
+  ...ALL_TEXT_FORMATS,
+  ...ALL_JSON_FORMATS,
+];
 
 export const EXPORT_MIME_MAP = new Map<string, IDrawioFormat>([
   [PNG_EDITABLE.mimetype, PNG_EDITABLE],
   [SVG_EDITABLE.mimetype, SVG_EDITABLE],
-  // [HTML_EDITABLE.mimetype, HTML_EDITABLE],
   [PDF_PLAIN.mimetype, PDF_PLAIN],
   [PDF_BRANDED.mimetype, PDF_BRANDED],
+  [IPYNB_EDITABLE.mimetype, IPYNB_EDITABLE],
 ]);

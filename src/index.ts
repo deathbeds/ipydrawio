@@ -50,6 +50,7 @@ import { DrawioStatus } from "./status";
  */
 const TEXT_FACTORY = "Drawio";
 const BINARY_FACTORY = "Drawio Image";
+const JSON_FACTORY = "Drawio Notebook";
 
 interface IDrawioTracker extends IWidgetTracker<DrawioWidget> {}
 
@@ -111,6 +112,7 @@ function activate(
   for (const format of IO.ALL_FORMATS) {
     app.docRegistry.addFileType({
       name: format.name,
+      contentType: format.contentType || "file",
       displayName: format.label,
       mimeTypes: [format.mimetype],
       extensions: [format.ext],
@@ -224,6 +226,14 @@ function activate(
     IO.DEFAULT_BINARY_FORMATS
   );
 
+  const jsonTracker = initTracker(
+    "notebook",
+    JSON_FACTORY,
+    "drawio-notebook",
+    IO.ALL_JSON_FORMATS,
+    IO.DEFAULT_JSON_FORMATS
+  );
+
   /**
    * Whether there is an active DrawIO editor.
    */
@@ -237,6 +247,7 @@ function activate(
       const tracked: Widget[] = [
         textTracker.currentWidget,
         binaryTracker.currentWidget,
+        jsonTracker.currentWidget,
       ];
 
       return tracked.indexOf(currentWidget) >= 0;
@@ -372,5 +383,5 @@ function activate(
   }
 
   // this is very odd, and probably can't be reused. Use the manager pattern?
-  return [textTracker, binaryTracker];
+  return [textTracker, binaryTracker, jsonTracker];
 }
