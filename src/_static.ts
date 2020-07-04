@@ -2346,13 +2346,11 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/text.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/tickets.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/tooltips.js';
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/trees';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/trees/handle-move.gif';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/trees/trees.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/trello.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/update.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/voice.js';
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/webcola';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/webcola/cola.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/webcola/mxWebColaAdaptor.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/webcola/mxWebColaLayout.js';
