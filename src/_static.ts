@@ -2327,6 +2327,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/animation.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/anonymize.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/cConf-1-4-8.js';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/cConf-comments.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/edgeConnection.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/electron.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/explore.js';

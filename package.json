@@ -2344,6 +2344,7 @@
     "drawio/src/main/webapp/plugins/animation.js",
     "drawio/src/main/webapp/plugins/anonymize.js",
     "drawio/src/main/webapp/plugins/cConf-1-4-8.js",
+    "drawio/src/main/webapp/plugins/cConf-comments.js",
     "drawio/src/main/webapp/plugins/edgeConnection.js",
     "drawio/src/main/webapp/plugins/electron.js",
     "drawio/src/main/webapp/plugins/explore.js",
