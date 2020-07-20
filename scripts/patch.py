@@ -13,6 +13,11 @@ PATCHES = {
             "name": "global ref",
             "before": "b=null!=e?e():new App(new Editor",
             "after": "\nwindow.JUPYTERLAB_DRAWIO_APP = b=null!=e?e():new App(new Editor"
+        },
+        {
+            "name": "plugin path",
+            "before": """;window.PLUGINS_BASE_PATH=window.PLUGINS_BASE_PATH||"";""",
+            "after": """;window.PLUGINS_BASE_PATH=window.PLUGINS_BASE_PATH||".";""",
         }
     ]
 }
