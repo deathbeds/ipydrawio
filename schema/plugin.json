@@ -98,7 +98,8 @@
         "od": 0,
         "stealth": 1,
         "tr": 0,
-        "ui": "min"
+        "ui": "min",
+        "p": "ex;voice;tips;svgdata;number;sql;props;text;anim;update;trees;import;replay;anon;tickets;flow;webcola;rnd;tags"
       }
     },
     "drawioConfig": {
