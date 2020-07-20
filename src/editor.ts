@@ -114,6 +114,27 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     return this._exportPromise.promise;
   }
 
+  get app() {
+    return this._app;
+  }
+
+  set app(app) {
+    if (this._app != app) {
+      this._app = app;
+      this._appChanged.emit(void 0);
+    }
+
+    if(this._app) {
+      const file = this._app.getCurrentFile();
+      file.sync = new (this._frame.contentWindow as any).DrawioFileSync(file);
+      file.sync.start();
+    }
+  }
+
+  get appChanged() {
+    return this._appChanged;
+  }
+
   /**
    * Handle messages from the iframe over the drawio embed protocol
    */
@@ -136,6 +157,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
         this._onContentChanged();
         break;
       case "load":
+        this.app = (this._frame.contentWindow as any).JUPYTERLAB_DRAWIO_APP;
         this._ready.resolve(void 0);
         this._initialLoad = true;
         this.addClass(READY_CLASS);
@@ -386,6 +408,8 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
   private _lastEmitted: string;
   private _saveNeedsExport: boolean;
   private _frameClicked = new Signal<DrawioWidget, void>(this);
+  private _app: any;
+  private _appChanged = new Signal<DrawioWidget, void>(this);
 }
 
 export interface ISettingsGetter {

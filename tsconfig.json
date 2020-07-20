@@ -14,8 +14,7 @@
     "outDir": "./lib",
     "types": [],
     "rootDir": "./src",
-    "tsBuildInfoFile": "lib/.tsbuildinfo",
-    "sourceMap": true
+    "tsBuildInfoFile": "lib/.tsbuildinfo"
   },
   "include": ["src/*"]
 }

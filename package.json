@@ -2687,9 +2687,9 @@
     "url": "https://github.com/wolfv/jupyterlab-drawio.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "python scripts/patch.py && tsc",
     "clean": "rimraf lib",
-    "watch": "tsc -w"
+    "watch": "python scripts/patch.py && tsc -w"
   },
   "types": "lib/index.d.ts",
   "version": "0.7.0"
