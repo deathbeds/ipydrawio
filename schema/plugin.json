@@ -99,7 +99,7 @@
         "stealth": 1,
         "tr": 0,
         "ui": "min",
-        "p": "ex;voice;tips;svgdata;number;sql;props;text;anim;update;trees;import;replay;anon;tickets;flow;webcola;rnd;tags"
+        "p": "ex;tips;svgdata;sql;anim;trees;replay;anon;flow;webcola;tags"
       }
     },
     "drawioConfig": {
