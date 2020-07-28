@@ -5,7 +5,13 @@
     
     This file generated from https://github.com/jgraph/drawio
 */
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/about.html';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/app.html';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/dropbox.html';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/export2.html';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/export3.html';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/github.html';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/gitlab.html';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/1x1.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/2x2.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/3x3.png';
@@ -1386,6 +1392,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/img/telecommunication/Signal_tower_off_128x128.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/img/telecommunication/Signal_tower_on_128x128.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/img/telecommunication/iPhone_128x128.png';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/index.html';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/PostConfig.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/PreConfig.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/.npmignore';
@@ -2313,6 +2320,11 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/mxgraph/images/warning.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/mxgraph/images/window-title.gif';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/mxgraph/images/window.gif';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/offline.html';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/onedrive.html';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/onedrive2.html';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/onedrive3.html';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/open.html';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/animation.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/anonymize.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/cConf-1-4-8.js';
@@ -2579,3 +2591,4 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/vvd.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/webicons.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/weblogos.xml';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/vsdxImporter.html';
