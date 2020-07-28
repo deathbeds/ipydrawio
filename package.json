@@ -22,7 +22,13 @@
   "files": [
     "{lib,schema,style}/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css}",
     "LICENSE.txt",
+    "drawio/src/main/webapp/about.html",
+    "drawio/src/main/webapp/app.html",
+    "drawio/src/main/webapp/dropbox.html",
+    "drawio/src/main/webapp/export2.html",
     "drawio/src/main/webapp/export3.html",
+    "drawio/src/main/webapp/github.html",
+    "drawio/src/main/webapp/gitlab.html",
     "drawio/src/main/webapp/images/1x1.png",
     "drawio/src/main/webapp/images/2x2.png",
     "drawio/src/main/webapp/images/3x3.png",
@@ -1403,6 +1409,7 @@
     "drawio/src/main/webapp/img/telecommunication/Signal_tower_off_128x128.png",
     "drawio/src/main/webapp/img/telecommunication/Signal_tower_on_128x128.png",
     "drawio/src/main/webapp/img/telecommunication/iPhone_128x128.png",
+    "drawio/src/main/webapp/index.html",
     "drawio/src/main/webapp/js/PostConfig.js",
     "drawio/src/main/webapp/js/PreConfig.js",
     "drawio/src/main/webapp/math/.npmignore",
@@ -2330,6 +2337,11 @@
     "drawio/src/main/webapp/mxgraph/images/warning.png",
     "drawio/src/main/webapp/mxgraph/images/window-title.gif",
     "drawio/src/main/webapp/mxgraph/images/window.gif",
+    "drawio/src/main/webapp/offline.html",
+    "drawio/src/main/webapp/onedrive.html",
+    "drawio/src/main/webapp/onedrive2.html",
+    "drawio/src/main/webapp/onedrive3.html",
+    "drawio/src/main/webapp/open.html",
     "drawio/src/main/webapp/plugins/animation.js",
     "drawio/src/main/webapp/plugins/anonymize.js",
     "drawio/src/main/webapp/plugins/cConf-1-4-8.js",
@@ -2595,7 +2607,8 @@
     "drawio/src/main/webapp/stencils/veeam/veeam2.xml",
     "drawio/src/main/webapp/stencils/vvd.xml",
     "drawio/src/main/webapp/stencils/webicons.xml",
-    "drawio/src/main/webapp/stencils/weblogos.xml"
+    "drawio/src/main/webapp/stencils/weblogos.xml",
+    "drawio/src/main/webapp/vsdxImporter.html"
   ],
   "homepage": "https://github.com/QuantStack/jupyterlab-drawio",
   "jupyterlab": {
