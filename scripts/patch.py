@@ -29,7 +29,7 @@ def patch():
             ["git", "checkout", str(path.relative_to(DRAWIO))],
             cwd=DRAWIO
         )
-        txt = path.read_text()
+        txt = path.read_text(encoding="utf-8")
 
         for patch in patches:
             print("  ", patch["name"])
@@ -41,7 +41,7 @@ def patch():
             else:
                 print("   ...nothing to do")
 
-        path.write_text(txt)
+        path.write_text(txt, encoding="utf-8")
 
 
 if __name__ == "__main__":
