@@ -121,7 +121,7 @@
           "type": "string"
         },
         "lang": {
-          "description": "xy: Specifies the language of the user interface. Possible values for xy are i18n, id: Bahasa Indonesia, ms: Bahasa Melayu, bs: Bosanski, ca: Català, cs: Čeština, da: Dansk, de: Deutsch, et: Eesti, en: English, es: Español, fil: Filipino, fr: Français, it: Italiano, hu: Magyar, nl: Nederlands, no: Norsk, pl: Polski, pt-br: Português (Brasil), pt: Português (Portugal), ro: Română, fi: Suomi, sv: Svenska, vi: Tiếng Việt, tr: Türkçe, el: Ελληνικά, ru: Русский, sr: Српски, uk: Українська, he: עברית, ar: العربية, th: ไทย, ko: 한국어, ja: 日本語, zh: 中文（中国）, zh-tw: 中文（台灣）",
+          "description": "xy: Specifies the language of the user interface.",
           "type": "string"
         },
         "libs": {
