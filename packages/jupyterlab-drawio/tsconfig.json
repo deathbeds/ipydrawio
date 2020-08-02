@@ -1,18 +1,7 @@
 {
+  "extends": "../tsconfigbase",
   "compilerOptions": {
-    "declaration": false,
-    "noImplicitAny": true,
-    "noEmitOnError": true,
-    "noUnusedLocals": true,
-    "allowJs": true,
-    "module": "esnext",
-    "esModuleInterop": true,
-    "incremental": true,
-    "jsx": "react",
-    "moduleResolution": "node",
-    "target": "es2017",
     "outDir": "./lib",
-    "types": [],
     "rootDir": "./src",
     "tsBuildInfoFile": "lib/.tsbuildinfo"
   },
