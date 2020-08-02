@@ -1,5 +1,5 @@
 [submodule "src/drawio"]
-	path = packages/jupyterlab-drawio-webpack/drawio
+	path = packages/drawio-webpack/drawio
 	url = https://github.com/jgraph/drawio.git
 [submodule "drawio-export"]
 	path = vendor/drawio-export
