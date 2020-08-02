@@ -1,0 +1,4 @@
+**/.ipynb_checkpoints
+drawio/src/java/**/*
+drawio/etc/**/*
+drawio/.travis.yml

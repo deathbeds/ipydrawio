@@ -1,0 +1,28 @@
+{
+    "author": "Dead Pixels Collective",
+    "bugs": {
+      "url": "https://github.com/deathbeds/jupyterlab-drawio/issues"
+    },
+    "dependencies": {},
+    "description": "A webpack-ready repackaging of drawio",
+    "devDependencies": {},
+    "files": [
+      "drawio/**/*"
+    ],
+    "homepage": "https://github.com/deathbeds/jupyterlab-drawio",
+    "keywords": [
+      "webpack",
+      "drawio"
+    ],
+    "license": "Apache-2.0",
+    "main": "lib/index.js",
+    "name": "@deathbeds/drawio-webpack",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/deathbeds/jupyterlab-drawio.git"
+    },
+    "scripts": {
+    },
+    "types": "lib/index.d.ts",
+    "version": "13.5.8"
+  }
