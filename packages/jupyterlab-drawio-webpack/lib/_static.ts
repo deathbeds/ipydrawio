@@ -1,8 +1,8 @@
 /**
     All files that should be copied to the jupyterlab static folder, available as:
-    
-    {:base_url}static/lab/node_modules/jupyterlab-drawio/src/{:path}
-    
+
+    {:base_url}static/lab/node_modules/@deathbeds/jupyterlab-drawio-webpack/src/{:path}
+
     This file generated from https://github.com/jgraph/drawio
 */
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/export3.html';

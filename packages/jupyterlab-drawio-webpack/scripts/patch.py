@@ -1,4 +1,4 @@
-""" patch drawio sources for our purposes
+""" patch drawio sources for embedding in JupyterLab
 """
 from pathlib import Path
 import subprocess
@@ -10,12 +10,12 @@ APP_MIN = DRAWIO / "src/main/webapp/js/app.min.js"
 PATCHES = {
     APP_MIN: [
         {
-            "name": "global ref",
+            "name": "global ref so we can get at the App at runtime",
             "before": "b=null!=e?e():new App(new Editor",
             "after": "\nwindow.JUPYTERLAB_DRAWIO_APP = b=null!=e?e():new App(new Editor"
         },
         {
-            "name": "plugin path",
+            "name": "plugin path so this can be hosted on non-root",
             "before": """;window.PLUGINS_BASE_PATH=window.PLUGINS_BASE_PATH||"";""",
             "after": """;window.PLUGINS_BASE_PATH=window.PLUGINS_BASE_PATH||".";""",
         }
