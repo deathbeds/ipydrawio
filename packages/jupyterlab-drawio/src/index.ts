@@ -61,7 +61,7 @@ export const IDrawioTracker = new Token<IDrawioTracker>("drawio/tracki");
  */
 const plugin: JupyterFrontEndPlugin<IDrawioTracker[]> = {
   activate,
-  id: "jupyterlab-drawio:plugin",
+  id: "@deathbeds/jupyterlab-drawio:plugin",
   requires: [
     IFileBrowserFactory,
     ILayoutRestorer,
@@ -100,7 +100,7 @@ function activate(
 
   if (statusBar) {
     statusItem = new DrawioStatus({ menu });
-    statusBar.registerStatusItem("jupyterlab-drawio:status", {
+    statusBar.registerStatusItem("@deathbeds/jupyterlab-drawio:status", {
       item: statusItem,
       align: "right",
       rank: 3,

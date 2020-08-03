@@ -10,7 +10,7 @@ import { ISettingRegistry } from "@jupyterlab/settingregistry";
 import { DocumentRegistry } from "@jupyterlab/docregistry";
 import { NotebookModel } from "@jupyterlab/notebook";
 
-export const DRAWIO_METADATA = "jupyterlab-drawio";
+export const DRAWIO_METADATA = "@deathbeds/jupyterlab-drawio";
 
 export interface IDrawioFormat {
   key: string;

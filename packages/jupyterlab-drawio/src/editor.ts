@@ -35,7 +35,7 @@ const STATIC = URLExt.join(PageConfig.getBaseUrl(), "static");
 const DRAWIO_URL = URLExt.join(
   STATIC,
   "lab",
-  "node_modules/jupyterlab-drawio/drawio/src/main/webapp/index.html"
+  "node_modules/@deathbeds/jupyterlab-drawio-webpack/drawio/src/main/webapp/index.html"
 );
 
 /**
