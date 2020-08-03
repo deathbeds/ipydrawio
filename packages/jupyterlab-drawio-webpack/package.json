@@ -16,7 +16,7 @@
     ],
     "license": "Apache-2.0",
     "main": "lib/index.js",
-    "name": "@deathbeds/drawio-webpack",
+    "name": "@deathbeds/jupyterlab-drawio-webpack",
     "repository": {
       "type": "git",
       "url": "https://github.com/deathbeds/jupyterlab-drawio.git"
