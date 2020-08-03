@@ -389,13 +389,6 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     return this._frameClicked;
   }
 
-  /**
-   * Trick webpack into copying ~1000 files into the app's static folder
-   * */
-  protected async neverCallThis() {
-    await import("./_static");
-  }
-
   public content: IFrame;
   public revealed: Promise<void>;
   readonly context: DocumentRegistry.Context;

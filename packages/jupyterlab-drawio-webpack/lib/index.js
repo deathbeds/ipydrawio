@@ -14,4 +14,12 @@
 const plugin = {
   activate: () => {}
 };
+
+/**
+ * Trick webpack into copying ~1000 files into the app's static folder
+ * */
+export async function neverCallThis() {
+  return await import("./_static");
+}
+
 export default plugin;
