@@ -6,6 +6,7 @@ channels:
 dependencies:
   - babel
   - bqplot
+  - doit
   - escapism
   - httpx
   - ipywidgets

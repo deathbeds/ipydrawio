@@ -1,11 +1,13 @@
+__pycache__
+.doit*
 .ipynb_checkpoints
 *.bundle.*
 *.egg-info/
 *.log
+*.pdf
 *.sqlite
 *.tgz
 envs/
 node_modules/
 untitled*
 Untitled*
-*.pdf
