@@ -21,7 +21,7 @@
     "typescript": "~3.9.3"
   },
   "files": [
-    "{lib,schema,style}/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css}",
+    "{lib,schema,style,src}/**/*.{ts,tsx,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css}",
     "LICENSE.txt"
   ],
   "homepage": "https://github.com/deathbeds/jupyterlab-drawio",

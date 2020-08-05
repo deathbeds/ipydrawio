@@ -11,18 +11,18 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+let DEBUG = false;
+
 const plugin = {
   id: "@deathbeds/jupyterlab-drawio-webpack:plugin",
-  activate: () => {
+  activate: async () => {
     console.log(plugin.id, 'activated');
-  }
+    if(DEBUG) {
+      await import("./_static");
+    }
+  },
+  autoStart: true
 };
-
-/**
- * Trick webpack into copying ~3000 files into the app's static folder
- * */
-export async function neverCallThis() {
-  return await import("./_static");
-}
 
 export default plugin;

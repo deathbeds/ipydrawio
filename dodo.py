@@ -1,6 +1,7 @@
 import subprocess
 
-from doit.tools import PythonInteractiveAction
+from doit.action import CmdAction
+from doit.tools import PythonInteractiveAction, config_changed
 
 import scripts.project as P
 
@@ -91,6 +92,7 @@ def task_build():
             name="js:pre",
             file_dep=[P.YARN_INTEGRITY],
             actions=[[*P.JLPM, "lerna", "run", "build:pre"]],
+            targets=[P.JDW_APP],
         ),
         P.OK_JS_BUILD_PRE,
     )
@@ -98,20 +100,69 @@ def task_build():
     yield _ok(
         dict(
             name="js",
-            file_dep=[P.YARN_INTEGRITY, P.OK_JS_BUILD_PRE],
+            file_dep=[P.YARN_INTEGRITY, P.OK_JS_BUILD_PRE, *P.ALL_TS, *P.ALL_CSS],
             actions=[[*P.JLPM, "lerna", "run", "build"]],
+            targets=[P.JDIO_TSBUILD],
         ),
         P.OK_JS_BUILD,
     )
 
-    pack = [*P.JLPM, "lerna", "exec", "--scope"]
-    for scope, (file_dep, target) in P.SCOPE_PACK.items():
+    for pkg, (file_dep, target) in P.PKG_PACK.items():
         yield dict(
-            name=f"pack:{scope}",
+            name=f"pack:{pkg.name}",
             file_dep=file_dep,
-            actions=[[*pack, f"{P.JS_NS}/{scope}", "npm", "pack", "."]],
+            actions=[CmdAction(["npm", "pack", "."], cwd=pkg, shell=False)],
             targets=[target],
         )
+
+
+def task_lab_build():
+    """ do a "production" build of lab
+    """
+
+    def _clean():
+        subprocess.call(["jupyter", "lab", "clean", "--all"])
+        return True
+
+    def _build():
+        return subprocess.call() == 0
+
+    file_dep = [P.JDW_TARBALL, P.JDIO_TARBALL]
+
+    yield dict(
+        name="extensions",
+        file_dep=file_dep,
+        uptodate=[config_changed({"exts": P.EXTENSIONS})],
+        actions=[
+            _clean,
+            [
+                "jupyter",
+                "labextension",
+                "disable",
+                "@jupyterlab/extension-manager-extension",
+            ],
+            ["jupyter", "labextension", "link", "--debug", "--no-build", P.JDW, P.JDIO],
+            [
+                "jupyter",
+                "labextension",
+                "install",
+                "--debug",
+                "--no-build",
+                *P.EXTENSIONS,
+            ],
+            ["jupyter", "labextension", "list"],
+            [
+                "jupyter",
+                "lab",
+                "build",
+                "--debug",
+                "--dev-build=False",
+                "--mimimize=True",
+            ],
+            ["jupyter", "labextension", "list"],
+        ],
+        targets=[P.LAB_INDEX],
+    )
 
 
 def task_lab():

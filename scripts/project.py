@@ -25,7 +25,14 @@ PACKAGE = ROOT / "package.json"
 PACKAGES = ROOT / "packages"
 YARN_INTEGRITY = NODE_MODULES / ".yarn-integrity"
 YARN_LOCK = ROOT / "yarn.lock"
-EXTENSIONS = BINDER / "labextensions.txt"
+EXTENSIONS_FILE = BINDER / "labextensions.txt"
+EXTENSIONS = sorted(
+    [
+        line.strip()
+        for line in EXTENSIONS_FILE.read_text().strip().splitlines()
+        if line and not line.startswith("#")
+    ]
+)
 CI = ROOT / ".github"
 DODO = ROOT / "dodo.py"
 BUILD = ROOT / "build"
@@ -60,11 +67,14 @@ DIST_NBHTML = DIST / "nbsmoke"
 JS_NS = "@deathbeds"
 JDIO = PACKAGES / "jupyterlab-drawio"
 JDIO_SRC = JDIO / "src"
+JDIO_STYLE = JDIO / "style"
 JDIO_TSBUILD = JDIO / "lib" / ".tsbuildinfo"
 JDIO_TARBALL = JDIO / "deathbeds-jupyterlab-drawio-0.7.0.tgz"
 
 JDW = PACKAGES / "jupyterlab-drawio-webpack"
+JDW_APP = JDW / "drawio/src/main/webapp/js/app.min.js"
 JDW_LIB = JDW / "lib"
+JDW_IGNORE = JDW / ".npmignore"
 ALL_JDW_JS = JDW_LIB.glob("*.js")
 JDW_TARBALL = JDW / "deathbeds-jupyterlab-drawio-webpack-13.5.8.tgz"
 
@@ -78,11 +88,12 @@ ALL_JSON = [
 ]
 ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md")]
 ALL_TS = [*JDIO_SRC.rglob("*.ts")]
-ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS]
+ALL_CSS = [*JDIO_STYLE.rglob("*.css")]
+ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS, *ALL_CSS]
 
-SCOPE_PACK = {
-    JDIO.name: [[JDIO / "package.json", JDIO_TSBUILD], JDIO_TARBALL],
-    JDW.name: [[JDW / "package.json", *ALL_JDW_JS], JDW_TARBALL],
+PKG_PACK = {
+    JDIO: [[JDIO / "package.json", JDIO_TSBUILD], JDIO_TARBALL],
+    JDW: [[JDW / "package.json", JDW_IGNORE, JDW_APP, *ALL_JDW_JS], JDW_TARBALL],
 }
 
 

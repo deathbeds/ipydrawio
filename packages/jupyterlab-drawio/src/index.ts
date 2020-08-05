@@ -20,6 +20,8 @@ import { IStatusBar } from '@jupyterlab/statusbar';
 import { Contents } from '@jupyterlab/services';
 import { PathExt } from '@jupyterlab/coreutils';
 
+import '@deathbeds/jupyterlab-drawio-webpack';
+
 import {
   ILayoutRestorer,
   JupyterLab,
