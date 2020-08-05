@@ -11,7 +11,7 @@ DOIT_CONFIG = {"backend": "sqlite3", "verbosity": 2, "par_type": "thread"}
 def task_setup():
     yield dict(
         name="js",
-        file_dep=[P.YARN_LOCK],
+        file_dep=[P.YARN_LOCK, P.PACKAGE],
         actions=[
             [*P.JLPM, "--ignore-optional", "--prefer-offline"],
             [*P.JLPM, "lerna", "bootstrap"],
