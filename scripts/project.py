@@ -2,12 +2,9 @@
 
     this should not import anything not in py36+ stdlib, or any local paths
 """
-import json
 import os
 import platform
-import re
 import sys
-
 from pathlib import Path
 
 # platform
@@ -59,6 +56,7 @@ EXAMPLE_IPYNB = [
 DIST_NBHTML = DIST / "nbsmoke"
 
 # mostly linting
+ALL_PY = [DODO, *SCRIPTS.glob("*.py")]
 ALL_YML = [*ROOT.glob("*.yml"), *CI.rglob("*.yml")]
 ALL_JSON = [*ROOT.glob("*.json")]
 ALL_MD = [*ROOT.glob("*.md")]
@@ -72,6 +70,7 @@ OK_ISORT = BUILD / "isort.ok"
 OK_LINT = BUILD / "lint.ok"
 OK_PYFLAKES = BUILD / "pyflakes.ok"
 OK_PRETTIER = BUILD / "prettier.ok"
+OK_ESLINT = BUILD / "eslint.ok"
 
 # built artifacts
 EXAMPLE_HTML = [DIST_NBHTML / p.name.replace(".ipynb", ".html") for p in EXAMPLE_IPYNB]

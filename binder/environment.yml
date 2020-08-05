@@ -5,11 +5,14 @@ channels:
 
 dependencies:
   - babel
+  - black
   - bqplot
   - doit
   - escapism
+  - flake8
   - httpx
   - ipywidgets
+  - isort <5
   - json-e
   - jupyter-server-proxy
   - jupyterlab >=2.2.0,<3.0.0a0
@@ -20,6 +23,7 @@ dependencies:
   - pandas
   - pillow
   - pip
+  - pyflakes
   - pygraphviz
   - pypdf2
   - python >=3.8,<3.9.0a0

@@ -7,6 +7,7 @@ __pycache__
 *.pdf
 *.sqlite
 *.tgz
+build/
 envs/
 node_modules/
 untitled*

@@ -2,10 +2,7 @@
   "ServerProxy": {
     "servers": {
       "drawio-export-demo": {
-        "command": [
-          "python",
-          "scripts/drawio_export_demo.py"
-        ],
+        "command": ["python", "scripts/drawio_export_demo.py"],
         "environment": {
           "PORT": "{port}"
         },

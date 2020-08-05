@@ -2,10 +2,18 @@
   "private": true,
   "devDependencies": {
     "lerna": "^3.22.1",
-    "prettier": "~2.0.5"
+    "prettier": "~2.0.5",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^7.5.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-prettier": "^3.1.1"
   },
   "scripts": {
-    "bootstrap": "jlpm --prefer-offline && lerna bootstrap"
+    "bootstrap": "jlpm --prefer-offline && lerna bootstrap",
+    "eslint": "eslint --ext .js,.ts --fix packages",
+    "eslint:check": "eslint --ext .js,.ts packages"
   },
   "workspaces": [
     "packages/*"

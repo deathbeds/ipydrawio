@@ -1,11 +1,10 @@
-import subprocess
+import atexit
 import os
+import subprocess
 import sys
 from pathlib import Path
-from jupyterlab.commands import get_app_dir
-import socket
-import atexit
 
+from jupyterlab.commands import get_app_dir
 
 HERE = Path(__file__).parent.resolve()
 APP = HERE.parent / "drawio-export"
@@ -33,7 +32,11 @@ def main():
         env["DRAWIO_SERVER_URL"] = DRAWIO_STATIC.as_uri()
 
     exporter = subprocess.Popen(["jlpm", "start"], cwd=str(APP), env=env)
-    print("Starting drawio-export server\n\t", f"""http://localhost:{env["PORT"]}""", flush=True)
+    print(
+        "Starting drawio-export server\n\t",
+        f"""http://localhost:{env["PORT"]}""",
+        flush=True,
+    )
 
     def stop():
         exporter.terminate()

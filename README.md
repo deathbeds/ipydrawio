@@ -18,6 +18,7 @@
 > for now, see [CONTRIBUTING.md][].
 
 ## Features
+
 - Edit multi-page diagrams as SVG, PNG, or embedded in Jupyter Notebooks
 - Use all stencils and (almost all) plugins on [diagrams.net][drawio]
 
@@ -40,7 +41,7 @@ The copyright holders of drawio is [jgraph](http://www.jgraph.com).
 The original source code vendored in this package is taken from:
 https://github.com/jgraph/drawio
 
-[CONTRIBUTING.md]: ./CONTRIBUTING.md
+[contributing.md]: ./CONTRIBUTING.md
 [jupyterlab]: https://github.com/jupyterlab/jupyterlab
 [drawio]: https://www.diagrams.net
 [quantstack/jupyterlab-drawio]: https://github.com/QuantStack/jupyterlab-drawio
