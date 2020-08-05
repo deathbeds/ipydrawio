@@ -57,8 +57,13 @@ EXAMPLE_IPYNB = [
 DIST_NBHTML = DIST / "nbsmoke"
 
 # js packages
+JS_NS = "@deathbeds"
 JDIO = PACKAGES / "jupyterlab-drawio"
 JDIO_SRC = JDIO / "src"
+JDIO_TSBUILD = JDIO / "lib" / ".tsbuildinfo"
+JDW = PACKAGES / "jupyterlab-drawio-webpack"
+JDW_LIB = JDW / "lib"
+ALL_JDW_JS = JDW_LIB.glob("*.js")
 
 # mostly linting
 ALL_PY = [DODO, *SCRIPTS.glob("*.py")]
@@ -71,6 +76,17 @@ ALL_JSON = [
 ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md")]
 ALL_TS = [*JDIO_SRC.rglob("*.ts")]
 ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS]
+
+SCOPE_PACK = {
+    JDIO.name: [
+        [JDIO / "package.json", JDIO_TSBUILD],
+        JDIO / "deathbeds-jupyterlab-drawio-0.7.0.tgz",
+    ],
+    JDW.name: [
+        [JDW / "package.json", *ALL_JDW_JS],
+        JDW / "deathbeds-jupyterlab-drawio-webpack-13.5.8.tgz",
+    ],
+}
 
 
 # built files

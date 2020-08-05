@@ -104,6 +104,15 @@ def task_build():
         P.OK_JS_BUILD,
     )
 
+    pack = [*P.JLPM, "lerna", "exec", "--scope"]
+    for scope, (file_dep, target) in P.SCOPE_PACK.items():
+        yield dict(
+            name=f"pack:{scope}",
+            file_dep=file_dep,
+            actions=[[*pack, f"{P.JS_NS}/{scope}", "npm", "pack", "."]],
+            targets=[target],
+        )
+
 
 def task_lab():
     """ run JupyterLab "normally" (not watching sources)
