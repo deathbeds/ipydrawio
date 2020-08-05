@@ -98,7 +98,7 @@ def task_build():
     yield _ok(
         dict(
             name="js",
-            file_dep=[P.YARN_INTEGRITY],
+            file_dep=[P.YARN_INTEGRITY, P.OK_JS_BUILD_PRE],
             actions=[[*P.JLPM, "lerna", "run", "build"]],
         ),
         P.OK_JS_BUILD,

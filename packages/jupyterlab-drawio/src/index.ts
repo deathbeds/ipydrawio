@@ -12,56 +12,56 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Token, PromiseDelegate } from "@lumino/coreutils";
-import { Widget } from "@lumino/widgets";
+import { Token, PromiseDelegate } from '@lumino/coreutils';
+import { Widget } from '@lumino/widgets';
 
-import { IStatusBar } from "@jupyterlab/statusbar";
+import { IStatusBar } from '@jupyterlab/statusbar';
 
-import { Contents } from "@jupyterlab/services";
-import { PathExt } from "@jupyterlab/coreutils";
+import { Contents } from '@jupyterlab/services';
+import { PathExt } from '@jupyterlab/coreutils';
 
 import {
   ILayoutRestorer,
   JupyterLab,
   JupyterFrontEndPlugin,
-} from "@jupyterlab/application";
+} from '@jupyterlab/application';
 
 import {
   WidgetTracker,
   IWidgetTracker,
   ICommandPalette,
-} from "@jupyterlab/apputils";
+} from '@jupyterlab/apputils';
 
-import { ISettingRegistry } from "@jupyterlab/settingregistry";
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
 
-import { IFileBrowserFactory } from "@jupyterlab/filebrowser";
+import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
 
-import { ILauncher } from "@jupyterlab/launcher";
+import { ILauncher } from '@jupyterlab/launcher';
 
-import { IMainMenu } from "@jupyterlab/mainmenu";
+import { IMainMenu } from '@jupyterlab/mainmenu';
 
-import { DrawioWidget, DrawioFactory, DEBUG } from "./editor";
+import { DrawioWidget, DrawioFactory, DEBUG } from './editor';
 
-import * as IO from "./io";
-import { DrawioStatus } from "./status";
+import * as IO from './io';
+import { DrawioStatus } from './status';
 
 /**
  * The name of the factory that creates text editor widgets.
  */
-const TEXT_FACTORY = "Drawio";
-const BINARY_FACTORY = "Drawio Image";
-const JSON_FACTORY = "Drawio Notebook";
+const TEXT_FACTORY = 'Drawio';
+const BINARY_FACTORY = 'Drawio Image';
+const JSON_FACTORY = 'Drawio Notebook';
 
 interface IDrawioTracker extends IWidgetTracker<DrawioWidget> {}
 
-export const IDrawioTracker = new Token<IDrawioTracker>("drawio/tracki");
+export const IDrawioTracker = new Token<IDrawioTracker>('drawio/tracki');
 
 /**
  * The editor tracker extension.
  */
 const plugin: JupyterFrontEndPlugin<IDrawioTracker[]> = {
   activate,
-  id: "@deathbeds/jupyterlab-drawio:plugin",
+  id: '@deathbeds/jupyterlab-drawio:plugin',
   requires: [
     IFileBrowserFactory,
     ILayoutRestorer,
@@ -100,9 +100,9 @@ function activate(
 
   if (statusBar) {
     statusItem = new DrawioStatus({ menu });
-    statusBar.registerStatusItem("@deathbeds/jupyterlab-drawio:status", {
+    statusBar.registerStatusItem('@deathbeds/jupyterlab-drawio:status', {
       item: statusItem,
-      align: "right",
+      align: 'right',
       rank: 3,
       isActive: () => isEnabled(),
     });
@@ -112,7 +112,7 @@ function activate(
   for (const format of IO.ALL_FORMATS) {
     app.docRegistry.addFileType({
       name: format.name,
-      contentType: format.contentType || "file",
+      contentType: format.contentType || 'file',
       displayName: format.label,
       mimeTypes: [format.mimetype],
       extensions: [format.ext],
@@ -142,11 +142,13 @@ function activate(
     const tracker = new WidgetTracker<DrawioWidget>({ namespace });
 
     // Handle state restoration.
-    restorer.restore(tracker, {
-      command: "docmanager:open",
-      args: (widget) => ({ path: widget.context.path, factory: name }),
-      name: (widget) => widget.context.path,
-    }).catch(console.warn);
+    restorer
+      .restore(tracker, {
+        command: 'docmanager:open',
+        args: (widget) => ({ path: widget.context.path, factory: name }),
+        name: (widget) => widget.context.path,
+      })
+      .catch(console.warn);
 
     factory.widgetCreated.connect((sender, widget) => {
       statusItem && (statusItem.model.status = `Loading Diagram...`);
@@ -165,15 +167,17 @@ function activate(
       });
 
       // complete initialization once context is ready;
-      widget.context.ready.then(() => {
-        const { mimetype } = widget.context.contentsModel;
-        const icon = IO.EXPORT_MIME_MAP.get(mimetype)?.icon;
-        if (icon != null) {
-          widget.title.icon = icon;
-        }
-        statusItem &&
-          (statusItem.model.status = `${widget.context.path} ready`);
-      }).catch(console.warn);
+      widget.context.ready
+        .then(() => {
+          const { mimetype } = widget.context.contentsModel;
+          const icon = IO.EXPORT_MIME_MAP.get(mimetype)?.icon;
+          if (icon != null) {
+            widget.title.icon = icon;
+          }
+          statusItem &&
+            (statusItem.model.status = `${widget.context.path} ready`);
+        })
+        .catch(console.warn);
 
       // add to tracker
       tracker.add(widget).catch(console.warn);
@@ -201,7 +205,7 @@ function activate(
   settingsRegistry
     .load(plugin.id)
     .then((loadedSettings) => {
-      DEBUG && console.warn("settings loaded", loadedSettings.composite);
+      DEBUG && console.warn('settings loaded', loadedSettings.composite);
       settings = loadedSettings;
       settings.changed.connect(() => settingsChanged());
       settingsChanged();
@@ -211,25 +215,25 @@ function activate(
 
   // create the trackers
   const textTracker = initTracker(
-    "text",
+    'text',
     TEXT_FACTORY,
-    "drawio-text",
+    'drawio-text',
     IO.ALL_TEXT_FORMATS,
     IO.DEFAULT_TEXT_FORMATS
   );
 
   const binaryTracker = initTracker(
-    "base64",
+    'base64',
     BINARY_FACTORY,
-    "drawio-binary",
+    'drawio-binary',
     IO.ALL_BINARY_FORMATS,
     IO.DEFAULT_BINARY_FORMATS
   );
 
   const jsonTracker = initTracker(
-    "notebook",
+    'notebook',
     JSON_FACTORY,
-    "drawio-notebook",
+    'drawio-notebook',
     IO.ALL_JSON_FORMATS,
     IO.DEFAULT_JSON_FORMATS
   );
@@ -264,14 +268,14 @@ function activate(
     statusItem && (statusItem.model.status = `Creating Diagram in ${cwd}...`);
 
     const result = commands
-      .execute("docmanager:new-untitled", {
+      .execute('docmanager:new-untitled', {
         path: cwd,
-        type: "file",
+        type: 'file',
         ext: IO.XML_NATIVE.ext,
       })
       .then((model: Contents.IModel) => {
         statusItem && (statusItem.model.status = `Opening Diagram...`);
-        return commands.execute("docmanager:open", {
+        return commands.execute('docmanager:open', {
           path: model.path,
           factory: TEXT_FACTORY,
         });
@@ -287,7 +291,7 @@ function activate(
     const save = exportFormat.save || String;
     const _exporter = async (cwd: string) => {
       let drawio = app.shell.currentWidget as DrawioWidget;
-      let stem = PathExt.basename(drawio.context.path).replace(/\.dio$/, "");
+      let stem = PathExt.basename(drawio.context.path).replace(/\.dio$/, '');
 
       statusItem &&
         (statusItem.model.status = `Exporting Diagram ${stem} to ${label}...`);
@@ -301,10 +305,10 @@ function activate(
       statusItem && (statusItem.model.status = `${stem} ready, saving...`);
 
       let model: Contents.IModel = await commands.execute(
-        "docmanager:new-untitled",
+        'docmanager:new-untitled',
         {
           path: cwd,
-          type: "file",
+          type: 'file',
           ext,
         }
       );
@@ -331,7 +335,7 @@ function activate(
         .map((f) => f.name);
 
       if (factories.length) {
-        await app.commands.execute("docmanager:open", {
+        await app.commands.execute('docmanager:open', {
           factory: factories[0],
           path: model.path,
         });
@@ -358,7 +362,7 @@ function activate(
   });
 
   // Add a command for creating a new diagram file.
-  commands.addCommand("drawio:create-new", {
+  commands.addCommand('drawio:create-new', {
     label: IO.XML_NATIVE.label,
     icon: IO.drawioIcon,
     caption: `Create a new ${IO.XML_NATIVE.name} file`,
@@ -371,15 +375,15 @@ function activate(
   // Add a launcher item if the launcher is available.
   if (launcher) {
     launcher.add({
-      command: "drawio:create-new",
+      command: 'drawio:create-new',
       rank: 1,
-      category: "Other",
+      category: 'Other',
     });
   }
 
   if (menu) {
     // Add new text file creation to the file menu.
-    menu.fileMenu.newMenu.addGroup([{ command: "drawio:create-new" }], 40);
+    menu.fileMenu.newMenu.addGroup([{ command: 'drawio:create-new' }], 40);
   }
 
   // this is very odd, and probably can't be reused. Use the manager pattern?

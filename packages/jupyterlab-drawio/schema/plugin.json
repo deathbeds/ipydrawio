@@ -643,12 +643,7 @@
     },
     "ui-theme": {
       "type": "string",
-      "enum": [
-        "min",
-        "atlas",
-        "dark",
-        "kennedy"
-      ]
+      "enum": ["min", "atlas", "dark", "kennedy"]
     },
     "off-switch": {
       "type": "number",
@@ -667,12 +662,7 @@
     },
     "url-param-target": {
       "type": "string",
-      "enum": [
-        "auto",
-        "self",
-        "frame",
-        "blank"
-      ]
+      "enum": ["auto", "self", "frame", "blank"]
     },
     "url-param-url-or-blank": {
       "anyOf": [
@@ -682,43 +672,25 @@
         },
         {
           "type": "string",
-          "enum": [
-            "_blank"
-          ]
+          "enum": ["_blank"]
         }
       ]
     },
     "url-param-sync": {
       "type": "string",
-      "enum": [
-        "none",
-        "manual",
-        "auto"
-      ]
+      "enum": ["none", "manual", "auto"]
     },
     "url-param-save": {
       "type": "string",
-      "enum": [
-        "local",
-        "remote"
-      ]
+      "enum": ["local", "remote"]
     },
     "url-param-storage": {
       "type": "string",
-      "enum": [
-        "device"
-      ]
+      "enum": ["device"]
     },
     "url-param-mode": {
       "type": "string",
-      "enum": [
-        "google",
-        "onedrive",
-        "github",
-        "dropobox",
-        "device",
-        "browser"
-      ]
+      "enum": ["google", "onedrive", "github", "dropobox", "device", "browser"]
     }
   }
 }

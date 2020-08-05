@@ -11,44 +11,44 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { PromiseDelegate, ReadonlyPartialJSONObject } from "@lumino/coreutils";
-import { Message } from "@lumino/messaging";
-import { Signal } from "@lumino/signaling";
+import { PromiseDelegate, ReadonlyPartialJSONObject } from '@lumino/coreutils';
+import { Message } from '@lumino/messaging';
+import { Signal } from '@lumino/signaling';
 
-import { PathExt, URLExt, PageConfig } from "@jupyterlab/coreutils";
-import { IFrame } from "@jupyterlab/apputils";
+import { PathExt, URLExt, PageConfig } from '@jupyterlab/coreutils';
+import { IFrame } from '@jupyterlab/apputils';
 import {
   ABCWidgetFactory,
   DocumentRegistry,
   DocumentWidget,
-} from "@jupyterlab/docregistry";
+} from '@jupyterlab/docregistry';
 
-import * as IO from "./io";
+import * as IO from './io';
 
-import "../style/index.css";
+import '../style/index.css';
 
-const STATIC = URLExt.join(PageConfig.getBaseUrl(), "static");
+const STATIC = URLExt.join(PageConfig.getBaseUrl(), 'static');
 
 /**
  * The path on the server to base application HTML, to be served in an iframe
  */
 const DRAWIO_URL = URLExt.join(
   STATIC,
-  "lab",
-  "node_modules/@deathbeds/jupyterlab-drawio-webpack/drawio/src/main/webapp/index.html"
+  'lab',
+  'node_modules/@deathbeds/jupyterlab-drawio-webpack/drawio/src/main/webapp/index.html'
 );
 
 /**
  * Escape hatch for runtime debugging.
  */
-export const DEBUG = window.location.hash.indexOf("DRAWIO_DEBUG") > -1;
+export const DEBUG = window.location.hash.indexOf('DRAWIO_DEBUG') > -1;
 
 /**
  * Core URL params that are required to function properly
  */
 const CORE_EMBED_PARAMS = {
   embed: 1,
-  proto: "json",
+  proto: 'json',
   configure: 1,
 };
 
@@ -56,20 +56,20 @@ const CORE_EMBED_PARAMS = {
  * Additional capabilities to allow to sandbox
  */
 const SANDBOX_EXCEPTIONS: IFrame.SandboxExceptions[] = [
-  "allow-forms",
-  "allow-modals",
-  "allow-orientation-lock",
-  "allow-pointer-lock",
-  "allow-popups",
-  "allow-presentation",
-  "allow-same-origin",
-  "allow-scripts",
-  "allow-top-navigation",
+  'allow-forms',
+  'allow-modals',
+  'allow-orientation-lock',
+  'allow-pointer-lock',
+  'allow-popups',
+  'allow-presentation',
+  'allow-same-origin',
+  'allow-scripts',
+  'allow-top-navigation',
 ];
 
-const DRAWIO_CLASS = "jp-Drawio";
+const DRAWIO_CLASS = 'jp-Drawio';
 
-const READY_CLASS = "jp-Drawio-ready";
+const READY_CLASS = 'jp-Drawio-ready';
 
 /**
  * A document for using offline drawio in an iframe
@@ -80,20 +80,24 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     this.getSettings = options.getSettings;
     this.addClass(DRAWIO_CLASS);
 
-    this.context = options["context"];
+    this.context = options['context'];
 
     this._onTitleChanged();
     this.context.pathChanged.connect(this._onTitleChanged, this);
 
-    this.context.ready.then(() => {
-      this._onContextReady();
-    }).catch(console.warn);
+    this.context.ready
+      .then(() => {
+        this._onContextReady();
+      })
+      .catch(console.warn);
 
-    this.ready.then(() => {
-      this._saveNeedsExport = IO.EXPORT_MIME_MAP.has(
-        this.context.contentsModel.mimetype
-      );
-    }).catch(console.warn);
+    this.ready
+      .then(() => {
+        this._saveNeedsExport = IO.EXPORT_MIME_MAP.has(
+          this.context.contentsModel.mimetype
+        );
+      })
+      .catch(console.warn);
   }
 
   /**
@@ -109,7 +113,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
   exportAs(format: string): Promise<string> {
     this._exportPromise = new PromiseDelegate();
 
-    this.postMessage({ action: "export", format });
+    this.postMessage({ action: 'export', format });
 
     return this._exportPromise.promise;
   }
@@ -124,7 +128,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       this._appChanged.emit(void 0);
     }
 
-    if(this._app) {
+    if (this._app) {
       const file = this._app.getCurrentFile();
       file.sync = new (this._frame.contentWindow as any).DrawioFileSync(file);
       file.sync.start();
@@ -147,22 +151,22 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       return;
     }
 
-    DEBUG && console.warn("drawio message received", msg);
+    DEBUG && console.warn('drawio message received', msg);
 
     switch (msg.event) {
-      case "configure":
+      case 'configure':
         this.configureDrawio();
         break;
-      case "init":
+      case 'init':
         this._onContentChanged();
         break;
-      case "load":
+      case 'load':
         this.app = (this._frame.contentWindow as any).JUPYTERLAB_DRAWIO_APP;
         this._ready.resolve(void 0);
         this._initialLoad = true;
         this.addClass(READY_CLASS);
         break;
-      case "save":
+      case 'save':
         if (this._saveNeedsExport) {
           this.saveWithExport(true);
           break;
@@ -170,7 +174,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
         this._lastEmitted = msg.xml;
         this.save(msg.xml, true);
         break;
-      case "autosave":
+      case 'autosave':
         if (this._saveNeedsExport) {
           this.saveWithExport();
           break;
@@ -178,7 +182,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
         this._lastEmitted = msg.xml;
         this.save(msg.xml);
         break;
-      case "export":
+      case 'export':
         if (this._exportPromise != null) {
           this._exportPromise.resolve(msg.data);
           this._exportPromise = null;
@@ -190,7 +194,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
         }
         break;
       default:
-        DEBUG && console.warn("unhandled message", msg.event, msg);
+        DEBUG && console.warn('unhandled message', msg.event, msg);
         break;
     }
   }
@@ -201,13 +205,15 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
   onAfterShow(msg: Message): void {
     if (this._frame?.contentWindow == null) {
       this._frame = this.content.node.querySelector(
-        "iframe"
+        'iframe'
       ) as HTMLIFrameElement;
-      window.addEventListener("message", (evt) => this.handleMessageEvent(evt));
-      this.revealed.then(() => {
-        DEBUG && console.warn("drawio revealed");
-        this.maybeReloadFrame();
-      }).catch(console.warn);
+      window.addEventListener('message', (evt) => this.handleMessageEvent(evt));
+      this.revealed
+        .then(() => {
+          DEBUG && console.warn('drawio revealed');
+          this.maybeReloadFrame();
+        })
+        .catch(console.warn);
     }
     this.maybeReloadFrame();
   }
@@ -237,7 +243,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     }
     this._saveWithExportPromise = new PromiseDelegate();
     this.postMessage({
-      action: "export",
+      action: 'export',
       format: format.key,
     });
     this._saveWithExportPromise.promise
@@ -264,8 +270,8 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       ...(settingsConfig || {}),
       version: `${+new Date()}`,
     };
-    DEBUG && console.warn("configuring drawio", config);
-    this.postMessage({ action: "configure", config });
+    DEBUG && console.warn('configuring drawio', config);
+    this.postMessage({ action: 'configure', config });
   }
 
   /**
@@ -275,7 +281,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     if (this._frame?.contentWindow == null) {
       return false;
     }
-    this._frame.contentWindow.postMessage(JSON.stringify(msg), "*");
+    this._frame.contentWindow.postMessage(JSON.stringify(msg), '*');
     return true;
   }
 
@@ -296,16 +302,16 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     for (const p in params) {
       query.append(p, (params as any)[p]);
     }
-    const url = DRAWIO_URL + "?" + query.toString();
+    const url = DRAWIO_URL + '?' + query.toString();
 
     if (force || this.content.url !== url) {
-      DEBUG && console.warn("configuring iframe", params);
+      DEBUG && console.warn('configuring iframe', params);
       this.removeClass(READY_CLASS);
       this.content.url = url;
       this._initialLoad = false;
       this._frame.onload = () => {
         this._frame.contentDocument.body.onclick = () => {
-          DEBUG && console.warn("click");
+          DEBUG && console.warn('click');
           this._frameClicked.emit(void 0);
         };
       };
@@ -329,7 +335,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     const { mimetype } = this.context.contentsModel;
     let format = IO.EXPORT_MIME_MAP.get(mimetype);
     if (format == null) {
-      if (this.context.contentsModel.type === "notebook") {
+      if (this.context.contentsModel.type === 'notebook') {
         return IO.IPYNB_EDITABLE;
       }
     }
@@ -346,7 +352,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     const { model, contentsModel } = this.context;
     const { format } = this;
 
-    let xml: string = "";
+    let xml: string = '';
 
     if (format?.toXML) {
       xml = format.toXML(model);
@@ -358,13 +364,13 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       return;
     }
 
-    if (contentsModel.format === "base64") {
+    if (contentsModel.format === 'base64') {
       xml = `data:${contentsModel.mimetype};base64,${xml}`;
     }
 
     if (!this._initialLoad) {
       this.postMessage({
-        action: "load",
+        action: 'load',
         autosave: 1,
         noSaveBtn: 1,
         noExitBtn: 1,
@@ -372,7 +378,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       });
     } else {
       this.postMessage({
-        action: "merge",
+        action: 'merge',
         xml,
       });
     }

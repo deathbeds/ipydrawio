@@ -22,6 +22,7 @@ BINDER = ROOT / "binder"
 # top-level stuff
 NODE_MODULES = ROOT / "node_modules"
 PACKAGE = ROOT / "package.json"
+PACKAGES = ROOT / "packages"
 YARN_INTEGRITY = NODE_MODULES / ".yarn-integrity"
 YARN_LOCK = ROOT / "yarn.lock"
 EXTENSIONS = BINDER / "labextensions.txt"
@@ -55,12 +56,21 @@ EXAMPLE_IPYNB = [
 ]
 DIST_NBHTML = DIST / "nbsmoke"
 
+# js packages
+JDIO = PACKAGES / "jupyterlab-drawio"
+JDIO_SRC = JDIO / "src"
+
 # mostly linting
 ALL_PY = [DODO, *SCRIPTS.glob("*.py")]
 ALL_YML = [*ROOT.glob("*.yml"), *CI.rglob("*.yml")]
-ALL_JSON = [*ROOT.glob("*.json")]
-ALL_MD = [*ROOT.glob("*.md")]
-ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD]
+ALL_JSON = [
+    *ROOT.glob("*.json"),
+    *PACKAGES.glob("*/*.json"),
+    *PACKAGES.glob("*/schema/*.json"),
+]
+ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md")]
+ALL_TS = [*JDIO_SRC.rglob("*.ts")]
+ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS]
 
 
 # built files

@@ -1,16 +1,16 @@
-import { Contents } from "@jupyterlab/services";
+import { Contents } from '@jupyterlab/services';
 
-import { LabIcon } from "@jupyterlab/ui-components";
+import { LabIcon } from '@jupyterlab/ui-components';
 
-import DRAWIO_ICON_SVG from "../style/img/drawio.svg";
-import { DrawioWidget } from "./editor";
-import { ReadonlyPartialJSONObject } from "@lumino/coreutils";
-import { PageConfig } from "@jupyterlab/coreutils";
-import { ISettingRegistry } from "@jupyterlab/settingregistry";
-import { DocumentRegistry } from "@jupyterlab/docregistry";
-import { NotebookModel } from "@jupyterlab/notebook";
+import DRAWIO_ICON_SVG from '../style/img/drawio.svg';
+import { DrawioWidget } from './editor';
+import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
+import { PageConfig } from '@jupyterlab/coreutils';
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
+import { DocumentRegistry } from '@jupyterlab/docregistry';
+import { NotebookModel } from '@jupyterlab/notebook';
 
-export const DRAWIO_METADATA = "@deathbeds/jupyterlab-drawio";
+export const DRAWIO_METADATA = '@deathbeds/jupyterlab-drawio';
 
 export interface IDrawioFormat {
   key: string;
@@ -36,104 +36,104 @@ export interface IDrawioFormat {
 const iconRegEx = /jp-icon-warn0/;
 
 export const drawioIcon = new LabIcon({
-  name: "drawio:drawio",
+  name: 'drawio:drawio',
   svgstr: DRAWIO_ICON_SVG,
 });
 
 export const drawioSvgIcon = new LabIcon({
-  name: "drawio:svg",
-  svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, "jp-icon-contrast1"),
+  name: 'drawio:svg',
+  svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, 'jp-icon-contrast1'),
 });
 
 export const drawioPngIcon = new LabIcon({
-  name: "drawio:png",
-  svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, "jp-icon-contrast0"),
+  name: 'drawio:png',
+  svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, 'jp-icon-contrast0'),
 });
 
 export const drawioPdfIcon = new LabIcon({
-  name: "drawio:pdf",
-  svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, "jp-icon-contrast2"),
+  name: 'drawio:pdf',
+  svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, 'jp-icon-contrast2'),
 });
 
 export const drawioIpynbIcon = new LabIcon({
-  name: "drawio:ipynb",
-  svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, "jp-icon-contrast3"),
+  name: 'drawio:ipynb',
+  svgstr: DRAWIO_ICON_SVG.replace(iconRegEx, 'jp-icon-contrast3'),
 });
 
-const stripDataURI = (raw: string) => raw.split(",")[1];
+const stripDataURI = (raw: string) => raw.split(',')[1];
 
 const unbase64SVG = (raw: string) => atob(stripDataURI(raw));
 
 export const XML_NATIVE: IDrawioFormat = {
-  ext: ".dio",
-  format: "text",
+  ext: '.dio',
+  format: 'text',
   icon: drawioIcon,
-  key: "drawio",
-  label: "Diagram",
-  mimetype: "application/dio",
-  name: "dio",
+  key: 'drawio',
+  label: 'Diagram',
+  mimetype: 'application/dio',
+  name: 'dio',
 };
 
 export const XML_LEGACY: IDrawioFormat = {
-  ext: ".drawio",
-  format: "text",
+  ext: '.drawio',
+  format: 'text',
   icon: drawioIcon,
-  key: "dio",
-  label: "Diagram (mxgraph)",
-  mimetype: "application/mxgraph",
-  name: "dio-legacy",
+  key: 'dio',
+  label: 'Diagram (mxgraph)',
+  mimetype: 'application/mxgraph',
+  name: 'dio-legacy',
 };
 
 export const SVG_PLAIN: IDrawioFormat = {
-  ext: ".svg",
-  format: "text",
+  ext: '.svg',
+  format: 'text',
   icon: drawioSvgIcon,
-  key: "svg",
-  label: "SVG",
-  mimetype: "image/svg+xml",
-  name: "svg",
+  key: 'svg',
+  label: 'SVG',
+  mimetype: 'image/svg+xml',
+  name: 'svg',
   save: unbase64SVG,
 };
 
 export const SVG_EDITABLE: IDrawioFormat = {
   ...SVG_PLAIN,
-  ext: ".dio.svg",
-  key: "xmlsvg",
-  label: "SVG (Editable)",
-  name: "diosvg",
-  pattern: "^.*.dio.svg$",
+  ext: '.dio.svg',
+  key: 'xmlsvg',
+  label: 'SVG (Editable)',
+  name: 'diosvg',
+  pattern: '^.*.dio.svg$',
 };
 
 export const PNG_PLAIN: IDrawioFormat = {
-  ext: ".png",
-  format: "base64",
+  ext: '.png',
+  format: 'base64',
   icon: drawioPngIcon,
-  key: "png",
-  label: "PNG",
-  mimetype: "image/png",
-  name: "png",
+  key: 'png',
+  label: 'PNG',
+  mimetype: 'image/png',
+  name: 'png',
   save: stripDataURI,
 };
 
 export const PNG_EDITABLE: IDrawioFormat = {
   ...PNG_PLAIN,
-  ext: ".dio.png",
-  key: "xmlpng",
-  label: "PNG (Editable)",
-  name: "diopng",
-  pattern: "^.*.dio.png$",
+  ext: '.dio.png',
+  key: 'xmlpng',
+  label: 'PNG (Editable)',
+  name: 'diopng',
+  pattern: '^.*.dio.png$',
 };
 
 export const IPYNB_EDITABLE: IDrawioFormat = {
-  ext: ".dio.ipynb",
-  key: "ipynb",
-  format: "json",
+  ext: '.dio.ipynb',
+  key: 'ipynb',
+  format: 'json',
   icon: drawioIpynbIcon,
-  label: "Diagram Notebook",
-  mimetype: "application/x-ipynb+json",
-  name: "dionotebook",
-  pattern: ".*.dio.ipynb$",
-  contentType: "notebook",
+  label: 'Diagram Notebook',
+  mimetype: 'application/x-ipynb+json',
+  name: 'dionotebook',
+  pattern: '.*.dio.ipynb$',
+  contentType: 'notebook',
   fromXML: (model: NotebookModel, xml) => {
     const meta = model.metadata.get(
       DRAWIO_METADATA
@@ -144,27 +144,27 @@ export const IPYNB_EDITABLE: IDrawioFormat = {
     const meta = model.metadata.get(
       DRAWIO_METADATA
     ) as ReadonlyPartialJSONObject;
-    return meta?.xml ? `${meta.xml}` : "";
+    return meta?.xml ? `${meta.xml}` : '';
   },
 };
 
 export const PDF_PLAIN: IDrawioFormat = {
-  ext: ".pdf",
-  format: "base64",
+  ext: '.pdf',
+  format: 'base64',
   icon: drawioPdfIcon,
-  key: "pdf",
-  label: "PDF",
-  mimetype: "application/pdf",
-  name: "pdf",
+  key: 'pdf',
+  label: 'PDF',
+  mimetype: 'application/pdf',
+  name: 'pdf',
   save: stripDataURI,
   exporter: async (widget, key, settings) => {
-    let drawioExportUrl = "./drawio-export-demo";
+    let drawioExportUrl = './drawio-export-demo';
     try {
-      drawioExportUrl = (settings.composite["drawioExportDemo"] as any)["url"];
+      drawioExportUrl = (settings.composite['drawioExportDemo'] as any)['url'];
     } catch (err) {
       console.warn(err);
     }
-    if (drawioExportUrl.indexOf("./") !== 0) {
+    if (drawioExportUrl.indexOf('./') !== 0) {
       console.error(`don't know how to handle non-relative URLs`);
       return;
     }
@@ -175,15 +175,15 @@ export const PDF_PLAIN: IDrawioFormat = {
       : widget.context.model.toString();
 
     let url = `${PageConfig.getBaseUrl()}${drawioExportUrl.slice(2)}`;
-    url += url.endsWith("/") ? "" : "/";
+    url += url.endsWith('/') ? '' : '/';
     const query = new URLSearchParams();
-    query.append("xml", xml);
-    query.append("format", "pdf");
-    query.append("base64", "1");
+    query.append('xml', xml);
+    query.append('format', 'pdf');
+    query.append('base64', '1');
 
     const response = await fetch(`${url}?token=${PageConfig.getToken()}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: query.toString(),
     });
 
@@ -195,7 +195,7 @@ export const PDF_PLAIN: IDrawioFormat = {
 
 export const PDF_BRANDED = {
   ...PDF_PLAIN,
-  ext: ".dio.pdf",
+  ext: '.dio.pdf',
 };
 
 export const EXPORT_FORMATS = [
