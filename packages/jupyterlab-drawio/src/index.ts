@@ -96,7 +96,7 @@ function activate(
 ): IDrawioTracker[] {
   const { commands } = app;
 
-  let statusItem: DrawioStatus = null;
+  let statusItem: DrawioStatus | null = null;
 
   if (statusBar) {
     statusItem = new DrawioStatus({ menu });
@@ -169,6 +169,10 @@ function activate(
       // complete initialization once context is ready;
       widget.context.ready
         .then(() => {
+          if (widget.context.contentsModel == null) {
+            console.warn('widget not ready');
+            return;
+          }
           const { mimetype } = widget.context.contentsModel;
           const icon = IO.EXPORT_MIME_MAP.get(mimetype)?.icon;
           if (icon != null) {
@@ -248,7 +252,7 @@ function activate(
         return false;
       }
 
-      const tracked: Widget[] = [
+      const tracked: (Widget | null)[] = [
         textTracker.currentWidget,
         binaryTracker.currentWidget,
         jsonTracker.currentWidget,
@@ -316,12 +320,14 @@ function activate(
       const newPath = PathExt.join(cwd, `${stem}-${+new Date()}${ext}`);
       model = await app.serviceManager.contents.rename(model.path, newPath);
 
-      await app.serviceManager.contents.save(model.path, {
-        ...model,
-        format,
-        mimetype,
-        content: save(rawContent),
-      });
+      if (rawContent != null) {
+        await app.serviceManager.contents.save(model.path, {
+          ...model,
+          format,
+          mimetype,
+          content: save(rawContent),
+        });
+      }
 
       statusItem &&
         (statusItem.model.status = `${stem} ${label} saved as ${PathExt.basename(

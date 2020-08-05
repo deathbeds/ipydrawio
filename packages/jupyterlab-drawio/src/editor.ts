@@ -93,9 +93,9 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
 
     this.ready
       .then(() => {
-        this._saveNeedsExport = IO.EXPORT_MIME_MAP.has(
-          this.context.contentsModel.mimetype
-        );
+        this._saveNeedsExport =
+          this.context.contentsModel?.mimetype != null &&
+          IO.EXPORT_MIME_MAP.has(this.context.contentsModel.mimetype);
       })
       .catch(console.warn);
   }
@@ -202,7 +202,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
   /**
    * Install the message listener, the first time, and potentially reload the frame
    */
-  onAfterShow(msg: Message): void {
+  onAfterShow(msg?: Message): void {
     if (this._frame?.contentWindow == null) {
       this._frame = this.content.node.querySelector(
         'iframe'
@@ -235,6 +235,10 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
    * Handle round-tripping to formats that require an export
    */
   private saveWithExport(hardSave: boolean = false) {
+    if (this.context.contentsModel == null) {
+      console.warn('cannot save without context');
+      return;
+    }
     const { mimetype } = this.context.contentsModel;
     const { format } = this;
     if (format?.save == null) {
@@ -248,6 +252,10 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     });
     this._saveWithExportPromise.promise
       .then((raw) => {
+        if (format?.save == null) {
+          console.warn('format cannot save', format);
+          return;
+        }
         const stripped = format.save(raw);
         if (stripped === this._lastEmitted) {
           return;
@@ -310,6 +318,10 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       this.content.url = url;
       this._initialLoad = false;
       this._frame.onload = () => {
+        if (this._frame.contentDocument == null) {
+          console.warn('contentDocument not ready');
+          return;
+        }
         this._frame.contentDocument.body.onclick = () => {
           DEBUG && console.warn('click');
           this._frameClicked.emit(void 0);
@@ -321,7 +333,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
   private _onContextReady(): void {
     this.context.model.contentChanged.connect(this._onContentChanged, this);
     this._onContentChanged();
-    this.onAfterShow(null);
+    this.onAfterShow();
   }
 
   /**
@@ -331,7 +343,10 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     this.title.label = PathExt.basename(this.context.localPath);
   }
 
-  get format(): IO.IDrawioFormat {
+  get format(): IO.IDrawioFormat | null {
+    if (this.context.contentsModel == null) {
+      return null;
+    }
     const { mimetype } = this.context.contentsModel;
     let format = IO.EXPORT_MIME_MAP.get(mimetype);
     if (format == null) {
@@ -339,7 +354,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
         return IO.IPYNB_EDITABLE;
       }
     }
-    return format;
+    return format || null;
   }
 
   /**
@@ -360,7 +375,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       xml = model.toString();
     }
 
-    if (xml === this._lastEmitted) {
+    if (xml === this._lastEmitted || contentsModel == null) {
       return;
     }
 
@@ -401,8 +416,8 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
   protected getSettings: ISettingsGetter;
   private _initialLoad = false;
   private _ready = new PromiseDelegate<void>();
-  private _exportPromise: PromiseDelegate<string>;
-  private _saveWithExportPromise: PromiseDelegate<string>;
+  private _exportPromise: PromiseDelegate<string> | null;
+  private _saveWithExportPromise: PromiseDelegate<string> | null;
   private _frame: HTMLIFrameElement;
   private _lastEmitted: string;
   private _saveNeedsExport: boolean;

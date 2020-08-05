@@ -30,7 +30,7 @@ export interface IDrawioFormat {
     drawio: DrawioWidget,
     key: string,
     settings: ISettingRegistry.ISettings
-  ) => Promise<string>;
+  ) => Promise<string | null>;
 }
 
 const iconRegEx = /jp-icon-warn0/;
@@ -166,7 +166,7 @@ export const PDF_PLAIN: IDrawioFormat = {
     }
     if (drawioExportUrl.indexOf('./') !== 0) {
       console.error(`don't know how to handle non-relative URLs`);
-      return;
+      return null;
     }
     const currentFormat = widget.format;
 
