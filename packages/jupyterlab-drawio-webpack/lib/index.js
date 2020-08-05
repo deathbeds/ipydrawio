@@ -13,7 +13,9 @@
 // limitations under the License.
 const plugin = {
   id: "@deathbeds/jupyterlab-drawio-webpack:plugin",
-  activate: () => {}
+  activate: () => {
+    console.log(plugin.id, 'activated');
+  }
 };
 
 /**

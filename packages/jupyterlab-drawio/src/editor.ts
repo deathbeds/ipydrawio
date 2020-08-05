@@ -87,13 +87,13 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
 
     this.context.ready.then(() => {
       this._onContextReady();
-    });
+    }).catch(console.warn);
 
     this.ready.then(() => {
       this._saveNeedsExport = IO.EXPORT_MIME_MAP.has(
         this.context.contentsModel.mimetype
       );
-    });
+    }).catch(console.warn);
   }
 
   /**
@@ -207,7 +207,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       this.revealed.then(() => {
         DEBUG && console.warn("drawio revealed");
         this.maybeReloadFrame();
-      });
+      }).catch(console.warn);
     }
     this.maybeReloadFrame();
   }
@@ -221,7 +221,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
     }
 
     if (hardSave) {
-      this.context.save();
+      this.context.save().catch(console.warn);
     }
   }
 

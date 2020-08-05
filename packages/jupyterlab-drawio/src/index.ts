@@ -146,7 +146,7 @@ function activate(
       command: "docmanager:open",
       args: (widget) => ({ path: widget.context.path, factory: name }),
       name: (widget) => widget.context.path,
-    });
+    }).catch(console.warn);
 
     factory.widgetCreated.connect((sender, widget) => {
       statusItem && (statusItem.model.status = `Loading Diagram...`);
@@ -173,10 +173,10 @@ function activate(
         }
         statusItem &&
           (statusItem.model.status = `${widget.context.path} ready`);
-      });
+      }).catch(console.warn);
 
       // add to tracker
-      tracker.add(widget);
+      tracker.add(widget).catch(console.warn);
     });
     app.docRegistry.addWidgetFactory(factory);
 
