@@ -71,6 +71,8 @@ OK_LINT = BUILD / "lint.ok"
 OK_PYFLAKES = BUILD / "pyflakes.ok"
 OK_PRETTIER = BUILD / "prettier.ok"
 OK_ESLINT = BUILD / "eslint.ok"
+OK_JS_BUILD_PRE = BUILD / "js.build.pre.ok"
+OK_JS_BUILD = BUILD / "js.build.ok"
 
 # built artifacts
 EXAMPLE_HTML = [DIST_NBHTML / p.name.replace(".ipynb", ".html") for p in EXAMPLE_IPYNB]

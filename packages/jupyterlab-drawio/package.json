@@ -42,7 +42,7 @@
     "url": "https://github.com/deathbeds/jupyterlab-drawio.git"
   },
   "scripts": {
-    "build": "python scripts/patch.py && tsc",
+    "build": "tsc",
     "clean": "rimraf lib",
     "watch": "python scripts/patch.py && tsc -w"
   },

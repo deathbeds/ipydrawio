@@ -86,10 +86,22 @@ def task_lint():
 
 
 def task_build():
-    yield dict(
-        name="js",
-        file_dep=[P.YARN_INTEGRITY],
-        actions=[[*P.JLPM, "lerna", "run", "build"]],
+    yield _ok(
+        dict(
+            name="js:pre",
+            file_dep=[P.YARN_INTEGRITY],
+            actions=[[*P.JLPM, "lerna", "run", "build:pre"]],
+        ),
+        P.OK_JS_BUILD_PRE,
+    )
+
+    yield _ok(
+        dict(
+            name="js",
+            file_dep=[P.YARN_INTEGRITY],
+            actions=[[*P.JLPM, "lerna", "run", "build"]],
+        ),
+        P.OK_JS_BUILD,
     )
 
 

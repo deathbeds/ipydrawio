@@ -22,6 +22,7 @@
       "url": "https://github.com/deathbeds/jupyterlab-drawio.git"
     },
     "scripts": {
+      "build:pre": "python scripts/patch.py"
     },
     "types": "lib/index.d.ts",
     "version": "13.5.8"
