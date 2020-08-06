@@ -6,7 +6,10 @@ from doit.tools import PythonInteractiveAction, config_changed
 import scripts.project as P
 
 DOIT_CONFIG = dict(
-    backend="sqlite3", verbosity=2, par_type="thread", default_tasks=["lab_build"]
+    backend="sqlite3",
+    verbosity=2,
+    par_type="thread",
+    default_tasks=["lab_build:extensions"],
 )
 
 
@@ -159,7 +162,7 @@ def task_lab_build():
                 "build",
                 "--debug",
                 "--dev-build=False",
-                "--mimimize=True",
+                "--minimize=True",
             ],
             ["jupyter", "labextension", "list"],
         ],

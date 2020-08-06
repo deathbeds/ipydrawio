@@ -7,7 +7,6 @@
     This file generated from https://github.com/jgraph/drawio
 */
 
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/.gitignore';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/LICENSE';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/VERSION';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/about.html';
@@ -119,7 +118,6 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/logo-small.gif';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/logo-white.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/logo.png';
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/manifest.json';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/move.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/mstile-150x150.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/my-diagrams-sel.svg';
@@ -1439,7 +1437,6 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/orgchart/mxOrgChartLayout.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/orgchart.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/rough/rough.js.modified';
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/rough/rough.js.orig';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/rough/rough.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/sanitizer/sanitizer.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/shapes.min.js';
@@ -1447,11 +1444,8 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/stencils.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/viewer-static.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/viewer.min.js';
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/.npmignore';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/LICENSE';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/MathJax.js';
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/bower.json';
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/composer.json';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/config/AM_HTMLorMML-full.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/config/AM_HTMLorMML.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/config/Accessible-full.js';
@@ -1885,7 +1879,6 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/jax/output/SVG/fonts/TeX/fontdata.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/jax/output/SVG/jax.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/latest.js';
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/math/package.json';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/mxgraph/css/common.css';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/mxgraph/css/explorer.css';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/mxgraph/images/button.gif';
@@ -1914,7 +1907,6 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/newDiagramCats/index.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/offline.html';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/open.html';
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/package.json';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/animation.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/anonymize.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/plugins/cConf-1-4-8.js';
@@ -2685,4 +2677,3 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/templates/wireframes/home_page_hero_video_1.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/templates/wireframes/home_page_hero_video_1.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/vsdxImporter.html';
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/well-known/microsoft-identity-association.json';

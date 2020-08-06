@@ -38,12 +38,9 @@ def update_static():
 
     for path in sorted(DRAWIO.rglob("*")):
         if path.is_dir():
-            print("d", end="", flush=True)
             continue
         if is_ignored(path):
-            print("i", end="", flush=True)
             continue
-        print("+", end="", flush=True)
         lines += [TMPL.format(str(path).replace(str(DRAWIO), "")).strip()]
 
     assert lines

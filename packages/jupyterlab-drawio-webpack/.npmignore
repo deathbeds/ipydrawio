@@ -1,12 +1,12 @@
 *.tgz
 **/.ipynb_checkpoints
-drawio/.git
-drawio/.github/*
+drawio/.git*
 drawio/.travis.yml
 drawio/*.md
 drawio/ChangeLog
 drawio/etc/*
-
+drawio/*/*.orig
+drawio/*/*.json
 drawio/src/main/java/*
 drawio/src/main/webapp/connect/*
 drawio/src/main/webapp/js/diagramly/*
@@ -19,3 +19,4 @@ drawio/src/main/webapp/META-INF/*
 drawio/src/main/webapp/yarn.lock
 drawio/src/main/webapp/math/.travis.yml
 scripts/*
+drawio/*/.npmignore

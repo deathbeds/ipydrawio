@@ -8,7 +8,6 @@ dependencies:
   - black
   - bqplot
   - doit
-  - escapism
   - flake8
   - httpx
   - ipywidgets
@@ -32,4 +31,3 @@ dependencies:
   - tabulate
   - pip:
     - graphviz2drawio
-    - jupyter_videochat
