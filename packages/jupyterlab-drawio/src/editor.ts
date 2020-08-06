@@ -307,10 +307,16 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       ...(settingsUrlParams || {}),
       ...CORE_EMBED_PARAMS,
     };
+    // [p]lugins should not be URL encoded
+    let plugins: string[] = [];
     for (const p in params) {
+      if (p == 'p') {
+        plugins = (params as any)[p];
+        continue;
+      }
       query.append(p, (params as any)[p]);
     }
-    const url = DRAWIO_URL + '?' + query.toString();
+    const url = DRAWIO_URL + '?' + query.toString() + `p=${plugins}`;
 
     if (force || this.content.url !== url) {
       DEBUG && console.warn('configuring iframe', params);
