@@ -1,4 +1,12 @@
 {
+  "LabApp": {
+    "tornado_settings": {
+      "page_config_data": {
+        "buildCheck": false,
+        "buildAvailable": false
+      }
+    }
+  },
   "ServerProxy": {
     "servers": {
       "drawio-export-demo": {

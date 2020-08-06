@@ -5,7 +5,9 @@ from doit.tools import PythonInteractiveAction, config_changed
 
 import scripts.project as P
 
-DOIT_CONFIG = {"backend": "sqlite3", "verbosity": 2, "par_type": "thread"}
+DOIT_CONFIG = dict(
+    backend="sqlite3", verbosity=2, par_type="thread", default_tasks=["lab_build"]
+)
 
 
 def task_setup():
@@ -90,7 +92,7 @@ def task_build():
     yield _ok(
         dict(
             name="js:pre",
-            file_dep=[P.YARN_INTEGRITY],
+            file_dep=[P.YARN_INTEGRITY, P.JDW_IGNORE],
             actions=[[*P.JLPM, "lerna", "run", "build:pre"]],
             targets=[P.JDW_APP],
         ),
@@ -187,6 +189,34 @@ def task_lab():
         uptodate=[lambda: False],
         file_dep=[P.LAB_INDEX],
         actions=[PythonInteractiveAction(lab)],
+    )
+
+
+def task_watch():
+    def watch():
+        jlpm_proc = subprocess.Popen(["jlpm", "watch"], cwd=P.JDIO)
+
+        lab_proc = subprocess.Popen(
+            ["jupyter", "lab", "--no-browser", "--debug", "--watch"],
+            stdin=subprocess.PIPE,
+        )
+
+        try:
+            lab_proc.wait()
+        except KeyboardInterrupt:
+            print("attempting to stop lab, you may want to check your process monitor")
+            lab_proc.terminate()
+            lab_proc.communicate(b"y\n")
+        finally:
+            jlpm_proc.terminate()
+
+        lab_proc.wait()
+        jlpm_proc.wait()
+
+    return dict(
+        uptodate=[lambda: False],
+        file_dep=[P.LAB_INDEX],
+        actions=[PythonInteractiveAction(watch)],
     )
 
 

@@ -44,7 +44,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rimraf lib",
-    "watch": "python scripts/patch.py && tsc -w"
+    "watch": "tsc -w"
   },
   "types": "lib/index.d.ts",
   "version": "0.7.0"
