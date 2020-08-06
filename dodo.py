@@ -1,3 +1,4 @@
+import shutil
 import subprocess
 
 from doit.action import CmdAction
@@ -13,10 +14,30 @@ DOIT_CONFIG = dict(
 )
 
 
+def task_submodules():
+    """ ensure submodules are available
+    """
+    subs = subprocess.check_output(["git", "submodule"]).decode("utf-8").splitlines()
+
+    def _clean():
+        """ clean drawio, as it gets patched in-place
+        """
+        if any([x.startswith("-") for x in subs]) and P.DRAWIO.exists():
+            shutil.rmtree(P.DRAWIO)
+
+    return _ok(
+        dict(
+            uptodate=[config_changed({"subs": subs})],
+            actions=[_clean, ["git", "submodule", "update", "--init", "--recursive"]],
+        ),
+        P.OK_SUBMODULES,
+    )
+
+
 def task_setup():
     yield dict(
         name="js",
-        file_dep=[P.YARN_LOCK, P.PACKAGE],
+        file_dep=[P.YARN_LOCK, P.PACKAGE, P.OK_SUBMODULES],
         actions=[
             [*P.JLPM, "--ignore-optional", "--prefer-offline"],
             [*P.JLPM, "lerna", "bootstrap"],
@@ -95,7 +116,7 @@ def task_build():
     yield _ok(
         dict(
             name="js:pre",
-            file_dep=[P.YARN_INTEGRITY, P.JDW_IGNORE],
+            file_dep=[P.YARN_INTEGRITY, P.JDW_IGNORE, P.OK_SUBMODULES],
             actions=[[*P.JLPM, "lerna", "run", "build:pre"]],
             targets=[P.JDW_APP],
         ),

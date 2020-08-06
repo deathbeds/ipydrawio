@@ -73,6 +73,7 @@ JDIO_TARBALL = JDIO / "deathbeds-jupyterlab-drawio-0.7.0.tgz"
 
 JDW = PACKAGES / "jupyterlab-drawio-webpack"
 JDW_APP = JDW / "drawio/src/main/webapp/js/app.min.js"
+DRAWIO = JDW / "drawio"
 JDW_LIB = JDW / "lib"
 JDW_IGNORE = JDW / ".npmignore"
 ALL_JDW_JS = JDW_LIB.glob("*.js")
@@ -98,6 +99,7 @@ PKG_PACK = {
 
 
 # built files
+OK_SUBMODULES = BUILD / "submodules.ok"
 OK_BLACK = BUILD / "black.ok"
 OK_FLAKE8 = BUILD / "flake8.ok"
 OK_ISORT = BUILD / "isort.ok"
