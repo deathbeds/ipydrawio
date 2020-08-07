@@ -128,11 +128,12 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       this._appChanged.emit(void 0);
     }
 
-    if (this._app) {
-      const file = this._app.getCurrentFile();
-      file.sync = new (this._frame.contentWindow as any).DrawioFileSync(file);
-      file.sync.start();
-    }
+    // TODO: restore as real feature
+    // if (this._app) {
+    //   const file = this._app.getCurrentFile();
+    //   file.sync = new (this._frame.contentWindow as any).DrawioFileSync(file);
+    //   file.sync.start();
+    // }
   }
 
   get appChanged() {

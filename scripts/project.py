@@ -2,6 +2,7 @@
 
     this should not import anything not in py36+ stdlib, or any local paths
 """
+import json
 import os
 import platform
 import shutil
@@ -74,17 +75,23 @@ DIST_NBHTML = DIST / "nbsmoke"
 JS_NS = "@deathbeds"
 JDIO = PACKAGES / "jupyterlab-drawio"
 JDIO_SRC = JDIO / "src"
+JDIO_PKG = JDIO / "package.json"
+JDIO_PKG_DATA = json.loads(JDIO_PKG.read_text(encoding="utf-8"))
 JDIO_STYLE = JDIO / "style"
 JDIO_TSBUILD = JDIO / "lib" / ".tsbuildinfo"
-JDIO_TARBALL = JDIO / "deathbeds-jupyterlab-drawio-0.7.0.tgz"
+JDIO_TARBALL = JDIO / f"""deathbeds-jupyterlab-drawio-{JDIO_PKG_DATA["version"]}.tgz"""
 
 JDW = PACKAGES / "jupyterlab-drawio-webpack"
 JDW_APP = JDW / "drawio/src/main/webapp/js/app.min.js"
+JDW_PKG = JDIO / "package.json"
+JDW_PKG_DATA = json.loads(JDW_PKG.read_text(encoding="utf-8"))
 DRAWIO = JDW / "drawio"
 JDW_LIB = JDW / "lib"
 JDW_IGNORE = JDW / ".npmignore"
 ALL_JDW_JS = JDW_LIB.glob("*.js")
-JDW_TARBALL = JDW / "deathbeds-jupyterlab-drawio-webpack-13.5.8.tgz"
+JDW_TARBALL = (
+    JDW / f"""deathbeds-jupyterlab-drawio-webpack-{JDW_PKG_DATA["version"]}.tgz"""
+)
 
 # mostly linting
 ALL_PY = [DODO, *SCRIPTS.glob("*.py")]
