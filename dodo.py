@@ -137,7 +137,7 @@ def task_build():
         yield dict(
             name=f"pack:{pkg.name}",
             file_dep=file_dep,
-            actions=[CmdAction(["npm", "pack", "."], cwd=pkg, shell=False)],
+            actions=[CmdAction([P.NPM, "pack", "."], cwd=pkg, shell=False)],
             targets=[target],
         )
 

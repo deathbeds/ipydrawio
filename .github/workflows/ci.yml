@@ -22,9 +22,11 @@ jobs:
           - macos-latest
           - windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
 
-      - uses: actions/cache@v1
+      - name: cache (yarn)
+        uses: actions/cache@v1
         with:
           path: .yarn-packages
           key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
@@ -32,25 +34,29 @@ jobs:
             yarn-${{ runner.os }}-
             yarn-
 
-      - uses: goanpeca/setup-miniconda@v1.6.0
+      - name: install (conda)
+        uses: goanpeca/setup-miniconda@v1.6.0
         with:
           environment-file: environment.yml
 
-      - if: ${{ contains(matrix.os, 'ubuntu') }}
+      - name: build (linux)
+        if: ${{ contains(matrix.os, 'ubuntu') }}
         shell: bash -l {0}
         run: |
           source /usr/share/miniconda/bin/deactivate
           source /usr/share/miniconda/bin/activate /usr/share/miniconda/envs/jupyterlab-drawio
           doit
 
-      - if: ${{ contains(matrix.os, 'macos') }}
+      - name: build (macos)
+        if: ${{ contains(matrix.os, 'macos') }}
         shell: bash -l {0}
         run: |
           source /usr/local/miniconda/bin/deactivate
           source /usr/local/miniconda/bin/activate /usr/local/miniconda/envs/jupyterlab-drawio
           doit
 
-      - if: ${{ contains(matrix.os, 'windows') }}
+      - name: build (windows)
+        if: ${{ contains(matrix.os, 'windows') }}
         shell: cmd /C CALL {0}
         run: |
           call C:\Miniconda\Scripts\deactivate

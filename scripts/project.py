@@ -4,6 +4,7 @@
 """
 import os
 import platform
+import shutil
 import sys
 from pathlib import Path
 
@@ -43,6 +44,12 @@ PY = ["python"]
 PYM = [*PY, "-m"]
 PIP = [*PYM, "pip"]
 
+NPM = (
+    shutil.which("npm")
+    or shutil.which("npm.cmd")
+    or shutil.which("npm.exe")
+    or shutil.which("npm.bat")
+)
 JLPM = ["jlpm"]
 JLPM_INSTALL = [*JLPM, "--ignore-optional", "--prefer-offline"]
 LAB_EXT = ["jupyter", "labextension"]
