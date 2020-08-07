@@ -36,7 +36,7 @@ jobs:
         with:
           environment-file: environment.yml
 
-       - if: ${{ contains(matrix.os, 'ubuntu') }}
+      - if: ${{ contains(matrix.os, 'ubuntu') }}
         shell: bash -l {0}
         run: |
           source /usr/share/miniconda/bin/deactivate

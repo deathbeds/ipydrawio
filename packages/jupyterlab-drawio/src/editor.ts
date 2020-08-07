@@ -308,7 +308,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       ...CORE_EMBED_PARAMS,
     };
     // [p]lugins should not be URL encoded
-    let plugins: string[] = [];
+    let plugins = '';
     for (const p in params) {
       if (p == 'p') {
         plugins = (params as any)[p];
@@ -316,7 +316,7 @@ export class DrawioWidget extends DocumentWidget<IFrame> {
       }
       query.append(p, (params as any)[p]);
     }
-    const url = DRAWIO_URL + '?' + query.toString() + `p=${plugins}`;
+    const url = DRAWIO_URL + '?' + query.toString() + `&p=${plugins}`;
 
     if (force || this.content.url !== url) {
       DEBUG && console.warn('configuring iframe', params);
