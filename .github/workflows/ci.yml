@@ -8,6 +8,7 @@ on:
 
 env:
   PYTHONUNBUFFERED: 1
+  PYTHONIOENCODING: utf-8
 
 jobs:
   ci:
@@ -20,8 +21,6 @@ jobs:
           - ubuntu-latest
           - macos-latest
           - windows-latest
-    env:
-      SKIP_DRAWIO: 1
     steps:
       - uses: actions/checkout@v2
 
@@ -35,16 +34,25 @@ jobs:
 
       - uses: goanpeca/setup-miniconda@v1.6.0
         with:
-          activate-environment: jupyterlab-drawio
-          auto-activate-base: false
           environment-file: environment.yml
-          show-channel-urls: true
-          use-only-tar-bz2: true
 
-      - if: ${{ !contains(matrix.os, 'windows') }}
+       - if: ${{ contains(matrix.os, 'ubuntu') }}
         shell: bash -l {0}
-        run: doit || doit
+        run: |
+          source /usr/share/miniconda/bin/deactivate
+          source /usr/share/miniconda/bin/activate /usr/share/miniconda/envs/jupyterlab-drawio
+          doit
+
+      - if: ${{ contains(matrix.os, 'macos') }}
+        shell: bash -l {0}
+        run: |
+          source /usr/local/miniconda/bin/deactivate
+          source /usr/local/miniconda/bin/activate /usr/local/miniconda/envs/jupyterlab-drawio
+          doit
 
       - if: ${{ contains(matrix.os, 'windows') }}
         shell: cmd /C CALL {0}
-        run: call scripts\win_ci.bat
+        run: |
+          call C:\Miniconda\Scripts\deactivate
+          call C:\Miniconda\Scripts\activate C:\Miniconda\envs\jupyterlab-drawio
+          doit
