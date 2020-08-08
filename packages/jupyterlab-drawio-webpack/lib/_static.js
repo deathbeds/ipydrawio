@@ -1,5 +1,5 @@
 
-;(function(){
+(function(){
 /**
     All files that should be copied to the jupyterlab static folder, available as:
 

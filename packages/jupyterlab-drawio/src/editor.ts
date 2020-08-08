@@ -15,7 +15,7 @@ import { PromiseDelegate, ReadonlyPartialJSONObject } from '@lumino/coreutils';
 import { Message } from '@lumino/messaging';
 import { Signal } from '@lumino/signaling';
 
-import { PathExt, URLExt, PageConfig } from '@jupyterlab/coreutils';
+import { PathExt } from '@jupyterlab/coreutils';
 import { IFrame } from '@jupyterlab/apputils';
 import {
   ABCWidgetFactory,
@@ -23,20 +23,11 @@ import {
   DocumentWidget,
 } from '@jupyterlab/docregistry';
 
+import { DRAWIO_URL } from '@deathbeds/jupyterlab-drawio-webpack';
+
 import * as IO from './io';
 
 import '../style/index.css';
-
-const STATIC = URLExt.join(PageConfig.getBaseUrl(), 'static');
-
-/**
- * The path on the server to base application HTML, to be served in an iframe
- */
-const DRAWIO_URL = URLExt.join(
-  STATIC,
-  'lab',
-  'node_modules/@deathbeds/jupyterlab-drawio-webpack/drawio/src/main/webapp/index.html'
-);
 
 /**
  * Escape hatch for runtime debugging.

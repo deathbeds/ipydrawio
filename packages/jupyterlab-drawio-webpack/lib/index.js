@@ -12,7 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import { URLExt, PageConfig } from '@jupyterlab/coreutils';
+
 let DEBUG = false;
+
+/**
+ * The path on the server to base application HTML, to be served in an iframe
+ */
+export const DRAWIO_URL = URLExt.join(
+  URLExt.join(PageConfig.getBaseUrl(), 'static'),
+  'lab',
+  'node_modules/@deathbeds/jupyterlab-drawio-webpack/drawio/src/main/webapp/index.html'
+);
+
 
 const plugin = {
   id: "@deathbeds/jupyterlab-drawio-webpack:plugin",
