@@ -45,7 +45,7 @@ jobs:
         run: |
           source /usr/share/miniconda/bin/deactivate
           source /usr/share/miniconda/bin/activate /usr/share/miniconda/envs/jupyterlab-drawio
-          doit
+          doit all || doit all
 
       - name: build (macos)
         if: ${{ contains(matrix.os, 'macos') }}
@@ -53,7 +53,7 @@ jobs:
         run: |
           source /usr/local/miniconda/bin/deactivate
           source /usr/local/miniconda/bin/activate /usr/local/miniconda/envs/jupyterlab-drawio
-          doit
+          doit all || doit all
 
       - name: build (windows)
         if: ${{ contains(matrix.os, 'windows') }}
@@ -61,4 +61,4 @@ jobs:
         run: |
           call C:\Miniconda\Scripts\deactivate
           call C:\Miniconda\Scripts\activate C:\Miniconda\envs\jupyterlab-drawio
-          doit
+          doit all || doit all

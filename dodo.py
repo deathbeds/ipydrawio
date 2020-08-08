@@ -241,6 +241,14 @@ def task_watch():
     )
 
 
+def task_all():
+    return dict(
+        file_dep=[P.LAB_INDEX, P.OK_LINT],
+        actions=[lambda: [print("nothing left to do"), True][1]],
+    )
+
+
+# utilities
 def _echo_ok(msg):
     def _echo():
         print(msg, flush=True)
