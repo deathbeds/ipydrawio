@@ -1,5 +1,5 @@
-from pathlib import Path
 from fnmatch import fnmatch
+from pathlib import Path
 from pprint import pprint
 
 HERE = Path(__file__).parent
@@ -25,12 +25,14 @@ TMPL = """
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio{}';
 """
 
+
 def is_ignored(path):
     for ignore in IGNORED:
         if fnmatch(str(path.relative_to(ROOT)), ignore):
             IGNORED[ignore] += 1
             return True
     return False
+
 
 def update_static():
     print("ignoring\n", "\n".join(IGNORED))
@@ -45,9 +47,10 @@ def update_static():
 
     assert lines
 
-    STATIC.write_text("\n".join([HEADER, *lines]))
+    STATIC.write_text("\n".join([HEADER, *lines]), encoding="utf-8")
     print(f"wrote {len(lines)} lines")
     pprint(IGNORED)
+
 
 if __name__ == "__main__":
     update_static()

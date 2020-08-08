@@ -1,7 +1,7 @@
 """ patch drawio sources for embedding in JupyterLab
 """
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 HERE = Path(__file__).parent
 ROOT = HERE.parent
@@ -12,22 +12,22 @@ PATCHES = {
         {
             "name": "global ref so we can get at the App at runtime",
             "before": "b=null!=e?e():new App(new Editor",
-            "after": "\nwindow.JUPYTERLAB_DRAWIO_APP = b=null!=e?e():new App(new Editor"
+            "after": "\nwindow.JUPYTERLAB_DRAWIO_APP = b=null!=e?e():new App(new Editor",
         },
         {
             "name": "plugin path so this can be hosted on non-root",
             "before": """;window.PLUGINS_BASE_PATH=window.PLUGINS_BASE_PATH||"";""",
             "after": """;window.PLUGINS_BASE_PATH=window.PLUGINS_BASE_PATH||".";""",
-        }
+        },
     ]
 }
+
 
 def patch():
     for path, patches in PATCHES.items():
         print("checkout", path)
         subprocess.check_call(
-            ["git", "checkout", str(path.relative_to(DRAWIO))],
-            cwd=DRAWIO
+            ["git", "checkout", str(path.relative_to(DRAWIO))], cwd=DRAWIO
         )
         txt = path.read_text(encoding="utf-8")
 

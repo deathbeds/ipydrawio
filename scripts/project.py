@@ -85,6 +85,7 @@ JDW = PACKAGES / "jupyterlab-drawio-webpack"
 JDW_APP = JDW / "drawio/src/main/webapp/js/app.min.js"
 JDW_PKG = JDW / "package.json"
 JDW_PKG_DATA = json.loads(JDW_PKG.read_text(encoding="utf-8"))
+JDW_PY = (JDW / "scripts").rglob("*.py")
 DRAWIO = JDW / "drawio"
 JDW_LIB = JDW / "lib"
 JDW_IGNORE = JDW / ".npmignore"
@@ -94,7 +95,7 @@ JDW_TARBALL = (
 )
 
 # mostly linting
-ALL_PY = [DODO, *SCRIPTS.glob("*.py")]
+ALL_PY = [DODO, *SCRIPTS.glob("*.py"), *JDW_PY]
 ALL_YML = [*ROOT.glob("*.yml"), *CI.rglob("*.yml")]
 ALL_JSON = [
     *ROOT.glob("*.json"),
