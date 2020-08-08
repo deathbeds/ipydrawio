@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Menu } from '@lumino/widgets';
 import { Token, PromiseDelegate } from '@lumino/coreutils';
 import { Widget } from '@lumino/widgets';
 
@@ -290,8 +289,6 @@ function activate(
     return result;
   };
 
-  const exportMenuItems: Menu.IItemOptions[] = [];
-
   /**
    * Create commands for all of the known export formats.
    */
@@ -370,10 +367,6 @@ function activate(
       command: `drawio:export-${key}`,
       category: `${IO.XML_NATIVE.label} Export`,
     });
-
-    exportMenuItems.push({
-      command: `drawio:export-${key}`,
-    });
   });
 
   // Add a command for creating a new diagram file.
@@ -397,12 +390,8 @@ function activate(
   }
 
   if (menu) {
-    const submenu = new Menu({ commands });
-    exportMenuItems.map(submenu.addItem);
     // Add new text file creation to the file menu.
     menu.fileMenu.newMenu.addGroup([{ command: 'drawio:create-new' }], 40);
-
-    menu.fileMenu.addGroup([{ type: 'submenu' as Menu.ItemType, submenu }], 50);
   }
 
   // this is very odd, and probably can't be reused. Use the manager pattern?
