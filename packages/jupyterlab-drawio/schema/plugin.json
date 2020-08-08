@@ -531,12 +531,10 @@
     },
     "color": {
       "type": "string",
-      "uniqueItems": true,
-      "pattern": "[a-fA-F\\d]{6}"
+      "uniqueItems": true
     },
     "library-keys-string": {
-      "type": "string",
-      "pattern": "([^;]+;)*[^;]+"
+      "type": "string"
     },
     "library-key-list": {
       "type": "array",
