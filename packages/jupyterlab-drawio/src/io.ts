@@ -12,7 +12,7 @@ import { NotebookModel } from '@jupyterlab/notebook';
 
 export const DRAWIO_METADATA = '@deathbeds/jupyterlab-drawio';
 
-export interface IDrawioFormat {
+export interface IDrawioFormat<T = string> {
   key: string;
   name: string;
   ext: string;
@@ -30,7 +30,7 @@ export interface IDrawioFormat {
     drawio: DrawioWidget,
     key: string,
     settings: ISettingRegistry.ISettings
-  ) => Promise<string | null>;
+  ) => Promise<T | null>;
 }
 
 const iconRegEx = /jp-icon-warn0/;
@@ -124,7 +124,7 @@ export const PNG_EDITABLE: IDrawioFormat = {
   pattern: '^.*.dio.png$',
 };
 
-export const IPYNB_EDITABLE: IDrawioFormat = {
+export const IPYNB_EDITABLE: IDrawioFormat<any> = {
   ext: '.dio.ipynb',
   key: 'ipynb',
   format: 'json',
@@ -134,6 +134,9 @@ export const IPYNB_EDITABLE: IDrawioFormat = {
   name: 'dionotebook',
   pattern: '.*.dio.ipynb$',
   contentType: 'notebook',
+  save: (raw) => {
+    return raw;
+  },
   fromXML: (model: NotebookModel, xml) => {
     const meta = model.metadata.get(
       DRAWIO_METADATA
@@ -145,6 +148,12 @@ export const IPYNB_EDITABLE: IDrawioFormat = {
       DRAWIO_METADATA
     ) as ReadonlyPartialJSONObject;
     return meta?.xml ? `${meta.xml}` : '';
+  },
+  exporter: async (widget, key, settings) => {
+    const xml = (widget.context.model as any).value.text;
+    const newModel = new NotebookModel();
+    newModel.metadata.set(DRAWIO_METADATA, { xml });
+    return newModel.toJSON();
   },
 };
 
@@ -204,6 +213,7 @@ export const EXPORT_FORMATS = [
   SVG_EDITABLE,
   SVG_PLAIN,
   PDF_BRANDED,
+  IPYNB_EDITABLE,
 ];
 
 export const ALL_BINARY_FORMATS = [PNG_PLAIN, PNG_EDITABLE];

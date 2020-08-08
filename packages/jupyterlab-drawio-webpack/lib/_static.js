@@ -1,4 +1,5 @@
 
+;(function(){
 /**
     All files that should be copied to the jupyterlab static folder, available as:
 
@@ -2677,3 +2678,5 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/templates/wireframes/home_page_hero_video_1.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/templates/wireframes/home_page_hero_video_1.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/vsdxImporter.html';
+
+}).call(this);

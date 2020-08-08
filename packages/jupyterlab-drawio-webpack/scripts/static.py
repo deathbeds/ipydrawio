@@ -13,6 +13,7 @@ IGNORED = {
 }
 STATIC = ROOT / "lib" / "_static.js"
 HEADER = """
+;(function(){
 /**
     All files that should be copied to the jupyterlab static folder, available as:
 
@@ -21,6 +22,10 @@ HEADER = """
     This file generated from https://github.com/jgraph/drawio
 */
 """
+FOOTER = """
+}).call(this);
+"""
+
 TMPL = """
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio{}';
 """
@@ -47,7 +52,7 @@ def update_static():
 
     assert lines
 
-    STATIC.write_text("\n".join([HEADER, *lines]), encoding="utf-8")
+    STATIC.write_text("\n".join([HEADER, *lines, FOOTER]), encoding="utf-8")
     print(f"wrote {len(lines)} lines")
     pprint(IGNORED)
 
