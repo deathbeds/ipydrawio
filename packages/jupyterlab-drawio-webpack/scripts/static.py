@@ -27,7 +27,7 @@ FOOTER = """
 """
 
 TMPL = """
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio{}';
+require('!!file-loader?name=[path][name].[ext]&context=.!../drawio{}');
 """
 
 
