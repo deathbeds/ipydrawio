@@ -83,7 +83,7 @@ JDIO_TARBALL = JDIO / f"""deathbeds-jupyterlab-drawio-{JDIO_PKG_DATA["version"]}
 
 JDW = PACKAGES / "jupyterlab-drawio-webpack"
 JDW_APP = JDW / "drawio/src/main/webapp/js/app.min.js"
-JDW_PKG = JDIO / "package.json"
+JDW_PKG = JDW / "package.json"
 JDW_PKG_DATA = json.loads(JDW_PKG.read_text(encoding="utf-8"))
 DRAWIO = JDW / "drawio"
 JDW_LIB = JDW / "lib"

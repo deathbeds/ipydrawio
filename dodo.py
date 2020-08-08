@@ -155,6 +155,10 @@ def task_lab_build():
 
     file_dep = [P.JDW_TARBALL, P.JDIO_TARBALL]
 
+    build_args = ["--dev-build=False", "--minimize=True"]
+    if P.WIN:
+        build_args = []
+
     yield dict(
         name="extensions",
         file_dep=file_dep,
@@ -177,14 +181,7 @@ def task_lab_build():
                 *P.EXTENSIONS,
             ],
             ["jupyter", "labextension", "list"],
-            [
-                "jupyter",
-                "lab",
-                "build",
-                "--debug",
-                "--dev-build=False",
-                "--minimize=True",
-            ],
+            ["jupyter", "lab", "build", "--debug", *build_args],
             ["jupyter", "labextension", "list"],
         ],
         targets=[P.LAB_INDEX],
