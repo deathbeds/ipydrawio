@@ -15,14 +15,13 @@
 let DEBUG = false;
 
 const plugin = {
-  id: "@deathbeds/jupyterlab-drawio-webpack:plugin",
+  id: '@deathbeds/jupyterlab-drawio-webpack:plugin',
   activate: async () => {
-    if(DEBUG) {
-      await import("./_static");
+    if (DEBUG) {
+      await import('./_static');
     }
-    console.log("activated", plugin.id);
   },
-  autoStart: true
+  autoStart: true,
 };
 
 export default plugin;
