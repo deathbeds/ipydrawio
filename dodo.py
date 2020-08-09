@@ -49,7 +49,7 @@ def task_setup():
         yield _ok(
             dict(
                 name=f"py:{pkg}",
-                file_dep=[pkg_setup],
+                file_dep=[pkg_setup, P.PY_SETUP_CFG[pkg]],
                 actions=[
                     CmdAction(
                         [
@@ -318,9 +318,18 @@ def task_watch():
     )
 
 
+def task_provision():
+    return _ok(
+        dict(
+            file_dep=[*P.OK_SERVEREXT.values()], actions=[["jupyter", "drawio-export"]],
+        ),
+        P.OK_PROVISION,
+    )
+
+
 def task_all():
     return dict(
-        file_dep=[P.OK_INTEGRITY],
+        file_dep=[P.OK_INTEGRITY, P.OK_PROVISION],
         actions=[lambda: [print("nothing left to do"), True][1]],
     )
 

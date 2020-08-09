@@ -46,8 +46,8 @@ class DrawioExportManager(LoggingConfigurable):
         return await self._pdf(pdf_request)
 
     def _atexit(self):
-        self.log.warn("shutting down drawio export server")
         if self._server is not None:
+            self.log.warning("shutting down drawio export server")
             self._server.terminate()
             self._server.wait()
 
@@ -143,6 +143,17 @@ class DrawioExportManager(LoggingConfigurable):
         return pdf_text
 
     async def start_server(self):
+        server_path = self.provision()
+
+        env = dict(os.environ)
+        env["PORT"] = str(self.drawio_port)
+        env["DRAWIO_SERVER_URL"] = self.drawio_server_url
+
+        self._server = subprocess.Popen(
+            ["jlpm", "start"], cwd=str(server_path), env=env
+        )
+
+    def provision(self, force=False):
         dx_path = Path(self.drawio_export_folder)
 
         if not dx_path.exists():
@@ -150,17 +161,13 @@ class DrawioExportManager(LoggingConfigurable):
 
         dest = dx_path / VEND.name
         if not dest.exists():
-            self.log.warn("initializing drawio export folder", dest)
+            self.log.warning("initializing drawio export folder %s", dest)
             shutil.copytree(VEND, dest)
         else:
-            self.log.warn("using existing drawio export folder", dest)
+            self.log.warning("using existing drawio export folder %s", dest)
 
-        if not (dest / "node_modules" / ".yarn-integrity").exists():
-            self.log.warn("installing drawio export dependencies", dest)
+        if not (dest / "node_modules" / ".yarn-integrity").exists() or force:
+            self.log.warning("installing drawio export dependencies %s", dest)
             subprocess.check_call(["jlpm"], cwd=str(dest))
 
-        env = dict(os.environ)
-        env["PORT"] = str(self.drawio_port)
-        env["DRAWIO_SERVER_URL"] = self.drawio_server_url
-
-        self._server = subprocess.Popen(["jlpm", "start"], cwd=str(dest), env=env)
+        return dest
