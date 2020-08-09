@@ -45,6 +45,52 @@ def task_setup():
         targets=[P.YARN_INTEGRITY],
     )
 
+    for pkg, pkg_setup in P.PY_SETUP.items():
+        yield _ok(
+            dict(
+                name=f"py:{pkg}",
+                file_dep=[pkg_setup],
+                actions=[
+                    CmdAction(
+                        [
+                            "python",
+                            "-m",
+                            "pip",
+                            "install",
+                            "-e",
+                            ".",
+                            "--no-deps",
+                            "-vv",
+                        ],
+                        shell=False,
+                        cwd=pkg_setup.parent,
+                    ),
+                    ["python", "-m", "pip", "check"],
+                ],
+            ),
+            P.OK_PYSETUP[pkg],
+        )
+
+    for ext, ext_py in P.SERVER_EXT.items():
+        yield _ok(
+            dict(
+                name=f"ext:{ext}",
+                file_dep=[ext_py],
+                actions=[
+                    [
+                        "jupyter",
+                        "serverextension",
+                        "enable",
+                        "--py",
+                        "jupyter_drawio_export",
+                        "--sys-prefix",
+                    ],
+                    ["jupyter", "serverextension", "list"],
+                ],
+            ),
+            P.OK_SERVEREXT[ext],
+        )
+
 
 def task_lint():
     """ format all source files
@@ -143,6 +189,33 @@ def task_build():
             targets=targets,
         )
 
+    for py_pkg, py_setup in P.PY_SETUP.items():
+        file_dep = [py_setup, *P.PY_SRC[py_pkg]]
+        yield dict(
+            name=f"sdist:{py_pkg}",
+            file_dep=file_dep,
+            actions=[
+                CmdAction(
+                    ["python", "setup.py", "sdist"],
+                    shell=False,
+                    cwd=str(py_setup.parent),
+                ),
+            ],
+            targets=[P.PY_SDIST[py_pkg]],
+        )
+        yield dict(
+            name=f"whl:{py_pkg}",
+            file_dep=file_dep,
+            actions=[
+                CmdAction(
+                    ["python", "setup.py", "bdist_wheel"],
+                    shell=False,
+                    cwd=str(py_setup.parent),
+                ),
+            ],
+            targets=[P.PY_WHEEL[py_pkg]],
+        )
+
 
 def task_lab_build():
     """ do a "production" build of lab
@@ -204,7 +277,7 @@ def task_lab():
 
     return dict(
         uptodate=[lambda: False],
-        file_dep=[P.LAB_INDEX],
+        file_dep=[P.LAB_INDEX, *P.OK_SERVEREXT.values()],
         actions=[PythonInteractiveAction(lab)],
     )
 
@@ -245,7 +318,7 @@ def task_watch():
 
     return dict(
         uptodate=[lambda: False],
-        file_dep=sorted(P.JS_TARBALL.values()),
+        file_dep=[*P.JS_TARBALL.values(), *P.OK_SERVEREXT.values()],
         actions=[
             P.LIST_EXTENSIONS,
             P.LINK_EXTENSIONS,
@@ -259,7 +332,13 @@ def task_watch():
 
 def task_all():
     return dict(
-        file_dep=[P.LAB_INDEX, P.OK_LINT],
+        file_dep=[
+            P.LAB_INDEX,
+            P.OK_LINT,
+            *[*P.OK_SERVEREXT.values()],
+            *[*P.PY_WHEEL.values()],
+            *[*P.PY_SDIST.values()],
+        ],
         actions=[lambda: [print("nothing left to do"), True][1]],
     )
 

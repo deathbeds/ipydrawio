@@ -134,8 +134,30 @@ JDW_LIB = JDW / "lib"
 JDW_IGNORE = JDW / ".npmignore"
 ALL_JDW_JS = JDW_LIB.glob("*.js")
 
+PY_SETUP = {p.parent.name: p for p in (ROOT / "py_packages").glob("*/setup.py")}
+PY_SRC = {k: sorted((v.parent / "src").rglob("*.py")) for k, v in PY_SETUP.items()}
+
+JDE = PY_SETUP["jupyter-drawio-export"].parent
+PY_SDIST = {JDE.name: JDE / "dist" / f"{JDE.name}-0.8.0a0.tar.gz"}
+PY_WHEEL = {
+    JDE.name: JDE
+    / "dist"
+    / f"""{JDE.name.replace("-", "_")}-0.8.0a0-py3-none-any.whl"""
+}
+
+SERVER_EXT = {
+    k: sorted(v.parent.glob("src/*/serverextension.py"))[0]
+    for k, v in PY_SETUP.items()
+    if sorted(v.parent.glob("src/*/serverextension.py"))
+}
+
 # mostly linting
-ALL_PY = [DODO, *SCRIPTS.glob("*.py"), *sum(JS_PY_SCRIPTS.values(), [])]
+ALL_PY = [
+    DODO,
+    *SCRIPTS.glob("*.py"),
+    *sum(JS_PY_SCRIPTS.values(), []),
+    *sum(PY_SRC.values(), []),
+]
 ALL_YML = [*ROOT.glob("*.yml"), *CI.rglob("*.yml")]
 ALL_JSON = [
     *ROOT.glob("*.json"),
@@ -172,6 +194,8 @@ OK_PRETTIER = BUILD / "prettier.ok"
 OK_ESLINT = BUILD / "eslint.ok"
 OK_JS_BUILD_PRE = BUILD / "js.build.pre.ok"
 OK_JS_BUILD = BUILD / "js.build.ok"
+OK_PYSETUP = {k: BUILD / f"pysetup.{k}.ok" for k, v in PY_SETUP.items()}
+OK_SERVEREXT = {k: BUILD / f"serverext.{k}.ok" for k, v in SERVER_EXT.items()}
 
 # built artifacts
 EXAMPLE_HTML = [DIST_NBHTML / p.name.replace(".ipynb", ".html") for p in EXAMPLE_IPYNB]
