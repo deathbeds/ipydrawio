@@ -75,7 +75,7 @@ def task_setup():
         yield _ok(
             dict(
                 name=f"ext:{ext}",
-                file_dep=[ext_py],
+                file_dep=[ext_py, P.OK_PYSETUP[ext]],
                 actions=[
                     [
                         "jupyter",
