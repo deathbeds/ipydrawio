@@ -15,9 +15,9 @@ def test_drawio_versions():
     assert pdv.startswith(dv), "drawio version out of sync"
 
 
-@pytest.mark.parametrize("key,tarball", P.JS_TARBALL.items())
+@pytest.mark.parametrize("key,tarball", [*P.JS_TARBALL.items(), *P.PY_SDIST.items()])
 def test_tarball(key, tarball):
-    with tarfile.open(str(tarball), "w") as tar:
+    with tarfile.open(str(tarball), "r") as tar:
         all_names = list(tar.getnames())
         licenses = [p for p in all_names if "LICENSE.txt" in p]
         assert licenses, f"{key} doesn't have LICENSE"

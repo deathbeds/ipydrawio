@@ -221,13 +221,6 @@ def task_lab_build():
     """ do a "production" build of lab
     """
 
-    def _clean():
-        """ TODO: remove this hopefully once packages are up on npm
-        """
-        subprocess.call(["jlpm", "cache", "clean"])
-        subprocess.call(["jupyter", "lab", "clean", "--all"])
-        return True
-
     def _build():
         return subprocess.call() == 0
 
@@ -242,7 +235,6 @@ def task_lab_build():
         file_dep=file_dep,
         uptodate=[config_changed({"exts": P.EXTENSIONS})],
         actions=[
-            _clean,
             P.CMD_DISABLE_EXTENSIONS,
             P.CMD_INSTALL_ALL_EXTENSIONS,
             P.CMD_LIST_EXTENSIONS,
