@@ -13,3 +13,4 @@ def load_jupyter_server_extension(nbapp):
     manager = nbapp.drawio_manager = DrawioExportManager(parent=nbapp)
     manager.initialize()
     add_handlers(nbapp)
+    nbapp.log.warning("drawio initialized %s", manager)

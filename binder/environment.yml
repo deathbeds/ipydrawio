@@ -13,10 +13,9 @@ dependencies:
   - ipywidgets
   - isort <5
   - json-e
-  - jupyter-server-proxy
-  - jupyterlab >=2.2.0,<3.0.0a0
+  - jupyterlab >=2.2.4,<3.0.0a0
   - lxml
-  - matplotlib
+  - matplotlib-base
   - networkx
   - nodejs >=12,<13.0.0a0
   - pandas
@@ -30,4 +29,4 @@ dependencies:
   - shapely
   - tabulate
   - pip:
-    - graphviz2drawio
+      - graphviz2drawio

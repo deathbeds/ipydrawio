@@ -27,9 +27,9 @@ export const PDF_PLAIN: IDiagramManager.IFormat = {
   isBinary: true,
   save: stripDataURI,
   exporter: async (widget, key, settings) => {
-    let drawioExportUrl = './drawio-export-demo';
+    let drawioExportUrl = './drawio/export/';
     try {
-      drawioExportUrl = (settings.composite['drawioExportDemo'] as any)['url'];
+      drawioExportUrl = (settings.composite['drawioExportUrl'] as any)['url'];
     } catch (err) {
       console.warn(err);
     }

@@ -158,7 +158,7 @@ ALL_PY = [
     *sum(JS_PY_SCRIPTS.values(), []),
     *sum(PY_SRC.values(), []),
 ]
-ALL_YML = [*ROOT.glob("*.yml"), *CI.rglob("*.yml")]
+ALL_YML = [*ROOT.glob("*.yml"), *CI.rglob("*.yml"), *BINDER.glob("*.yml")]
 ALL_JSON = [
     *ROOT.glob("*.json"),
     *PACKAGES.glob("*/*.json"),

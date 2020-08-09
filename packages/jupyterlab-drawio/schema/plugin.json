@@ -6,12 +6,12 @@
   "description": "Drawio settings.",
   "type": "object",
   "properties": {
-    "drawioExportDemo": {
+    "drawioExportUrl": {
       "properties": {
         "url": {
           "description": "URL for (local) drawio-export server https://github.com/jgraph/draw-image-export2",
           "type": "string",
-          "default": "./drawio-export-demo"
+          "default": "./drawio/export/"
         },
         "params": {
           "type": "object",

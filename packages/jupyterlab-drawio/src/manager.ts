@@ -90,7 +90,8 @@ export class DiagramManager implements IDiagramManager {
   }
   get activeWidget() {
     const { currentWidget } = this._app.shell;
-    for (const tracker of this._trackers.values()) {
+    for (const [namespace, tracker] of this._trackers.entries()) {
+      console.warn(namespace, tracker.currentWidget);
       if (tracker.currentWidget === currentWidget) {
         return tracker.currentWidget;
       }
@@ -227,7 +228,7 @@ export class DiagramManager implements IDiagramManager {
         let cwd = this._browserFactory.defaultBrowser.model.path;
         return _exporter(cwd);
       },
-      isEnabled: () => this.activeWidget == null,
+      isEnabled: () => this.activeWidget != null,
     });
 
     this._palette.addItem({
@@ -246,7 +247,7 @@ export class DiagramManager implements IDiagramManager {
     fileTypes: IDiagramManager.IFormat[],
     defaultFor: IDiagramManager.IFormat[]
   ) {
-    if (this._trackers.has(name)) {
+    if (this._trackers.has(namespace)) {
       throw Error(name);
     }
 
@@ -305,7 +306,7 @@ export class DiagramManager implements IDiagramManager {
     });
     this._app.docRegistry.addWidgetFactory(factory);
 
-    this._trackers.set(name, tracker);
+    this._trackers.set(namespace, tracker);
 
     return tracker;
   }

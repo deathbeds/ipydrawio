@@ -2,6 +2,7 @@
 """
 from notebook.base.handlers import IPythonHandler
 from notebook.utils import url_path_join as ujoin
+from tornado.escape import json_decode
 
 from .manager import DrawioExportManager
 
@@ -14,17 +15,15 @@ class BaseHandler(IPythonHandler):
 
 
 class PDFHandler(BaseHandler):
-    def get(self, url):
-        self.finish(f"WOO {url}")
-
-    def post(self, url):
-        self.finish(f"HA {url}")
+    async def post(self):
+        pdf = await self.manager.pdf(json_decode(self.request.body))
+        self.finish(pdf)
 
 
 def add_handlers(nbapp):
     """ Add drawio routes to the notebook server web application
     """
-    url = ujoin(nbapp.base_url, "drawio", "export", "pdf", "(?P<url>.*)")
+    url = ujoin(nbapp.base_url, "drawio", "export", r"(?P<url>.*)")
 
     opts = {"manager": nbapp.drawio_manager}
 
