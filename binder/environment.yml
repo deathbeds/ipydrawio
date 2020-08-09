@@ -23,11 +23,13 @@ dependencies:
   - pip
   - pyflakes
   - pygraphviz
-  - pytest
   - pypdf2
+  - pytest
   - python >=3.8,<3.9.0a0
   - requests_cache
   - shapely
   - tabulate
+  - twine
+  - wheel
   - pip:
       - graphviz2drawio
