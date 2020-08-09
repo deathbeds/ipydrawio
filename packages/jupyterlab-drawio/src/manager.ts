@@ -37,6 +37,7 @@ export class DiagramManager implements IDiagramManager {
     this._app = options.app;
     this._restorer = options.restorer;
     this._palette = options.palette;
+    this._browserFactory = options.browserFactory;
     this._status = new DrawioStatus.Model();
     this._initCommands();
   }
