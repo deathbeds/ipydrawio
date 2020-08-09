@@ -17,7 +17,6 @@ let DEBUG = false;
 const plugin = {
   id: "@deathbeds/jupyterlab-drawio-webpack:plugin",
   activate: async () => {
-    console.log("activating", plugin.id);
     if(DEBUG) {
       await import("./_static");
     }

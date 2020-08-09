@@ -4,7 +4,6 @@
     "url": "https://github.com/deathbeds/jupyterlab-drawio/issues"
   },
   "dependencies": {
-    "@deathbeds/jupyterlab-drawio-webpack": "^13.6.1-alpha0",
     "@jupyterlab/application": "^2.0.0",
     "@jupyterlab/apputils": "^2.0.0",
     "@jupyterlab/coreutils": "^4.0.0",
@@ -17,6 +16,9 @@
   "description": "A JupyterLab extension for embedding drawio / mxgraph.",
   "devDependencies": {
     "typescript": "~3.9.3"
+  },
+  "peerDependencies": {
+    "@deathbeds/jupyterlab-drawio-webpack": "^13.6.1-alpha0"
   },
   "files": [
     "{lib,schema,style,src}/**/*.{ts,tsx,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css}",
