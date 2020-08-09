@@ -222,6 +222,7 @@ def task_lab_build():
     """
 
     def _clean():
+        subprocess.call(["jlpm", "cache", "clean"])
         subprocess.call(["jupyter", "lab", "clean", "--all"])
         return True
 
@@ -246,9 +247,7 @@ def task_lab_build():
                 "disable",
                 "@jupyterlab/extension-manager-extension",
             ],
-            P.LINK_EXTENSIONS,
-            P.LIST_EXTENSIONS,
-            P.INSTALL_EXTENSIONS,
+            P.INSTALL_ALL_EXTENSIONS,
             P.LIST_EXTENSIONS,
             ["jupyter", "lab", "build", "--debug", *build_args],
             P.LIST_EXTENSIONS,

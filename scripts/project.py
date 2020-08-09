@@ -218,4 +218,6 @@ INSTALL_EXTENSIONS = [
     *EXTENSIONS,
 ]
 
+INSTALL_ALL_EXTENSIONS = [*INSTALL_EXTENSIONS, *JS_TARBALL.values()]
+
 LIST_EXTENSIONS = ["jupyter", "labextension", "list"]
