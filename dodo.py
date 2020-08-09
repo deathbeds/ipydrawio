@@ -321,7 +321,11 @@ def task_watch():
 def task_provision():
     return _ok(
         dict(
-            file_dep=[*P.OK_SERVEREXT.values()], actions=[["jupyter", "drawio-export"]],
+            file_dep=[*P.OK_SERVEREXT.values()],
+            actions=[
+                ["jupyter", "drawio-export", "--version"],
+                ["jupyter", "drawio-export", "provision"],
+            ],
         ),
         P.OK_PROVISION,
     )
