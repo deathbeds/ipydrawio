@@ -5,9 +5,9 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-import requests
 from jupyter_core.paths import jupyter_data_dir
 from jupyterlab.commands import get_app_dir
+from requests_cache import CachedSession
 from tornado.concurrent import run_on_executor
 from traitlets import Dict, Instance, Int, Unicode, default
 from traitlets.config import LoggingConfigurable
@@ -28,6 +28,7 @@ class DrawioExportManager(LoggingConfigurable):
     core_params = Dict().tag(config=True)
     drawio_export_folder = Unicode().tag(config=True)
     _server = Instance(subprocess.Popen, allow_none=True)
+    _session = Instance(CachedSession)
 
     executor = ThreadPoolExecutor(1)
 
@@ -47,6 +48,12 @@ class DrawioExportManager(LoggingConfigurable):
     def _default_drawio_server_url(self):
         return DRAWIO_STATIC.as_uri()
 
+    @default("_session")
+    def _default_session(self):
+        return CachedSession(
+            str(Path(self.drawio_export_folder) / ".cache"), allowable_methods=["POST"]
+        )
+
     @default("core_params")
     def _default_core_params(self):
         return dict(format="pdf", base64="1")
@@ -59,7 +66,7 @@ class DrawioExportManager(LoggingConfigurable):
     def _pdf(self, pdf_request):
         data = dict(pdf_request)
         data.update(**self.core_params)
-        r = requests.post(self.url, timeout=None, data=data)
+        r = self._session.post(self.url, timeout=None, data=data)
         if r.status_code != 200:
             self.log.error(r.text)
         return r.text

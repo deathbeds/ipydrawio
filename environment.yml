@@ -12,3 +12,4 @@ dependencies:
   - nodejs >=12,<13.0.0a0
   - pyflakes
   - python
+  - requests_cache
