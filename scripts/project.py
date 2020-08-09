@@ -111,7 +111,7 @@ JS_TSSRC = {
     if (v.parent / "src").exists()
 }
 
-JS_TSBUILDINFO = {k: v.parent / ".tsbuildinfo" for k, v in JS_TSCONFIG.items()}
+JS_TSBUILDINFO = {k: v.parent / "tsconfig.tsbuildinfo" for k, v in JS_TSCONFIG.items()}
 
 JS_STYLE = {
     k: sorted((v.parent / "style").glob("*.css"))
