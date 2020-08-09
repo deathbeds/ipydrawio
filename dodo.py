@@ -328,14 +328,25 @@ def task_watch():
 
 def task_all():
     return dict(
-        file_dep=[
-            P.LAB_INDEX,
-            P.OK_LINT,
-            *[*P.OK_SERVEREXT.values()],
-            *[*P.PY_WHEEL.values()],
-            *[*P.PY_SDIST.values()],
-        ],
+        file_dep=[P.OK_INTEGRITY],
         actions=[lambda: [print("nothing left to do"), True][1]],
+    )
+
+
+def task_integrity():
+    return _ok(
+        dict(
+            file_dep=[
+                P.SCRIPTS / "integrity.py",
+                P.LAB_INDEX,
+                P.OK_LINT,
+                *[*P.OK_SERVEREXT.values()],
+                *[*P.PY_WHEEL.values()],
+                *[*P.PY_SDIST.values()],
+            ],
+            actions=[["python", "-m", "pytest", "--pyargs", "scripts.integrity"]],
+        ),
+        P.OK_INTEGRITY,
     )
 
 

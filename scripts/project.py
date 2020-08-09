@@ -186,6 +186,7 @@ JS_PKG_PACK[JDW.name][0] += [
 
 
 # built files
+OK_INTEGRITY = BUILD / "integrity.ok"
 OK_SUBMODULES = BUILD / "submodules.ok"
 OK_BLACK = BUILD / "black.ok"
 OK_FLAKE8 = BUILD / "flake8.ok"
