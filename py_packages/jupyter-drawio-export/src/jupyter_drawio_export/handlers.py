@@ -2,7 +2,6 @@
 """
 from notebook.base.handlers import IPythonHandler
 from notebook.utils import url_path_join as ujoin
-from tornado.escape import json_decode
 
 from .manager import DrawioExportManager
 
@@ -15,8 +14,10 @@ class BaseHandler(IPythonHandler):
 
 
 class PDFHandler(BaseHandler):
-    async def post(self):
-        pdf = await self.manager.pdf(json_decode(self.request.body))
+    async def post(self, url):
+        self.manager.parent.log.warning("DIO %s %s", url, self.request.body)
+        params = {k: v[-1] for k, v in self.request.arguments.items()}
+        pdf = await self.manager.pdf(params)
         self.finish(pdf)
 
 

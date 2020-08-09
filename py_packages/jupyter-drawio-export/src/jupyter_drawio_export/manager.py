@@ -1,3 +1,5 @@
+import atexit
+import os
 import shutil
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
@@ -5,26 +7,45 @@ from pathlib import Path
 
 import requests
 from jupyter_core.paths import jupyter_data_dir
+from jupyterlab.commands import get_app_dir
 from tornado.concurrent import run_on_executor
 from traitlets import Dict, Instance, Int, Unicode, default
 from traitlets.config import LoggingConfigurable
 
 VEND = Path(__file__).parent / "vendor" / "draw-image-export2"
 
+DRAWIO_STATIC = Path(get_app_dir()) / (
+    "static/node_modules/@deathbeds/jupyterlab-drawio-webpack/drawio/src/main/webapp"
+)
+
 
 class DrawioExportManager(LoggingConfigurable):
     """ manager of (currently) another node-based server
     """
 
-    drawio_port = Int().tag(config=True)
+    drawio_server_url = Unicode().tag(config=True)
+    drawio_port = Int(8080).tag(config=True)
     core_params = Dict().tag(config=True)
     drawio_export_folder = Unicode().tag(config=True)
-    _server = Instance(subprocess.Popen)
+    _server = Instance(subprocess.Popen, allow_none=True)
 
     executor = ThreadPoolExecutor(1)
 
     def initialize(self):
-        pass
+        atexit.register(self._atexit)
+
+    def _atexit(self):
+        if self._server is not None:
+            self._server.terminate()
+            self._server.wait()
+
+    @property
+    def url(self):
+        return f"http://localhost:{self.drawio_port}"
+
+    @default("drawio_server_url")
+    def _default_drawio_server_url(self):
+        return DRAWIO_STATIC.as_uri()
 
     @default("core_params")
     def _default_core_params(self):
@@ -32,15 +53,15 @@ class DrawioExportManager(LoggingConfigurable):
 
     @default("drawio_export_folder")
     def _default_drawio_export_folder(self):
-        return str(Path(jupyter_data_dir) / "jupyter_drawio_export")
+        return str(Path(jupyter_data_dir()) / "jupyter_drawio_export")
 
     @run_on_executor
     def _pdf(self, pdf_request):
-        r = requests.post(
-            self.url, timeout=None, data=dict(**pdf_request, **self.core_params)
-        )
+        data = dict(pdf_request)
+        data.update(**self.core_params)
+        r = requests.post(self.url, timeout=None, data=data)
         if r.status_code != 200:
-            self.error = r.text
+            self.log.error(r.text)
         return r.text
 
     async def pdf(self, pdf_request):
@@ -61,8 +82,9 @@ class DrawioExportManager(LoggingConfigurable):
         if not (dest / "node_modules" / ".yarn-integrity").exists():
             subprocess.check_call(["jlpm"], cwd=str(dest))
 
-        self._server = subprocess.Popen(
-            ["jlpm", "start"],
-            cwd=str(dest),
-            # env=dict(DRAWIO_SERVER_URL=DRAWIO_SERVER_URL),
-        )
+        env = dict(os.environ)
+        env = dict(os.environ)
+        env["PORT"] = str(self.drawio_port)
+        env["DRAWIO_SERVER_URL"] = self.drawio_server_url
+
+        self._server = subprocess.Popen(["jlpm", "start"], cwd=str(dest), env=env)
