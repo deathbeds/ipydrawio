@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## jupyter-drawio-export 0.8.0-alpha0 (unreleased)
+
+- wraps/vendors `drawio-image-export2`
+- optionally supports
+  - PDF caching with `requests_cache`
+  - XML embedding with `PyPDF2`
+
 ## @deathbeds/jupyterlab-drawio-pdf 0.8.0-alpha0 (unreleased)
 
 - depends on `@deathbeds/jupyterlab-drawio`
