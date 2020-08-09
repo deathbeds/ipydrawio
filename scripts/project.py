@@ -200,7 +200,7 @@ OK_SERVEREXT = {k: BUILD / f"serverext.{k}.ok" for k, v in SERVER_EXT.items()}
 # built artifacts
 EXAMPLE_HTML = [DIST_NBHTML / p.name.replace(".ipynb", ".html") for p in EXAMPLE_IPYNB]
 
-LINK_EXTENSIONS = [
+CMD_LINK_EXTENSIONS = [
     "jupyter",
     "labextension",
     "link",
@@ -209,7 +209,7 @@ LINK_EXTENSIONS = [
     *[v.parent for k, v in JS_PKG_JSON_LABEXT.items()],
 ]
 
-INSTALL_EXTENSIONS = [
+CMD_INSTALL_EXTENSIONS = [
     "jupyter",
     "labextension",
     "install",
@@ -218,6 +218,17 @@ INSTALL_EXTENSIONS = [
     *EXTENSIONS,
 ]
 
-INSTALL_ALL_EXTENSIONS = [*INSTALL_EXTENSIONS, *JS_TARBALL.values()]
+CMD_INSTALL_ALL_EXTENSIONS = [*CMD_INSTALL_EXTENSIONS, *JS_TARBALL.values()]
 
-LIST_EXTENSIONS = ["jupyter", "labextension", "list"]
+CMD_LIST_EXTENSIONS = ["jupyter", "labextension", "list"]
+
+CMD_DISABLE_EXTENSIONS = [
+    "jupyter",
+    "labextension",
+    "disable",
+    "@jupyterlab/extension-manager-extension",
+]
+
+CMD_BUILD = ["jupyter", "lab", "build", "--debug"]
+
+CMD_LAB = ["jupyter", "lab", "--no-browser", "--debug"]

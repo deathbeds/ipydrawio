@@ -222,6 +222,8 @@ def task_lab_build():
     """
 
     def _clean():
+        """ TODO: remove this hopefully once packages are up on npm
+        """
         subprocess.call(["jlpm", "cache", "clean"])
         subprocess.call(["jupyter", "lab", "clean", "--all"])
         return True
@@ -241,16 +243,11 @@ def task_lab_build():
         uptodate=[config_changed({"exts": P.EXTENSIONS})],
         actions=[
             _clean,
-            [
-                "jupyter",
-                "labextension",
-                "disable",
-                "@jupyterlab/extension-manager-extension",
-            ],
-            P.INSTALL_ALL_EXTENSIONS,
-            P.LIST_EXTENSIONS,
-            ["jupyter", "lab", "build", "--debug", *build_args],
-            P.LIST_EXTENSIONS,
+            P.CMD_DISABLE_EXTENSIONS,
+            P.CMD_INSTALL_ALL_EXTENSIONS,
+            P.CMD_LIST_EXTENSIONS,
+            [*P.CMD_BUILD, *build_args],
+            P.CMD_LIST_EXTENSIONS,
         ],
         targets=[P.LAB_INDEX],
     )
@@ -261,9 +258,7 @@ def task_lab():
     """
 
     def lab():
-        proc = subprocess.Popen(
-            ["jupyter", "lab", "--no-browser", "--debug"], stdin=subprocess.PIPE
-        )
+        proc = subprocess.Popen(P.CMD_LAB, stdin=subprocess.PIPE)
 
         try:
             proc.wait()
@@ -289,7 +284,10 @@ def task_watch():
         for sub_ns in (P.LAB_STAGING / "node_modules" / f"@{P.JS_NS}").glob(
             f"*/node_modules/@{P.JS_NS}"
         ):
+            print(f"Deleting {sub_ns.relative_to(P.LAB_STAGING)}", flush=True)
             shutil.rmtree(sub_ns)
+        else:
+            print(f"Nothing deleted in {P.LAB_STAGING}!", flush=True)
 
         jlpm_proc = subprocess.Popen(
             ["jlpm", "lerna", "run", "--parallel", "--stream", "watch"]
@@ -297,9 +295,7 @@ def task_watch():
 
         build_proc = subprocess.Popen(["jlpm", "watch"], cwd=P.LAB_STAGING)
 
-        lab_proc = subprocess.Popen(
-            ["jupyter", "lab", "--no-browser", "--debug"], stdin=subprocess.PIPE,
-        )
+        lab_proc = subprocess.Popen(P.CMD_LAB, stdin=subprocess.PIPE)
 
         try:
             lab_proc.wait()
@@ -319,11 +315,12 @@ def task_watch():
         uptodate=[lambda: False],
         file_dep=[*P.JS_TARBALL.values(), *P.OK_SERVEREXT.values()],
         actions=[
-            P.LIST_EXTENSIONS,
-            P.LINK_EXTENSIONS,
-            P.LIST_EXTENSIONS,
-            P.INSTALL_EXTENSIONS,
-            P.LIST_EXTENSIONS,
+            P.CMD_LIST_EXTENSIONS,
+            P.CMD_LINK_EXTENSIONS,
+            P.CMD_LIST_EXTENSIONS,
+            P.CMD_INSTALL_EXTENSIONS,
+            P.CMD_DISABLE_EXTENSIONS,
+            P.CMD_LIST_EXTENSIONS,
             PythonInteractiveAction(watch),
         ],
     )

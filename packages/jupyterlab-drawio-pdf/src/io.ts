@@ -62,6 +62,11 @@ export const PDF_PLAIN: IDiagramManager.IFormat = {
       body: query.toString(),
     });
 
+    if (response.status >= 400) {
+      console.warn('PDF export failed', response);
+      return null;
+    }
+
     const text = await response.text();
 
     return `application/pdf;base64,${text}`;

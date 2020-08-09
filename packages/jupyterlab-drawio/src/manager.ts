@@ -183,6 +183,11 @@ export class DiagramManager implements IDiagramManager {
         this._settings
       );
 
+      if (rawContent == null) {
+        this._status.status = `Failed to export to ${label}... please retry`;
+        return;
+      }
+
       this._status.status = `${stem} ready, saving...`;
 
       let model: Contents.IModel = await this._app.commands.execute(
