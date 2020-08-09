@@ -10,7 +10,7 @@ DOIT_CONFIG = dict(
     backend="sqlite3",
     verbosity=2,
     par_type="thread",
-    default_tasks=["lab_build:extensions"],
+    default_tasks=["setup", "lab_build:extensions"],
 )
 
 
