@@ -1,23 +1,42 @@
-# @deathbeds/jupyterlab-drawio [![binder-badge][]][binder]
+# @deathbeds/jupyterlab-drawio
 
 [Drawio][] diagrams for [JupyterLab][]. Forked with ❤️ from [QuantStack/jupyterlab-drawio][].
 
-> Quick Links:
->
 > **[Install](#installation)** &middot; > **[History](./CHANGELOG.md)** &middot; > **[Roadmap](./docs/ROADMAP.dio.ipynb)** &middot; > **[Contribute](./CONTRIBUTING.md)** &middot; > **[Open Source](#open-source)**
 
 [binder]: http://mybinder.org/v2/gh/deathbeds/jupyterlab-drawio/master?urlpath=lab
 [binder-badge]: https://mybinder.org/badge_logo.svg
 
+## Examples
+
+|                                                       Screenshot/Example | Note                                                                        |
+| -----------------------------------------------------------------------: | :-------------------------------------------------------------------------- |
+|                                              [![binder-badge][]][binder] | A Binder **demo** with a full [contributing](./CONTRIBUTING.md) environment |
+| [<img width="100" src="./docs/Poster.dio.svg" />](./docs/Poster.dio.svg) | The beginning of an interactive computational **poster**                    |
+|                         [~~Screenshot Needed~](./docs/ROADMAP.dio.ipynb) | A mixed computational/creative **roadmap** for this project                 |
+
 ## Features
 
-- Edit multi-page diagrams as SVG, PNG, or embedded in Jupyter Notebooks
-- Use all stencils and (almost all) plugins on [diagrams.net][drawio]
-- Export print-quality PDF from diagrams
+- Edit multi-page diagrams
+  - with nearly the same UI and features as [diagrams.net][drawio]
+  - in many file formats
+    - Drawio/mxgraph XML, SVG, PNG
+    - or Jupyter Notebooks
+
+> - Experimental: Export print-quality PDF from diagrams (_beware: some **heavy** dependencies_)
+>   - include editable Drawio metadata
 
 ## Usage
 
-> TBD
+- Try on [![binder-badge][]][binder]
+  - or follow the [Installation instructions](#installation) and **Start JupyterLab**
+- Import a `drawio` from [diagrams.net](https://diagrams.net) with the _[File Manager][]_
+  - or create a new <img src="./packages/jupyterlab-drawio/style/img/drawio.svg" width="24"/> _Diagram_ from the [Launcher][]
+- Use the _[Command Palette][]_ to _Export Diagram_ to various formats
+
+[command palette]: https://jupyterlab.readthedocs.io/en/stable/user/commands.html?highlight=command%20palette
+[launcher]: https://jupyterlab.readthedocs.io/en/stable/user/files.html?highlight=Launcher#creating-files-and-activities
+[file manager]: https://jupyterlab.readthedocs.io/en/stable/user/files.html
 
 ## Installation
 
