@@ -2,6 +2,9 @@
 
 [Drawio][] diagrams for [JupyterLab][]. Forked with ❤️ from [QuantStack/jupyterlab-drawio][].
 
+> > This is ALPHA software. Native drawio files created with these tools _should_ work
+> > with any other [drawio][] client, but any UI/API is liable to change at any time.
+
 > **[Install](#installation)** &middot; > **[History](./CHANGELOG.md)** &middot; > **[Roadmap](./docs/ROADMAP.dio.ipynb)** &middot; > **[Contribute](./CONTRIBUTING.md)** &middot; > **[Open Source](#open-source)**
 
 [binder]: http://mybinder.org/v2/gh/deathbeds/jupyterlab-drawio/master?urlpath=lab

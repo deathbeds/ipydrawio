@@ -11,5 +11,6 @@ dependencies:
   - jupyterlab >=2.2.4,<3.0.0a0
   - nodejs >=12,<13.0.0a0
   - pyflakes
+  - pytest
   - python
   - requests_cache
