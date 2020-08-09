@@ -9,6 +9,27 @@ if True:
     from scripts import project as P
 
 
+@pytest.fixture
+def the_changelog():
+    return (P.ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize(
+    "pkg,version",
+    [
+        *[[k, v] for k, v in P.PY_VERSION.items()],
+        *[
+            [v["name"], v["version"]]
+            for k, v in P.JS_PKG_DATA.items()
+            if not k.startswith("_")
+        ],
+    ],
+)
+def test_changelog(pkg, version, the_changelog):
+    version_string = f"## {pkg} {version}"
+    assert version_string in the_changelog, version_string
+
+
 def test_drawio_versions():
     dv = (P.JDW / "drawio/VERSION").read_text(encoding="utf-8")
     pdv = P.JS_PKG_DATA[P.JDW.name]["version"]

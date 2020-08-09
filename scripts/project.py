@@ -5,6 +5,7 @@
 import json
 import os
 import platform
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -139,6 +140,13 @@ PY_PACKAGES = ROOT / "py_packages"
 PY_SETUP = {p.parent.name: p for p in (ROOT / "py_packages").glob("*/setup.py")}
 PY_SRC = {k: sorted((v.parent / "src").rglob("*.py")) for k, v in PY_SETUP.items()}
 PY_SETUP_CFG = {k: v.parent / "setup.cfg" for k, v in PY_SETUP.items()}
+PY_VERSION = {
+    k: re.findall(
+        r"""__version__ = "([^"]+)""",
+        [vv for vv in v if vv.name == "_version.py"][0].read_text(),
+    )[0]
+    for k, v in PY_SRC.items()
+}
 JDE = PY_SETUP["jupyter-drawio-export"].parent
 PY_SDIST = {JDE.name: JDE / "dist" / f"{JDE.name}-0.8.0a0.tar.gz"}
 PY_WHEEL = {
