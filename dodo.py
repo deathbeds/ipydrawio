@@ -344,7 +344,9 @@ def task_integrity():
                 *[*P.PY_WHEEL.values()],
                 *[*P.PY_SDIST.values()],
             ],
-            actions=[["python", "-m", "pytest", "--pyargs", "scripts.integrity"]],
+            actions=[
+                ["python", "-m", "pytest", "--pyargs", "scripts.integrity", "-vv"]
+            ],
         ),
         P.OK_INTEGRITY,
     )
