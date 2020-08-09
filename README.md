@@ -12,7 +12,10 @@
 ## Installation
 
 ```bash
-# TBD: jupyter labextension install @deathbeds/jupyterlab-drawio
+# TBD:
+# jupyter labextension install @deathbeds/jupyterlab-drawio @deathbeds/jupyterlab-drawio-pdf
+# pip install jupyter-drawio-export
+# jupyter serverextension enable --sys-prefix --py jupyter_drawio_export
 ```
 
 > for now, see [CONTRIBUTING.md][].
