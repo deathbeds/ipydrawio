@@ -1,8 +1,13 @@
-# @deathbeds/jupyterlab-drawio
-
-[![Binder with JupyterLab](https://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/deathbeds/jupyterlab-drawio/master?urlpath=lab)
+# @deathbeds/jupyterlab-drawio [![binder-badge][]][binder]
 
 [Drawio][] diagrams for [JupyterLab][]. Forked with ❤️ from [QuantStack/jupyterlab-drawio][].
+
+> Quick Links:
+>
+> **[Install](#installation)** &middot; > **[History](./CHANGELOG.md)** &middot; > **[Roadmap](./docs/ROADMAP.dio.ipynb)** &middot; > **[Contribute](./CONTRIBUTING.md)** &middot; > **[Open Source](#open-source)**
+
+[binder]: http://mybinder.org/v2/gh/deathbeds/jupyterlab-drawio/master?urlpath=lab
+[binder-badge]: https://mybinder.org/badge_logo.svg
 
 ## Features
 
