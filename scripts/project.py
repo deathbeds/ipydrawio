@@ -134,6 +134,8 @@ JDW_LIB = JDW / "lib"
 JDW_IGNORE = JDW / ".npmignore"
 ALL_JDW_JS = JDW_LIB.glob("*.js")
 
+PY_PACKAGES = ROOT / "py_packages"
+
 PY_SETUP = {p.parent.name: p for p in (ROOT / "py_packages").glob("*/setup.py")}
 PY_SRC = {k: sorted((v.parent / "src").rglob("*.py")) for k, v in PY_SETUP.items()}
 
@@ -164,7 +166,7 @@ ALL_JSON = [
     *PACKAGES.glob("*/*.json"),
     *PACKAGES.glob("*/schema/*.json"),
 ]
-ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md")]
+ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md"), *PY_PACKAGES.glob("*/*.md")]
 ALL_TS = sum(JS_TSSRC.values(), [])
 ALL_CSS = sum(JS_STYLE.values(), [])
 ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS, *ALL_CSS]

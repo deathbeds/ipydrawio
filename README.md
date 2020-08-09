@@ -10,11 +10,9 @@
 - Use all stencils and (almost all) plugins on [diagrams.net][drawio]
 - Export print-quality PDF from diagrams
 
-
 ## Usage
 
 > TBD
-
 
 ## Installation
 
@@ -24,10 +22,10 @@
 - `nodejs >=10`
 
 > For example:
+>
 > ```bash
 > conda install -yc conda-forge jupyterlab=2.2 nodejs=12
 > ```
-
 
 ### Core Lab Extensions
 
@@ -58,13 +56,13 @@ dependencies. To enable all the bells and whistles get:
   - for more, see the [binder](./binder/apt.txt) and ~~CI~~.
 
 > For example:
+>
 > ```bash
 > conda install -yc conda-forge pypdf2 requests_cache nodejs=12
 > pip install jupyter-drawio-export
 > jupyter serverextension enable --sys-prefix --py jupyter_drawio_export
 > jupyter labextension install @deathbeds/jupyterlab-drawio-pdf
 > ```
-
 
 ## Open Source
 
@@ -81,6 +79,7 @@ Portions of the JupyterLab components are derived from [QuantStack/jupyterlab-dr
 The copyright holders of drawio and drawio-export is [jgraph](http://www.jgraph.com).
 
 The original source code vendored in this package from:
+
 - [@jgraph/drawio][]
 - [@jgraph/draw-image-export2][]
 
