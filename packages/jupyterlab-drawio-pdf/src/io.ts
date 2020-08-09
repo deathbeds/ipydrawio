@@ -3,6 +3,7 @@ import {
   IDiagramManager,
   DRAWIO_ICON_CLASS_RE,
   DRAWIO_ICON_SVG,
+  DEBUG,
 } from '@deathbeds/jupyterlab-drawio/lib/tokens';
 
 import { stripDataURI } from '@deathbeds/jupyterlab-drawio/lib/utils';
@@ -32,7 +33,7 @@ export const PDF_PLAIN: IDiagramManager.IFormat = {
     try {
       drawioExportUrl = (settings.composite['drawioExportUrl'] as any)['url'];
     } catch (err) {
-      console.warn(err);
+      DEBUG && console.warn('using fallback url', err);
     }
     if (drawioExportUrl.indexOf('./') !== 0) {
       console.error(`don't know how to handle non-relative URLs`);
@@ -47,13 +48,17 @@ export const PDF_PLAIN: IDiagramManager.IFormat = {
     let url = `${PageConfig.getBaseUrl()}${drawioExportUrl.slice(2)}`;
     url += url.endsWith('/') ? '' : '/';
     const query = new URLSearchParams();
+    // TODO: expose, understand, schematize this form API
     query.append('xml', xml);
     query.append('format', 'pdf');
     query.append('base64', '1');
 
-    const response = await fetch(`${url}?token=${PageConfig.getToken()}`, {
+    const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-XSRFToken': getCookie('_xsrf') || '',
+      },
       body: query.toString(),
     });
 
@@ -69,3 +74,9 @@ export const PDF_BRANDED = {
   key: 'pdf-editable',
   ext: '.dio.pdf',
 };
+
+function getCookie(name: string): string | undefined {
+  // From http://www.tornadoweb.org/en/stable/guide/security.html
+  const matches = document.cookie.match('\\b' + name + '=([^;]*)\\b');
+  return matches?.[1];
+}

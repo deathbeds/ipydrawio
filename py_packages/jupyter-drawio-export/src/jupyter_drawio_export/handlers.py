@@ -14,9 +14,9 @@ class BaseHandler(IPythonHandler):
 
 
 class PDFHandler(BaseHandler):
-    async def post(self, url):
-        self.manager.parent.log.warning("DIO %s %s", url, self.request.body)
+    async def post(self, url=None):
         params = {k: v[-1] for k, v in self.request.arguments.items()}
+        params.pop("_xsrf", None)
         pdf = await self.manager.pdf(params)
         self.finish(pdf)
 

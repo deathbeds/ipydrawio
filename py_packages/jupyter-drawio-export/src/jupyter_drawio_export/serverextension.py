@@ -10,7 +10,7 @@ def load_jupyter_server_extension(nbapp):
     """ create a DrawioExportManager and add handlers
     """
     nbapp.add_traits(drawio_manager=traitlets.Instance(DrawioExportManager))
-    manager = nbapp.drawio_manager = DrawioExportManager(parent=nbapp)
+    manager = nbapp.drawio_manager = DrawioExportManager(parent=nbapp, log=nbapp.log)
     manager.initialize()
     add_handlers(nbapp)
     nbapp.log.warning("drawio initialized %s", manager)
