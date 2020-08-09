@@ -22,6 +22,7 @@ export const PDF_PLAIN: IDiagramManager.IFormat = {
   key: 'pdf',
   label: 'PDF',
   mimetype: 'application/pdf',
+  modelName: 'base64',
   name: 'pdf',
   isExport: true,
   isBinary: true,

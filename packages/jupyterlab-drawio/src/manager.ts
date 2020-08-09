@@ -6,7 +6,7 @@ import {
 import { JupyterLab, ILayoutRestorer } from '@jupyterlab/application';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { PathExt } from '@jupyterlab/coreutils';
-import { IDiagramManager, TEXT_FACTORY, CommandIds } from './tokens';
+import { IDiagramManager, TEXT_FACTORY, CommandIds, DEBUG } from './tokens';
 import { DiagramWidget, DiagramFactory } from './editor';
 import { Contents } from '@jupyterlab/services';
 import { DrawioStatus } from './status';
@@ -90,8 +90,7 @@ export class DiagramManager implements IDiagramManager {
   }
   get activeWidget() {
     const { currentWidget } = this._app.shell;
-    for (const [namespace, tracker] of this._trackers.entries()) {
-      console.warn(namespace, tracker.currentWidget);
+    for (const tracker of this._trackers.values()) {
       if (tracker.currentWidget === currentWidget) {
         return tracker.currentWidget;
       }
@@ -128,6 +127,7 @@ export class DiagramManager implements IDiagramManager {
   }
 
   addFormat(format: IDiagramManager.IFormat) {
+    DEBUG && console.warn(`adding format ${format.name}`, format);
     if (this._formats.has(format.key)) {
       throw Error(`cannot reregister ${format.key}`);
     }
@@ -144,16 +144,18 @@ export class DiagramManager implements IDiagramManager {
     });
 
     if (format.isExport) {
+      DEBUG && console.warn(`...export ${format.name}`);
       this._initExportCommands(format);
     }
 
     this._initTracker(
-      format.format,
+      format.modelName,
       format.factoryName,
-      format.key,
+      `drawio-${format.key}`,
       [format],
       format.isDefault ? [format] : []
     );
+    DEBUG && console.warn(`...tracked ${format.name}`);
   }
 
   protected updateWidgetSettings(widget: DiagramWidget) {

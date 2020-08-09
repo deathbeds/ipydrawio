@@ -61,6 +61,7 @@ export namespace IDiagramManager {
     ) => Promise<T | null>;
     // factory info
     factoryName: string;
+    modelName: 'base64' | 'notebook' | 'text';
     // behavior switches
     isExport?: boolean;
     isBinary?: boolean;
