@@ -1,16 +1,12 @@
 import { LabIcon } from '@jupyterlab/ui-components';
 
 import DRAWIO_ICON_SVG from '../style/img/drawio.svg';
-import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
-import { NotebookModel } from '@jupyterlab/notebook';
 
 import {
-  DRAWIO_METADATA,
   IDiagramManager,
   DRAWIO_ICON_CLASS_RE,
   TEXT_FACTORY,
   BINARY_FACTORY,
-  JSON_FACTORY,
 } from './tokens';
 
 import { stripDataURI, unbase64SVG } from './utils';
@@ -28,11 +24,6 @@ export const drawioSvgIcon = new LabIcon({
 export const drawioPngIcon = new LabIcon({
   name: 'drawio:png',
   svgstr: DRAWIO_ICON_SVG.replace(DRAWIO_ICON_CLASS_RE, 'jp-icon-contrast0'),
-});
-
-export const drawioIpynbIcon = new LabIcon({
-  name: 'drawio:ipynb',
-  svgstr: DRAWIO_ICON_SVG.replace(DRAWIO_ICON_CLASS_RE, 'jp-icon-contrast3'),
 });
 
 export const XML_NATIVE: IDiagramManager.IFormat = {
@@ -122,53 +113,6 @@ export const PNG_EDITABLE: IDiagramManager.IFormat = {
   isDefault: true,
 };
 
-export const IPYNB_EDITABLE: IDiagramManager.IFormat<any> = {
-  ext: '.dio.ipynb',
-  factoryName: `${JSON_FACTORY} (Notebook)`,
-  key: 'ipynb',
-  format: 'json',
-  icon: drawioIpynbIcon,
-  label: 'Diagram Notebook',
-  mimetype: 'application/x-ipynb+json',
-  name: 'dionotebook',
-  pattern: '.*.dio.ipynb$',
-  contentType: 'notebook',
-  modelName: 'notebook',
-  isJson: true,
-  isEditable: true,
-  isExport: true,
-  isDefault: true,
-  save: (raw) => {
-    return raw;
-  },
-  fromXML: (model: NotebookModel, xml) => {
-    const meta = model.metadata.get(
-      DRAWIO_METADATA
-    ) as ReadonlyPartialJSONObject;
-    model.metadata.set(DRAWIO_METADATA, { ...(meta || {}), xml });
-  },
-  toXML: (model: NotebookModel) => {
-    const meta = model.metadata.get(
-      DRAWIO_METADATA
-    ) as ReadonlyPartialJSONObject;
-    return meta?.xml ? `${meta.xml}` : '';
-  },
-  exporter: async (widget, key, settings) => {
-    const xml = (widget.context.model as any).value.text;
-    const newModel = new NotebookModel();
-    newModel.metadata.set(DRAWIO_METADATA, { xml });
-    return newModel.toJSON();
-  },
-};
-
-export const EXPORT_FORMATS = [
-  PNG_EDITABLE,
-  PNG_PLAIN,
-  SVG_EDITABLE,
-  SVG_PLAIN,
-  IPYNB_EDITABLE,
-];
-
 export const ALL_BINARY_FORMATS = [PNG_PLAIN, PNG_EDITABLE];
 
 export const ALL_TEXT_FORMATS = [
@@ -178,13 +122,4 @@ export const ALL_TEXT_FORMATS = [
   XML_LEGACY,
 ];
 
-export const ALL_JSON_FORMATS = [IPYNB_EDITABLE];
-
-export const DEFAULT_TEXT_FORMATS = [SVG_EDITABLE, XML_NATIVE, XML_LEGACY];
-export const DEFAULT_BINARY_FORMATS = [PNG_EDITABLE];
-export const DEFAULT_JSON_FORMATS = [IPYNB_EDITABLE];
-export const ALL_FORMATS = [
-  ...ALL_BINARY_FORMATS,
-  ...ALL_TEXT_FORMATS,
-  ...ALL_JSON_FORMATS,
-];
+export const ALL_FORMATS = [...ALL_BINARY_FORMATS, ...ALL_TEXT_FORMATS];

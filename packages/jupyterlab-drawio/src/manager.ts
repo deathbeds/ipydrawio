@@ -56,15 +56,21 @@ export class DiagramManager implements IDiagramManager {
   }
 
   isExportable(mimetype: string) {
-    return this.formatForType(mimetype) != null;
+    return this.formatForModel({ mimetype } as any) != null;
   }
 
-  formatForType(mimetype: string) {
+  formatForModel(contentsModel: Contents.IModel) {
+    const { mimetype } = contentsModel;
+
     for (const fmt of this._formats.values()) {
       if (fmt.mimetype === mimetype && fmt.isExport) {
         return fmt;
       }
+      if (fmt.wantsModel != null && fmt.wantsModel(contentsModel)) {
+        return fmt;
+      }
     }
+
     return null;
   }
 

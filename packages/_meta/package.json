@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "@deathbeds/jupyterlab-drawio-pdf": "file:../jupyterlab-drawio-pdf",
+    "@deathbeds/jupyterlab-drawio-notebook": "file:../jupyterlab-drawio-notebook",
     "@deathbeds/jupyterlab-drawio": "file:../jupyterlab-drawio"
   },
   "devDependencies": {

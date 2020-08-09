@@ -23,8 +23,6 @@ import {
   DocumentWidget,
 } from '@jupyterlab/docregistry';
 
-import * as IO from './io';
-
 import '../style/index.css';
 import { IDiagramManager, DEBUG } from './tokens';
 
@@ -343,14 +341,7 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
     if (this.context.contentsModel == null) {
       return null;
     }
-    const { mimetype } = this.context.contentsModel;
-    let format = this._manager.formatForType(mimetype);
-    if (format == null) {
-      // TODO: better than this
-      if (this.context.contentsModel.type === 'notebook') {
-        return IO.IPYNB_EDITABLE;
-      }
-    }
+    let format = this._manager.formatForModel(this.context.contentsModel);
     return format || null;
   }
 

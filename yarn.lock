@@ -64,6 +64,12 @@
     classnames "^2.2"
     tslib "~1.10.0"
 
+"@deathbeds/jupyterlab-drawio-notebook@file:packages/jupyterlab-drawio-notebook":
+  version "0.8.0-alpha0"
+  dependencies:
+    "@deathbeds/jupyterlab-drawio" "0.8.0-alpha0"
+    "@jupyterlab/notebook" "^2.0.0"
+
 "@deathbeds/jupyterlab-drawio-pdf@file:packages/jupyterlab-drawio-pdf":
   version "0.8.0-alpha0"
   dependencies:
@@ -80,7 +86,6 @@
     "@jupyterlab/filebrowser" "^2.0.0"
     "@jupyterlab/launcher" "^2.0.0"
     "@jupyterlab/mainmenu" "^2.0.0"
-    "@jupyterlab/notebook" "^2.0.0"
     "@jupyterlab/settingregistry" "^2.0.0"
 
 "@evocateur/libnpmaccess@^3.1.2":

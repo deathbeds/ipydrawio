@@ -8,12 +8,6 @@
   "references": [
     {
       "path": "../jupyterlab-drawio"
-    },
-    {
-      "path": "../jupyterlab-drawio-pdf"
-    },
-    {
-      "path": "../jupyterlab-drawio-notebook"
     }
   ]
 }

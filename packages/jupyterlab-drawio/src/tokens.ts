@@ -29,7 +29,9 @@ export const DEBUG = window.location.hash.indexOf('DRAWIO_DEBUG') > -1;
 export interface IDiagramManager {
   addFormat(format: IDiagramManager.IFormat): void;
   isExportable(mimetype: string): boolean;
-  formatForType(mimetype: string): IDiagramManager.IFormat | null;
+  formatForModel(
+    contentsModel: Contents.IModel
+  ): IDiagramManager.IFormat | null;
   activeWidget: DiagramWidget | null;
   drawioURL: string;
 }
@@ -62,6 +64,7 @@ export namespace IDiagramManager {
     // factory info
     factoryName: string;
     modelName: 'base64' | 'notebook' | 'text';
+    wantsModel?(contentsModel: Contents.IModel): boolean;
     // behavior switches
     isExport?: boolean;
     isBinary?: boolean;

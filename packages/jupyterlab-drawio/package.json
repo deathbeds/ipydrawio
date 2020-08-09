@@ -12,7 +12,6 @@
     "@jupyterlab/filebrowser": "^2.0.0",
     "@jupyterlab/launcher": "^2.0.0",
     "@jupyterlab/mainmenu": "^2.0.0",
-    "@jupyterlab/notebook": "^2.0.0",
     "@jupyterlab/settingregistry": "^2.0.0"
   },
   "description": "A JupyterLab extension for embedding drawio / mxgraph.",
