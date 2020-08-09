@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## @deathbeds/jupyterlab-drawio-pdf 0.8.0-alpha0 (unreleased)
+
+- depends on `@deathbeds/jupyterlab-drawio`
+
+## @deathbeds/jupyterlab-drawio-notebook 0.8.0-alpha0 (unreleased)
+
+- depends on `@deathbeds/jupyterlab-drawio`
+
 ## @deathbeds/jupyterlab-drawio 0.8.0-alpha0 (unreleased)
 
 - depends on `@deathbeds/jupyterlab-drawio-webpack`
