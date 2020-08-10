@@ -12,11 +12,12 @@
 
 ## Examples
 
-|                                                       Screenshot/Example | Note                                                                        |
-| -----------------------------------------------------------------------: | :-------------------------------------------------------------------------- |
-|                                              [![binder-badge][]][binder] | A Binder **demo** with a full [contributing](./CONTRIBUTING.md) environment |
-| [<img width="100" src="./docs/Poster.dio.svg" />](./docs/Poster.dio.svg) | The beginning of an interactive computational **poster**                    |
-|                         [~~Screenshot Needed~](./docs/ROADMAP.dio.ipynb) | A mixed computational/creative **roadmap** for this project                 |
+|                                                                             Screenshot/Example | Note                                                                        |
+| ---------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------- |
+|                                                                    [![binder-badge][]][binder] | A Binder **demo** with a full [contributing](./CONTRIBUTING.md) environment |
+| [<img width="100" src="./docs/_static/images/poster.png" />](./docs/_static/images/poster.png) | Screenshot of drawio "minimal" UI with export options                       |
+|                       [<img width="100" src="./docs/Poster.dio.svg" />](./docs/Poster.dio.svg) | The beginning of an interactive computational **poster**                    |
+|                                               [~~Screenshot Needed~](./docs/ROADMAP.dio.ipynb) | A mixed computational/creative **roadmap** for this project                 |
 
 ## Features
 
