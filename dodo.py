@@ -137,7 +137,7 @@ def task_lint():
     yield _ok(
         dict(
             name="eslint",
-            file_dep=[P.YARN_INTEGRITY, *P.ALL_PRETTIER, P.OK_PRETTIER],
+            file_dep=[P.YARN_INTEGRITY, *P.ALL_TS, P.OK_PRETTIER],
             actions=[["jlpm", "eslint"]],
         ),
         P.OK_ESLINT,

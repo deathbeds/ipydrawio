@@ -7,7 +7,7 @@
 
 > **[Install](#installation)** &middot; > **[History](./CHANGELOG.md)** &middot; > **[Roadmap](./docs/ROADMAP.dio.ipynb)** &middot; > **[Contribute](./CONTRIBUTING.md)** &middot; > **[Open Source](#open-source)**
 
-[binder]: http://mybinder.org/v2/gh/deathbeds/jupyterlab-drawio/master?urlpath=lab
+[binder]: http://mybinder.org/v2/gh/deathbeds/jupyterlab-drawio/master?urlpath=lab/tree/docs/Poster.dio.svg
 [binder-badge]: https://mybinder.org/badge_logo.svg
 
 ## Examples
