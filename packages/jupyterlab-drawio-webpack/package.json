@@ -3,7 +3,9 @@
   "bugs": {
     "url": "https://github.com/deathbeds/jupyterlab-drawio/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@jupyterlab/application": "^2.0.0"
+  },
   "description": "A webpack-ready repackaging of drawio",
   "devDependencies": {},
   "homepage": "https://github.com/deathbeds/jupyterlab-drawio",
