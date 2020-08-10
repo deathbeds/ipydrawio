@@ -2,10 +2,12 @@
 
 [Drawio][] diagrams for [JupyterLab][]. Forked with ❤️ from [QuantStack/jupyterlab-drawio][].
 
+> **[Install](#installation)** &middot; > **[History](./CHANGELOG.md)** &middot; > **[Roadmap](./docs/ROADMAP.dio.ipynb)** &middot; > **[Contribute](./CONTRIBUTING.md)** &middot; > **[Open Source](#open-source)**
+
+> > ![.github/workflows/ci.yml](https://github.com/deathbeds/jupyterlab-drawio/workflows/.github/workflows/ci.yml/badge.svg)
+> >
 > > This is ALPHA software. Native drawio files created with these tools _should_ work
 > > with any other [drawio][] client, but any UI/API is liable to change at any time.
-
-> **[Install](#installation)** &middot; > **[History](./CHANGELOG.md)** &middot; > **[Roadmap](./docs/ROADMAP.dio.ipynb)** &middot; > **[Contribute](./CONTRIBUTING.md)** &middot; > **[Open Source](#open-source)**
 
 [binder]: http://mybinder.org/v2/gh/deathbeds/jupyterlab-drawio/master?urlpath=lab/tree/docs/Poster.dio.svg
 [binder-badge]: https://mybinder.org/badge_logo.svg
@@ -86,7 +88,7 @@ dependencies. To enable all the bells and whistles get:
 > For example:
 >
 > ```bash
-> conda install -yc conda-forge pypdf2 requests_cache nodejs=12
+> conda install -yc conda-forge pypdf2 requests_cache nodejs
 > pip install jupyter-drawio-export
 > jupyter serverextension enable --sys-prefix --py jupyter_drawio_export
 > jupyter labextension install @deathbeds/jupyterlab-drawio-pdf
