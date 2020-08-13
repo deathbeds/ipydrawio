@@ -98,24 +98,6 @@ def task_lint():
 
     yield _ok(
         dict(
-            name="robot:tidy",
-            file_dep=P.ALL_ROBOT,
-            actions=[[*P.PYM, "robot.tidy", "--inplace", *P.ALL_ROBOT]],
-        ),
-        P.OK_ROBOTIDY,
-    )
-
-    yield _ok(
-        dict(
-            name="robot:dryrun",
-            file_dep=[*P.ALL_ROBOT, P.OK_ROBOTIDY],
-            actions=[[*P.PYM, "scripts.atest", "--dryrun", "--console", "quiet"]],
-        ),
-        P.OK_ROBOT_DRYRUN,
-    )
-
-    yield _ok(
-        dict(
             name="isort", file_dep=[*P.ALL_PY], actions=[["isort", "-rc", *P.ALL_PY]],
         ),
         P.OK_ISORT,
@@ -173,6 +155,33 @@ def task_lint():
             ],
         ),
         P.OK_LINT,
+    )
+
+    yield _ok(
+        dict(
+            name="robot:tidy",
+            file_dep=P.ALL_ROBOT,
+            actions=[[*P.PYM, "robot.tidy", "--inplace", *P.ALL_ROBOT]],
+        ),
+        P.OK_ROBOTIDY,
+    )
+
+    yield _ok(
+        dict(
+            name="robot:lint",
+            file_dep=[*P.ALL_ROBOT, P.OK_ROBOTIDY],
+            actions=[["rflint", *P.RFLINT_OPTS, *P.ALL_ROBOT]],
+        ),
+        P.OK_RFLINT,
+    )
+
+    yield _ok(
+        dict(
+            name="robot:dryrun",
+            file_dep=[*P.ALL_ROBOT, P.OK_RFLINT],
+            actions=[[*P.PYM, "scripts.atest", "--dryrun"]],
+        ),
+        P.OK_ROBOT_DRYRUN,
     )
 
 
@@ -379,10 +388,11 @@ def task_test():
         dict(
             name="robot",
             file_dep=[
-                P.SCRIPTS / "atest.py",
+                *P.ALL_ROBOT,
                 P.LAB_INDEX,
                 P.OK_PROVISION,
                 P.OK_ROBOT_DRYRUN,
+                P.SCRIPTS / "atest.py",
             ],
             actions=[["python", "-m", "scripts.atest"]],
         ),

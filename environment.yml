@@ -18,6 +18,7 @@ dependencies:
   - python
   - requests_cache
   - robotframework
+  - robotframework-lint
   - robotframework-seleniumlibrary
   - twine
   - wheel
