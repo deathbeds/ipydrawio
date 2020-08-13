@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     jupyterlab-drawio
-Resource          Keywords.robot
-Resource          Variables.robot
+Resource          _Keywords.robot
+Resource          _Variables.robot
 Suite Setup       Setup Server and Browser
 Suite Teardown    Tear Down Everything
 Test Setup        Reset Application State

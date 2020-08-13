@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation     smoke tests
-Resource          Keywords.robot
+Resource          _Keywords.robot
 
 *** Test Cases ***
 Smoke

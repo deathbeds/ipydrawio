@@ -1,5 +1,5 @@
 *** Settings ***
-Resource          Variables.robot
+Resource          _Variables.robot
 Library           SeleniumLibrary
 Library           OperatingSystem
 Library           Process
