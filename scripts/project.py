@@ -21,6 +21,7 @@ PREFIX = Path(sys.prefix)
 SCRIPTS = Path(__file__).parent.resolve()
 ROOT = SCRIPTS.parent
 BINDER = ROOT / "binder"
+PY_MAJOR = "".join(map(str, sys.version_info[:2]))
 
 # top-level stuff
 NODE_MODULES = ROOT / "node_modules"
@@ -71,6 +72,8 @@ EXAMPLE_IPYNB = [
     p for p in EXAMPLES.rglob("*.ipynb") if ".ipynb_checkpoints" not in str(p)
 ]
 DIST_NBHTML = DIST / "nbsmoke"
+ATEST = ROOT / "atest"
+ATEST_OUT = ATEST / "output"
 
 # js packages
 JS_NS = "deathbeds"
@@ -177,6 +180,7 @@ ALL_JSON = [
 ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md"), *PY_PACKAGES.glob("*/*.md")]
 ALL_TS = sum(JS_TSSRC.values(), [])
 ALL_CSS = sum(JS_STYLE.values(), [])
+ALL_ROBOT = [*ATEST.rglob("*.robot")]
 ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS, *ALL_CSS]
 
 # package: [dependencies, targets]
@@ -200,6 +204,7 @@ OK_BLACK = BUILD / "black.ok"
 OK_FLAKE8 = BUILD / "flake8.ok"
 OK_ISORT = BUILD / "isort.ok"
 OK_LINT = BUILD / "lint.ok"
+OK_ROBOTIDY = BUILD / "robot.tidy.ok"
 OK_PYFLAKES = BUILD / "pyflakes.ok"
 OK_PRETTIER = BUILD / "prettier.ok"
 OK_ESLINT = BUILD / "eslint.ok"
@@ -208,6 +213,8 @@ OK_JS_BUILD = BUILD / "js.build.ok"
 OK_PYSETUP = {k: BUILD / f"pysetup.{k}.ok" for k, v in PY_SETUP.items()}
 OK_SERVEREXT = {k: BUILD / f"serverext.{k}.ok" for k, v in SERVER_EXT.items()}
 OK_PROVISION = BUILD / "provision.ok"
+OK_ROBOT_DRYRUN = BUILD / "robot.dryrun.ok"
+OK_ATEST = BUILD / "atest.ok"
 
 # built artifacts
 EXAMPLE_HTML = [DIST_NBHTML / p.name.replace(".ipynb", ".html") for p in EXAMPLE_IPYNB]

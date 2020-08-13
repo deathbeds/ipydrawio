@@ -98,6 +98,24 @@ def task_lint():
 
     yield _ok(
         dict(
+            name="robot:tidy",
+            file_dep=P.ALL_ROBOT,
+            actions=[[*P.PYM, "robot.tidy", "--inplace", *P.ALL_ROBOT]],
+        ),
+        P.OK_ROBOTIDY,
+    )
+
+    yield _ok(
+        dict(
+            name="robot:dryrun",
+            file_dep=[*P.ALL_ROBOT, P.OK_ROBOTIDY],
+            actions=[[*P.PYM, "scripts.atest", "--dryrun", "--console", "quiet"]],
+        ),
+        P.OK_ROBOT_DRYRUN,
+    )
+
+    yield _ok(
+        dict(
             name="isort", file_dep=[*P.ALL_PY], actions=[["isort", "-rc", *P.ALL_PY]],
         ),
         P.OK_ISORT,
@@ -333,14 +351,15 @@ def task_provision():
 
 def task_all():
     return dict(
-        file_dep=[P.OK_INTEGRITY, P.OK_PROVISION],
+        file_dep=[P.OK_INTEGRITY, P.OK_PROVISION, P.OK_ATEST],
         actions=[lambda: [print("nothing left to do"), True][1]],
     )
 
 
-def task_integrity():
-    return _ok(
+def task_test():
+    yield _ok(
         dict(
+            name="integrity",
             file_dep=[
                 P.SCRIPTS / "integrity.py",
                 P.LAB_INDEX,
@@ -354,6 +373,20 @@ def task_integrity():
             ],
         ),
         P.OK_INTEGRITY,
+    )
+
+    yield _ok(
+        dict(
+            name="robot",
+            file_dep=[
+                P.SCRIPTS / "atest.py",
+                P.LAB_INDEX,
+                P.OK_PROVISION,
+                P.OK_ROBOT_DRYRUN,
+            ],
+            actions=[["python", "-m", "scripts.atest"]],
+        ),
+        P.OK_ATEST,
     )
 
 

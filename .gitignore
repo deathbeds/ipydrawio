@@ -7,10 +7,11 @@ __pycache__
 *.pdf
 *.sqlite
 *.tgz
+*.tsbuildinfo
+atest/output/
 build/
 dist/
 envs/
 node_modules/
 untitled*
 Untitled*
-*.tsbuildinfo
