@@ -9,6 +9,7 @@ on:
 env:
   PYTHONUNBUFFERED: 1
   PYTHONIOENCODING: utf-8
+  ATEST_RETRIES: 3
 
 jobs:
   ci:
