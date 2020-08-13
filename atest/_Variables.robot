@@ -29,3 +29,9 @@ ${DIO PLUGIN ID}    @deathbeds/jupyterlab-drawio:plugin
 ${DIO PLUGIN SETTINGS FILE}    @deathbeds${/}jupyterlab-drawio${/}plugin.jupyterlab-settings
 ${CSS USER SETTINGS}    .jp-SettingsRawEditor-user
 ${JLAB XP CLOSE SETTINGS}    ${JLAB XP DOCK TAB}\[contains(., 'Settings')]/*[contains(@class, 'm-TabBar-tabCloseIcon')]
+# launcher
+${XP LAUNCH TAB}    ${JLAB XP DOCK TAB}//*[contains(text(), 'Launcher')]
+${CSS LAUNCHER}    css:.jp-Launcher-body
+${CSS LAUNCH DIO}    css:.jp-LauncherCard[title='Create a new dio file'] svg
+${CSS DIO READY}    css:.jp-Diagram-ready
+${CSS DIO IFRAME}    ${CSS DIO READY} iframe

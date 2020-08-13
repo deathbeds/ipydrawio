@@ -68,7 +68,7 @@ Tear Down Everything
 
 Wait For Splash
     Go To    ${URL}lab?reset&token=${TOKEN}
-    Set Window Size    1024    768
+    Set Window Size    1920    1080
     Wait Until Page Contains Element    ${SPLASH}    timeout=30s
     Wait Until Page Does Not Contain Element    ${SPLASH}    timeout=10s
     Execute Javascript    window.onbeforeunload \= function (){}
@@ -77,7 +77,7 @@ Open JupyterLab
     Set Environment Variable    MOZ_HEADLESS    ${HEADLESS}
     ${firefox} =    Get Firefox Binary
     ${geckodriver} =    Which    geckodriver
-    ${service args} =    Create List    --log    debug
+    ${service args} =    Create List    --log    warn
     Create WebDriver    Firefox
     ...    executable_path=${geckodriver}
     ...    firefox_binary=${firefox}
@@ -124,8 +124,8 @@ Ensure All Kernels Are Shut Down
     Run Keyword If    ${els.__len__()}    Click Element    ${accept}
 
 Open Command Palette
-    Press Keys    id:main    ${ACCEL}+SHIFT+c
-    Wait Until Page Contains Element    ${CMD PALETTE INPUT}
+    Ensure Command Palette is Open
+    Wait Until Element Is Visible    ${CMD PALETTE INPUT}
     Click Element    ${CMD PALETTE INPUT}
 
 Enter Command Name
@@ -170,14 +170,22 @@ Open With JupyterLab Menu
     END
 
 Ensure File Browser is Open
-    ${sel} =    Set Variable    css:.lm-TabBar-tab[data-id="filebrowser"]:not(.lm-mod-current)
+    ${sel} =    Set Variable
+    ...    css:.lm-TabBar-tab[data-id="filebrowser"]:not(.lm-mod-current)
+    ${els} =    Get WebElements    ${sel}
+    Run Keyword If    ${els.__len__()}    Click Element    ${sel}
+
+Ensure Command Palette is Open
+    ${sel} =    Set Variable
+    ...    css:.lm-TabBar-tab[data-id="command-palette"]:not(.lm-mod-current)
     ${els} =    Get WebElements    ${sel}
     Run Keyword If    ${els.__len__()}    Click Element    ${sel}
 
 Ensure Sidebar Is Closed
     [Arguments]    ${side}=left
     ${els} =    Get WebElements    css:#jp-${side}-stack
-    Run Keyword If    ${els.__len__()}    Click Element    css:.jp-mod-${side} .lm-TabBar-tab.lm-mod-current
+    Run Keyword If    ${els.__len__()}
+    ...    Click Element    css:.jp-mod-${side} .lm-TabBar-tab.lm-mod-current
 
 Open Context Menu for File
     [Arguments]    ${file}

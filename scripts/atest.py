@@ -97,6 +97,11 @@ def atest(attempt, extra_args):
         return 0
     except SystemExit as err:
         return err.code
+    finally:
+        for dot_dir in out_dir.rglob(".*/"):
+            if dot_dir.is_dir():
+                print("cleaning", dot_dir, flush=True)
+                shutil.rmtree(dot_dir)
 
 
 def attempt_atest_with_retries(*extra_args):
