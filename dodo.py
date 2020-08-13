@@ -390,6 +390,7 @@ def task_test():
             file_dep=[
                 *P.ALL_ROBOT,
                 P.LAB_INDEX,
+                P.OK_INTEGRITY,
                 P.OK_PROVISION,
                 P.OK_ROBOT_DRYRUN,
                 P.SCRIPTS / "atest.py",
