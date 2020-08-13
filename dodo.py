@@ -248,9 +248,6 @@ def task_lab_build():
     """ do a "production" build of lab
     """
 
-    def _build():
-        return subprocess.call() == 0
-
     file_dep = sorted(P.JS_TARBALL.values())
 
     build_args = ["--dev-build=False", "--minimize=True"]
@@ -259,16 +256,17 @@ def task_lab_build():
 
     yield dict(
         name="extensions",
-        file_dep=file_dep,
+        file_dep=[*file_dep, P.OVERRIDES],
         uptodate=[config_changed({"exts": P.EXTENSIONS})],
         actions=[
             P.CMD_DISABLE_EXTENSIONS,
             P.CMD_INSTALL_ALL_EXTENSIONS,
             P.CMD_LIST_EXTENSIONS,
+            P._override_lab,
             [*P.CMD_BUILD, *build_args],
             P.CMD_LIST_EXTENSIONS,
         ],
-        targets=[P.LAB_INDEX],
+        targets=[P.LAB_INDEX, P.LAB_OVERRIDES, P.LAB_LOCK],
     )
 
 
@@ -339,6 +337,7 @@ def task_watch():
             P.CMD_LIST_EXTENSIONS,
             P.CMD_INSTALL_EXTENSIONS,
             P.CMD_DISABLE_EXTENSIONS,
+            P._override_lab,
             P.CMD_LIST_EXTENSIONS,
             PythonInteractiveAction(watch),
         ],
@@ -390,6 +389,7 @@ def task_test():
             file_dep=[
                 *P.ALL_ROBOT,
                 P.LAB_INDEX,
+                P.LAB_OVERRIDES,
                 P.OK_INTEGRITY,
                 P.OK_PROVISION,
                 P.OK_ROBOT_DRYRUN,

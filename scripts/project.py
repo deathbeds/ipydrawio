@@ -30,6 +30,7 @@ PACKAGES = ROOT / "packages"
 YARN_INTEGRITY = NODE_MODULES / ".yarn-integrity"
 YARN_LOCK = ROOT / "yarn.lock"
 EXTENSIONS_FILE = BINDER / "labextensions.txt"
+OVERRIDES = ROOT / "overrides.json"
 EXTENSIONS = sorted(
     [
         line.strip()
@@ -65,6 +66,7 @@ LAB_STAGING = LAB_APP_DIR / "staging"
 LAB_LOCK = LAB_STAGING / "yarn.lock"
 LAB_STATIC = LAB_APP_DIR / "static"
 LAB_INDEX = LAB_STATIC / "index.html"
+LAB_OVERRIDES = LAB_APP_DIR / "settings" / "overrides.json"
 
 # tests
 EXAMPLES = ROOT / "notebooks"
@@ -235,6 +237,7 @@ OK_ATEST = BUILD / "atest.ok"
 # built artifacts
 EXAMPLE_HTML = [DIST_NBHTML / p.name.replace(".ipynb", ".html") for p in EXAMPLE_IPYNB]
 
+# long lab commands
 CMD_LINK_EXTENSIONS = [
     "jupyter",
     "labextension",
@@ -267,3 +270,13 @@ CMD_DISABLE_EXTENSIONS = [
 CMD_BUILD = ["jupyter", "lab", "build", "--debug"]
 
 CMD_LAB = ["jupyter", "lab", "--no-browser", "--debug"]
+
+
+def _override_lab():
+    if LAB_OVERRIDES.exists():
+        LAB_OVERRIDES.unlink()
+
+    if not LAB_OVERRIDES.parent.exists():
+        LAB_OVERRIDES.parent.mkdir(parents=True)
+
+    shutil.copy2(OVERRIDES, LAB_OVERRIDES)
