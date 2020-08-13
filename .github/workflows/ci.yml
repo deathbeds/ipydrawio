@@ -62,3 +62,10 @@ jobs:
           call C:\Miniconda\Scripts\deactivate
           call C:\Miniconda\Scripts\activate C:\Miniconda\envs\jupyterlab-drawio
           doit all || doit all
+
+      - name: report (robot)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: RF${{ github.run_number }} ${{ matrix.os }}
+          path: ./atest/output
