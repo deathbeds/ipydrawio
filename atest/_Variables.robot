@@ -35,3 +35,8 @@ ${CSS LAUNCHER}    css:.jp-Launcher-body
 ${CSS LAUNCH DIO}    css:.jp-LauncherCard[title='Create a new dio file'] svg
 ${CSS DIO READY}    css:.jp-Diagram-ready
 ${CSS DIO IFRAME}    ${CSS DIO READY} iframe
+# drawio
+${CSS DIO BG}     css:.geBackgroundPage
+${CSS DIO SHAPE MENU}    css:.geToolbarContainer.geSidebarContainer.geSidebar
+${CSS DIO SHAPE MENU SHAPE}    ${CSS DIO SHAPE MENU} .geItem
+${CSS DIO EDITABLE}    css:.mxCellEditor.geContentEditable

@@ -195,6 +195,7 @@ RFLINT_OPTS = sum(
             "RequireKeywordDocumentation",
             "TooFewKeywordSteps",
             "RequireKeywordDocumentation",
+            "TooFewTestSteps",
         ]
     ],
     [],

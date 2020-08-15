@@ -16,6 +16,7 @@ Setup Server and Browser
     ${token} =    Generate Random String
     Set Global Variable    ${TOKEN}    ${token}
     ${home} =    Set Variable    ${OUTPUT DIR}${/}home
+    Set Global Variable    ${HOME}    ${home}
     ${root} =    Normalize Path    ${OUTPUT DIR}${/}..${/}..${/}..
     Create Directory    ${home}
     Create Notebok Server Config    ${home}
