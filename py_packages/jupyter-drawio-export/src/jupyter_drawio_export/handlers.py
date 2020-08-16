@@ -32,7 +32,7 @@ class PDFHandler(BaseHandler):
     async def post(self, url=None):
         params = {k: v[-1] for k, v in self.request.arguments.items()}
         params.pop("_xsrf", None)
-        pdf = await self.manager.pdf(params)
+        pdf = await self.manager.pdf([params])
         self.finish(pdf)
 
 

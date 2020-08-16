@@ -17,29 +17,34 @@ limitations under the License.
 """
 import asyncio
 import atexit
-import base64
 import os
 import shutil
 import socket
 import subprocess
 import sys
+import tempfile
+import urllib
+from base64 import b64decode, b64encode
 from concurrent.futures import ThreadPoolExecutor
+from io import BytesIO
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+import lxml.etree as E
 from jupyterlab.commands import get_app_dir
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from PIL import Image
+from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 from requests import Session
 from requests_cache import CachedSession
 from tornado.concurrent import run_on_executor
 from traitlets import Bool, Dict, Instance, Int, Unicode, default
 from traitlets.config import LoggingConfigurable
 
+from .constants import DRAWIO_APP, PNG_DRAWIO_INFO
+
 VEND = Path(__file__).parent / "vendor" / "draw-image-export2"
 
-DRAWIO_STATIC = Path(get_app_dir()) / (
-    "static/node_modules/@deathbeds/jupyterlab-drawio-webpack/drawio/src/main/webapp"
-)
+DRAWIO_STATIC = Path(get_app_dir()) / DRAWIO_APP
 
 JLPM = shutil.which("jlpm")
 
@@ -65,10 +70,17 @@ class DrawioExportManager(LoggingConfigurable):
     def initialize(self):
         atexit.register(self.stop_server)
 
-    async def pdf(self, pdf_request):
+    async def pdf(self, pdf_requests):
         if not self._server:
             await self.start_server()
-        return await self._pdf(pdf_request)
+
+        for pdf_request in pdf_requests:
+            pdf_request["pdf"] = await self._pdf(pdf_request)
+
+        if len(pdf_requests) == 1:
+            return pdf_requests[0]["pdf"]
+
+        return await self._merge(pdf_requests)
 
     def stop_server(self):
         if self._server is not None:
@@ -137,17 +149,75 @@ class DrawioExportManager(LoggingConfigurable):
         pdf_text = r.text
         self.log.warning("drawio PDF: %s bytes", len(r.text))
 
-        if self.attach_xml:
-            pdf_text = self.add_files(pdf_text, {self.drawing_name: pdf_request["xml"]})
-
         return pdf_text
+
+    def extract_diagrams(self, pdf_request):
+        node = None
+
+        errors = []
+        try:
+            node = E.fromstring(pdf_request["xml"])
+        except Exception as err:
+            errors += [err]
+
+        if node is None:
+            try:
+                img = Image.open(BytesIO(b64decode(pdf_request["xml"].encode("utf-8"))))
+                node = E.fromstring(urllib.parse.unquote(img.info[PNG_DRAWIO_INFO]))
+            except Exception as err:
+                errors += [err]
+
+        if node is None:
+            self.log.warning("errors encountered extracting xml %s", errors)
+            return
+
+        tag = node.tag
+
+        if tag == "mxfile":
+            for diagram in node.xpath("//diagram"):
+                yield diagram
+        elif tag == "mxGraphModel":
+            diagram = E.Element("diagram")
+            diagram.append(node)
+            yield diagram
+        elif tag == "{http://www.w3.org/2000/svg}svg":
+            diagrams = E.fromstring(node.attrib["content"]).xpath("//diagram")
+            for diagram in diagrams:
+                yield diagram
+
+    @run_on_executor
+    def _merge(self, pdf_requests):
+        tree = E.fromstring("""<mxfile version="13.3.6"></mxfile>""")
+        with tempfile.TemporaryDirectory() as td:
+            tdp = Path(td)
+            merger = PdfFileMerger()
+            for i, pdf_request in enumerate(pdf_requests):
+                self.log.warning("adding page %s", i)
+                for diagram in self.extract_diagrams(pdf_request):
+                    tree.append(diagram)
+                next_pdf = tdp / f"doc-{i}.pdf"
+                wrote = next_pdf.write_bytes(
+                    b64decode(pdf_request["pdf"].encode("utf-8"))
+                )
+                if wrote:
+                    merger.append(PdfFileReader(str(next_pdf)))
+            output_pdf = tdp / "output.pdf"
+            final_pdf = tdp / "final.pdf"
+            merger.write(str(output_pdf))
+            composite_xml = E.tostring(tree).decode("utf-8")
+            final = PdfFileWriter()
+            final.appendPagesFromReader(PdfFileReader(str(output_pdf), "rb"))
+            final.addAttachment("drawing.drawio", composite_xml.encode("utf-8"))
+            with final_pdf.open("wb") as fpt:
+                final.write(fpt)
+            return b64encode(final_pdf.read_bytes()).decode("utf-8")
 
     def add_files(self, pdf_text, attachments):
         with TemporaryDirectory() as td:
             tdp = Path(td)
             output_pdf = tdp / "output.pdf"
             final_pdf = tdp / "final.pdf"
-            output_pdf.write_bytes(base64.b64decode(pdf_text))
+            output_pdf.write_bytes(b64decode(pdf_text))
             writer = PdfFileWriter()
             writer.appendPagesFromReader(PdfFileReader(str(output_pdf), "rb"))
 
@@ -160,7 +230,7 @@ class DrawioExportManager(LoggingConfigurable):
             with final_pdf.open("wb") as fpt:
                 writer.write(fpt)
 
-            pdf_text = base64.b64encode(final_pdf.read_bytes()).decode("utf-8")
+            pdf_text = b64encode(final_pdf.read_bytes()).decode("utf-8")
 
         self.log.warning("final pdf size %s", len(pdf_text))
         return pdf_text

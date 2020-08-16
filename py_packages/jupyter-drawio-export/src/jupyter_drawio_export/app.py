@@ -16,6 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 import base64
+import json
 from pathlib import Path
 
 import traitlets as T
@@ -23,6 +24,7 @@ from tornado import ioloop
 from traitlets.config import Application
 
 from ._version import __version__
+from .constants import IPYNB_METADATA
 from .manager import DrawioExportManager
 
 
@@ -83,15 +85,28 @@ class PDFApp(ManagedApp):
         try:
             await self.drawio_manager.provision()
             await self.drawio_manager.start_server()
+            pdf_requests = []
             for dio in self.dio_files:
-                xml = dio.read_text(encoding="utf-8")
-                out = dio.parent / f"{dio.stem}.pdf"
-                self.log.warning("Converting %s: %s bytes", dio, len(xml))
-                pdf_request = dict(xml=xml.encode("utf-8"))
-                pdf_text = await self.drawio_manager.pdf(pdf_request)
-                pdf_bytes = base64.b64decode(pdf_text)
-                self.log.warning("Writing %s bytes to %s", len(pdf_bytes), out)
-                out.write_bytes(pdf_bytes)
+                # TODO: handle more request params
+                pdf_request = {}
+                if dio.name.endswith(".png"):
+                    pdf_request["xml"] = base64.b64encode(dio.read_bytes()).decode(
+                        "utf-8"
+                    )
+                elif dio.name.endswith(".ipynb"):
+                    meta = json.loads(dio.read_text(encoding="utf-8"))["metadata"]
+                    pdf_request["xml"] = meta[IPYNB_METADATA]["xml"]
+                else:
+                    pdf_request["xml"] = dio.read_text(encoding="utf-8")
+
+                pdf_requests += [pdf_request]
+
+            # TODO: traitelt for output name
+            out = self.dio_files[0].parent / f"{self.dio_files[0].stem}.pdf"
+            pdf_text = await self.drawio_manager.pdf(pdf_requests)
+            pdf_bytes = base64.b64decode(pdf_text)
+            self.log.warning("Writing %s bytes to %s", len(pdf_bytes), out)
+            out.write_bytes(pdf_bytes)
         finally:
             self.stop()
 

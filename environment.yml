@@ -12,6 +12,7 @@ dependencies:
   - isort <5
   - jupyterlab >=2.2.4,<3.0.0a0
   - nodejs >=12,<13.0.0a0
+  - pillow
   - pip
   - pyflakes
   - pytest
