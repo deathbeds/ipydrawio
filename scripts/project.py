@@ -229,6 +229,7 @@ OK_ESLINT = BUILD / "eslint.ok"
 OK_JS_BUILD_PRE = BUILD / "js.build.pre.ok"
 OK_JS_BUILD = BUILD / "js.build.ok"
 OK_PYSETUP = {k: BUILD / f"pysetup.{k}.ok" for k, v in PY_SETUP.items()}
+OK_PYTEST = {k: BUILD / f"pytest.{k}.ok" for k, v in PY_SETUP.items()}
 OK_SERVEREXT = {k: BUILD / f"serverext.{k}.ok" for k, v in SERVER_EXT.items()}
 OK_PROVISION = BUILD / "provision.ok"
 OK_ROBOT_DRYRUN = BUILD / "robot.dryrun.ok"

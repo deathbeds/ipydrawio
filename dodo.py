@@ -359,9 +359,16 @@ def task_provision():
 
 def task_all():
     return dict(
-        file_dep=[P.OK_INTEGRITY, P.OK_PROVISION, P.OK_ATEST],
+        file_dep=[P.OK_INTEGRITY, P.OK_PROVISION, P.OK_ATEST, *P.OK_PYTEST],
         actions=[lambda: [print("nothing left to do"), True][1]],
     )
+
+
+def _pytest(setup_py):
+    def _test():
+        subprocess.check_call([*P.PYM, "pytest"], shell=False, cwd=str(setup_py.parent))
+
+    return _test
 
 
 def task_test():
@@ -383,6 +390,16 @@ def task_test():
         P.OK_INTEGRITY,
     )
 
+    for pkg, setup in P.PY_SETUP.items():
+        yield _ok(
+            dict(
+                name=f"pytest:{pkg}",
+                file_dep=[*P.PY_SRC[pkg]],
+                actions=[PythonInteractiveAction(_pytest(setup))],
+            ),
+            P.OK_PYTEST[pkg],
+        )
+
     yield _ok(
         dict(
             name="robot",
@@ -390,7 +407,6 @@ def task_test():
                 *P.ALL_ROBOT,
                 P.LAB_INDEX,
                 P.LAB_OVERRIDES,
-                P.OK_INTEGRITY,
                 P.OK_PROVISION,
                 P.OK_ROBOT_DRYRUN,
                 P.SCRIPTS / "atest.py",

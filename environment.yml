@@ -15,6 +15,7 @@ dependencies:
   - pip
   - pyflakes
   - pytest
+  - pytest-cov
   - python
   - requests_cache
   - robotframework
