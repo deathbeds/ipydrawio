@@ -50,9 +50,10 @@ jobs:
       - name: install (conda)
         uses: goanpeca/setup-miniconda@v1.6.0
         with:
+          activate-environment: jupyterlab-drawio
           environment-file: environment.yml
-          use-only-tar-bz2: true
           python-version: ${{ matrix.python-version }}
+          use-only-tar-bz2: true
 
       - name: build (linux)
         if: ${{ contains(matrix.os, 'ubuntu') }}
