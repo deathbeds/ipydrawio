@@ -22,13 +22,15 @@ import os
 import shutil
 import socket
 import subprocess
+import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from jupyter_core.paths import jupyter_data_dir
 from jupyterlab.commands import get_app_dir
+from PyPDF2 import PdfFileReader, PdfFileWriter
 from requests import Session
+from requests_cache import CachedSession
 from tornado.concurrent import run_on_executor
 from traitlets import Bool, Dict, Instance, Int, Unicode, default
 from traitlets.config import LoggingConfigurable
@@ -99,12 +101,7 @@ class DrawioExportManager(LoggingConfigurable):
     @default("_session")
     def _default_session(self):
         if self.pdf_cache is not None:
-            try:
-                from requests_cache import CachedSession
-
-                return CachedSession(self.pdf_cache, allowable_methods=["POST"])
-            except ImportError:
-                pass
+            return CachedSession(self.pdf_cache, allowable_methods=["POST"])
 
         return Session()
 
@@ -114,16 +111,15 @@ class DrawioExportManager(LoggingConfigurable):
 
     @default("drawio_export_workdir")
     def _default_drawio_export_workdir(self):
-        return str(Path(jupyter_data_dir()).resolve() / "drawio_export")
+        data_root = Path(sys.prefix) / "share/jupyter"
+
+        if "JUPYTER_DATA_DIR" in os.environ:
+            data_root = Path(os.environ["JUPYTER_DATA_DIR"])
+
+        return str(data_root / "drawio_export")
 
     @default("attach_xml")
     def _default_attach_xml(self):
-        try:
-            __import__("PyPDF2")
-        except (ImportError, ValueError):
-            self.log.warning("install PyPDF2 to enable attaching drawio XML in PDF")
-            return False
-
         return True
 
     @run_on_executor
@@ -147,12 +143,6 @@ class DrawioExportManager(LoggingConfigurable):
         return pdf_text
 
     def add_files(self, pdf_text, attachments):
-        try:
-            from PyPDF2 import PdfFileReader, PdfFileWriter
-        except ImportError:
-            self.log.warning("could not import pypdf2, drawio XML will not be attached")
-            return pdf_text
-
         with TemporaryDirectory() as td:
             tdp = Path(td)
             output_pdf = tdp / "output.pdf"
