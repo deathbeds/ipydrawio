@@ -8,6 +8,10 @@
 
 - adds statusbar item for PDF export server
 - adds status and provision endpoints
+- adds export CLI
+- requires `lxml`, `pillow`, `pypdf2` and `requests_cache`
+  - and, of course, `nodejs`
+- CLI functionality tested with pytest
 
 ### @deathbeds/jupyterlab-drawio-pdf 0.8.0-alpha1
 
