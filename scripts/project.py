@@ -237,7 +237,7 @@ OK_ROBOT_DRYRUN = BUILD / "robot.dryrun.ok"
 OK_RFLINT = BUILD / "robot.rflint.ok"
 OK_ATEST = BUILD / "atest.ok"
 
-PY_TEST_DEP["jupyter-drawio-export"] = [OK_PROVISION]
+PY_TEST_DEP["jupyter-drawio-export"] = [OK_PROVISION, LAB_INDEX]
 
 # built artifacts
 EXAMPLE_HTML = [DIST_NBHTML / p.name.replace(".ipynb", ".html") for p in EXAMPLE_IPYNB]
