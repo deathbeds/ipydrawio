@@ -17,9 +17,9 @@
 
 ### @deathbeds/jupyterlab-drawio 0.8.0-alpha1
 
-### @deathbeds/jupyterlab-drawio-webpack 13.6.1-alpha1
+### @deathbeds/jupyterlab-drawio-webpack 13.6.2-alpha1
 
-- Drawio v??.??.??
+- Drawio v13.6.2
 
 ## Released 2020-08-09
 

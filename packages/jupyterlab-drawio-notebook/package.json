@@ -1,12 +1,12 @@
 {
   "name": "@deathbeds/jupyterlab-drawio-notebook",
-  "version": "0.8.0-alpha0",
+  "version": "0.8.0-alpha1",
   "dependencies": {
     "@jupyterlab/application": "^2.0.0",
     "@jupyterlab/notebook": "^2.0.0"
   },
   "peerDependencies": {
-    "@deathbeds/jupyterlab-drawio": "^0.8.0-alpha0"
+    "@deathbeds/jupyterlab-drawio": "^0.8.0-alpha1"
   },
   "files": [
     "{lib,schema,style,src}/**/*.{ts,tsx,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css}",
