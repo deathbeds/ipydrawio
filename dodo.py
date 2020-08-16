@@ -359,7 +359,7 @@ def task_provision():
 
 def task_all():
     return dict(
-        file_dep=[P.OK_INTEGRITY, P.OK_PROVISION, P.OK_ATEST, *P.OK_PYTEST],
+        file_dep=[P.OK_INTEGRITY, P.OK_PROVISION, P.OK_ATEST, *P.OK_PYTEST.values()],
         actions=[lambda: [print("nothing left to do"), True][1]],
     )
 
