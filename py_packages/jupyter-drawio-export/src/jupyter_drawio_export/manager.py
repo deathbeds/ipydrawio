@@ -133,6 +133,7 @@ class DrawioExportManager(LoggingConfigurable):
         """
         data = dict(pdf_request)
         data.update(**self.core_params)
+        self.log.warning("%s", data)
         r = self._session.post(self.url, timeout=None, data=data)
 
         if r.status_code != 200:
@@ -188,17 +189,20 @@ class DrawioExportManager(LoggingConfigurable):
         )
 
         self._server = subprocess.Popen(
-            [JLPM, "start"], cwd=str(self.drawio_export_app), env=env
+            [JLPM, "--silent", "start"], cwd=str(self.drawio_export_app), env=env
         )
 
         response = None
         while response is None:
-            await asyncio.sleep(0.5)
+            self.log.warning("drawio export server starting...")
+            await asyncio.sleep(2)
 
             try:
-                response = self._session.get(self.url, timeout=None)
-            except Exception as err:
-                self.log.warning("drawio export still starting up %s", err)
+                response = self._session.get(self.url, timeout=1)
+            except Exception:
+                pass
+
+        self.log.warning("drawio export server started.")
 
         self.is_starting = False
 
@@ -241,7 +245,7 @@ class DrawioExportManager(LoggingConfigurable):
             self.log.warning(
                 "installing drawio export dependencies %s", self.drawio_export_app
             )
-            subprocess.check_call([JLPM], cwd=str(self.drawio_export_app))
+            subprocess.check_call([JLPM, "--silent"], cwd=str(self.drawio_export_app))
         self.is_provisioning = False
 
     def get_unused_port(self):

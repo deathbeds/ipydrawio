@@ -17,13 +17,22 @@ import re
 from pathlib import Path
 
 HERE = Path(__file__).parent
+VERSION = [*HERE.glob("src/jupyter_drawio_export/_version.py")][0]
 
 version = re.findall(
-    r"""__version__\s*=\s*"([^"]+)""",
-    [*HERE.glob("src/*/_version.py")][0].read_text(encoding="utf-8")
+    r"""__version__\s*=\s*"([^"]+)""", VERSION.read_text(encoding="utf-8")
 )[0]
 
 
 if __name__ == "__main__":
     import setuptools
-    setuptools.setup(version=version)
+    setuptools.setup(
+        version=version,
+        data_files=[
+            (
+                "etc/jupyter/jupyter_notebook_config.d",
+                ["src/jupyter_drawio_export/etc/jupyter-drawio-export.json"],
+            )
+        ],
+
+    )

@@ -1,3 +1,4 @@
 include LICENSE.txt
+recursive-include src/jupyter_drawio_export/etc *.json
 recursive-include src/jupyter_drawio_export/vendor/draw-image-export2 *.json *.js README.md LICENSE yarn.lock
 recursive-exclude src/jupyter_drawio_export/vendor/draw-image-export2 node_modules
