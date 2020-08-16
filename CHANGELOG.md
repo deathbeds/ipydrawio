@@ -13,7 +13,7 @@
 
 - removes non-functioning editable PDF for now
 
-### @deathbeds/jupyterlab-drawio-notebook 0.8.0-alph1
+### @deathbeds/jupyterlab-drawio-notebook 0.8.0-alpha1
 
 ### @deathbeds/jupyterlab-drawio 0.8.0-alpha1
 
