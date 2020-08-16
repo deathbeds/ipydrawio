@@ -57,12 +57,17 @@ jobs:
           doit all || doit all
 
       - name: build (windows)
-        if: ${{ contains(matrix.os, 'windows') }}
         shell: cmd /C CALL {0}
         run: |
           call C:\Miniconda\Scripts\deactivate
           call C:\Miniconda\Scripts\activate C:\Miniconda\envs\jupyterlab-drawio
           doit all || doit all
+
+      - name: clean (windows)
+        if: ${{ contains(matrix.os, 'windows') }}
+        run: |
+          taskkill /IM python.exe || echo "no python"
+          taskkill /IM node.exe || echo "no node"
 
       - name: report (robot)
         if: ${{ always() }}
