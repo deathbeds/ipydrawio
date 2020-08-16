@@ -130,7 +130,9 @@ def task_lint():
         dict(
             name="prettier",
             file_dep=[P.YARN_INTEGRITY, *P.ALL_PRETTIER],
-            actions=[["jlpm", "prettier", "--write", *P.ALL_PRETTIER]],
+            actions=[
+                ["jlpm", "prettier", "--list-different", "--write", *P.ALL_PRETTIER]
+            ],
         ),
         P.OK_PRETTIER,
     )
