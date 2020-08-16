@@ -394,7 +394,11 @@ def task_test():
         yield _ok(
             dict(
                 name=f"pytest:{pkg}",
-                file_dep=[*P.PY_SRC[pkg]],
+                file_dep=[
+                    *P.PY_SRC[pkg],
+                    P.OK_PYSETUP[pkg],
+                    *P.PY_TEST_DEP.get(pkg, []),
+                ],
                 actions=[PythonInteractiveAction(_pytest(setup))],
             ),
             P.OK_PYTEST[pkg],

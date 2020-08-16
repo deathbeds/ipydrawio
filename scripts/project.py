@@ -159,6 +159,7 @@ PY_WHEEL = {
     / "dist"
     / f"""{JDE.name.replace("-", "_")}-0.8.0a1-py3-none-any.whl"""
 }
+PY_TEST_DEP = {}
 
 SERVER_EXT = {
     k: sorted(v.parent.glob("src/*/serverextension.py"))[0]
@@ -235,6 +236,8 @@ OK_PROVISION = BUILD / "provision.ok"
 OK_ROBOT_DRYRUN = BUILD / "robot.dryrun.ok"
 OK_RFLINT = BUILD / "robot.rflint.ok"
 OK_ATEST = BUILD / "atest.ok"
+
+PY_TEST_DEP["jupyter-drawio-export"] = [OK_PROVISION]
 
 # built artifacts
 EXAMPLE_HTML = [DIST_NBHTML / p.name.replace(".ipynb", ".html") for p in EXAMPLE_IPYNB]
