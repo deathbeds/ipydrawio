@@ -133,7 +133,6 @@ class DrawioExportManager(LoggingConfigurable):
         """
         data = dict(pdf_request)
         data.update(**self.core_params)
-        self.log.warning("%s", data)
         r = self._session.post(self.url, timeout=None, data=data)
 
         if r.status_code != 200:

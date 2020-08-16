@@ -1,4 +1,5 @@
 __pycache__
+.coverage
 .doit*
 .ipynb_checkpoints
 *.bundle.*

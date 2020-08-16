@@ -15,7 +15,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-
+import base64
 from pathlib import Path
 
 import traitlets as T
@@ -88,9 +88,10 @@ class PDFApp(ManagedApp):
                 out = dio.parent / f"{dio.stem}.pdf"
                 self.log.warning("Converting %s: %s bytes", dio, len(xml))
                 pdf_request = dict(xml=xml.encode("utf-8"))
-                pdf = await self.drawio_manager.pdf(pdf_request)
-                self.log.warning("Writing %s bytes to %s", len(pdf), out)
-                out.write_bytes(pdf.encode("utf-8"))
+                pdf_text = await self.drawio_manager.pdf(pdf_request)
+                pdf_bytes = base64.b64decode(pdf_text)
+                self.log.warning("Writing %s bytes to %s", len(pdf_bytes), out)
+                out.write_bytes(pdf_bytes)
         finally:
             self.stop()
 

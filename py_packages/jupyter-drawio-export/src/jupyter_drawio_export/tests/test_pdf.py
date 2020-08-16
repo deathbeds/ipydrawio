@@ -2,6 +2,7 @@ import shutil
 from pathlib import Path
 
 import pytest
+from PyPDF2 import PdfFileReader
 
 from ..app import PDFApp
 
@@ -27,4 +28,7 @@ def export_app(tmp_path):
 def test_export(export_app, empty_dio, tmp_path):
     export_app.dio_files = [empty_dio]
     export_app.start()
-    assert (tmp_path / f"{empty_dio.stem}.pdf").exists()
+    out = tmp_path / f"{empty_dio.stem}.pdf"
+    assert out.exists()
+    reader = PdfFileReader(str(out), "rb")
+    assert reader.getNumPages() == 1
