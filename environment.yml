@@ -15,6 +15,7 @@ dependencies:
   - pillow
   - pip
   - pyflakes
+  - pypdf2
   - pytest
   - pytest-cov
   - python
