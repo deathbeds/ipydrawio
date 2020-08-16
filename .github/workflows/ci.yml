@@ -76,8 +76,8 @@ jobs:
       - name: clean (windows)
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
-          taskkill /IM python.exe || echo "no python"
-          taskkill /IM node.exe || echo "no node"
+          taskkill /F /IM python.exe || echo "no python"
+          taskkill /F /IM node.exe || echo "no node"
 
       - name: report (robot)
         if: ${{ always() }}
