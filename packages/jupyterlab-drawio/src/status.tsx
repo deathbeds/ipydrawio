@@ -25,29 +25,18 @@ import {
 
 import { Menu } from '@lumino/widgets';
 
-/**
- * A namespace for TabSpaceComponent statics.
- */
 namespace DrawioStatusComponent {
-  /**
-   * The props for TabSpaceComponent.
-   */
   export interface IProps {
     /**
      * A simple status
      */
     status: string;
-
-    /**
-     * A click handler for the TabSpace component. By default
-     * opens a menu allowing the user to select tabs vs spaces.
-     */
     handleClick: () => void;
   }
 }
 
 /**
- * A pure functional component for rendering the TabSpace status.
+ * A pure functional component for rendering the Drawio status.
  */
 function DrawioStatusComponent(
   props: DrawioStatusComponent.IProps
@@ -65,7 +54,7 @@ function DrawioStatusComponent(
 }
 
 /**
- * A VDomRenderer for a tabs vs. spaces status item.
+ * A VDomRenderer for Drawio status
  */
 export class DrawioStatus extends VDomRenderer<DrawioStatus.Model> {
   /**
@@ -76,9 +65,6 @@ export class DrawioStatus extends VDomRenderer<DrawioStatus.Model> {
     this.addClass(interactiveItem);
   }
 
-  /**
-   * Render the TabSpace status item.
-   */
   render(): React.ReactElement<DrawioStatusComponent.IProps> | null {
     if (this.model == null) {
       return null;

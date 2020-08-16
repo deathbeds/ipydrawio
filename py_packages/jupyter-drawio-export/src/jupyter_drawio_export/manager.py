@@ -15,11 +15,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-
+import asyncio
 import atexit
 import base64
 import os
 import shutil
+import socket
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -38,48 +39,62 @@ DRAWIO_STATIC = Path(get_app_dir()) / (
     "static/node_modules/@deathbeds/jupyterlab-drawio-webpack/drawio/src/main/webapp"
 )
 
+JLPM = shutil.which("jlpm")
+
 
 class DrawioExportManager(LoggingConfigurable):
     """ manager of (currently) another node-based server
     """
 
     drawio_server_url = Unicode().tag(config=True)
-    drawio_port = Int(8080).tag(config=True)
+    drawio_port = Int().tag(config=True)
     drawing_name = Unicode("drawing.dio.xml").tag(config=True)
     core_params = Dict().tag(config=True)
-    drawio_export_folder = Unicode().tag(config=True)
+    drawio_export_workdir = Unicode().tag(config=True)
     pdf_cache = Unicode(allow_none=True).tag(config=True)
     attach_xml = Bool().tag(config=True)
+    is_provisioning = Bool(False)
+    is_starting = Bool(False)
     _server = Instance(subprocess.Popen, allow_none=True)
     _session = Instance(Session)
 
     executor = ThreadPoolExecutor(1)
 
     def initialize(self):
-        atexit.register(self._atexit)
+        atexit.register(self.stop_server)
 
     async def pdf(self, pdf_request):
         if not self._server:
             await self.start_server()
         return await self._pdf(pdf_request)
 
-    def _atexit(self):
+    def stop_server(self):
         if self._server is not None:
             self.log.warning("shutting down drawio export server")
             self._server.terminate()
             self._server.wait()
+            self._server = None
+
+    async def status(self):
+        return {
+            "has_jlpm": JLPM is not None,
+            "is_provisioned": self.is_provisioned,
+            "is_provisioning": self.is_provisioning,
+            "is_starting": self.is_starting,
+            "is_running": self.is_running,
+        }
 
     @property
     def url(self):
         return f"http://localhost:{self.drawio_port}"
 
+    @default("drawio_port")
+    def _default_drawio_port(self):
+        return self.get_unused_port()
+
     @default("drawio_server_url")
     def _default_drawio_server_url(self):
         return DRAWIO_STATIC.as_uri()
-
-    @default("pdf_cache")
-    def _default_pdf_cache(self):
-        return str(Path(self.drawio_export_folder) / ".cache")
 
     @default("_session")
     def _default_session(self):
@@ -97,9 +112,9 @@ class DrawioExportManager(LoggingConfigurable):
     def _default_core_params(self):
         return dict(format="pdf", base64="1")
 
-    @default("drawio_export_folder")
-    def _default_drawio_export_folder(self):
-        return str(Path(jupyter_data_dir()) / "jupyter_drawio_export")
+    @default("drawio_export_workdir")
+    def _default_drawio_export_workdir(self):
+        return str(Path(jupyter_data_dir()).resolve() / "drawio_export")
 
     @default("attach_xml")
     def _default_attach_xml(self):
@@ -161,31 +176,82 @@ class DrawioExportManager(LoggingConfigurable):
         return pdf_text
 
     async def start_server(self):
-        server_path = self.provision()
+        self.is_starting = True
+        self.stop_server()
+
+        if not self.is_provisioned:
+            await self.provision()
 
         env = dict(os.environ)
-        env["PORT"] = str(self.drawio_port)
-        env["DRAWIO_SERVER_URL"] = self.drawio_server_url
-
-        self._server = subprocess.Popen(
-            ["jlpm", "start"], cwd=str(server_path), env=env
+        env.update(
+            PORT=str(self.drawio_port), DRAWIO_SERVER_URL=self.drawio_server_url,
         )
 
+        self._server = subprocess.Popen(
+            [JLPM, "start"], cwd=str(self.drawio_export_app), env=env
+        )
+
+        response = None
+        while response is None:
+            await asyncio.sleep(0.5)
+
+            try:
+                response = self._session.get(self.url, timeout=None)
+            except Exception as err:
+                self.log.warning("drawio export still starting up %s", err)
+
+        self.is_starting = False
+
+    @property
+    def is_provisioned(self):
+        return self.drawio_export_integrity.exists()
+
+    @property
+    def is_running(self):
+        return self._server is not None and self._server.returncode is None
+
+    @property
+    def drawio_export_app(self):
+        return Path(self.drawio_export_workdir) / VEND.name
+
+    @property
+    def drawio_export_node_modules(self):
+        return self.drawio_export_app / "node_modules"
+
+    @property
+    def drawio_export_integrity(self):
+        return self.drawio_export_node_modules / ".yarn-integrity"
+
+    @run_on_executor
     def provision(self, force=False):
-        dx_path = Path(self.drawio_export_folder)
-
-        if not dx_path.exists():
-            dx_path.mkdir(parents=True)
-
-        dest = dx_path / VEND.name
-        if not dest.exists():
-            self.log.warning("initializing drawio export folder %s", dest)
-            shutil.copytree(VEND, dest)
+        self.is_provisioning = True
+        if not self.drawio_export_app.exists():
+            if not self.drawio_export_app.parent.exists():
+                self.drawio_export_app.parent.mkdir(parents=True)
+            self.log.warning(
+                "initializing drawio export app %s", self.drawio_export_app
+            )
+            shutil.copytree(VEND, self.drawio_export_app)
         else:
-            self.log.warning("using existing drawio export folder %s", dest)
+            self.log.warning(
+                "using existing drawio export folder %s", self.drawio_export_app
+            )
 
-        if not (dest / "node_modules" / ".yarn-integrity").exists() or force:
-            self.log.warning("installing drawio export dependencies %s", dest)
-            subprocess.check_call(["jlpm"], cwd=str(dest))
+        if not self.drawio_export_node_modules.exists() or force:
+            self.log.warning(
+                "installing drawio export dependencies %s", self.drawio_export_app
+            )
+            subprocess.check_call([JLPM], cwd=str(self.drawio_export_app))
+        self.is_provisioning = False
 
-        return dest
+    def get_unused_port(self):
+        """ Get an unused port by trying to listen to any random port.
+
+            Probably could introduce race conditions if inside a tight loop.
+        """
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.bind(("localhost", 0))
+        sock.listen(1)
+        port = sock.getsockname()[1]
+        sock.close()
+        return port

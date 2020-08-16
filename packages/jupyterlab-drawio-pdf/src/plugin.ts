@@ -13,11 +13,18 @@
 // limitations under the License.
 import { JupyterLab, JupyterFrontEndPlugin } from '@jupyterlab/application';
 
+import { ICommandPalette } from '@jupyterlab/apputils';
+
+import { IStatusBar } from '@jupyterlab/statusbar';
+
 import { IDiagramManager } from '@deathbeds/jupyterlab-drawio/lib/tokens';
 
-import { PLUGIN_ID } from '.';
+import { PLUGIN_ID, NS } from '.';
 
-import { PDF_BRANDED, PDF_PLAIN } from './io';
+import { PDF_PLAIN } from './io';
+import { PDFStatus } from './status';
+import { DrawioPDFManager } from './manager';
+import { CommandIds } from './tokens';
 
 /**
  * The editor tracker extension.
@@ -25,13 +32,46 @@ import { PDF_BRANDED, PDF_PLAIN } from './io';
 const plugin: JupyterFrontEndPlugin<void> = {
   activate,
   id: PLUGIN_ID,
-  requires: [IDiagramManager],
+  requires: [ICommandPalette, IDiagramManager],
+  optional: [IStatusBar],
   autoStart: true,
 };
 
 export default plugin;
 
-function activate(app: JupyterLab, diagrams: IDiagramManager) {
-  diagrams.addFormat(PDF_PLAIN);
-  diagrams.addFormat(PDF_BRANDED);
+function activate(
+  app: JupyterLab,
+  palette: ICommandPalette,
+  diagrams: IDiagramManager,
+  statusBar?: IStatusBar
+) {
+  const manager = new DrawioPDFManager();
+
+  diagrams.addFormat({
+    ...PDF_PLAIN,
+    exporter: manager.exportPDF,
+  });
+
+  app.commands.addCommand(CommandIds.provision, {
+    label: 'Provision Drawio PDF Export Server',
+    execute: async () => {
+      await manager.provision();
+    },
+  });
+
+  palette.addItem({
+    command: CommandIds.provision,
+    category: `Diagram Export`,
+  });
+
+  if (statusBar) {
+    const statusItem = new PDFStatus(manager.status);
+    statusBar.registerStatusItem(`${NS}:status`, {
+      item: statusItem,
+      align: 'right',
+      rank: 4,
+      isActive: () => diagrams.activeWidget != null,
+    });
+    manager.fetchStatus().catch(console.warn);
+  }
 }

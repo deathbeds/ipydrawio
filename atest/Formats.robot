@@ -20,9 +20,21 @@ PNG (Editable)
     [Documentation]    does editable PNG work?
     Validate Export Format    PNG (Editable)    dio.png    editable=${True}
 
+Notebook
+    [Documentation]    does editable Notebook work?
+    Validate Export Format    Notebook    dio.ipynb    editable=${True}
+
+PDF
+    [Documentation]    does read-only PDF work?
+    Validate Export Format    PDF    pdf    timeout=60s
+# TODO: restore someday
+# PDF (Editable)
+#    [Documentation]    does editable PDF work?
+#    Validate Export Format    PDF    pdf    timeout=60s
+
 *** Keywords ***
 Validate Export Format
-    [Arguments]    ${format}    ${ext}    ${editable}=${False}
+    [Arguments]    ${format}    ${ext}    ${editable}=${False}    ${timeout}=10s
     Set Tags    format:${ext}    editable:${editable}
     Set Screenshot Directory    ${OUTPUT DIR}${/}screenshots${/}${ext}
     Launch Untitled Diagram
@@ -34,8 +46,9 @@ Validate Export Format
     Unselect Frame
     Capture Page Screenshot    10-edited.png
     Lab Command    Export Diagram as ${format}
-    Wait Until Page Contains Element    ${JLAB XP DOCK TAB}\[contains(., 'untitled')][contains(., '.${ext}')]
+    Wait Until Page Contains Element    ${JLAB XP DOCK TAB}\[contains(., 'untitled')][contains(., '.${ext}')]    timeout=${timeout}
     Run Keyword If    ${editable}    Validate Editable Format    ${format}    ${ext}    ${doc id}
+    Ensure Sidebar Is Closed
     Capture Page Screenshot    99-exported.png
     [Teardown]    Clean Up After Export Test
 

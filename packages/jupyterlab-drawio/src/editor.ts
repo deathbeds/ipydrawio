@@ -110,8 +110,13 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
   }
 
   set app(app) {
+    DEBUG && console.warn('drawio app', app);
     if (this._app != app) {
       this._app = app;
+      // TODO: get a much better understanding of this
+      (app.container as HTMLBodyElement).addEventListener('mousedown', () => {
+        this._frameClicked.emit(void 0);
+      });
       this._appChanged.emit(void 0);
     }
 
@@ -317,10 +322,6 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
           console.warn('contentDocument not ready');
           return;
         }
-        this._frame.contentDocument.body.onclick = () => {
-          DEBUG && console.warn('click');
-          this._frameClicked.emit(void 0);
-        };
       };
     }
   }

@@ -299,6 +299,12 @@ export class DiagramManager implements IDiagramManager {
     factory.widgetCreated.connect((sender, widget) => {
       this._status.status = `Loading Diagram...`;
 
+      widget.frameClicked.connect(() => {
+        if (widget !== this._app.shell.currentWidget) {
+          widget.node.focus();
+        }
+      });
+
       // initialize icon
       widget.title.icon = IO.drawioIcon;
 

@@ -13,3 +13,4 @@
 // limitations under the License.
 export const NS = '@deathbeds/jupyterlab-drawio-pdf';
 export const PLUGIN_ID = `${NS}:plugin`;
+export const CMD_NS = `drawio-pdf`;
