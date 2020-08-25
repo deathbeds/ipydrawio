@@ -16,7 +16,7 @@ import { LabIcon } from '@jupyterlab/ui-components';
 import DRAWIO_ICON_SVG from '../style/img/drawio.svg';
 
 import {
-  IDiagramManager,
+  IFormat,
   DRAWIO_ICON_CLASS_RE,
   TEXT_FACTORY,
   BINARY_FACTORY,
@@ -39,7 +39,7 @@ export const drawioPngIcon = new LabIcon({
   svgstr: DRAWIO_ICON_SVG.replace(DRAWIO_ICON_CLASS_RE, 'jp-icon-contrast0'),
 });
 
-export const XML_NATIVE: IDiagramManager.IFormat = {
+export const XML_NATIVE: IFormat = {
   ext: '.dio',
   format: 'text',
   icon: drawioIcon,
@@ -56,7 +56,7 @@ export const XML_NATIVE: IDiagramManager.IFormat = {
   isDefault: true,
 };
 
-export const XML_LEGACY: IDiagramManager.IFormat = {
+export const XML_LEGACY: IFormat = {
   ext: '.drawio',
   format: 'text',
   icon: drawioIcon,
@@ -72,7 +72,7 @@ export const XML_LEGACY: IDiagramManager.IFormat = {
   isDefault: true,
 };
 
-export const SVG_PLAIN: IDiagramManager.IFormat = {
+export const SVG_PLAIN: IFormat = {
   ext: '.svg',
   format: 'text',
   factoryName: `${TEXT_FACTORY} (SVG)`,
@@ -87,7 +87,7 @@ export const SVG_PLAIN: IDiagramManager.IFormat = {
   isText: true,
 };
 
-export const SVG_EDITABLE: IDiagramManager.IFormat = {
+export const SVG_EDITABLE: IFormat = {
   ...SVG_PLAIN,
   factoryName: `${TEXT_FACTORY} (Editable SVG)`,
   ext: '.dio.svg',
@@ -99,7 +99,7 @@ export const SVG_EDITABLE: IDiagramManager.IFormat = {
   isDefault: true,
 };
 
-export const PNG_PLAIN: IDiagramManager.IFormat = {
+export const PNG_PLAIN: IFormat = {
   ext: '.png',
   format: 'base64',
   modelName: 'base64',
@@ -114,7 +114,7 @@ export const PNG_PLAIN: IDiagramManager.IFormat = {
   isExport: true,
 };
 
-export const PNG_EDITABLE: IDiagramManager.IFormat = {
+export const PNG_EDITABLE: IFormat = {
   ...PNG_PLAIN,
   factoryName: `${BINARY_FACTORY} (Editable PNG)`,
   ext: '.dio.png',

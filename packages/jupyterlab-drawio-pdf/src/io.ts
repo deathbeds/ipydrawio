@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import {
-  IDiagramManager,
   DRAWIO_ICON_CLASS_RE,
   DRAWIO_ICON_SVG,
+  IFormat,
 } from '@deathbeds/jupyterlab-drawio/lib/tokens';
 
 import { stripDataURI } from '@deathbeds/jupyterlab-drawio/lib/utils';
@@ -26,7 +26,7 @@ export const drawioPdfIcon = new LabIcon({
   svgstr: DRAWIO_ICON_SVG.replace(DRAWIO_ICON_CLASS_RE, 'jp-icon-contrast2'),
 });
 
-export const PDF_PLAIN: IDiagramManager.IFormat = {
+export const PDF_PLAIN: IFormat = {
   ext: '.pdf',
   format: 'base64',
   factoryName: `Diagram (PDF)`,

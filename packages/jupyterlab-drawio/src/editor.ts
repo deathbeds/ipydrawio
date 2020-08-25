@@ -25,7 +25,7 @@ import {
 } from '@jupyterlab/docregistry';
 
 import '../style/index.css';
-import { IDiagramManager, DEBUG } from './tokens';
+import { IDiagramManager, IFormat, DEBUG } from './tokens';
 
 /**
  * Core URL params that are required to function properly
@@ -339,7 +339,7 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
     this.title.label = PathExt.basename(this.context.localPath);
   }
 
-  get format(): IDiagramManager.IFormat | null {
+  get format(): IFormat | null {
     if (this.context.contentsModel == null) {
       return null;
     }
