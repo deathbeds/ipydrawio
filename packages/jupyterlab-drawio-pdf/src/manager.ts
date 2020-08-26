@@ -1,4 +1,4 @@
-import { DiagramWidget } from '@deathbeds/jupyterlab-drawio/lib/editor';
+import { Diagram } from '@deathbeds/jupyterlab-drawio/lib/editor';
 import { PageConfig } from '@jupyterlab/coreutils';
 import { DEBUG } from '@deathbeds/jupyterlab-drawio/lib/tokens';
 
@@ -100,7 +100,7 @@ export class DrawioPDFManager {
   }
 
   exportPDF = async (
-    widget: DiagramWidget,
+    widget: Diagram,
     key: string,
     settings: ISettingRegistry.ISettings
   ) => {
@@ -112,11 +112,7 @@ export class DrawioPDFManager {
       return null;
     }
 
-    const currentFormat = widget.format;
-
-    const xml = currentFormat?.toXML
-      ? currentFormat.toXML(widget.context.model)
-      : widget.context.model.toString();
+    const xml = widget.adapter.toXML();
 
     url += url.endsWith('/') ? '' : '/';
     const query = new URLSearchParams();

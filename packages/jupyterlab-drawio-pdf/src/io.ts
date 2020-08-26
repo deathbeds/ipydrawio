@@ -38,6 +38,7 @@ export const PDF_PLAIN: IFormat = {
   name: 'pdf',
   isExport: true,
   isBinary: true,
+  isTransformed: true,
   save: stripDataURI,
   // this is replaced with the manager function
   exporter: async (widget, key, settings) => null,

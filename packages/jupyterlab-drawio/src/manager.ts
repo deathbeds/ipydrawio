@@ -19,8 +19,15 @@ import {
 import { JupyterLab, ILayoutRestorer } from '@jupyterlab/application';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { PathExt } from '@jupyterlab/coreutils';
-import { IDiagramManager, TEXT_FACTORY, CommandIds, DEBUG, IFormat } from './tokens';
-import { DiagramWidget, DiagramFactory } from './editor';
+import {
+  IDiagramManager,
+  TEXT_FACTORY,
+  CommandIds,
+  DEBUG,
+  IFormat,
+} from './tokens';
+import { Diagram } from './editor';
+import { DiagramFactory, DiagramDocument } from './document';
 import { Contents } from '@jupyterlab/services';
 import { DrawioStatus } from './status';
 import * as IO from './io';
@@ -28,7 +35,7 @@ import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
 import { DRAWIO_URL } from '@deathbeds/jupyterlab-drawio-webpack';
 
 const DEFAULT_EXPORTER = async (
-  drawio: DiagramWidget,
+  drawio: Diagram,
   key: string,
   settings: any = null
 ) => {
@@ -37,7 +44,7 @@ const DEFAULT_EXPORTER = async (
 
 export class DiagramManager implements IDiagramManager {
   private _formats = new Map<string, IFormat>();
-  private _trackers = new Map<string, IWidgetTracker<DiagramWidget>>();
+  private _trackers = new Map<string, IWidgetTracker<DiagramDocument>>();
   private _settings: ISettingRegistry.ISettings;
   private _palette: ICommandPalette;
   private _browserFactory: IFileBrowserFactory;
@@ -68,23 +75,28 @@ export class DiagramManager implements IDiagramManager {
     });
   }
 
-  isExportable(mimetype: string) {
-    return this.formatForModel({ mimetype } as any) != null;
-  }
+  formatForModel(contentsModel: Partial<Contents.IModel>) {
+    DEBUG && console.warn('getting format', contentsModel);
+    const { path } = contentsModel;
 
-  formatForModel(contentsModel: Contents.IModel) {
-    const { mimetype } = contentsModel;
+    let longestExt: string = '';
+    let candidateFmt = (null as any) as IFormat;
 
     for (const fmt of this._formats.values()) {
-      if (fmt.mimetype === mimetype && fmt.isExport) {
-        return fmt;
-      }
       if (fmt.wantsModel != null && fmt.wantsModel(contentsModel)) {
         return fmt;
       }
+      if (
+        path &&
+        path.endsWith(fmt.ext) &&
+        fmt.ext.length > longestExt.length
+      ) {
+        candidateFmt = fmt;
+        longestExt = fmt.ext;
+      }
     }
 
-    return null;
+    return candidateFmt || null;
   }
 
   get drawioURL() {
@@ -177,7 +189,7 @@ export class DiagramManager implements IDiagramManager {
     DEBUG && console.warn(`...tracked ${format.name}`);
   }
 
-  protected updateWidgetSettings(widget: DiagramWidget) {
+  protected updateWidgetSettings(widget: DiagramDocument) {
     widget.updateSettings();
   }
 
@@ -185,13 +197,13 @@ export class DiagramManager implements IDiagramManager {
     const { ext, key, format, label, mimetype, icon } = exportFormat;
     const save = exportFormat.save || String;
     const _exporter = async (cwd: string) => {
-      let drawio = this._app.shell.currentWidget as DiagramWidget;
+      let drawio = this._app.shell.currentWidget as DiagramDocument;
       let stem = PathExt.basename(drawio.context.path).replace(/\.dio$/, '');
 
       this._status.status = `Exporting Diagram ${stem} to ${label}...`;
 
       const rawContent = await (exportFormat.exporter || DEFAULT_EXPORTER)(
-        drawio,
+        drawio.content,
         key,
         this._settings
       );
@@ -285,7 +297,7 @@ export class DiagramManager implements IDiagramManager {
       getSettings: () => this._settings.composite,
       manager: this,
     });
-    const tracker = new WidgetTracker<DiagramWidget>({ namespace });
+    const tracker = new WidgetTracker<DiagramDocument>({ namespace });
 
     // Handle state restoration.
     this._restorer
@@ -299,7 +311,7 @@ export class DiagramManager implements IDiagramManager {
     factory.widgetCreated.connect((sender, widget) => {
       this._status.status = `Loading Diagram...`;
 
-      widget.frameClicked.connect(() => {
+      widget.content.frameClicked.connect(() => {
         if (widget !== this._app.shell.currentWidget) {
           widget.node.focus();
         }
@@ -312,7 +324,7 @@ export class DiagramManager implements IDiagramManager {
       widget.context.pathChanged.connect(() => tracker.save(widget));
 
       // capture clicks inside the frame
-      widget.frameClicked.connect((widget) => {
+      widget.content.frameClicked.connect((drawio) => {
         this._app.shell.activateById(widget.id);
         this._status.status = `Editing ${widget.context.path}`;
       });

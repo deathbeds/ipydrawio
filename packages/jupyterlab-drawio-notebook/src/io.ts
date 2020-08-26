@@ -33,6 +33,7 @@ export const IPYNB_EDITABLE: IFormat<any> = {
   isEditable: true,
   isExport: true,
   isDefault: true,
+  isTransformed: true,
   wantsModel(contentsModel: Contents.IModel) {
     return contentsModel.type === 'notebook';
   },
@@ -52,7 +53,7 @@ export const IPYNB_EDITABLE: IFormat<any> = {
     return meta?.xml ? `${meta.xml}` : '';
   },
   exporter: async (widget, key, settings) => {
-    const xml = (widget.context.model as any).value.text;
+    const xml = widget.adapter.toXML();
     const newModel = new NotebookModel();
     newModel.metadata.set(DRAWIO_METADATA, { xml });
     return newModel.toJSON();

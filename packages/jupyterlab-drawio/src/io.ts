@@ -54,6 +54,10 @@ export const XML_NATIVE: IFormat = {
   isEditable: true,
   isText: true,
   isDefault: true,
+  isTransformed: false,
+  exporter: async (drawio, key, settings) => {
+    return await drawio.adapter.toXML();
+  },
 };
 
 export const XML_LEGACY: IFormat = {
@@ -70,6 +74,7 @@ export const XML_LEGACY: IFormat = {
   isEditable: true,
   isText: true,
   isDefault: true,
+  isTransformed: false,
 };
 
 export const SVG_PLAIN: IFormat = {
@@ -85,6 +90,7 @@ export const SVG_PLAIN: IFormat = {
   save: unbase64SVG,
   isExport: true,
   isText: true,
+  isTransformed: true,
 };
 
 export const SVG_EDITABLE: IFormat = {
@@ -97,6 +103,7 @@ export const SVG_EDITABLE: IFormat = {
   pattern: '^.*.dio.svg$',
   isEditable: true,
   isDefault: true,
+  isTransformed: true,
 };
 
 export const PNG_PLAIN: IFormat = {
@@ -112,6 +119,7 @@ export const PNG_PLAIN: IFormat = {
   save: stripDataURI,
   isBinary: true,
   isExport: true,
+  isTransformed: true,
 };
 
 export const PNG_EDITABLE: IFormat = {

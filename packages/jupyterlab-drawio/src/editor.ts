@@ -12,20 +12,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { PromiseDelegate, ReadonlyPartialJSONObject } from '@lumino/coreutils';
+import { PromiseDelegate } from '@lumino/coreutils';
 import { Message } from '@lumino/messaging';
 import { Signal } from '@lumino/signaling';
 
-import { PathExt } from '@jupyterlab/coreutils';
 import { IFrame } from '@jupyterlab/apputils';
-import {
-  ABCWidgetFactory,
-  DocumentRegistry,
-  DocumentWidget,
-} from '@jupyterlab/docregistry';
 
 import '../style/index.css';
-import { IDiagramManager, IFormat, DEBUG } from './tokens';
+import { IFormat, DEBUG, IAdapter } from './tokens';
 
 /**
  * Core URL params that are required to function properly
@@ -55,43 +49,32 @@ const DRAWIO_CLASS = 'jp-Diagram';
 
 const READY_CLASS = 'jp-Diagram-ready';
 
+export namespace Diagram {
+  export interface IOptions extends IFrame.IOptions {
+    adapter: IAdapter;
+  }
+}
+
 /**
  * A document for using offline drawio in an iframe
  */
-export class DiagramWidget extends DocumentWidget<IFrame> {
-  protected _manager: IDiagramManager;
+export class Diagram extends IFrame {
+  adapter: IAdapter;
+  private _ready = new PromiseDelegate<void>();
+  public revealed: Promise<void>;
+  private _initialLoad = false;
+  private _exportPromise: PromiseDelegate<string> | null;
+  private _saveWithExportPromise: PromiseDelegate<string> | null;
+  private _frame: HTMLIFrameElement;
+  private _lastEmitted: string;
+  private _frameClicked = new Signal<Diagram, void>(this);
+  private _app: any;
+  private _appChanged = new Signal<Diagram, void>(this);
 
-  constructor(options: DiagramWidget.IOptions) {
-    super({ ...options });
-    this._manager = options.manager;
-    this.getSettings = options.getSettings;
+  constructor(options: Diagram.IOptions) {
+    super({ sandbox: SANDBOX_EXCEPTIONS, ...options });
     this.addClass(DRAWIO_CLASS);
-
-    this.context = options['context'];
-
-    this._onTitleChanged();
-    this.context.pathChanged.connect(this._onTitleChanged, this);
-
-    this.context.ready
-      .then(() => {
-        this._onContextReady();
-      })
-      .catch(console.warn);
-
-    this.ready
-      .then(() => {
-        this._saveNeedsExport =
-          this.context.contentsModel?.mimetype != null &&
-          this._manager.isExportable(this.context.contentsModel.mimetype);
-      })
-      .catch(console.warn);
-  }
-
-  /**
-   * Handle receiving settings from the extension
-   */
-  updateSettings() {
-    this.maybeReloadFrame(true);
+    this.adapter = options.adapter;
   }
 
   /**
@@ -151,7 +134,7 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
         this.configureDrawio();
         break;
       case 'init':
-        this._onContentChanged();
+        this.onContentChanged();
         break;
       case 'load':
         this.app = (this._frame.contentWindow as any).JUPYTERLAB_DRAWIO_APP;
@@ -160,7 +143,7 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
         this.addClass(READY_CLASS);
         break;
       case 'save':
-        if (this._saveNeedsExport) {
+        if (this.format?.isTransformed) {
           this.saveWithExport(true);
           break;
         }
@@ -168,7 +151,7 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
         this.save(msg.xml, true);
         break;
       case 'autosave':
-        if (this._saveNeedsExport) {
+        if (this.adapter.saveNeedsExport()) {
           this.saveWithExport();
           break;
         }
@@ -197,43 +180,27 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
    */
   onAfterShow(msg?: Message): void {
     if (this._frame?.contentWindow == null) {
-      this._frame = this.content.node.querySelector(
-        'iframe'
-      ) as HTMLIFrameElement;
+      this._frame = this.node.querySelector('iframe') as HTMLIFrameElement;
       window.addEventListener('message', (evt) => this.handleMessageEvent(evt));
-      this.revealed
-        .then(() => {
-          DEBUG && console.warn('drawio revealed');
-          this.maybeReloadFrame();
-        })
-        .catch(console.warn);
+      // this.maybeReloadFrame();
     }
     this.maybeReloadFrame();
   }
 
   private save(xml: string, hardSave: boolean = false) {
-    const { format } = this;
-    if (format?.fromXML) {
-      format.fromXML(this.context.model, xml);
-    } else {
-      this.context.model.fromString(xml);
-    }
-
-    if (hardSave) {
-      this.context.save().catch(console.warn);
-    }
+    this.adapter.fromXML(xml, hardSave);
   }
 
   /**
    * Handle round-tripping to formats that require an export
    */
   private saveWithExport(hardSave: boolean = false) {
-    if (this.context.contentsModel == null) {
+    const { format } = this;
+    if (format == null) {
       console.warn('cannot save without context');
       return;
     }
-    const { mimetype } = this.context.contentsModel;
-    const { format } = this;
+    const { mimetype } = format;
     if (format?.save == null) {
       console.error(`Unexpected save with export of ${mimetype}`);
       return;
@@ -265,8 +232,7 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
    * Prepare and post the message for configuring the drawio application
    */
   private configureDrawio() {
-    let settingsConfig = this.getSettings()
-      ?.drawioConfig as ReadonlyPartialJSONObject;
+    let settingsConfig = this.adapter.drawioConfig();
     const config = {
       ...(settingsConfig || {}),
       version: `${+new Date()}`,
@@ -289,13 +255,12 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
   /**
    * Determine the URL for the iframe src, reload if changed
    */
-  private maybeReloadFrame(force: boolean = false) {
-    if (this.isHidden || !this.isVisible || !this.isRevealed) {
+  maybeReloadFrame(force: boolean = false) {
+    if (this.isHidden || !this.isVisible) {
       return;
     }
     const query = new URLSearchParams();
-    const settingsUrlParams = this.getSettings()
-      ?.drawioUrlParams as ReadonlyPartialJSONObject;
+    const settingsUrlParams = this.adapter.urlParams();
     const params = {
       ...(settingsUrlParams || {}),
       ...CORE_EMBED_PARAMS,
@@ -310,12 +275,12 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
       query.append(p, (params as any)[p]);
     }
     const url =
-      this._manager.drawioURL + '?' + query.toString() + `&p=${plugins}`;
+      this.adapter.drawioUrl() + '?' + query.toString() + `&p=${plugins}`;
 
-    if (force || this.content.url !== url) {
+    if (force || this.url !== url) {
       DEBUG && console.warn('configuring iframe', params);
       this.removeClass(READY_CLASS);
-      this.content.url = url;
+      this.url = url;
       this._initialLoad = false;
       this._frame.onload = () => {
         if (this._frame.contentDocument == null) {
@@ -326,51 +291,29 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
     }
   }
 
-  private _onContextReady(): void {
-    this.context.model.contentChanged.connect(this._onContentChanged, this);
-    this._onContentChanged();
-    this.onAfterShow();
-  }
-
-  /**
-   * Handle a change to the title.
-   */
-  private _onTitleChanged(): void {
-    this.title.label = PathExt.basename(this.context.localPath);
-  }
-
-  get format(): IFormat | null {
-    if (this.context.contentsModel == null) {
-      return null;
-    }
-    let format = this._manager.formatForModel(this.context.contentsModel);
-    return format || null;
-  }
-
   /**
    * Handle a change to the raw document
    */
-  private _onContentChanged(): void {
-    if (!this._frame?.contentWindow) {
-      return;
-    }
-    const { model, contentsModel } = this.context;
-    const { format } = this;
-
-    let xml: string = '';
-
-    if (format?.toXML) {
-      xml = format.toXML(model);
-    } else {
-      xml = model.toString();
-    }
-
-    if (xml === this._lastEmitted || contentsModel == null) {
+  onContentChanged(): void {
+    if (!this._frame?.contentWindow || !this.format) {
+      DEBUG &&
+        console.warn(
+          'contentWindow or format not ready',
+          this.format,
+          this._frame.contentWindow
+        );
       return;
     }
 
-    if (contentsModel.format === 'base64') {
-      xml = `data:${contentsModel.mimetype};base64,${xml}`;
+    let xml = this.adapter.toXML();
+
+    if (xml === this._lastEmitted) {
+      DEBUG && console.warn('content has not changed');
+      return;
+    }
+
+    if (this.format.modelName === 'base64') {
+      xml = `data:${this.format.mimetype};base64,${xml}`;
     }
 
     if (!this._initialLoad) {
@@ -389,78 +332,18 @@ export class DiagramWidget extends DocumentWidget<IFrame> {
     }
   }
 
-  /**
-   * A promise that resolves when drawio is ready.
-   */
-  get ready(): Promise<void> {
-    return this._ready.promise;
+  get format(): IFormat | null {
+    return this.adapter.format();
   }
 
   get frameClicked() {
     return this._frameClicked;
   }
 
-  public content: IFrame;
-  public revealed: Promise<void>;
-  readonly context: DocumentRegistry.Context;
-  protected getSettings: ISettingsGetter;
-  private _initialLoad = false;
-  private _ready = new PromiseDelegate<void>();
-  private _exportPromise: PromiseDelegate<string> | null;
-  private _saveWithExportPromise: PromiseDelegate<string> | null;
-  private _frame: HTMLIFrameElement;
-  private _lastEmitted: string;
-  private _saveNeedsExport: boolean;
-  private _frameClicked = new Signal<DiagramWidget, void>(this);
-  private _app: any;
-  private _appChanged = new Signal<DiagramWidget, void>(this);
-}
-
-export interface ISettingsGetter {
-  (): ReadonlyPartialJSONObject;
-}
-
-export namespace DiagramWidget {
-  export interface IOptions extends DocumentWidget.IOptions<IFrame> {
-    getSettings: ISettingsGetter;
-    manager: IDiagramManager;
-  }
-}
-
-/**
- * A widget factory for a drawio diagram.
- */
-export class DiagramFactory extends ABCWidgetFactory<
-  DiagramWidget,
-  DocumentRegistry.IModel
-> {
-  protected getSettings: ISettingsGetter;
-  manager: IDiagramManager;
   /**
-   * Create a new widget given a context.
+   * A promise that resolves when drawio is ready.
    */
-  constructor(options: DiagramFactory.IOptions) {
-    super(options);
-    this.getSettings = options.getSettings;
-    this.manager = options.manager;
-  }
-
-  protected createNewWidget(context: DocumentRegistry.Context): DiagramWidget {
-    const content = new IFrame({
-      sandbox: SANDBOX_EXCEPTIONS,
-    });
-    return new DiagramWidget({
-      context,
-      content,
-      getSettings: this.getSettings,
-      manager: this.manager,
-    });
-  }
-}
-
-export namespace DiagramFactory {
-  export interface IOptions extends DocumentRegistry.IWidgetFactoryOptions {
-    getSettings: () => ReadonlyPartialJSONObject;
-    manager: IDiagramManager;
+  get ready(): Promise<void> {
+    return this._ready.promise;
   }
 }
