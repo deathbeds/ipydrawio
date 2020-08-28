@@ -48,22 +48,28 @@ export class RenderedDiagram extends Panel implements IRenderMime.IRenderer {
       adapter: {
         format: () => this.format,
         urlParams: () => {
-          const {manager} = RenderedDiagram;
-          if(manager == null) {
+          const { manager } = RenderedDiagram;
+          if (manager == null) {
             return {};
           }
-          return manager.settings.composite.urlParams as ReadonlyPartialJSONObject || {};
+          return (
+            (manager.settings.composite
+              .urlParams as ReadonlyPartialJSONObject) || {}
+          );
         },
         drawioUrl: () => DRAWIO_URL,
         saveNeedsExport: () => {
           return this.format?.isTransformed || true;
         },
         drawioConfig: () => {
-          const {manager} = RenderedDiagram;
-          if(manager == null) {
+          const { manager } = RenderedDiagram;
+          if (manager == null) {
             return {};
           }
-          return manager.settings.composite.drawioConfig as ReadonlyPartialJSONObject || {};
+          return (
+            (manager.settings.composite
+              .drawioConfig as ReadonlyPartialJSONObject) || {}
+          );
         },
         toXML: () => {
           if (this.lastModel == null) {
