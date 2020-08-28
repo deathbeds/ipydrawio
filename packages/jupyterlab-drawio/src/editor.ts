@@ -137,7 +137,7 @@ export class Diagram extends IFrame {
         this.onContentChanged();
         break;
       case 'load':
-        this.app = (this._frame.contentWindow as any).JUPYTERLAB_DRAWIO_APP;
+        this.app = (this._frame?.contentWindow as any).JUPYTERLAB_DRAWIO_APP;
         this._ready.resolve(void 0);
         this._initialLoad = true;
         this.addClass(READY_CLASS);
@@ -299,8 +299,8 @@ export class Diagram extends IFrame {
       DEBUG &&
         console.warn(
           'contentWindow or format not ready',
-          this.format,
-          this._frame.contentWindow
+          this._frame?.contentWindow,
+          this.format
         );
       return;
     }

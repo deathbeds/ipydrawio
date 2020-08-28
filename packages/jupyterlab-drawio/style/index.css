@@ -17,3 +17,7 @@
   min-height: 0;
   display: none;
 }
+
+.jp-DiagramMedia {
+  min-height: 300px;
+}

@@ -49,6 +49,7 @@ export interface IDiagramManager {
   formatForModel(contentsModel: Partial<Contents.IModel>): IFormat | null;
   activeWidget: DiagramDocument | null;
   drawioURL: string;
+  settings: ISettingRegistry.ISettings;
 }
 
 export const DRAWIO_ICON_CLASS_RE = /jp-icon-warn0/;

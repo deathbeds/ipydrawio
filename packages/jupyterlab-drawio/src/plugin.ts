@@ -55,7 +55,7 @@ const plugin: JupyterFrontEndPlugin<IDiagramManager> = {
   autoStart: true,
 };
 
-export default plugin;
+export default [plugin];
 
 function activate(
   app: JupyterLab,

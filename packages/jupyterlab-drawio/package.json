@@ -27,6 +27,7 @@
   "homepage": "https://github.com/deathbeds/jupyterlab-drawio",
   "jupyterlab": {
     "extension": "lib/plugin.js",
+    "mimeExtension": "lib/mime.js",
     "schemaDir": "schema"
   },
   "keywords": [
