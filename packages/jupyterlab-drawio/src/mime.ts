@@ -54,11 +54,11 @@ export class RenderedDiagram extends Panel implements IRenderMime.IRenderer {
           if (manager != null) {
             params =
               (manager.settings.composite
-                .urlParams as ReadonlyPartialJSONObject) || {};
+                .drawioUrlParams as ReadonlyPartialJSONObject) || {};
           }
           const meta = this.lastModel?.metadata;
           const mimeParams = ((meta[this.format.mimetype] || {}) as any)[
-            'urlParams'
+            'drawioUrlParams'
           ];
           if (mimeParams != null) {
             params = { ...params, ...mimeParams };
