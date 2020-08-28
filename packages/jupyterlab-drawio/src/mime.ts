@@ -48,28 +48,45 @@ export class RenderedDiagram extends Panel implements IRenderMime.IRenderer {
       adapter: {
         format: () => this.format,
         urlParams: () => {
+          let params = {};
+
           const { manager } = RenderedDiagram;
-          if (manager == null) {
-            return {};
+          if (manager != null) {
+            params =
+              (manager.settings.composite
+                .urlParams as ReadonlyPartialJSONObject) || {};
           }
-          return (
-            (manager.settings.composite
-              .urlParams as ReadonlyPartialJSONObject) || {}
-          );
+          const meta = this.lastModel?.metadata;
+          const mimeParams = ((meta[this.format.mimetype] || {}) as any)[
+            'urlParams'
+          ];
+          if (mimeParams != null) {
+            params = { ...params, ...mimeParams };
+          }
+
+          return params;
         },
         drawioUrl: () => DRAWIO_URL,
         saveNeedsExport: () => {
           return this.format?.isTransformed || true;
         },
         drawioConfig: () => {
+          let config = {};
           const { manager } = RenderedDiagram;
-          if (manager == null) {
-            return {};
+          if (manager != null) {
+            config =
+              (manager.settings.composite
+                .drawioConfig as ReadonlyPartialJSONObject) || {};
           }
-          return (
-            (manager.settings.composite
-              .drawioConfig as ReadonlyPartialJSONObject) || {}
-          );
+
+          const meta = this.lastModel?.metadata;
+          const mimeConfig = ((meta[this.format.mimetype] || {}) as any)[
+            'drawioConfig'
+          ];
+          if (mimeConfig != null) {
+            config = { ...config, ...mimeConfig };
+          }
+          return config;
         },
         toXML: () => {
           if (this.lastModel == null) {
@@ -94,14 +111,6 @@ export class RenderedDiagram extends Panel implements IRenderMime.IRenderer {
   }
 
   async renderModel(model: IRenderMime.IMimeModel): Promise<void> {
-    this.lastModel = model;
-    if (this.initialized) {
-      this.content.onContentChanged();
-    } else if (this.isVisible) {
-      this.onAfterShow();
-    } else {
-      setTimeout(() => this.onAfterShow(), 100);
-    }
     const meta = model.metadata || {};
     const mimeMeta = meta
       ? (meta[this.format.mimetype] as ReadonlyPartialJSONObject)
@@ -109,6 +118,15 @@ export class RenderedDiagram extends Panel implements IRenderMime.IRenderer {
     if (mimeMeta != null) {
       const height = mimeMeta['height'] ? `${mimeMeta['height']}` : '';
       this.node.style.minHeight = height;
+    }
+
+    this.lastModel = model;
+    if (this.initialized) {
+      this.content.onContentChanged();
+    } else if (this.isVisible) {
+      this.onAfterShow();
+    } else {
+      setTimeout(() => this.onAfterShow(), 100);
     }
     return;
   }

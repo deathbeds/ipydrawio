@@ -36,6 +36,7 @@ import { NS, PLUGIN_ID } from '.';
 
 import { IDiagramManager, CommandIds, DEBUG } from './tokens';
 import { DiagramManager } from './manager';
+import { RenderedDiagram } from './mime';
 
 /**
  * The editor tracker extension.
@@ -112,6 +113,6 @@ function activate(
     menu.fileMenu.newMenu.addGroup([{ command: CommandIds.createNew }], 40);
   }
 
-  // this is very odd, and probably can't be reused. Use the manager pattern?
+  RenderedDiagram.manager = manager;
   return manager;
 }
