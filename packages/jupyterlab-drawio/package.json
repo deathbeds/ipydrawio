@@ -18,7 +18,7 @@
     "typescript": "~3.9.3"
   },
   "peerDependencies": {
-    "@deathbeds/jupyterlab-drawio-webpack": "^13.6.2-alpha1"
+    "@deathbeds/jupyterlab-drawio-webpack": "^13.6.10-alpha2"
   },
   "files": [
     "{lib,schema,style,src}/**/*.{ts,tsx,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css}",
@@ -43,5 +43,5 @@
     "url": "https://github.com/deathbeds/jupyterlab-drawio.git"
   },
   "types": "lib/index.d.ts",
-  "version": "0.8.0-alpha1"
+  "version": "0.8.0-alpha2"
 }

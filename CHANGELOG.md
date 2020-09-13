@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## Unreleased
+
+### jupyter-drawio-export 0.8.0-alpha2
+
+### @deathbeds/jupyterlab-drawio 0.8.0-alpha2
+
+### @deathbeds/jupyterlab-drawio-notebook 0.8.0-alpha2
+
+### @deathbeds/jupyterlab-drawio-webpack 13.6.10-alpha2
+
+- Drawio v13.6.10
+
+---
+
 ## Released 2020-08-16
 
 - basic functionality now tested with robotframework in Firefox on
@@ -26,6 +40,8 @@
 ### @deathbeds/jupyterlab-drawio-webpack 13.6.2-alpha1
 
 - Drawio v13.6.2
+
+---
 
 ## Released 2020-08-09
 
