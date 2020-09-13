@@ -112,6 +112,9 @@ def attempt_atest_with_retries(*extra_args):
 
     retries = int(os.environ.get("ATEST_RETRIES") or "0")
 
+    if "ATEST_ARGS" in os.environ:
+        extra_args += tuple(os.environ["ATEST_ARGS"].split(" "))
+
     while error_count != 0 and attempt <= retries:
         attempt += 1
         print("attempt {} of {}...".format(attempt, retries + 1))

@@ -2,6 +2,7 @@
 Documentation     Are export formats sane?
 Resource          _Keywords.robot
 Library           OperatingSystem
+Force Tags        component:document
 
 *** Test Cases ***
 SVG
