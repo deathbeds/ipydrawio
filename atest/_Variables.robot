@@ -33,7 +33,7 @@ ${JLAB XP CLOSE SETTINGS}    ${JLAB XP DOCK TAB}\[contains(., 'Settings')]/*[con
 ${XP LAUNCH TAB}    ${JLAB XP DOCK TAB}//*[contains(text(), 'Launcher')]
 ${CSS LAUNCHER}    css:.jp-Launcher-body
 ${CSS LAUNCH DIO}    css:.jp-LauncherCard[title='Create a new dio file'] svg
-${CSS LAUNCH IPYNB}    css:.jp-LauncherCard[data-category='Notebook'][title='Python 3'] svg
+${CSS LAUNCH IPYNB}    css:.jp-LauncherCard[data-category='Notebook'][title='Python 3'] .jp-LauncherCard-icon
 ${CSS DIO READY}    css:.jp-Diagram-ready
 ${CSS DIO IFRAME}    ${CSS DIO READY} iframe
 # drawio
