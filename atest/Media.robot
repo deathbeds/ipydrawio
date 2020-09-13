@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Does the media type (mimerenderer) work?
 Resource          _Keywords.robot
-Force Tags        component:document
+Force Tags        component:media
 
 *** Test Cases ***
 Drawio XML
