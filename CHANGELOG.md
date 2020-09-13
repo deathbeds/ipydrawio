@@ -8,6 +8,10 @@
 
 ### @deathbeds/jupyterlab-drawio-notebook 0.8.0-alpha2
 
+### @deathbeds/jupyterlab-drawio-shapes-jupyterlab 0.8.0-alpha2
+
+### @deathbeds/jupyterlab-drawio-pdf 0.8.0-alpha2
+
 ### @deathbeds/jupyterlab-drawio-webpack 13.6.10-alpha2
 
 - Drawio v13.6.10

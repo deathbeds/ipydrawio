@@ -15,6 +15,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/disableUpdate.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/electron.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/electronFilesWorker.js';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/export-fonts.css';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/export2.html';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/export3.html';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/favicon.ico';
@@ -2213,6 +2214,9 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/rack/f5.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/rack/general.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/rack/hp.xml';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/rack/hpe_aruba/gateways_controllers.xml';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/rack/hpe_aruba/security.xml';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/rack/hpe_aruba/switches.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/rack/ibm.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/rack/oracle.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/stencils/signs/animals.xml';
