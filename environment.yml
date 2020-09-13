@@ -23,6 +23,7 @@ dependencies:
   - requests_cache
   - robotframework
   - robotframework-lint
+  - robotframework-pabot
   - robotframework-seleniumlibrary
   - twine
   - wheel
