@@ -1,8 +1,12 @@
 # minimum pip build/format requirements for ipydrawio
 black
 doit
+flake8
 isort <5
 jupyterlab ==3.*
 pip
+pyflakes
+robotframework
+robotframework-lint
 setuptools
 wheel
