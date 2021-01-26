@@ -10,21 +10,17 @@ env:
   PYTHONUNBUFFERED: 1
   PYTHONIOENCODING: utf-8
   ATEST_RETRIES: 3
+  CACHE_EPOCH: 0
 
 jobs:
   ci:
     name: ${{ matrix.os }} ${{ matrix.python-version }}
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
-        python-version:
-          - '3.6'
-          - '3.8'
+        os: ['ubuntu', 'macos', 'windows']
+        python-version: ['3.6', '3.9']
     steps:
       - name: configure line endings
         run: |
@@ -37,50 +33,47 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/conda_pkgs_dir
-          key: ${{ runner.os }}-conda-${{ matrix.python-version }}-${{ hashFiles('environment.yml') }}
+          key: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-${{ matrix.python-version }}-${{ hashFiles('environment.yml') }}
           restore-keys: |
-            ${{ runner.os }}-conda-${{ matrix.python-version }}-
-            ${{ runner.os }}-conda-
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-${{ matrix.python-version }}-
 
       - name: cache (yarn)
         uses: actions/cache@v1
         with:
           path: .yarn-packages
-          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          key: |
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            yarn-${{ runner.os }}-
-            yarn-
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-
+            ${{ env.CACHE_EPOCH }}-yarn-
 
       - name: install (conda)
         uses: conda-incubator/setup-miniconda@master
         with:
-          activate-environment: jupyterlab-drawio
-          environment-file: environment.yml
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
+          mamba-version: '*'
           python-version: ${{ matrix.python-version }}
+          environment-file: environment.yml
           use-only-tar-bz2: true
 
       - name: build (linux)
         if: ${{ contains(matrix.os, 'ubuntu') }}
         shell: bash -l {0}
         run: |
-          source /usr/share/miniconda/bin/deactivate
-          source /usr/share/miniconda/bin/activate /usr/share/miniconda/envs/jupyterlab-drawio
-          doit all || doit all
+          doit all -n8 || doit all
 
       - name: build (macos)
         if: ${{ contains(matrix.os, 'macos') }}
         shell: bash -l {0}
         run: |
-          source /usr/local/miniconda/bin/deactivate
-          source /usr/local/miniconda/bin/activate /usr/local/miniconda/envs/jupyterlab-drawio
-          doit all || doit all
+          doit all -2 || doit all
 
       - name: build (windows)
         if: ${{ contains(matrix.os, 'windows') }}
         shell: cmd /C CALL {0}
         run: |
-          call C:\Miniconda\Scripts\deactivate
-          call C:\Miniconda\Scripts\activate C:\Miniconda\envs\jupyterlab-drawio
           doit all || doit all
 
       - name: clean (windows)
@@ -93,5 +86,5 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
-          name: RF${{ github.run_number }} ${{ matrix.os }}${{ matrix.python-version }}
+          name: ${{ github.run_number }} atest ${{ matrix.os }}${{ matrix.python-version }}
           path: ./atest/output
