@@ -16,7 +16,96 @@ env:
   CACHE_EPOCH: 0
 
 jobs:
-  ci:
+  build:
+    name: build
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      matrix:
+        os: [ubuntu]
+        python-version: ['3.8']
+    defaults:
+      run:
+        shell: bash -l {0}
+    env:
+      BUILDING_IN_CI: 1
+    steps:
+      - uses: actions/checkout@v2
+
+      # configure builtin providers
+      - name: setup (python)
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+
+      - name: setup (node)
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      # restore caches
+      - name: cache (pip)
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-pip-${{ hashFiles('.github/reqs/pip-build.txt') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-pip-
+      - name: cache (node)
+        uses: actions/cache@v2
+        id: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ env.CACHE_EPOCH }}-${{ runner.os }}-node-build-${{ hashFiles('yarn.lock', '.gitub/reqs/pip-build.txt') }}
+
+      - name: cache (yarn)
+        uses: actions/cache@v1
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        id: cache-yarn-packages
+        with:
+          path: .yarn-packages
+          key: ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-
+            ${{ env.CACHE_EPOCH }}-yarn-
+
+      - name: setup (pip)
+        run: pip install -U pip wheel setuptools
+
+      - name: setup (pip build)
+        run: pip install -U -v -r .github/reqs/pip-build.txt
+
+      - name: check (pip)
+        run: |
+          set -eux
+          mkdir -p build/pip
+          pip freeze | tee build/pip/dist.pip.freeze
+          pip check
+
+      - name: upload (pip freeze)
+        uses: actions/upload-artifact@v2
+        with:
+          name: ipydrawio ${{ github.run_number }} build pip freeze
+          path: ./build/pip/
+
+      - name: list
+        run: doit list --all --status
+
+      - name: build
+        run: doit hash || doit hash
+
+      - name: status
+        run: doit list --all --status | sort
+        if: always()
+
+      - name: upload (dist)
+        uses: actions/upload-artifact@v2
+        with:
+          name: ipydrawio ${{ github.run_number }} dist
+          path: ./dist
+
+  test:
     name: ${{ matrix.os }} ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}-latest
     strategy:
@@ -89,5 +178,5 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ github.run_number }} atest ${{ matrix.os }}${{ matrix.python-version }}
+          name: ipydrawio ${{ github.run_number }} atest ${{ matrix.os }}${{ matrix.python-version }}
           path: ./atest/output
