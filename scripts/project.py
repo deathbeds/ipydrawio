@@ -240,6 +240,9 @@ OK_ATEST = BUILD / "atest.ok"
 
 PY_TEST_DEP["jupyter-drawio-export"] = [OK_PROVISION, LAB_INDEX]
 
+HASH_DEPS = [*PY_WHEEL.values(), *JS_TARBALL.values()]
+SHA256SUMS = DIST / "SHA256SUMS"
+
 # built artifacts
 EXAMPLE_HTML = [DIST_NBHTML / p.name.replace(".ipynb", ".html") for p in EXAMPLE_IPYNB]
 

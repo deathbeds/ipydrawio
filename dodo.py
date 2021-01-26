@@ -16,6 +16,7 @@ maybe before you push
 """
 import shutil
 import subprocess
+from hashlib import sha256
 
 from doit.action import CmdAction
 from doit.tools import PythonInteractiveAction, config_changed
@@ -260,6 +261,32 @@ def task_build():
             targets=[P.PY_WHEEL[py_pkg]],
         )
 
+    def _make_hashfile():
+        # mimic sha256sum CLI
+        if P.SHA256SUMS.exists():
+            P.SHA256SUMS.unlink()
+
+        if not P.DIST.exists():
+            P.DIST.mkdir(parents=True)
+
+        [shutil.copy2(p, P.DIST / p.name) for p in P.HASH_DEPS]
+
+        lines = []
+
+        for p in P.HASH_DEPS:
+            lines += ["  ".join([sha256(p.read_bytes()).hexdigest(), p.name])]
+
+        output = "\n".join(lines)
+        print(output)
+        P.SHA256SUMS.write_text(output)
+
+    yield dict(
+        name="hash",
+        file_dep=[*P.HASH_DEPS],
+        targets=[P.SHA256SUMS],
+        actions=[_make_hashfile],
+    )
+
 
 def task_lab_build():
     """do a "production" build of lab"""
@@ -374,7 +401,14 @@ def task_provision():
 
 def task_all():
     return dict(
-        file_dep=[P.OK_INTEGRITY, P.OK_PROVISION, P.OK_ATEST, *P.OK_PYTEST.values()],
+        uptodate=[lambda: False],
+        file_dep=[
+            P.OK_INTEGRITY,
+            P.OK_PROVISION,
+            P.OK_ATEST,
+            *P.OK_PYTEST.values(),
+            P.SHA256SUMS,
+        ],
         actions=[lambda: [print("nothing left to do"), True][1]],
     )
 
