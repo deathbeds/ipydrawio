@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu]
-        python-version: ['3.9']
+        python-version: ['3.8']
     defaults:
       run:
         shell: bash -l {0}
@@ -112,7 +112,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu', 'macos', 'windows']
-        python-version: ['3.6', '3.9']
+        python-version: ['3.6', '3.8']
     steps:
       - name: configure line endings
         run: |
