@@ -17,7 +17,7 @@ import re
 from pathlib import Path
 
 HERE = Path(__file__).parent
-VERSION = [*HERE.glob("src/jupyter_drawio_export/_version.py")][0]
+VERSION = HERE / "src/ipydrawio/_version.py"
 
 version = re.findall(
     r"""__version__\s*=\s*"([^"]+)""", VERSION.read_text(encoding="utf-8")

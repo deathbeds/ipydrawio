@@ -4,7 +4,9 @@
     "url": "https://github.com/deathbeds/ipydrawio/issues"
   },
   "dependencies": {
-    "@jupyterlab/application": "3"
+    "@jupyterlab/application": "3",
+    "@jupyterlab/launcher": "3",
+    "@jupyterlab/mainmenu": "3"
   },
   "description": "A JupyterLab extension for embedding drawio / mxgraph.",
   "devDependencies": {
