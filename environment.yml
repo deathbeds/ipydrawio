@@ -2,6 +2,7 @@ name: jupyterlab-drawio
 
 channels:
   - conda-forge
+  - nodefaults
 
 dependencies:
   - black

@@ -62,13 +62,13 @@ jobs:
         if: ${{ contains(matrix.os, 'ubuntu') }}
         shell: bash -l {0}
         run: |
-          doit all -n8 || doit all
+          doit all || doit all
 
       - name: build (macos)
         if: ${{ contains(matrix.os, 'macos') }}
         shell: bash -l {0}
         run: |
-          doit all -2 || doit all
+          doit all || doit all
 
       - name: build (windows)
         if: ${{ contains(matrix.os, 'windows') }}
