@@ -207,9 +207,9 @@ def task_build():
     yield _ok(
         dict(
             name="js:pre",
-            file_dep=[P.YARN_INTEGRITY, P.JDW_IGNORE, P.OK_SUBMODULES],
+            file_dep=[P.YARN_INTEGRITY, P.IPDW_IGNORE, P.OK_SUBMODULES],
             actions=[[*P.JLPM, "lerna", "run", "build:pre"]],
-            targets=[P.JDW_APP],
+            targets=[P.IPDW_APP],
         ),
         P.OK_JS_BUILD_PRE,
     )
@@ -288,29 +288,29 @@ def task_build():
     )
 
 
-def task_lab_build():
-    """do a "production" build of lab"""
+# def task_lab_build():
+#     """do a "production" build of lab"""
 
-    file_dep = sorted(P.JS_TARBALL.values())
+#     file_dep = sorted(P.JS_TARBALL.values())
 
-    build_args = ["--dev-build=False", "--minimize=True"]
-    if P.WIN:
-        build_args = []
+#     build_args = ["--dev-build=False", "--minimize=True"]
+#     if P.WIN:
+#         build_args = []
 
-    yield dict(
-        name="extensions",
-        file_dep=[*file_dep, P.OVERRIDES],
-        uptodate=[config_changed({"exts": P.EXTENSIONS})],
-        actions=[
-            P.CMD_DISABLE_EXTENSIONS,
-            P.CMD_INSTALL_ALL_EXTENSIONS,
-            P.CMD_LIST_EXTENSIONS,
-            P._override_lab,
-            [*P.CMD_BUILD, *build_args],
-            P.CMD_LIST_EXTENSIONS,
-        ],
-        targets=[P.LAB_INDEX, P.LAB_OVERRIDES, P.LAB_LOCK],
-    )
+#     yield dict(
+#         name="extensions",
+#         file_dep=[*file_dep, P.OVERRIDES],
+#         uptodate=[config_changed({"exts": P.EXTENSIONS})],
+#         actions=[
+#             P.CMD_DISABLE_EXTENSIONS,
+#             P.CMD_INSTALL_ALL_EXTENSIONS,
+#             P.CMD_LIST_EXTENSIONS,
+#             P._override_lab,
+#             [*P.CMD_BUILD, *build_args],
+#             P.CMD_LIST_EXTENSIONS,
+#         ],
+#         targets=[P.LAB_INDEX, P.LAB_OVERRIDES, P.LAB_LOCK],
+#     )
 
 
 def task_lab():
@@ -330,60 +330,60 @@ def task_lab():
 
     return dict(
         uptodate=[lambda: False],
-        file_dep=[P.LAB_INDEX, *P.OK_SERVEREXT.values()],
+        file_dep=[*P.OK_SERVEREXT.values()],
         actions=[PythonInteractiveAction(lab)],
     )
 
 
-def task_watch():
-    def watch():
-        shutil.rmtree(P.LAB_STATIC, ignore_errors=True)
-        subprocess.check_call(["jupyter", "lab", "build"])
+# def task_watch():
+#     def watch():
+#         shutil.rmtree(P.LAB_STATIC, ignore_errors=True)
+#         subprocess.check_call(["jupyter", "lab", "build"])
 
-        for sub_ns in (P.LAB_STAGING / "node_modules" / f"@{P.JS_NS}").glob(
-            f"*/node_modules/@{P.JS_NS}"
-        ):
-            print(f"Deleting {sub_ns.relative_to(P.LAB_STAGING)}", flush=True)
-            shutil.rmtree(sub_ns)
-        else:
-            print(f"Nothing deleted in {P.LAB_STAGING}!", flush=True)
+#         for sub_ns in (P.LAB_STAGING / "node_modules" / f"@{P.JS_NS}").glob(
+#             f"*/node_modules/@{P.JS_NS}"
+#         ):
+#             print(f"Deleting {sub_ns.relative_to(P.LAB_STAGING)}", flush=True)
+#             shutil.rmtree(sub_ns)
+#         else:
+#             print(f"Nothing deleted in {P.LAB_STAGING}!", flush=True)
 
-        jlpm_proc = subprocess.Popen(
-            ["jlpm", "lerna", "run", "--parallel", "--stream", "watch"]
-        )
+#         jlpm_proc = subprocess.Popen(
+#             ["jlpm", "lerna", "run", "--parallel", "--stream", "watch"]
+#         )
 
-        build_proc = subprocess.Popen(["jlpm", "watch"], cwd=P.LAB_STAGING)
+#         build_proc = subprocess.Popen(["jlpm", "watch"], cwd=P.LAB_STAGING)
 
-        lab_proc = subprocess.Popen(P.CMD_LAB, stdin=subprocess.PIPE)
+#         lab_proc = subprocess.Popen(P.CMD_LAB, stdin=subprocess.PIPE)
 
-        try:
-            lab_proc.wait()
-        except KeyboardInterrupt:
-            print("attempting to stop lab, you may want to check your process monitor")
-            lab_proc.terminate()
-            lab_proc.communicate(b"y\n")
-        finally:
-            jlpm_proc.terminate()
-            build_proc.terminate()
+#         try:
+#             lab_proc.wait()
+#         except KeyboardInterrupt:
+#             print("attempting to stop lab, you may want to check your process monitor")
+#             lab_proc.terminate()
+#             lab_proc.communicate(b"y\n")
+#         finally:
+#             jlpm_proc.terminate()
+#             build_proc.terminate()
 
-        lab_proc.wait()
-        jlpm_proc.wait()
-        build_proc.wait()
+#         lab_proc.wait()
+#         jlpm_proc.wait()
+#         build_proc.wait()
 
-    return dict(
-        uptodate=[lambda: False],
-        file_dep=[*P.JS_TARBALL.values(), *P.OK_SERVEREXT.values()],
-        actions=[
-            P.CMD_LIST_EXTENSIONS,
-            P.CMD_LINK_EXTENSIONS,
-            P.CMD_LIST_EXTENSIONS,
-            P.CMD_INSTALL_EXTENSIONS,
-            P.CMD_DISABLE_EXTENSIONS,
-            P._override_lab,
-            P.CMD_LIST_EXTENSIONS,
-            PythonInteractiveAction(watch),
-        ],
-    )
+#     return dict(
+#         uptodate=[lambda: False],
+#         file_dep=[*P.JS_TARBALL.values(), *P.OK_SERVEREXT.values()],
+#         actions=[
+#             P.CMD_LIST_EXTENSIONS,
+#             P.CMD_LINK_EXTENSIONS,
+#             P.CMD_LIST_EXTENSIONS,
+#             P.CMD_INSTALL_EXTENSIONS,
+#             P.CMD_DISABLE_EXTENSIONS,
+#             P._override_lab,
+#             P.CMD_LIST_EXTENSIONS,
+#             PythonInteractiveAction(watch),
+#         ],
+#     )
 
 
 def task_provision():
@@ -426,7 +426,6 @@ def task_test():
             name="integrity",
             file_dep=[
                 P.SCRIPTS / "integrity.py",
-                P.LAB_INDEX,
                 P.OK_LINT,
                 *[*P.OK_SERVEREXT.values()],
                 *[*P.PY_WHEEL.values()],
@@ -458,8 +457,6 @@ def task_test():
             name="robot",
             file_dep=[
                 *P.ALL_ROBOT,
-                P.LAB_INDEX,
-                P.LAB_OVERRIDES,
                 P.OK_PROVISION,
                 P.OK_ROBOT_DRYRUN,
                 P.SCRIPTS / "atest.py",

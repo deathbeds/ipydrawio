@@ -1,8 +1,10 @@
 black
 doit
 flake8
-isort <5
-jupyterlab ==2.*
+ipywidgets >=7.6
+isort >=5
+jupyterlab ==3.*
+jupyterlab_widgets >=1
 lxml
 pillow
 pip

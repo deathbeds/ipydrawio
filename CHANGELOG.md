@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### ipydrawio 1.0.0-alpha0
+
+- ipywidgets support
+- Supports JupyterLab 3
+- `pip` primary distribution
+- Contains all previous packages
+  - PDF export is tenuous, due to `nodejs` dependencies, and may be temporarily
+    unavailable
+- A future release may unpack various dependencies into sub-packages
+
+---
+
 ### jupyter-drawio-export 0.8.0-alpha2
 
 ### @deathbeds/jupyterlab-drawio 0.8.0-alpha2

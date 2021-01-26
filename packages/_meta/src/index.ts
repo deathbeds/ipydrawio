@@ -11,6 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import '@deathbeds/jupyterlab-drawio';
-import '@deathbeds/jupyterlab-drawio-pdf';
-import '@deathbeds/jupyterlab-drawio-notebook';
+import '@deathbeds/ipydrawio';
+import '@deathbeds/ipydrawio-pdf';
+import '@deathbeds/ipydrawio-notebook';

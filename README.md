@@ -1,15 +1,15 @@
-# @deathbeds/jupyterlab-drawio
+# @deathbeds/ipydrawio
 
 [Drawio][] diagrams for [JupyterLab][]. Forked with ❤️ from [QuantStack/jupyterlab-drawio][].
 
 > **[Install](#installation)** &middot; > **[History](./CHANGELOG.md)** &middot; > **[Roadmap](./docs/ROADMAP.dio.ipynb)** &middot; > **[Contribute](./CONTRIBUTING.md)** &middot; > **[Open Source](#open-source)**
 
-> > ![.github/workflows/ci.yml](https://github.com/deathbeds/jupyterlab-drawio/workflows/.github/workflows/ci.yml/badge.svg)
+> > ![.github/workflows/ci.yml](https://github.com/deathbeds/ipydrawio/workflows/.github/workflows/ci.yml/badge.svg)
 > >
 > > This is ALPHA software. Native drawio files created with these tools _should_ work
 > > with any other [drawio][] client, but any UI/API is liable to change at any time.
 
-[binder]: http://mybinder.org/v2/gh/deathbeds/jupyterlab-drawio/master?urlpath=lab/tree/docs/Poster.dio.svg
+[binder]: http://mybinder.org/v2/gh/deathbeds/ipydrawio/master?urlpath=lab/tree/docs/Poster.dio.svg
 [binder-badge]: https://mybinder.org/badge_logo.svg
 
 ## Examples
@@ -37,7 +37,7 @@
 - Try on [![binder-badge][]][binder]
   - or follow the [Installation instructions](#installation) and **Start JupyterLab**
 - Import a `drawio` from [diagrams.net](https://diagrams.net) with the _[File Manager][]_
-  - or create a new <img src="./packages/jupyterlab-drawio/style/img/drawio.svg" width="24"/> _Diagram_ from the [Launcher][]
+  - or create a new <img src="./packages/ipydrawio/style/img/drawio.svg" width="24"/> _Diagram_ from the [Launcher][]
 - Use the _[Command Palette][]_ to _Export Diagram_ to various formats
 
 [command palette]: https://jupyterlab.readthedocs.io/en/stable/user/commands.html?highlight=command%20palette
@@ -46,36 +46,20 @@
 
 ## Installation
 
-### Prerequisites
-
-- `jupyterlab >=2.2,<3`
-- `nodejs >=10`
-
-> For example:
->
-> ```bash
-> conda install -yc conda-forge jupyterlab=2.2 nodejs=12
-> ```
-
-### Core Lab Extensions
-
-The core labextensions do not have any server-side dependencies.
-
 ```bash
-jupyter labextension install \
-    @deathbeds/jupyterlab-drawio \
-    @deathbeds/jupyterlab-drawio-notebook \
-    @deathbeds/jupyterlab-drawio-webpack
+pip install ipydrawio
+# TBD: conda install -c conda-forge ipydrawio
 ```
 
 ### PDF: Lab and Server extensions
 
-`@deathbeds/jupyterlab-drawio-pdf` and `jupyter-drawio-export` can generate
-print-quality PDF. This approach relies on a headless browser, powered by `jgraph/drawio-image-export2` and ultimately `puppeteer` and has a number of heavy-weight
+`@deathbeds/ipydrawio-pdf` and `jupyter-drawio-export` can generate
+print-quality PDF. This approach relies on a headless browser, powered by
+`jgraph/drawio-image-export2` and ultimately `puppeteer` and has a number of heavy-weight
 dependencies. To enable all the bells and whistles get:
 
 - `pypdf2` and `requests_cache` from `pip` or `conda`
-- `nodejs>10` from `conda` or your system package manager
+- `nodejs>10,<14` from `conda` or your system package manager
   - **NOTE**: this relies on being able to install `puppeteer` (and other
     **arbitrary dependencies** with `jlpm` for now **when first used**
     - _we'll figure out a better approach soon enough_
@@ -86,10 +70,8 @@ dependencies. To enable all the bells and whistles get:
 > For example:
 >
 > ```bash
-> conda install -yc conda-forge pypdf2 requests_cache nodejs
+> conda install -yc conda-forge nodejs=12
 > pip install jupyter-drawio-export
-> jupyter serverextension enable --sys-prefix --py jupyter_drawio_export
-> jupyter labextension install @deathbeds/jupyterlab-drawio-pdf
 > ```
 
 ## Open Source
@@ -117,4 +99,4 @@ The original source code vendored in this package from:
 [jupyterlab]: https://github.com/jupyterlab/jupyterlab
 [drawio]: https://www.diagrams.net
 [quantstack/jupyterlab-drawio]: https://github.com/QuantStack/jupyterlab-drawio
-[contributors]: https://github.com/deathbeds/jupyterlab-drawio/graphs/contributors
+[contributors]: https://github.com/deathbeds/ipydrawio/graphs/contributors

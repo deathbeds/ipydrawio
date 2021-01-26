@@ -2,7 +2,7 @@
 
 > PDF export of [drawio](https://www.diagrams.net) diagrams for Jupyter.
 
-See the [project repo](https://github.com/deathbeds/jupyterlab-drawio) for more information.
+See the [project repo](https://github.com/deathbeds/ipydrawio) for more information.
 
 ## Server Extension
 

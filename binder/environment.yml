@@ -1,4 +1,4 @@
-name: jupyterlab-drawio
+name: ipydrawio
 
 channels:
   - conda-forge
@@ -14,7 +14,7 @@ dependencies:
   - ipywidgets
   - isort <5
   - json-e
-  - jupyterlab >=2.2.4,<3.0.0a0
+  - jupyterlab >=3.0.0,<4.0.0a0
   - lxml
   - matplotlib-base
   - networkx

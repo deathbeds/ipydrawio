@@ -1,4 +1,4 @@
 node_modules/
 **/drawio/**
-packages/jupyterlab-drawio/lib/
-packages/jupyterlab-drawio-pdf/lib/
+packages/ipydrawio/lib/
+packages/ipydrawio-pdf/lib/
