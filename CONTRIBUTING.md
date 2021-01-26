@@ -6,7 +6,8 @@
 - improving testing
 - improving (self-hosted) documentation
 - improving the binder demo
-- improving [continuous integration](./github/workflows/ci.yml) and [developer experience](./dodo.py)
+- improving [continuous integration](./github/workflows/ci.yml) and
+  [developer experience](./dodo.py)
 
 ## Prerequisites
 

@@ -2,7 +2,8 @@
 
 > PDF export of [drawio](https://www.diagrams.net) diagrams for Jupyter.
 
-See the [project repo](https://github.com/deathbeds/ipydrawio) for more information.
+See the [project repo](https://github.com/deathbeds/ipydrawio) for more
+information.
 
 ## Server Extension
 
@@ -27,7 +28,8 @@ pip install jupyter-drawio-export
 jupyter drawio-export some_file.dio
 ```
 
-If needed, the `nodejs` application will be installed into the Jupyter data path.
+If needed, the `nodejs` application will be installed into the Jupyter data
+path.
 
 ```bash
 jupyter config --paths  # it uses the one in the environment
@@ -48,6 +50,10 @@ jupyter drawio-config provision
 
 This work is licensed under the [Apache 2.0](./LICENSE.txt).
 
-The vendored code from [@jgraph/draw-image-export2](https://github.com/jgraph/draw-image-export2) is also licensed under the [Apache-2.0](./vendor/draw-image-export2/LICENSE) License.
+The vendored code from
+[@jgraph/draw-image-export2](https://github.com/jgraph/draw-image-export2) is
+also licensed under the [Apache-2.0](./vendor/draw-image-export2/LICENSE)
+License.
 
-[serverext]: https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/Distributing%20Jupyter%20Extensions%20as%20Python%20Packages.html
+[serverext]:
+  https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/Distributing%20Jupyter%20Extensions%20as%20Python%20Packages.html

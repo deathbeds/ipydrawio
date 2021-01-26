@@ -1,8 +1,11 @@
 # `@deathbeds/jupyterlab-drawio-notebook`
 
-> Jupyter Notebook (`.ipynb` and `.dio.ipynb`) integration for [drawio](https://www.diagrams.net) in [JupyterLab](https://github.com/jupyterlab/jupyterlab)
+> Jupyter Notebook (`.ipynb` and `.dio.ipynb`) integration for
+> [drawio](https://www.diagrams.net) in
+> [JupyterLab](https://github.com/jupyterlab/jupyterlab)
 
-See the [project repo](https://github.com/deathbeds/ipydrawio) for more information.
+See the [project repo](https://github.com/deathbeds/ipydrawio) for more
+information.
 
 ## Open Source
 

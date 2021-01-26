@@ -59,7 +59,8 @@ jobs:
         id: cache-node-modules
         with:
           path: '**/node_modules'
-          key: ${{ env.CACHE_EPOCH }}-${{ runner.os }}-node-build-${{ hashFiles('yarn.lock', '.gitub/pip-build.txt') }}
+          key: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-node-build-${{ hashFiles('yarn.lock', '.gitub/pip-build.txt') }}
 
       - name: cache (yarn)
         uses: actions/cache@v1
@@ -67,7 +68,8 @@ jobs:
         id: cache-yarn-packages
         with:
           path: .yarn-packages
-          key: ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          key: |
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-
             ${{ env.CACHE_EPOCH }}-yarn-
@@ -181,5 +183,7 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
-          name: ipydrawio ${{ github.run_number }} atest ${{ matrix.os }}${{ matrix.python-version }}
+          name:
+            ipydrawio ${{ github.run_number }} atest ${{ matrix.os }}${{
+            matrix.python-version }}
           path: ./atest/output
