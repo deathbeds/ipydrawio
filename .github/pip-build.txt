@@ -4,8 +4,12 @@ doit
 flake8
 isort <5
 jupyterlab ==3.*
+lxml
+pillow
 pip
 pyflakes
+pypdf2
+requests
 robotframework
 robotframework-lint
 setuptools

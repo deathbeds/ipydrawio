@@ -17,6 +17,8 @@ OSX = PLATFORM == "Darwin"
 UNIX = not WIN
 PREFIX = Path(sys.prefix)
 
+BUILDING_IN_CI = bool(json.loads(os.environ.get("BUILDING_IN_CI", "0")))
+
 # find root
 SCRIPTS = Path(__file__).parent.resolve()
 ROOT = SCRIPTS.parent
