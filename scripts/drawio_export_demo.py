@@ -16,8 +16,7 @@ PORT = os.environ.get("PORT")
 
 
 def main():
-    """ start the drawio-export, and (usually) a local http server to serve the assets
-    """
+    """start the drawio-export, and (usually) a local http server to serve the assets"""
     if not (APP / "node_modules").exists():
         print("Installing drawio-export deps in:\n\t", str(APP), flush=True)
         subprocess.check_call(["jlpm"], cwd=str(APP))

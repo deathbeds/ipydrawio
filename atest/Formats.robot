@@ -24,11 +24,10 @@ PNG (Editable)
 Notebook
     [Documentation]    does editable Notebook work?
     Validate Export Format    Notebook    dio.ipynb    editable=${True}
-
-PDF
-    [Documentation]    does read-only PDF work?
-    Validate Export Format    PDF    pdf    timeout=60s
 # TODO: restore someday
+# PDF
+#    [Documentation]    does read-only PDF work?
+#    Validate Export Format    PDF    pdf    timeout=60s
 # PDF (Editable)
 #    [Documentation]    does editable PDF work?
 #    Validate Export Format    PDF    pdf    timeout=60s
@@ -43,7 +42,8 @@ Validate Export Format
     Capture Page Screenshot    00-launched.png
     Select Frame    ${CSS DIO IFRAME}
     Double Click Element    ${CSS DIO BG}
-    Click Element    ${CSS DIO SHAPE MENU SHAPE}:nth-child(2)
+    # TODO: investigate (and name) what this was trying to
+    # Click Element    ${CSS DIO SHAPE MENU SHAPE}:nth-child(2)
     Unselect Frame
     Capture Page Screenshot    10-edited.png
     Lab Command    Export Diagram as ${format}

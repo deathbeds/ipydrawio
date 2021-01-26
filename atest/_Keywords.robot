@@ -75,13 +75,10 @@ Wait For Splash
     Execute Javascript    window.onbeforeunload \= function (){}
 
 Open JupyterLab
-    Set Environment Variable    MOZ_HEADLESS    ${HEADLESS}
-    ${firefox} =    Get Firefox Binary
-    ${geckodriver} =    Which    geckodriver
+    # Open Browser    about:blank    headlessfirefox
+    Set Environment Variable    MOZ_HEADLESS    1
     ${service args} =    Create List    --log    warn
     Create WebDriver    Firefox
-    ...    executable_path=${geckodriver}
-    ...    firefox_binary=${firefox}
     ...    service_log_path=${OUTPUT DIR}${/}geckodriver.log
     ...    service_args=${service args}
     Wait Until Keyword Succeeds    3x    5s    Wait For Splash
@@ -89,7 +86,9 @@ Open JupyterLab
 Get Firefox Binary
     [Documentation]    Get Firefox path from the environment... or hope for the best
     ${from which} =    Which    firefox
-    ${firefox} =    Set Variable If    "%{FIREFOX_BINARY}"    %{FIREFOX_BINARY}
+    ${from env} =    Get Environment Variable    FIREFOX_BINARY    ${EMPTY}
+    ${firefox} =    Set Variable If    "${from env}"
+    ...    %{FIREFOX_BINARY}
     ...    ${from which}
     [Return]    ${firefox}
 

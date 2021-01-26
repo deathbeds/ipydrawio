@@ -1,3 +1,19 @@
+"""automation for ipydrawio
+
+> see https://pydoit.org/tutorial_1.html#incremental-computation
+
+see what you can do
+
+    doit list --status --all | sort
+
+do basically everything to get ready for a release
+
+    doit all
+
+maybe before you push
+
+    doit -n8 lint
+"""
 import shutil
 import subprocess
 
@@ -15,13 +31,11 @@ DOIT_CONFIG = dict(
 
 
 def task_submodules():
-    """ ensure submodules are available
-    """
+    """ensure submodules are available"""
     subs = subprocess.check_output(["git", "submodule"]).decode("utf-8").splitlines()
 
     def _clean():
-        """ clean drawio, as it gets patched in-place
-        """
+        """clean drawio, as it gets patched in-place"""
         if any([x.startswith("-") for x in subs]) and P.DRAWIO.exists():
             shutil.rmtree(P.DRAWIO)
 
@@ -93,12 +107,13 @@ def task_setup():
 
 
 def task_lint():
-    """ format all source files
-    """
+    """format all source files"""
 
     yield _ok(
         dict(
-            name="isort", file_dep=[*P.ALL_PY], actions=[["isort", "-rc", *P.ALL_PY]],
+            name="isort",
+            file_dep=[*P.ALL_PY],
+            actions=[["isort", "-rc", *P.ALL_PY]],
         ),
         P.OK_ISORT,
     )
@@ -247,8 +262,7 @@ def task_build():
 
 
 def task_lab_build():
-    """ do a "production" build of lab
-    """
+    """do a "production" build of lab"""
 
     file_dep = sorted(P.JS_TARBALL.values())
 
@@ -273,8 +287,7 @@ def task_lab_build():
 
 
 def task_lab():
-    """ run JupyterLab "normally" (not watching sources)
-    """
+    """run JupyterLab "normally" (not watching sources)"""
 
     def lab():
         proc = subprocess.Popen(P.CMD_LAB, stdin=subprocess.PIPE)

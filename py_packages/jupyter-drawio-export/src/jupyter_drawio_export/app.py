@@ -61,8 +61,7 @@ class ManagedApp(BaseApp):
 
 
 class ProvisionApp(ManagedApp):
-    """ pre-provision drawio export tools
-    """
+    """pre-provision drawio export tools"""
 
     async def start_async(self):
         try:
@@ -72,8 +71,7 @@ class ProvisionApp(ManagedApp):
 
 
 class PDFApp(ManagedApp):
-    """ export a drawio as PDF
-    """
+    """export a drawio as PDF"""
 
     dio_files = T.Tuple()
 
@@ -112,8 +110,7 @@ class PDFApp(ManagedApp):
 
 
 class DrawioExportApp(BaseApp):
-    """ drawio export tools
-    """
+    """drawio export tools"""
 
     name = "drawio-export"
     subcommands = dict(

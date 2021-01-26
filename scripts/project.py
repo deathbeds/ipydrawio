@@ -76,6 +76,7 @@ EXAMPLE_IPYNB = [
 DIST_NBHTML = DIST / "nbsmoke"
 ATEST = ROOT / "atest"
 ATEST_OUT = ATEST / "output"
+ATEST_OUT_XML = "output.xml"
 
 # js packages
 JS_NS = "deathbeds"
@@ -285,3 +286,16 @@ def _override_lab():
         LAB_OVERRIDES.parent.mkdir(parents=True)
 
     shutil.copy2(OVERRIDES, LAB_OVERRIDES)
+
+
+def get_atest_stem(attempt=1, extra_args=None, browser=None):
+    """get the directory in ATEST_OUT for this platform/apps"""
+    browser = browser or "headlessfirefox"
+    extra_args = extra_args or []
+
+    stem = f"{PLATFORM}_{PY_MAJOR}_{browser}_{attempt}"
+
+    if "--dryrun" in extra_args:
+        stem += "_dry_run"
+
+    return stem

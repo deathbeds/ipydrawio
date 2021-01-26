@@ -12,13 +12,14 @@ Drawio XML
 
 *** Keywords ***
 Validate Media Display
-    [Arguments]    ${label}    ${media type}    ${example}
+    [Arguments]    ${label}    ${media type}    ${example}    ${format}=text
     Set Screenshot Directory    ${OUTPUT DIR}${/}screenshots${/}media${/}${label}
     Set Tags    media:${media type}
-    ${xml} =    Get File    examples${/}${example}
+    ${path} =    Normalize Path    examples${/}${example}
     Launch Untitled Notebook
+    Add and Run JupyterLab Code Cell    from pathlib import Path
     Add and Run JupyterLab Code Cell    from IPython.display import display
-    Add and Run JupyterLab Code Cell    data = """${xml}"""
+    Add and Run JupyterLab Code Cell    data = Path("${path}").read_${format}()
     Add and Run JupyterLab Code Cell    display({"${media type}": data}, {}, raw=True)
     Sleep    5s
     Capture Page Screenshot    99-teardown.png

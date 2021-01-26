@@ -50,8 +50,7 @@ JLPM = shutil.which("jlpm")
 
 
 class DrawioExportManager(LoggingConfigurable):
-    """ manager of (currently) another node-based server
-    """
+    """manager of (currently) another node-based server"""
 
     drawio_server_url = Unicode().tag(config=True)
     drawio_port = Int().tag(config=True)
@@ -136,8 +135,8 @@ class DrawioExportManager(LoggingConfigurable):
 
     @run_on_executor
     def _pdf(self, pdf_request):
-        """ TODO: enable more customization... I guess over HTTP headers?
-            X-JPYDIO-embed: 1
+        """TODO: enable more customization... I guess over HTTP headers?
+        X-JPYDIO-embed: 1
         """
         data = dict(pdf_request)
         data.update(**self.core_params)
@@ -244,7 +243,8 @@ class DrawioExportManager(LoggingConfigurable):
 
         env = dict(os.environ)
         env.update(
-            PORT=str(self.drawio_port), DRAWIO_SERVER_URL=self.drawio_server_url,
+            PORT=str(self.drawio_port),
+            DRAWIO_SERVER_URL=self.drawio_server_url,
         )
 
         self._server = subprocess.Popen(
@@ -308,9 +308,9 @@ class DrawioExportManager(LoggingConfigurable):
         self.is_provisioning = False
 
     def get_unused_port(self):
-        """ Get an unused port by trying to listen to any random port.
+        """Get an unused port by trying to listen to any random port.
 
-            Probably could introduce race conditions if inside a tight loop.
+        Probably could introduce race conditions if inside a tight loop.
         """
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.bind(("localhost", 0))

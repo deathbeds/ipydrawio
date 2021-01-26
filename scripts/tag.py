@@ -10,8 +10,7 @@ FOR_REAL = json.loads(os.environ.get("FOR_REAL", "0"))
 
 
 def tag():
-    """ upload releases
-    """
+    """upload releases"""
     if not FOR_REAL:
         print("Not uploading FOR_REAL: set the environment variable for a real release")
 
