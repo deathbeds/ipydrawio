@@ -3,3 +3,4 @@ jupyterlab ==3.*
 pip
 setuptools
 wheel
+doit

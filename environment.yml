@@ -6,7 +6,7 @@ channels:
 
 dependencies:
   - black
-  - doit ==0.32
+  - doit
   - firefox =78
   - flake8
   - geckodriver >=0.28.0
