@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu]
-        python-version: ['3.8']
+        python-version: ['3.9']
     defaults:
       run:
         shell: bash -l {0}
@@ -93,7 +93,7 @@ jobs:
         run: doit list --all --status
 
       - name: build
-        run: doit hash || doit hash
+        run: doit build || doit build
 
       - name: status
         run: doit list --all --status | sort
