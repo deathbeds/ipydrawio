@@ -154,11 +154,11 @@ PY_VERSION = {
     for k, v in PY_SRC.items()
 }
 JDE = PY_SETUP["jupyter-drawio-export"].parent
-PY_SDIST = {JDE.name: JDE / "dist" / f"{JDE.name}-0.8.0a1.tar.gz"}
+PY_SDIST = {JDE.name: JDE / "dist" / f"{JDE.name}-0.8.0a2.tar.gz"}
 PY_WHEEL = {
     JDE.name: JDE
     / "dist"
-    / f"""{JDE.name.replace("-", "_")}-0.8.0a1-py3-none-any.whl"""
+    / f"""{JDE.name.replace("-", "_")}-0.8.0a2-py3-none-any.whl"""
 }
 PY_TEST_DEP = {}
 
