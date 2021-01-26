@@ -10,6 +10,7 @@ pip
 pyflakes
 pypdf2
 requests
+requests-cache
 robotframework
 robotframework-lint
 setuptools
