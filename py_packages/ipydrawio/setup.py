@@ -1,4 +1,5 @@
 """
+Copyright 2021 ipydrawio contributors
 Copyright 2020 jupyterlab-drawio contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,13 +28,5 @@ version = re.findall(
 if __name__ == "__main__":
     import setuptools
     setuptools.setup(
-        version=version,
-        # hold your horses there
-        # data_files=[
-        #     (
-        #         "etc/jupyter/jupyter_notebook_config.d",
-        #         ["src/jupyter_drawio_export/etc/jupyter-drawio-export.json"],
-        #     )
-        # ],
-
+        version=version
     )

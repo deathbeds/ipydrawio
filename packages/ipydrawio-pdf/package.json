@@ -23,6 +23,17 @@
         "bundled": false,
         "singleton": true
       }
+    },
+    "discovery": {
+      "server": {
+        "base": {
+          "name": "ipydrawio_export"
+        },
+        "managers": [
+          "pip",
+          "conda"
+        ]
+      }
     }
   },
   "main": "lib/index.js"

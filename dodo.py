@@ -27,7 +27,7 @@ DOIT_CONFIG = dict(
     backend="sqlite3",
     verbosity=2,
     par_type="thread",
-    default_tasks=["setup", "lab_build:extensions"],
+    default_tasks=["setup", "lint"],
 )
 
 
@@ -97,7 +97,7 @@ def task_setup():
                         "serverextension",
                         "enable",
                         "--py",
-                        "jupyter_drawio_export",
+                        "ipydrawio_export",
                         "--sys-prefix",
                     ],
                     ["jupyter", "serverextension", "list"],
@@ -232,6 +232,25 @@ def task_build():
                 CmdAction([P.NPM, "pack", "."], cwd=str(targets[0].parent), shell=False)
             ],
             targets=targets,
+        )
+        pkg_data = P.JS_PKG_DATA[pkg]
+
+        if "jupyterlab" not in pkg_data:
+            continue
+
+        yield dict(
+            name=f"ext:dev:{pkg}",
+            actions=[
+                CmdAction(
+                    [*P.LAB_EXT, "develop", "--overwrite", "."],
+                    shell=False,
+                    cwd=P.JS_PKG_JSON[pkg].parent
+                )
+            ],
+            file_dep=targets,
+            targets=[
+                P.IPD_EXT / f"""{pkg_data["name"]}/package.json"""
+            ]
         )
 
     for py_pkg, py_setup in P.PY_SETUP.items():
@@ -413,7 +432,7 @@ def task_all():
     )
 
 
-def _pytest(setup_py):
+def _pytest("setup_"py):
     def _test():
         subprocess.check_call([*P.PYM, "pytest"], shell=False, cwd=str(setup_py.parent))
 

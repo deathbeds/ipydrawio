@@ -24,6 +24,17 @@
         "bundled": false,
         "singleton": true
       }
+    },
+    "discovery": {
+      "server": {
+        "base": {
+          "name": "ipydrawio"
+        },
+        "managers": [
+          "pip",
+          "conda"
+        ]
+      }
     }
   },
   "main": "lib/index.js"

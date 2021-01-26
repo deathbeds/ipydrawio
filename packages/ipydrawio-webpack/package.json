@@ -21,7 +21,18 @@
   "name": "@deathbeds/ipydrawio-webpack",
   "jupyterlab": {
     "extension": "lib/plugin.js",
-    "outputDir": "../../py_packages/ipydrawio/labextensions/@deathbeds/ipydrawio-webpack"
+    "outputDir": "../../py_packages/ipydrawio/labextensions/@deathbeds/ipydrawio-webpack",
+    "discovery": {
+      "server": {
+        "base": {
+          "name": "ipydrawio"
+        },
+        "managers": [
+          "pip",
+          "conda"
+        ]
+      }
+    }
   },
   "repository": {
     "type": "git",

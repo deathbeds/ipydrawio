@@ -1,3 +1,4 @@
+// Copyright 2021 ipydrawio contributors
 // Copyright 2020 jupyterlab-drawio contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");

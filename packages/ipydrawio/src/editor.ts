@@ -1,3 +1,4 @@
+// Copyright 2021 ipydrawio contributors
 // Copyright 2020 jupyterlab-drawio contributors
 // Copyright 2018 Wolf Vollprecht
 //

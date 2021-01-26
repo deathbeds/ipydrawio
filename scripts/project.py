@@ -82,6 +82,12 @@ JS_PKG_JSON_LABEXT = {
     if JS_PKG_DATA[k].get("jupyterlab", {}).get("extension")
 }
 
+JS_LABEXT_PY_HOST = {
+    k: JS_PKG_DATA[k]["jupyterlab"]["discovery"]["server"]["base"]["name"]
+    for k, v in JS_PKG_JSON.items()
+    if JS_PKG_DATA[k].get("jupyterlab", {}).get("discovery")
+}
+
 JS_PKG_NOT_META = {k: v for k, v in JS_PKG_JSON.items() if k.startswith("_")}
 
 JS_TARBALL = {
@@ -142,6 +148,7 @@ PY_VERSION = {
 }
 JDE = PY_SETUP["jupyter-drawio-export"].parent
 IPD = PY_SETUP["ipydrawio"].parent
+IPD_EXT = IPD / "src/ipydrawio/labextensions"
 PY_SDIST = {
     JDE.name: JDE / "dist" / f"{JDE.name}-1.0.0a0.tar.gz",
     IPD.name: IPD / "dist" / f"{IPD.name}-1.0.0a0.tar.gz",
