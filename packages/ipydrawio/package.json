@@ -22,7 +22,14 @@
   "jupyterlab": {
     "extension": "lib/plugin.js",
     "mimeExtension": "lib/mime.js",
-    "schemaDir": "schema"
+    "schemaDir": "schema",
+    "outputDir": "../../py_packages/ipydrawio/labextensions/@deathbeds/ipydrawio",
+    "sharedPackages": {
+      "@deathbeds/ipydrawio-webpack": {
+        "bundled": false,
+        "singleton": true
+      }
+    }
   },
   "keywords": [
     "jupyter",

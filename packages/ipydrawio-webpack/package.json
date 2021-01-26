@@ -19,7 +19,8 @@
   "main": "lib/index.js",
   "name": "@deathbeds/ipydrawio-webpack",
   "jupyterlab": {
-    "extension": "lib/plugin.js"
+    "extension": "lib/plugin.js",
+    "outputDir": "../../py_packages/ipydrawio/labextensions/@deathbeds/ipydrawio-webpack"
   },
   "repository": {
     "type": "git",

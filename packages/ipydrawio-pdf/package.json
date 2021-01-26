@@ -15,7 +15,14 @@
     "LICENSE.txt"
   ],
   "jupyterlab": {
-    "extension": "lib/plugin.js"
+    "extension": "lib/plugin.js",
+    "outputDir": "../../py_packages/ipydrawio/labextensions/@deathbeds/ipydrawio-pdf",
+    "sharedPackages": {
+      "@deathbeds/ipydrawio": {
+        "bundled": false,
+        "singleton": true
+      }
+    }
   },
   "main": "lib/index.js"
 }
