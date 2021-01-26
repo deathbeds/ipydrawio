@@ -1,6 +1,8 @@
-# minimum pip build requirements for ipydrawio
+# minimum pip build/format requirements for ipydrawio
+black
+doit
+isort <5
 jupyterlab ==3.*
 pip
 setuptools
 wheel
-doit

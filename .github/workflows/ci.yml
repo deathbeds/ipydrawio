@@ -93,7 +93,7 @@ jobs:
         run: doit list --all --status
 
       - name: build
-        run: doit build || doit build
+        run: doit build -n4 || doit build
 
       - name: status
         run: doit list --all --status | sort
