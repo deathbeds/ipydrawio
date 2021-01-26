@@ -1,4 +1,3 @@
-# minimum pip build/format requirements for ipydrawio
 black
 doit
 flake8
@@ -9,6 +8,7 @@ pillow
 pip
 pyflakes
 pypdf2
+pytest
 requests
 requests-cache
 robotframework

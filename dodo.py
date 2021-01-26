@@ -282,7 +282,7 @@ def task_build():
 
     yield dict(
         name="hash",
-        file_dep=[*P.HASH_DEPS, P.OK_INTEGRITY],
+        file_dep=[*P.HASH_DEPS],
         targets=[P.SHA256SUMS],
         actions=[_make_hashfile],
     )
