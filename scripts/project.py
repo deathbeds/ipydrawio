@@ -182,6 +182,7 @@ ALL_TS = sum(JS_TSSRC.values(), [])
 ALL_CSS = sum(JS_STYLE.values(), [])
 ALL_ROBOT = [*ATEST.rglob("*.robot")]
 ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS, *ALL_CSS]
+ESLINTRC = ROOT / ".eslintrc.js"
 
 RFLINT_OPTS = sum(
     [

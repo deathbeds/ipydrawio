@@ -114,7 +114,7 @@ def task_lint():
         dict(
             name="isort",
             file_dep=[*P.ALL_PY],
-            actions=[["isort", "-rc", *P.ALL_PY]],
+            actions=[["isort", *P.ALL_PY]],
         ),
         P.OK_ISORT,
     )
@@ -155,7 +155,7 @@ def task_lint():
     yield _ok(
         dict(
             name="eslint",
-            file_dep=[P.YARN_INTEGRITY, *P.ALL_TS, P.OK_PRETTIER],
+            file_dep=[P.YARN_INTEGRITY, *P.ALL_TS, P.OK_PRETTIER, P.ESLINTRC],
             actions=[["jlpm", "eslint"]],
         ),
         P.OK_ESLINT,
