@@ -1,0 +1,5 @@
+# minimum pip build requirements for ipydrawio
+jupyterlab ==3.*
+pip
+setuptools
+wheel

@@ -52,7 +52,7 @@ jobs:
             yarn-
 
       - name: install (conda)
-        uses: goanpeca/setup-miniconda@v1.6.0
+        uses: conda-incubator/setup-miniconda@master
         with:
           activate-environment: jupyterlab-drawio
           environment-file: environment.yml
