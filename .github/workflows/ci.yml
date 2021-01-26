@@ -30,6 +30,7 @@ jobs:
       BUILDING_IN_CI: 1
     steps:
       - uses: actions/checkout@v2
+        submodules: recursive
 
       # configure builtin providers
       - name: setup (python)
