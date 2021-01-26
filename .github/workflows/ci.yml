@@ -108,6 +108,7 @@ jobs:
           path: ./dist
 
   test:
+    needs: [build]
     name: ${{ matrix.os }} ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}-latest
     strategy:
