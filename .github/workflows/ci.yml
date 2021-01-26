@@ -49,7 +49,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: |
-            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-pip-${{ hashFiles('.github/reqs/pip-build.txt') }}
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-pip-${{ hashFiles('.github/pip-build.txt') }}
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-${{ runner.os }}-pip-
       - name: cache (node)
@@ -57,7 +57,7 @@ jobs:
         id: cache-node-modules
         with:
           path: '**/node_modules'
-          key: ${{ env.CACHE_EPOCH }}-${{ runner.os }}-node-build-${{ hashFiles('yarn.lock', '.gitub/reqs/pip-build.txt') }}
+          key: ${{ env.CACHE_EPOCH }}-${{ runner.os }}-node-build-${{ hashFiles('yarn.lock', '.gitub/pip-build.txt') }}
 
       - name: cache (yarn)
         uses: actions/cache@v1
@@ -74,7 +74,7 @@ jobs:
         run: pip install -U pip wheel setuptools
 
       - name: setup (pip build)
-        run: pip install -U -v -r .github/reqs/pip-build.txt
+        run: pip install -U -v -r .github/pip-build.txt
 
       - name: check (pip)
         run: |
