@@ -170,7 +170,11 @@ SERVER_EXT = {
     if sorted(v.parent.glob("src/*/serverextension.py"))
 }
 
-# mostly linting
+
+def NOT_LABEXTENSIONS(paths):
+    return [p for p in paths if "labextensions" not in str(p)]
+
+
 ALL_PY = [
     DODO,
     *SCRIPTS.glob("*.py"),
@@ -185,7 +189,11 @@ ALL_JSON = [
     *PACKAGES.glob("*/schema/*.json"),
     *ATEST.rglob("*.json"),
 ]
-ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md"), *PY_PACKAGES.glob("*/*.md")]
+ALL_MD = [
+    *ROOT.glob("*.md"),
+    *PACKAGES.glob("*/*.md"),
+    *NOT_LABEXTENSIONS(PY_PACKAGES.glob("*/*.md")),
+]
 ALL_TS = sum(JS_TSSRC.values(), [])
 ALL_CSS = sum(JS_STYLE.values(), [])
 ALL_ROBOT = [*ATEST.rglob("*.robot")]

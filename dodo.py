@@ -445,8 +445,8 @@ def task_provision():
         dict(
             file_dep=[*P.OK_SERVEREXT.values()],
             actions=[
-                ["jupyter", "drawio-export", "--version"],
-                ["jupyter", "drawio-export", "provision"],
+                ["jupyter", "ipydrawio-export", "--version"],
+                ["jupyter", "ipydrawio-export", "provision"],
             ],
         ),
         P.OK_PROVISION,
