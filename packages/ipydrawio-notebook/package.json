@@ -18,7 +18,7 @@
   ],
   "jupyterlab": {
     "extension": "lib/plugin.js",
-    "outputDir": "../../py_packages/ipydrawio/labextensions/@deathbeds/ipydrawio-notebook",
+    "outputDir": "../../py_packages/ipydrawio/src/ipydrawio/labextensions/@deathbeds/ipydrawio-notebook",
     "sharedPackages": {
       "@deathbeds/ipydrawio": {
         "bundled": false,
