@@ -2,8 +2,9 @@
   "name": "@deathbeds/ipydrawio-meta",
   "version": "0.0.0",
   "dependencies": {
-    "@deathbeds/ipydrawio-pdf": "file:../ipydrawio-pdf",
     "@deathbeds/ipydrawio-notebook": "file:../ipydrawio-notebook",
+    "@deathbeds/ipydrawio-pdf": "file:../ipydrawio-pdf",
+    "@deathbeds/ipydrawio-webpack": "file:../ipydrawio-webpack",
     "@deathbeds/ipydrawio": "file:../ipydrawio"
   },
   "devDependencies": {

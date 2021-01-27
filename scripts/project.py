@@ -50,6 +50,7 @@ NPM = (
     or shutil.which("npm.bat")
 )
 JLPM = ["jlpm"]
+LERNA = [*JLPM, "lerna"]
 JLPM_INSTALL = [*JLPM, "--ignore-optional", "--prefer-offline"]
 LAB_EXT = ["jupyter", "labextension"]
 LAB = ["jupyter", "lab"]

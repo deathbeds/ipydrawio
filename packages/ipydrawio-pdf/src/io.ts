@@ -18,7 +18,7 @@ import {
   IFormat,
 } from '@deathbeds/ipydrawio/lib/tokens';
 
-import { stripDataURI } from '@deathbeds/jupyterlab-drawio/lib/utils';
+import { stripDataURI } from '@deathbeds/ipydrawio/lib/utils';
 
 import { LabIcon } from '@jupyterlab/ui-components';
 

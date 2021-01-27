@@ -55,7 +55,7 @@ def task_setup():
         file_dep=[P.YARN_LOCK, P.PACKAGE, P.OK_SUBMODULES],
         actions=[
             [*P.JLPM, "--ignore-optional", "--prefer-offline"],
-            [*P.JLPM, "lerna", "bootstrap"],
+            [*P.LERNA, "bootstrap"],
         ],
         targets=[P.YARN_INTEGRITY],
     )
@@ -208,7 +208,7 @@ def task_build():
         dict(
             name="js:pre",
             file_dep=[P.YARN_INTEGRITY, P.IPDW_IGNORE, P.OK_SUBMODULES],
-            actions=[[*P.JLPM, "lerna", "run", "build:pre"]],
+            actions=[[*P.LERNA, "run", "build:pre"]],
             targets=[P.IPDW_APP],
         ),
         P.OK_JS_BUILD_PRE,
@@ -218,7 +218,7 @@ def task_build():
         dict(
             name="js",
             file_dep=[P.YARN_INTEGRITY, P.OK_JS_BUILD_PRE, *P.ALL_TS, *P.ALL_CSS],
-            actions=[[*P.JLPM, "lerna", "run", "build"]],
+            actions=[[*P.LERNA, "run", "build", "--stream"]],
             targets=sorted(P.JS_TSBUILDINFO.values()),
         ),
         P.OK_JS_BUILD,

@@ -1,8 +1,10 @@
-import { Diagram } from '@deathbeds/jupyterlab-drawio/lib/editor';
 import { PageConfig } from '@jupyterlab/coreutils';
-import { DEBUG } from '@deathbeds/ipydrawio/lib/tokens';
 
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
+
+import { DEBUG } from '@deathbeds/ipydrawio/lib/tokens';
+import { Diagram } from '@deathbeds/ipydrawio/lib/editor';
+
 import { PDFStatus } from './status';
 
 const DEFAULT_EXPORT_URL = './drawio/export/';
