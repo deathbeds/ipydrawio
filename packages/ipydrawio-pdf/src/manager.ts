@@ -7,9 +7,9 @@ import { Diagram } from '@deathbeds/ipydrawio/lib/editor';
 
 import { PDFStatus } from './status';
 
-const DEFAULT_EXPORT_URL = './drawio/export/';
-const DEFAULT_STATUS_URL = './drawio/status';
-const DEFAULT_PROVISION_URL = './drawio/provision';
+const DEFAULT_EXPORT_URL = './ipydrawio/export/';
+const DEFAULT_STATUS_URL = './ipydrawio/status';
+const DEFAULT_PROVISION_URL = './ipydrawio/provision';
 const DATA_URI_PREFIX = 'application/pdf;base64';
 
 export class DrawioPDFManager {

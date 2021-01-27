@@ -27,7 +27,7 @@ import { Diagram } from './editor';
 import { DiagramDocument } from './document';
 
 import ICON_SVG from '../style/img/drawio.svg';
-export const CMD_NS = 'drawio';
+export const CMD_NS = 'ipydrawio';
 
 /**
  * The name of the factory that creates text editor widgets.

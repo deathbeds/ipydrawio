@@ -52,7 +52,7 @@ class ProvisionHandler(BaseHandler):
 
 def add_handlers(nbapp):
     """Add drawio routes to the notebook server web application"""
-    ns_url = ujoin(nbapp.base_url, "drawio")
+    ns_url = ujoin(nbapp.base_url, "ipydrawio")
     pdf_url = ujoin(ns_url, "export", r"(?P<url>.*)")
     status_url = ujoin(ns_url, "status")
     provision_url = ujoin(ns_url, "provision")
