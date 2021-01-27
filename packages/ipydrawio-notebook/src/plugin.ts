@@ -14,9 +14,9 @@
 
 import { JupyterLab, JupyterFrontEndPlugin } from '@jupyterlab/application';
 
-import { IDiagramManager } from '@deathbeds/ipydrawio/lib/tokens';
+import { IDiagramManager } from '@deathbeds/ipydrawio';
 
-import { PLUGIN_ID } from '.';
+import { PLUGIN_ID } from './tokens';
 
 import { IPYNB_EDITABLE } from './io';
 

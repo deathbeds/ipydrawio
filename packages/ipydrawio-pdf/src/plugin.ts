@@ -18,14 +18,12 @@ import { ICommandPalette } from '@jupyterlab/apputils';
 
 import { IStatusBar } from '@jupyterlab/statusbar';
 
-import { IDiagramManager } from '@deathbeds/ipydrawio/lib/tokens';
-
-import { PLUGIN_ID, NS } from '.';
+import { IDiagramManager } from '@deathbeds/ipydrawio';
 
 import { PDF_PLAIN } from './io';
 import { PDFStatus } from './status';
 import { DrawioPDFManager } from './manager';
-import { CommandIds } from './tokens';
+import { CommandIds, PLUGIN_ID, NS } from './tokens';
 
 /**
  * The editor tracker extension.

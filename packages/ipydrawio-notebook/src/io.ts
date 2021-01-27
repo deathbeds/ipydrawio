@@ -8,7 +8,7 @@ import {
   DRAWIO_ICON_SVG,
   JSON_FACTORY,
   DRAWIO_METADATA,
-} from '@deathbeds/ipydrawio/lib/tokens';
+} from '@deathbeds/ipydrawio';
 
 import { LabIcon } from '@jupyterlab/ui-components';
 

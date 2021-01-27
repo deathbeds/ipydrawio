@@ -2,7 +2,7 @@ import { PageConfig } from '@jupyterlab/coreutils';
 
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 
-import { DEBUG } from '@deathbeds/ipydrawio/lib/tokens';
+import { DEBUG } from '@deathbeds/ipydrawio';
 import { Diagram } from '@deathbeds/ipydrawio/lib/editor';
 
 import { PDFStatus } from './status';

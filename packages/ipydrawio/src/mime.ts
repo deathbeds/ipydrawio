@@ -1,8 +1,7 @@
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
-import { NS } from '.';
 import { Panel, PanelLayout } from '@lumino/widgets';
 import { ALL_FORMATS } from './io';
-import { DEBUG, IFormat, IDiagramManager } from './tokens';
+import { DEBUG, IFormat, IDiagramManager, NS } from './tokens';
 import { Diagram } from './editor';
 import { DRAWIO_URL } from '@deathbeds/ipydrawio-webpack';
 import { ReadonlyPartialJSONObject } from '@lumino/coreutils';

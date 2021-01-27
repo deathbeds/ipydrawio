@@ -32,9 +32,8 @@ import { IMainMenu } from '@jupyterlab/mainmenu';
 
 import * as IO from './io';
 import { DrawioStatus } from './status';
-import { NS, PLUGIN_ID } from '.';
 
-import { IDiagramManager, CommandIds, DEBUG } from './tokens';
+import { IDiagramManager, CommandIds, DEBUG, NS, PLUGIN_ID } from './tokens';
 import { DiagramManager } from './manager';
 import { RenderedDiagram } from './mime';
 
