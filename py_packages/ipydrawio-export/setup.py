@@ -18,22 +18,37 @@ import re
 from pathlib import Path
 
 HERE = Path(__file__).parent
+EXT = HERE / "src/ipydrawio_export/labextensions"
 VERSION = HERE / "src/ipydrawio_export/_version.py"
 
-version = re.findall(
-    r"""__version__\s*=\s*"([^"]+)""", VERSION.read_text(encoding="utf-8")
-)[0]
+EXT_FILES = {}
+SHARE = "share/jupyter/labextensions"
 
+for ext_path in [EXT] + [d for d in EXT.rglob("*") if d.is_dir()]:
+    if ext_path == EXT:
+        target = str(SHARE)
+    else:
+        target = f"{SHARE}/{ext_path.relative_to(EXT)}"
+    EXT_FILES[target] = [
+        str(p.relative_to(HERE).as_posix())
+        for p in ext_path.glob("*")
+        if not p.is_dir()
+    ]
+
+ALL_FILES = sum(EXT_FILES.values(), [])
+
+EXT_FILES[str(SHARE)] += ["install.json"]
+EXT_FILES["etc/jupyter/jupyter_server_config.d"] = ["src/ipydrawio_export/etc/ipydrawio-export.json"]
 
 if __name__ == "__main__":
     import setuptools
-    setuptools.setup(
-        version=version,
-        data_files=[
-            (
-                "etc/jupyter/jupyter_server_config.d",
-                ["src/ipydrawio_export/etc/ipydrawio-export.json"],
-            )
-        ],
 
+    setuptools.setup(
+        version=re.findall(
+            r"""__version__\s*=\s*"([^"]+)""",
+            VERSION.read_text(encoding="utf-8")
+        )[0],
+        data_files=[
+            *[(k, v) for k, v in EXT_FILES.items()],
+        ],
     )

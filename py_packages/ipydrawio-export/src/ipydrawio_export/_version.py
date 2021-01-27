@@ -1,8 +1,7 @@
 """
-source of truth for jupyter-drawio-export version
+source of truth for ipydrawio-export version
 
 Copyright 2021 ipydrawio contributors
-Copyright 2020 jupyterlab-drawio contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,4 +15,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-__version__ = "0.8.0-alpha2"
+__version__ = "1.0.0a0"

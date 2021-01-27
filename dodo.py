@@ -269,7 +269,27 @@ def task_build():
         # )
 
     for py_pkg, py_setup in P.PY_SETUP.items():
-        file_dep = [py_setup, *P.PY_SRC[py_pkg], P.OK_SUBMODULES]
+        py_mod = py_setup.parent.name.replace("-", "_")
+        ext_deps = [
+            py_setup.parent
+            / "src"
+            / py_mod
+            / "labextensions"
+            / P.JS_PKG_DATA[ext]["name"]
+            / "package.json"
+            for ext, mod in P.JS_LABEXT_PY_HOST.items()
+            if mod == py_setup.parent.name
+        ]
+        file_dep = sorted(
+            set(
+                [
+                    *ext_deps,
+                    *P.PY_SRC[py_pkg],
+                    P.OK_SUBMODULES,
+                    py_setup,
+                ]
+            )
+        )
         yield dict(
             name=f"sdist:{py_pkg}",
             file_dep=file_dep,
