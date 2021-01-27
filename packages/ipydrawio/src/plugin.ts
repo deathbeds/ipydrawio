@@ -36,6 +36,7 @@ import { DrawioStatus } from './status';
 import { IDiagramManager, CommandIds, DEBUG, NS, PLUGIN_ID } from './tokens';
 import { DiagramManager } from './manager';
 import { RenderedDiagram } from './mime';
+import widgetPlugin from './widgetPlugin';
 
 /**
  * The editor tracker extension.
@@ -55,7 +56,7 @@ const plugin: JupyterFrontEndPlugin<IDiagramManager> = {
   autoStart: true,
 };
 
-export default [plugin];
+export default [plugin, widgetPlugin];
 
 function activate(
   app: JupyterLab,

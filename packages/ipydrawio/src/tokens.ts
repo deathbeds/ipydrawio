@@ -21,6 +21,7 @@ import { DocumentRegistry } from '@jupyterlab/docregistry';
 import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
 
 export const NS = '@deathbeds/ipydrawio';
+export const VERSION = '1.0.0-alpha0';
 export const PLUGIN_ID = `${NS}:plugin`;
 
 import { Diagram } from './editor';
@@ -104,10 +105,16 @@ export interface IFormat<T = string> {
 export interface IAdapter {
   format(): IFormat | null;
   // TODO: generate these from schema
+  /** a dictionary encoding of the drawio JSON API Config Object */
   drawioConfig(): ReadonlyPartialJSONObject;
+  /** a dictionary encoding of the drawio JSON API URL Params */
   urlParams(): ReadonlyPartialJSONObject;
+  /** Use a an exporter to generate non-XML */
   saveNeedsExport(): boolean;
+  /** load the XML from somewhere */
   toXML(): string;
+  /** where to download drawio assets */
   drawioUrl(): string;
+  /** store the XML somewhere */
   fromXML(xml: string, hardSave: boolean): void;
 }

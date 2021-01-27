@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from ._version import __version__
+from .widget_diagram import Diagram
 
 
 def _jupyter_labextension_paths():
@@ -15,4 +16,4 @@ def _jupyter_labextension_paths():
     ]
 
 
-__all__ = ["__version__"]
+__all__ = ["__version__", "_jupyter_labextension_paths", "Diagram"]
