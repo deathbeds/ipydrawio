@@ -1,2 +1,2 @@
-export const NS = '@deathbeds/jupyterlab-drawio-notebook';
+export const NS = '@deathbeds/ipydrawio-notebook';
 export const PLUGIN_ID = `${NS}:plugin`;
