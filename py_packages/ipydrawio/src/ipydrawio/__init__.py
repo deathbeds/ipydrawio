@@ -9,7 +9,7 @@ def _jupyter_labextension_paths():
     return [
         dict(
             src=f"{pkg.parent.relative_to(here).as_posix()}",
-            dest=pkg.parent.parent.name / pkg.parent.name,
+            dest=f"{pkg.parent.parent.name}/{pkg.parent.name}",
         )
         for pkg in (here / "labextensions").glob("*/*/package.json")
     ]

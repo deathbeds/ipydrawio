@@ -16,14 +16,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+
+from pathlib import Path
+
 from ._version import __version__
 from .serverextension import load_jupyter_server_extension
 
 __all__ = [
     "load_jupyter_server_extension",
     "_jupyter_server_extension_paths",
+    "_jupyter_labextension_paths",
     "__version__",
 ]
+
+
+def _jupyter_labextension_paths():
+    here = Path(__file__).parent
+
+    return [
+        dict(
+            src=f"{pkg.parent.relative_to(here).as_posix()}",
+            dest=f"{pkg.parent.parent.name}/{pkg.parent.name}",
+        )
+        for pkg in (here / "labextensions").glob("*/*/package.json")
+    ]
 
 
 def _jupyter_server_extension_paths():

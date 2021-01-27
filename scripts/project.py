@@ -249,6 +249,9 @@ OK_ROBOT_DRYRUN = BUILD / "robot.dryrun.ok"
 OK_RFLINT = BUILD / "robot.rflint.ok"
 OK_ATEST = BUILD / "atest.ok"
 
+OK_EXT_DEV = {k: BUILD / f"ext.dev.{k}.ok" for k in JS_LABEXT_PY_HOST}
+OK_EXT_BUILD = {k: BUILD / f"ext.build.{k}.ok" for k in JS_LABEXT_PY_HOST}
+
 PY_TEST_DEP["jupyter-drawio-export"] = [OK_PROVISION]
 
 HASH_DEPS = [*PY_WHEEL.values(), *JS_TARBALL.values()]

@@ -61,10 +61,21 @@ def task_setup():
     )
 
     for pkg, pkg_setup in P.PY_SETUP.items():
+        # TODO: refactor
+        ext_deps = [
+            pkg_setup.parent
+            / "src"
+            / pkg.replace("-", "_")
+            / "labextensions"
+            / P.JS_PKG_DATA[ext]["name"]
+            / "package.json"
+            for ext, mod in P.JS_LABEXT_PY_HOST.items()
+            if mod == pkg_setup.parent.name
+        ]
         yield _ok(
             dict(
                 name=f"py:{pkg}",
-                file_dep=[pkg_setup, P.PY_SETUP_CFG[pkg]],
+                file_dep=[pkg_setup, P.PY_SETUP_CFG[pkg], *ext_deps],
                 actions=[
                     CmdAction(
                         [
@@ -76,6 +87,16 @@ def task_setup():
                             ".",
                             "--no-deps",
                             "-vv",
+                        ],
+                        shell=False,
+                        cwd=pkg_setup.parent,
+                    ),
+                    CmdAction(
+                        [
+                            *P.LAB_EXT,
+                            "develop",
+                            "--overwrite",
+                            ".",
                         ],
                         shell=False,
                         cwd=pkg_setup.parent,
@@ -242,31 +263,21 @@ def task_build():
         host_mod = host.replace("-", "_")
         host_ext = P.PY_PACKAGES / host / "src" / host_mod / "labextensions"
 
-        yield dict(
-            name=f"ext:build:{pkg}",
-            actions=[
-                CmdAction(
-                    [*P.LAB_EXT, "build", "."],
-                    shell=False,
-                    cwd=P.JS_PKG_JSON[pkg].parent,
-                )
-            ],
-            file_dep=targets,
-            targets=[host_ext / f"""{pkg_data["name"]}/package.json"""],
+        yield _ok(
+            dict(
+                name=f"ext:build:{pkg}",
+                actions=[
+                    CmdAction(
+                        [*P.LAB_EXT, "build", "."],
+                        shell=False,
+                        cwd=P.JS_PKG_JSON[pkg].parent,
+                    )
+                ],
+                file_dep=targets,
+                targets=[host_ext / f"""{pkg_data["name"]}/package.json"""],
+            ),
+            P.OK_EXT_BUILD[pkg],
         )
-
-        # yield dict(
-        #     name=f"ext:dev:{pkg}",
-        #     actions=[
-        #         CmdAction(
-        #             [*P.LAB_EXT, "develop", "--overwrite", "."],
-        #             shell=False,
-        #             cwd=P.JS_PKG_JSON[pkg].parent,
-        #         )
-        #     ],
-        #     file_dep=targets,
-        #     targets=[P.IPD_EXT / f"""{pkg_data["name"]}/package.json"""],
-        # )
 
     for py_pkg, py_setup in P.PY_SETUP.items():
         py_mod = py_setup.parent.name.replace("-", "_")
@@ -340,31 +351,6 @@ def task_build():
         targets=[P.SHA256SUMS],
         actions=[_make_hashfile],
     )
-
-
-# def task_lab_build():
-#     """do a "production" build of lab"""
-
-#     file_dep = sorted(P.JS_TARBALL.values())
-
-#     build_args = ["--dev-build=False", "--minimize=True"]
-#     if P.WIN:
-#         build_args = []
-
-#     yield dict(
-#         name="extensions",
-#         file_dep=[*file_dep, P.OVERRIDES],
-#         uptodate=[config_changed({"exts": P.EXTENSIONS})],
-#         actions=[
-#             P.CMD_DISABLE_EXTENSIONS,
-#             P.CMD_INSTALL_ALL_EXTENSIONS,
-#             P.CMD_LIST_EXTENSIONS,
-#             P._override_lab,
-#             [*P.CMD_BUILD, *build_args],
-#             P.CMD_LIST_EXTENSIONS,
-#         ],
-#         targets=[P.LAB_INDEX, P.LAB_OVERRIDES, P.LAB_LOCK],
-#     )
 
 
 def task_lab():
