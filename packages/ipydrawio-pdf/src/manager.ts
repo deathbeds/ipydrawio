@@ -1,6 +1,6 @@
 import { Diagram } from '@deathbeds/jupyterlab-drawio/lib/editor';
 import { PageConfig } from '@jupyterlab/coreutils';
-import { DEBUG } from '@deathbeds/jupyterlab-drawio/lib/tokens';
+import { DEBUG } from '@deathbeds/ipydrawio/lib/tokens';
 
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { PDFStatus } from './status';

@@ -14,7 +14,7 @@
 
 import { JupyterLab, JupyterFrontEndPlugin } from '@jupyterlab/application';
 
-import { IDiagramManager } from '@deathbeds/jupyterlab-drawio/lib/tokens';
+import { IDiagramManager } from '@deathbeds/ipydrawio/lib/tokens';
 
 import { PLUGIN_ID } from '.';
 

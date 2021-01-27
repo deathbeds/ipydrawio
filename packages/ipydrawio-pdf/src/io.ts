@@ -16,7 +16,7 @@ import {
   DRAWIO_ICON_CLASS_RE,
   DRAWIO_ICON_SVG,
   IFormat,
-} from '@deathbeds/jupyterlab-drawio/lib/tokens';
+} from '@deathbeds/ipydrawio/lib/tokens';
 
 import { stripDataURI } from '@deathbeds/jupyterlab-drawio/lib/utils';
 

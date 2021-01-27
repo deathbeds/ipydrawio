@@ -4,7 +4,7 @@ import { Panel, PanelLayout } from '@lumino/widgets';
 import { ALL_FORMATS } from './io';
 import { DEBUG, IFormat, IDiagramManager } from './tokens';
 import { Diagram } from './editor';
-import { DRAWIO_URL } from '@deathbeds/jupyterlab-drawio-webpack';
+import { DRAWIO_URL } from '@deathbeds/ipydrawio-webpack';
 import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
 
 export const MIME_CLASS = 'jp-DiagramMedia';

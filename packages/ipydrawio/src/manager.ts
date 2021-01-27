@@ -33,7 +33,7 @@ import { Contents } from '@jupyterlab/services';
 import { DrawioStatus } from './status';
 import * as IO from './io';
 import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
-import { DRAWIO_URL } from '@deathbeds/jupyterlab-drawio-webpack';
+import { DRAWIO_URL } from '@deathbeds/ipydrawio-webpack';
 
 const DEFAULT_EXPORTER = async (
   drawio: Diagram,

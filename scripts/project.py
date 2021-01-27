@@ -146,17 +146,17 @@ PY_VERSION = {
     )[0]
     for k, v in PY_SRC.items()
 }
-JDE = PY_SETUP["jupyter-drawio-export"].parent
+IPDE = PY_SETUP["ipydrawio-export"].parent
 IPD = PY_SETUP["ipydrawio"].parent
 IPD_EXT = IPD / "src/ipydrawio/labextensions"
 PY_SDIST = {
-    JDE.name: JDE / "dist" / f"{JDE.name}-1.0.0a0.tar.gz",
+    IPDE.name: IPDE / "dist" / f"{IPDE.name}-1.0.0a0.tar.gz",
     IPD.name: IPD / "dist" / f"{IPD.name}-1.0.0a0.tar.gz",
 }
 PY_WHEEL = {
-    JDE.name: JDE
+    IPDE.name: IPDE
     / "dist"
-    / f"""{JDE.name.replace("-", "_")}-1.0.0a0-py3-none-any.whl""",
+    / f"""{IPDE.name.replace("-", "_")}-1.0.0a0-py3-none-any.whl""",
     IPD.name: IPD
     / "dist"
     / f"""{IPD.name.replace("-", "_")}-1.0.0a0-py3-none-any.whl""",

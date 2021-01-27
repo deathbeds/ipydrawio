@@ -244,13 +244,11 @@ def task_build():
                 CmdAction(
                     [*P.LAB_EXT, "develop", "--overwrite", "."],
                     shell=False,
-                    cwd=P.JS_PKG_JSON[pkg].parent
+                    cwd=P.JS_PKG_JSON[pkg].parent,
                 )
             ],
             file_dep=targets,
-            targets=[
-                P.IPD_EXT / f"""{pkg_data["name"]}/package.json"""
-            ]
+            targets=[P.IPD_EXT / f"""{pkg_data["name"]}/package.json"""],
         )
 
     for py_pkg, py_setup in P.PY_SETUP.items():
@@ -432,7 +430,7 @@ def task_all():
     )
 
 
-def _pytest("setup_"py):
+def _pytest(setup_py):
     def _test():
         subprocess.check_call([*P.PYM, "pytest"], shell=False, cwd=str(setup_py.parent))
 

@@ -18,7 +18,7 @@ import { ICommandPalette } from '@jupyterlab/apputils';
 
 import { IStatusBar } from '@jupyterlab/statusbar';
 
-import { IDiagramManager } from '@deathbeds/jupyterlab-drawio/lib/tokens';
+import { IDiagramManager } from '@deathbeds/ipydrawio/lib/tokens';
 
 import { PLUGIN_ID, NS } from '.';
 

@@ -11,9 +11,9 @@
 
 ## Prerequisites
 
-- `jupyterlab >=2.2,<3`
+- `jupyterlab >=3,<4`
 - `nodejs >=12`
-- `doit =0.32`
+- `doit >=0.32`
 
 ### Recommended: conda
 
@@ -21,7 +21,7 @@
 
 ```bash
 conda env update --file environment.yml
-source activate jupyterlab-drawio
+source activate ipydrawio
 ```
 
 ## Get to a working Lab
