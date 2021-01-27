@@ -147,9 +147,10 @@ PY_VERSION = {
     )[0]
     for k, v in PY_SRC.items()
 }
-IPDE = PY_SETUP["ipydrawio-export"].parent
+
 IPD = PY_SETUP["ipydrawio"].parent
-IPD_EXT = IPD / "src/ipydrawio/labextensions"
+IPDE = PY_SETUP["ipydrawio-export"].parent
+
 PY_SDIST = {
     IPDE.name: IPDE / "dist" / f"{IPDE.name}-1.0.0a0.tar.gz",
     IPD.name: IPD / "dist" / f"{IPD.name}-1.0.0a0.tar.gz",
@@ -249,7 +250,6 @@ OK_ROBOT_DRYRUN = BUILD / "robot.dryrun.ok"
 OK_RFLINT = BUILD / "robot.rflint.ok"
 OK_ATEST = BUILD / "atest.ok"
 
-OK_EXT_DEV = {k: BUILD / f"ext.dev.{k}.ok" for k in JS_LABEXT_PY_HOST}
 OK_EXT_BUILD = {k: BUILD / f"ext.build.{k}.ok" for k in JS_LABEXT_PY_HOST}
 
 PY_TEST_DEP["jupyter-drawio-export"] = [OK_PROVISION]

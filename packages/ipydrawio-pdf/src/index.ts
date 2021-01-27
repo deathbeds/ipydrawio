@@ -12,6 +12,4 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-export const NS = '@deathbeds/ipydrawio-pdf';
-export const PLUGIN_ID = `${NS}:plugin`;
-export const CMD_NS = `drawio-pdf`;
+export * from './tokens';

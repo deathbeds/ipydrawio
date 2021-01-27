@@ -12,6 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 import { Token } from '@lumino/coreutils';
 import { Contents } from '@jupyterlab/services';
 import { LabIcon } from '@jupyterlab/ui-components';
@@ -19,7 +20,9 @@ import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
 
-import { NS, PLUGIN_ID } from '.';
+export const NS = '@deathbeds/ipydrawio';
+export const PLUGIN_ID = `${NS}:plugin`;
+
 import { Diagram } from './editor';
 import { DiagramDocument } from './document';
 

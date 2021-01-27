@@ -16,6 +16,7 @@ maybe before you push
 """
 import shutil
 import subprocess
+import time
 from hashlib import sha256
 
 from doit.action import CmdAction
@@ -375,55 +376,65 @@ def task_lab():
     )
 
 
-# def task_watch():
-#     def watch():
-#         shutil.rmtree(P.LAB_STATIC, ignore_errors=True)
-#         subprocess.check_call(["jupyter", "lab", "build"])
+def _make_lab(watch=False):
+    def _lab():
+        if watch:
+            print(">>> Starting typescript watcher...", flush=True)
+            ts = subprocess.Popen([*P.LERNA, "run", "watch"])
 
-#         for sub_ns in (P.LAB_STAGING / "node_modules" / f"@{P.JS_NS}").glob(
-#             f"*/node_modules/@{P.JS_NS}"
-#         ):
-#             print(f"Deleting {sub_ns.relative_to(P.LAB_STAGING)}", flush=True)
-#             shutil.rmtree(sub_ns)
-#         else:
-#             print(f"Nothing deleted in {P.LAB_STAGING}!", flush=True)
+            ext_watchers = [
+                subprocess.Popen([*P.LAB_EXT, "watch", "."], cwd=str(p.parent))
+                for p in P.JS_PKG_JSON_LABEXT.values()
+            ]
 
-#         jlpm_proc = subprocess.Popen(
-#             ["jlpm", "lerna", "run", "--parallel", "--stream", "watch"]
-#         )
+            print(">>> Waiting a bit to JupyterLab...", flush=True)
+            time.sleep(3)
+        print(">>> Starting JupyterLab...", flush=True)
+        lab = subprocess.Popen(
+            P.CMD_LAB,
+            stdin=subprocess.PIPE,
+        )
 
-#         build_proc = subprocess.Popen(["jlpm", "watch"], cwd=P.LAB_STAGING)
+        try:
+            print(">>> Waiting for JupyterLab to exit (Ctrl+C)...", flush=True)
+            lab.wait()
+        except KeyboardInterrupt:
+            print(
+                f""">>> {"Watch" if watch else "Run"} canceled by user!""",
+                flush=True,
+            )
+        finally:
+            print(">>> Stopping watchers...", flush=True)
+            if watch:
+                [x.terminate() for x in ext_watchers]
+                ts.terminate()
+            lab.terminate()
+            lab.communicate(b"y\n")
+            if watch:
+                ts.wait()
+                lab.wait()
+                [x.wait() for x in ext_watchers]
+                print(
+                    ">>> Stopped watchers! maybe check process monitor...",
+                    flush=True,
+                )
 
-#         lab_proc = subprocess.Popen(P.CMD_LAB, stdin=subprocess.PIPE)
+        return True
 
-#         try:
-#             lab_proc.wait()
-#         except KeyboardInterrupt:
-#             print("attempting to stop lab, you may want to check your process monitor")
-#             lab_proc.terminate()
-#             lab_proc.communicate(b"y\n")
-#         finally:
-#             jlpm_proc.terminate()
-#             build_proc.terminate()
+    return _lab
 
-#         lab_proc.wait()
-#         jlpm_proc.wait()
-#         build_proc.wait()
 
-#     return dict(
-#         uptodate=[lambda: False],
-#         file_dep=[*P.JS_TARBALL.values(), *P.OK_SERVEREXT.values()],
-#         actions=[
-#             P.CMD_LIST_EXTENSIONS,
-#             P.CMD_LINK_EXTENSIONS,
-#             P.CMD_LIST_EXTENSIONS,
-#             P.CMD_INSTALL_EXTENSIONS,
-#             P.CMD_DISABLE_EXTENSIONS,
-#             P._override_lab,
-#             P.CMD_LIST_EXTENSIONS,
-#             PythonInteractiveAction(watch),
-#         ],
-#     )
+def task_watch():
+    """watch labextensions for changes, rebuilding"""
+
+    return dict(
+        uptodate=[lambda: False],
+        file_dep=[*P.OK_SERVEREXT.values(), *P.OK_PYSETUP.values()],
+        actions=[
+            P.CMD_LIST_EXTENSIONS,
+            PythonInteractiveAction(_make_lab(watch=True)),
+        ],
+    )
 
 
 def task_provision():
