@@ -22,6 +22,7 @@
   "jupyterlab": {
     "extension": "lib/plugin.js",
     "outputDir": "../../py_packages/ipydrawio/labextensions/@deathbeds/ipydrawio-webpack",
+    "webpackConfig": "./webpack.config.js",
     "discovery": {
       "server": {
         "base": {

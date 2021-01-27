@@ -238,18 +238,35 @@ def task_build():
         if "jupyterlab" not in pkg_data:
             continue
 
+        host = P.JS_LABEXT_PY_HOST[pkg]
+        host_mod = host.replace("-", "_")
+        host_ext = P.PY_PACKAGES / host / "src" / host_mod / "labextensions"
+
         yield dict(
-            name=f"ext:dev:{pkg}",
+            name=f"ext:build:{pkg}",
             actions=[
                 CmdAction(
-                    [*P.LAB_EXT, "develop", "--overwrite", "."],
+                    [*P.LAB_EXT, "build", "."],
                     shell=False,
                     cwd=P.JS_PKG_JSON[pkg].parent,
                 )
             ],
             file_dep=targets,
-            targets=[P.IPD_EXT / f"""{pkg_data["name"]}/package.json"""],
+            targets=[host_ext / f"""{pkg_data["name"]}/package.json"""],
         )
+
+        # yield dict(
+        #     name=f"ext:dev:{pkg}",
+        #     actions=[
+        #         CmdAction(
+        #             [*P.LAB_EXT, "develop", "--overwrite", "."],
+        #             shell=False,
+        #             cwd=P.JS_PKG_JSON[pkg].parent,
+        #         )
+        #     ],
+        #     file_dep=targets,
+        #     targets=[P.IPD_EXT / f"""{pkg_data["name"]}/package.json"""],
+        # )
 
     for py_pkg, py_setup in P.PY_SETUP.items():
         file_dep = [py_setup, *P.PY_SRC[py_pkg], P.OK_SUBMODULES]

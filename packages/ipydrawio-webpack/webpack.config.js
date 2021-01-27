@@ -12,26 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { JupyterLab, JupyterFrontEndPlugin } from '@jupyterlab/application';
-
-import { IDiagramManager } from '@deathbeds/ipydrawio/lib/tokens';
-
-import { PLUGIN_ID } from '.';
-
-import { IPYNB_EDITABLE } from './io';
-
-/**
- * The editor tracker extension.
- */
-const plugin: JupyterFrontEndPlugin<void> = {
-  activate,
-  id: PLUGIN_ID,
-  requires: [IDiagramManager],
-  autoStart: true,
+module.exports = {
+  optimization: {
+    minimize: false,
+  },
 };
-
-export default plugin;
-
-function activate(app: JupyterLab, diagrams: IDiagramManager) {
-  diagrams.addFormat(IPYNB_EDITABLE);
-}

@@ -27,7 +27,7 @@
     "discovery": {
       "server": {
         "base": {
-          "name": "ipydrawio_export"
+          "name": "ipydrawio-export"
         },
         "managers": [
           "pip",
