@@ -14,9 +14,11 @@ dependencies:
   - ipywidgets
   - isort <5
   - json-e
+  - jupyter-telemetry >=0.1.0 # ick, but fails pip check
   - jupyterlab >=3.0.0,<4.0.0a0
   - lxml
   - matplotlib-base
+  - nbgitpuller
   - networkx
   - nodejs >=12,<13.0.0a0
   - pandas
