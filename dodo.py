@@ -361,6 +361,8 @@ if not P.TESTING_IN_CI:
                         *P.PY_SRC[py_pkg],
                         P.OK_SUBMODULES,
                         py_setup,
+                        py_setup.parent / "setup.cfg",
+                        py_setup.parent / "MANIFEST.in",
                     ]
                 )
             )
