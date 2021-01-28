@@ -44,9 +44,9 @@ export const DRAWIO_METADATA = NS;
 /**
  * Escape hatch for runtime debugging.
  */
-export const DEBUG = window.location.hash.indexOf('DRAWIO_DEBUG') > -1;
+export const DEBUG = window.location.href.indexOf('DRAWIO_DEBUG') > -1;
 export const DEBUG_LEVEL = DEBUG
-  ? window.location.hash.indexOf('DRAWIO_DEBUG')
+  ? window.location.href.indexOf('DRAWIO_DEBUG')
   : 0;
 
 export interface IDiagramManager {
@@ -117,4 +117,252 @@ export interface IAdapter {
   drawioUrl(): string;
   /** store the XML somewhere */
   fromXML(xml: string, hardSave: boolean): void;
+}
+
+/*
+  TODO: really didn't want to go here, but here we are
+
+  - to learn more about what's _actually_ in there, load up the iframe in a console
+    and look at `window.mxEvent`.
+  - when you have scope on an App, look at `eventListeners`
+*/
+type TMXAppModelEvent =
+  | 'backgroundColorChanged'
+  | 'backgroundImageChanged'
+  | 'connectionArrowsChanged'
+  | 'connectionPointsChanged'
+  | 'copyConnectChanged'
+  | 'customFontsChanged'
+  | 'foldingEnabledChanged'
+  | 'formatWidthChanged'
+  | 'gridColorChanged'
+  | 'gridEnabledChanged'
+  | 'guidesEnabledChanged'
+  | 'mathEnabledChanged'
+  | 'pageFormatChanged'
+  | 'pageScaleChanged'
+  | 'pageViewChanged'
+  | 'pageViewChanged'
+  | 'shadowVisibleChanged'
+  | 'styleChanged';
+
+export const MX_APP_MODEL_EVENTS: TMXAppModelEvent[] = [
+  'backgroundColorChanged',
+  'backgroundImageChanged',
+  'connectionArrowsChanged',
+  'connectionPointsChanged',
+  'copyConnectChanged',
+  'customFontsChanged',
+  'foldingEnabledChanged',
+  'formatWidthChanged',
+  'gridColorChanged',
+  'gridEnabledChanged',
+  'guidesEnabledChanged',
+  'mathEnabledChanged',
+  'pageFormatChanged',
+  'pageScaleChanged',
+  'pageViewChanged',
+  'pageViewChanged',
+  'shadowVisibleChanged',
+  'styleChanged',
+];
+
+type TMXMEditorEvent =
+  | 'autosaveChanged'
+  | 'fileLoaded'
+  | 'fileLoaded'
+  | 'pageSelected'
+  | 'resetGraphView'
+  | 'statusChanged';
+
+export const MX_EDITOR_EVENTS: TMXMEditorEvent[] = [
+  'autosaveChanged',
+  'fileLoaded',
+  'fileLoaded',
+  'pageSelected',
+  'resetGraphView',
+  'statusChanged',
+];
+
+type TMXGraphEvent =
+  | 'cellsAdded'
+  | 'cellsInserted'
+  | 'editingStarted'
+  | 'editingStopped'
+  | 'escape'
+  | 'fireMouseEvent'
+  | 'gesture'
+  | 'gridSizeChanged'
+  | 'moveCells'
+  | 'pan'
+  | 'resizeCells'
+  | 'root'
+  | 'shadowVisibleChanged'
+  | 'size'
+  | 'startEditing'
+  | 'tapAndHold'
+  | 'textInserted'
+  | 'viewStateChanged';
+
+export const MX_GRAPH_EVENTS: TMXGraphEvent[] = [
+  'cellsAdded',
+  'cellsInserted',
+  'editingStarted',
+  'editingStopped',
+  'escape',
+  'fireMouseEvent',
+  'gesture',
+  'gridSizeChanged',
+  'moveCells',
+  'pan',
+  'resizeCells',
+  'root',
+  'shadowVisibleChanged',
+  'size',
+  'startEditing',
+  'tapAndHold',
+  'textInserted',
+  'viewStateChanged',
+];
+
+type TMXGraphModelEvent = 'change';
+export const MX_GRAPH_MODEL_EVENTS: TMXGraphModelEvent[] = ['change'];
+
+type TMXGraphViewEvent =
+  | 'down'
+  | 'scale'
+  | 'scaleAndTranslate'
+  | 'translate'
+  | 'undo'
+  | 'unitChanged'
+  | 'up';
+
+export const MX_GRAPH_VIEW_EVENTS: TMXGraphViewEvent[] = [
+  'down',
+  'scale',
+  'scaleAndTranslate',
+  'translate',
+  'undo',
+  'unitChanged',
+  'up',
+];
+
+export type TMXGraphPanningEvent = 'panStart' | 'panEnd' | 'pan';
+
+export const MX_GRAPH_PAN_EVENTS: TMXGraphPanningEvent[] = [
+  'panStart',
+  'panEnd',
+  'pan',
+];
+
+export type TMXGraphSelectionEvent = 'change';
+
+export const MX_GRAPH_SELECT_EVENTS: TMXGraphSelectionEvent[] = ['change'];
+
+export type TMXGraphSelectionModelEvent = 'change';
+
+export const MX_GRAPH_SELECT_MODEL_EVENTS: TMXGraphSelectionModelEvent[] = [
+  'change',
+];
+
+type TMXEvent =
+  | TMXAppModelEvent
+  | TMXGraphModelEvent
+  | TMXGraphEvent
+  | TMXGraphViewEvent
+  | TMXGraphModelEvent
+  | TMXGraphViewEvent
+  | TMXMEditorEvent
+  | TMXGraphPanningEvent
+  | TMXGraphSelectionEvent;
+
+// TODO: use an enum or something to make all these type nicely
+export interface IMXEventHandler<T extends IMXEventSource = any> {
+  (sender: T, evt: IMXEvent): void;
+}
+
+export interface IMXEventSource<T = TMXEvent> {
+  addListener(name: T, handler: IMXEventHandler): void;
+}
+
+export interface IMXEvent {
+  name: TMXEvent;
+}
+
+export interface IMXGraphModel extends IMXEventSource<TMXGraphModelEvent> {
+  dx: number;
+  dy: number;
+}
+
+export interface IMXGraphView extends IMXEventSource<TMXGraphViewEvent> {
+  getScale(): number;
+  setScale(scale: number): void;
+  getTranslate(): IMXPoint;
+  setTranslate(x: number, y: number): void;
+  gridColor: string;
+}
+
+export interface IMXGraphPanningHandler
+  extends IMXEventSource<TMXGraphPanningEvent> {}
+
+export interface IMXGraphSelectionHandler
+  extends IMXEventSource<TMXGraphSelectionEvent> {}
+
+export interface IMXGraphSelectionModel
+  extends IMXEventSource<TMXGraphSelectionModelEvent> {
+  cells: IMXCell[];
+  setCells(cells: IMXCell[]): void;
+}
+
+export interface IMXGraph extends IMXEventSource<TMXGraphEvent> {
+  model: IMXGraphModel;
+  view: IMXGraphView;
+  panningHandler: IMXGraphPanningHandler;
+  pageFormat: IMXRectangle;
+  gridEnabled: boolean;
+  setGridEnabled(gridEnabled: boolean): void;
+  refresh(): void;
+  setGridSize(size: number): void;
+  gridSize: number;
+  selectionCellsHandler: IMXGraphSelectionHandler;
+  selectionModel: IMXGraphSelectionModel;
+  getCellsById(id: string): IMXCell[];
+}
+
+export interface IMXEditor extends IMXEventSource<TMXMEditorEvent> {
+  graph: IMXGraph;
+}
+
+// TODO: what does this do
+export interface IMXPage extends IMXEventSource<any> {
+  getId(): string;
+}
+
+export interface IMXApp extends IMXEventSource<TMXAppModelEvent> {
+  editor: IMXEditor;
+  container: HTMLBodyElement;
+  pages: IMXPage[];
+  currentPage: IMXPage;
+  setPageFormat(pageFormat: IMXRectangle): void;
+  selectPage(page: IMXPage): void;
+  setGridColor(color: string): void;
+
+  // DOM
+  diagramContainer: HTMLDivElement;
+}
+
+export interface IMXPoint {
+  x: number;
+  y: number;
+}
+
+export interface IMXRectangle {
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+}
+
+export interface IMXCell {
+  getId(): string;
 }

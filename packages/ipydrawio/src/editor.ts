@@ -20,7 +20,7 @@ import { Signal } from '@lumino/signaling';
 import { IFrame } from '@jupyterlab/apputils';
 
 import '../style/index.css';
-import { IFormat, DEBUG, IAdapter } from './tokens';
+import { IFormat, DEBUG, IAdapter, IMXApp } from './tokens';
 
 /**
  * Core URL params that are required to function properly
@@ -69,7 +69,7 @@ export class Diagram extends IFrame {
   private _frame: HTMLIFrameElement;
   private _lastEmitted: string;
   private _frameClicked = new Signal<Diagram, void>(this);
-  private _app: any;
+  private _app: IMXApp;
   private _appChanged = new Signal<Diagram, void>(this);
 
   constructor(options: Diagram.IOptions) {
@@ -98,7 +98,7 @@ export class Diagram extends IFrame {
     if (this._app != app) {
       this._app = app;
       // TODO: get a much better understanding of this
-      (app.container as HTMLBodyElement).addEventListener('mousedown', () => {
+      app.container.addEventListener('mousedown', () => {
         this._frameClicked.emit(void 0);
       });
       this._appChanged.emit(void 0);
