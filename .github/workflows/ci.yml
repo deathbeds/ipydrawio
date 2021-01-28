@@ -7,13 +7,15 @@ on:
       - master
 
 env:
-  PYTHONUNBUFFERED: 1
-  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  PYTHONIOENCODING: 'utf-8'
   PIP_DISABLE_PIP_VERSION_CHECK: '1'
 
   # our stuff
-  ATEST_RETRIES: 3
-  CACHE_EPOCH: 0
+  ATEST_RETRIES: '3'
+  CACHE_EPOCH: '0'
+  DOIT_N_BUILD: '-n4'
+  DOIT_N_TEST: '-n4'
 
 jobs:
   build:
@@ -97,7 +99,7 @@ jobs:
         run: doit list --all --status
 
       - name: build
-        run: doit -n4 build:hash || doit build:hash
+        run: doit ${{ matrix.DOIT_N_BUILD }} build:hash || doit build:hash
 
       - name: status
         run: doit list --all --status | sort
@@ -160,19 +162,19 @@ jobs:
         if: ${{ contains(matrix.os, 'ubuntu') }}
         shell: bash -l {0}
         run: |
-          doit all || doit all
+          doit ${{ matrix.DOIT_N_TEST }} all || doit all
 
       - name: build (macos)
         if: ${{ contains(matrix.os, 'macos') }}
         shell: bash -l {0}
         run: |
-          doit all || doit all
+          doit ${{ matrix.DOIT_N_TEST }} all || doit all
 
       - name: build (windows)
         if: ${{ contains(matrix.os, 'windows') }}
         shell: cmd /C CALL {0}
         run: |
-          doit all || doit all
+          doit ${{ matrix.DOIT_N_TEST }} all || doit all
 
       - name: clean (windows)
         if: ${{ contains(matrix.os, 'windows') }}
