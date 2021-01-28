@@ -148,6 +148,7 @@ jobs:
       - name: install (conda)
         uses: conda-incubator/setup-miniconda@master
         with:
+          condarc-file: .github/.condarc
           miniforge-variant: Mambaforge
           miniforge-version: latest
           mamba-version: '*'
