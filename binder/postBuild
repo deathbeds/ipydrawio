@@ -7,4 +7,7 @@ LAB_EXT = ["jupyter", "labextension"]
 
 subprocess.call([*LAB_EXT, "uninstall", "--no-build", "jupyter-offlinenotebook"])
 
+subprocess.call(["doit", "list", "--all", "--status"])
+subprocess.call(["doit", "-n4"])
+subprocess.call(["doit", "list", "--all", "--status"])
 sys.exit(subprocess.call(["doit"]))
