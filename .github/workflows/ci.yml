@@ -163,7 +163,7 @@ jobs:
         if: ${{ contains(matrix.os, 'ubuntu') }}
         shell: bash -l {0}
         run: |
-          doit $DOIT_N_TEST all || doit all
+          doit $DOIT_N_TEST test || doit test
 
       - name: test (macos)
         if: ${{ contains(matrix.os, 'macos') }}
