@@ -1,4 +1,3 @@
-import os
 import shutil
 import subprocess
 import sys
@@ -90,8 +89,8 @@ def attempt_atest_with_retries(extra_args=None):
     attempt = 0
     error_count = -1
 
-    retries = int(os.environ.get("ATEST_RETRIES") or "0")
-    extra_args += os.environ.get("ATEST_ARGS", "").split()
+    retries = P.ATEST_RETRIES
+    extra_args += P.ATEST_ARGS
 
     while error_count != 0 and attempt <= retries:
         attempt += 1

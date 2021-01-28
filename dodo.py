@@ -466,7 +466,9 @@ def task_all():
 
 def _pytest(setup_py):
     def _test():
-        subprocess.check_call([*P.PYM, "pytest"], shell=False, cwd=str(setup_py.parent))
+        subprocess.check_call(
+            [*P.PYM, "pytest", *P.PYTEST_ARGS], shell=False, cwd=str(setup_py.parent)
+        )
 
     return _test
 
@@ -493,10 +495,12 @@ def task_test():
         yield _ok(
             dict(
                 name=f"pytest:{pkg}",
+                uptodate=[config_changed(dict(PYTEST_ARGS=P.PYTEST_ARGS))],
                 file_dep=[
                     *P.PY_SRC[pkg],
-                    P.OK_PYSETUP[pkg],
                     *P.PY_TEST_DEP.get(pkg, []),
+                    P.OK_PROVISION,
+                    P.OK_PYSETUP[pkg],
                 ],
                 actions=[PythonInteractiveAction(_pytest(setup))],
             ),
@@ -506,6 +510,7 @@ def task_test():
     yield _ok(
         dict(
             name="robot",
+            uptodate=[config_changed(dict(ATEST_ARGS=P.ATEST_ARGS))],
             file_dep=[
                 *P.ALL_ROBOT,
                 P.OK_PROVISION,

@@ -20,6 +20,11 @@ PREFIX = Path(sys.prefix)
 BUILDING_IN_CI = bool(json.loads(os.environ.get("BUILDING_IN_CI", "0")))
 TESTING_IN_CI = bool(json.loads(os.environ.get("TESTING_IN_CI", "0")))
 
+# test arg pass-throughs
+ATEST_ARGS = json.loads(os.environ.get("ATEST_ARGS", "[]"))
+ATEST_RETRIES = int(os.environ.get("ATEST_RETRIES") or "0")
+PYTEST_ARGS = json.loads(os.environ.get("PYTEST_ARGS", "[]"))
+
 # find root
 SCRIPTS = Path(__file__).parent.resolve()
 ROOT = SCRIPTS.parent
@@ -188,7 +193,7 @@ ALL_JSON = [
     *ROOT.glob("*.json"),
     *PACKAGES.glob("*/*.json"),
     *PACKAGES.glob("*/schema/*.json"),
-    *ATEST.rglob("*.json"),
+    *ATEST.glob("fixtures/*.json"),
 ]
 ALL_MD = [
     *ROOT.glob("*.md"),
