@@ -8,10 +8,10 @@ from . import project as P
 PABOT_DEFAULTS = [
     "--testlevelsplit",
     "--processes",
-    "4",
+    P.ATEST_PROCS,
     "--artifactsinsubfolders",
     "--artifacts",
-    "png,log,txt,drawio,xml",
+    "png,log,txt,dio,svg,xml,pdf,ipynb",
 ]
 
 

@@ -19,11 +19,13 @@ PREFIX = Path(sys.prefix)
 
 BUILDING_IN_CI = bool(json.loads(os.environ.get("BUILDING_IN_CI", "0")))
 TESTING_IN_CI = bool(json.loads(os.environ.get("TESTING_IN_CI", "0")))
+CI_ARTIFACT = os.environ.get("CI_ARTIFACT", "wheel")
 
 # test arg pass-throughs
 ATEST_ARGS = json.loads(os.environ.get("ATEST_ARGS", "[]"))
 ATEST_RETRIES = int(os.environ.get("ATEST_RETRIES") or "0")
 PYTEST_ARGS = json.loads(os.environ.get("PYTEST_ARGS", "[]"))
+ATEST_PROCS = int(os.environ.get("ATEST_PROCS", "4"))
 
 # find root
 SCRIPTS = Path(__file__).parent.resolve()

@@ -29,7 +29,7 @@ jobs:
       run:
         shell: bash -l {0}
     env:
-      BUILDING_IN_CI: 1
+      BUILDING_IN_CI: '1'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -120,6 +120,13 @@ jobs:
       matrix:
         os: ['ubuntu', 'macos', 'windows']
         python-version: ['3.6', '3.8']
+        include:
+          - python-version: '3.6'
+            CI_ARTIFACT: 'sdist'
+          - python-version: '3.8'
+            CI_ARTIFACT: 'wheel'
+    env:
+      TESTING_IN_CI: '1'
     steps:
       - name: configure line endings
         run: |
@@ -158,23 +165,25 @@ jobs:
           environment-file: environment.yml
           use-only-tar-bz2: true
 
-      - name: build (linux)
+      - name: test (linux)
         if: ${{ contains(matrix.os, 'ubuntu') }}
         shell: bash -l {0}
         run: |
-          doit ${{ matrix.DOIT_N_TEST }} all || doit all
+          doit $DOIT_N_TEST all || doit all
 
-      - name: build (macos)
+      - name: test (macos)
         if: ${{ contains(matrix.os, 'macos') }}
         shell: bash -l {0}
         run: |
-          doit ${{ matrix.DOIT_N_TEST }} all || doit all
+          doit $DOIT_N_TEST test || doit test
 
-      - name: build (windows)
+      - name: test (windows)
         if: ${{ contains(matrix.os, 'windows') }}
         shell: cmd /C CALL {0}
+        env:
+          DOIT_N_TEST: '1'
         run: |
-          doit ${{ matrix.DOIT_N_TEST }} all || doit all
+          doit %DOIT_N_TEST% test || doit test
 
       - name: clean (windows)
         if: ${{ contains(matrix.os, 'windows') }}
@@ -182,7 +191,7 @@ jobs:
           taskkill /F /IM python.exe || echo "no python"
           taskkill /F /IM node.exe || echo "no node"
 
-      - name: report (robot)
+      - name: report (atest)
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
