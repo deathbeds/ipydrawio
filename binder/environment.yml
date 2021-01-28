@@ -5,34 +5,49 @@ channels:
   - nodefaults
 
 dependencies:
-  - babel
-  - black
-  - bqplot
-  - doit
-  - flake8
-  - httpx
-  - ipywidgets
-  - isort <5
-  - json-e
-  - jupyter-telemetry >=0.1.0 # ick, but fails pip check
+  - ipywidgets >=7.6
   - jupyterlab >=3.0.0,<4.0.0a0
+  - jupyterlab_widgets >=1
   - lxml
-  - matplotlib-base
-  - nbgitpuller
   - networkx
   - nodejs >=12,<13.0.0a0
   - pandas
   - pillow
-  - pip
-  - pyflakes
-  - pygraphviz
   - pypdf2
-  - pytest
-  - python >=3.8,<3.9.0a0
-  - requests_cache
   - shapely
   - tabulate
+  # linting and testing
+  - babel
+  - black
+  - doit
+  - flake8
+  - httpx
+  - isort <5
+  - json-e
+  - pyflakes
+  - pytest
+  - requests_cache
+  # python cruft
+  - python >=3.8,<3.9.0a0
+  - pip
   - twine
   - wheel
+  # demo toys
+  - matplotlib-base
+  - jupyter-lsp-python-plugins
+  - jupyterlab-classic
+  - jupyterlab-lsp
+  - nbgitpuller
+  - wxyz_datagrid
+  - wxyz_lab
+  - bqplot
+  # for graphviz2drawio
+  - raven
+  - python-graphviz
+  - pygraphviz
+  # for ipython
+  - jedi <0.18.0
+  # binder pins
+  - jupyter_telemetry >=0.1.0 # ick, but fails pip check
   - pip:
       - graphviz2drawio

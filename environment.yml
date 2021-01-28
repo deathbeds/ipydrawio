@@ -10,8 +10,11 @@ dependencies:
   - firefox =78
   - flake8
   - geckodriver >=0.28.0
+  - ipywidgets >=7.6
   - isort >=5
+  - jedi <0.18.0
   - jupyterlab >=3.0.0,<4.0.0a0
+  - jupyterlab_widgets >=1
   - lxml
   - nodejs >=12,<13.0.0a0
   - pillow
