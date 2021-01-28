@@ -10,6 +10,7 @@ __pycache__
 *.sqlite
 *.tgz
 *.tsbuildinfo
+**/*DRAWIO_DEBUG*
 **/labextensions/**
 atest/output/
 build/

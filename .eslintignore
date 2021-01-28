@@ -2,3 +2,7 @@ node_modules/
 **/drawio/**
 packages/ipydrawio/lib/
 packages/ipydrawio-pdf/lib/
+py_packages/
+**/labextensions/
+.yarn-packages
+docs/

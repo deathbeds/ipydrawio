@@ -31,8 +31,8 @@ def test_changelog(pkg, version, the_changelog):
 
 
 def test_drawio_versions():
-    dv = (P.JDW / "drawio/VERSION").read_text(encoding="utf-8")
-    pdv = P.JS_PKG_DATA[P.JDW.name]["version"]
+    dv = (P.IPDW / "drawio/VERSION").read_text(encoding="utf-8")
+    pdv = P.JS_PKG_DATA[P.IPDW.name]["version"]
     assert pdv.startswith(dv), "drawio version out of sync"
 
 

@@ -43,5 +43,5 @@
     "build:pre": "python scripts/patch.py && python scripts/static.py"
   },
   "types": "lib/index.d.ts",
-  "version": "13.6.10-alpha2"
+  "version": "13.6.10-alpha0"
 }

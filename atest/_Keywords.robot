@@ -30,7 +30,7 @@ Setup Server and Browser
     Set Global Variable    ${SERVER}    ${server}
     Open JupyterLab
     ${script} =    Get Element Attribute    id:jupyter-config-data    innerHTML
-    ${config} =    Evaluate    __import__("json").loads("""${script}""")
+    ${config} =    Evaluate    __import__("json").loads(r"""${script}""")
     Set Global Variable    ${PAGE CONFIG}    ${config}
     Set Global Variable    ${LAB VERSION}    ${config["appVersion"]}
 
@@ -55,7 +55,15 @@ Setup Suite For Screenshots
 
 Initialize User Settings
     Set Suite Variable    ${SETTINGS DIR}    ${OUTPUT DIR}${/}user-settings    children=${True}
-    Create File    ${SETTINGS DIR}${/}@jupyterlab${/}codemirror-extension${/}commands.jupyterlab-settings    {"styleActiveLine": true}
+    Create File
+    ...    ${SETTINGS DIR}${/}@jupyterlab${/}codemirror-extension${/}commands.jupyterlab-settings
+    ...    {"styleActiveLine": true}
+    Create File
+    ...    ${SETTINGS DIR}${/}@jupyterlab${/}extensionmanager-extension${/}plugin.jupyterlab-settings
+    ...    {"enabled": false}
+    Create File
+    ...    ${SETTINGS DIR}${/}@jupyterlab${/}apputils-extension${/}palette.jupyterlab-settings
+    ...    {"modal": false}
 
 Reset Plugin Settings
     Create File    ${SETTINGS DIR}${/}${LSP PLUGIN SETTINGS FILE}    {}

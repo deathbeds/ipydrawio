@@ -1,4 +1,4 @@
-name: jupyterlab-drawio
+name: ipydrawio
 
 channels:
   - conda-forge
