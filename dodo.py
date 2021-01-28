@@ -413,7 +413,7 @@ if not P.TESTING_IN_CI:
         yield dict(
             name="hash",
             file_dep=[*P.HASH_DEPS],
-            targets=[P.SHA256SUMS],
+            targets=[P.SHA256SUMS, *[P.DIST / d.name for d in P.HASH_DEPS]],
             actions=[_make_hashfile],
         )
 
@@ -565,16 +565,20 @@ def task_test():
             P.OK_PYTEST[pkg],
         )
 
+    file_dep = [
+        *P.ALL_ROBOT,
+        P.OK_PROVISION,
+        P.SCRIPTS / "atest.py",
+    ]
+
+    if not P.TESTING_IN_CI:
+        file_dep += [P.OK_ROBOT_DRYRUN]
+
     yield _ok(
         dict(
             name="robot",
             uptodate=[config_changed(dict(ATEST_ARGS=P.ATEST_ARGS))],
-            file_dep=[
-                *P.ALL_ROBOT,
-                P.OK_PROVISION,
-                P.OK_ROBOT_DRYRUN,
-                P.SCRIPTS / "atest.py",
-            ],
+            file_dep=file_dep,
             actions=[["python", "-m", "scripts.atest"]],
         ),
         P.OK_ATEST,
