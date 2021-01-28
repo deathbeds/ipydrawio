@@ -3,4 +3,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+LAB_EXT = ["jupyter", "labextension"]
+
+subprocess.call([*LAB_EXT, "uninstall", "--no-build", "jupyter-offlinenotebook"])
+
 sys.exit(subprocess.call(["doit"]))
