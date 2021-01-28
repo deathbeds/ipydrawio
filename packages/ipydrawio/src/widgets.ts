@@ -323,12 +323,13 @@ export class DiagramView extends BoxView {
         };
         break;
       case 'scale':
+      case 'scaleAndTranslate':
         needsUpdate = { zoom: this.app.editor.graph.view.getScale() };
         break;
+      case 'pan':
       case 'translate':
       case 'size':
-        const { x, y } = this.app.editor.graph.view.getTranslate();
-        needsUpdate = { scroll_x: x, scroll_y: y };
+        needsUpdate = this.translateToScroll();
         break;
       case 'pageSelected':
         needsUpdate = {
@@ -360,4 +361,9 @@ export class DiagramView extends BoxView {
       this.touch();
     }
   };
+
+  translateToScroll() {
+    const { x, y } = this.app.editor.graph.view.getTranslate();
+    return { scroll_x: x, scroll_y: y };
+  }
 }

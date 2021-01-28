@@ -49,6 +49,7 @@ class DiagramBase(W.Widget):
 
 class XML(DiagramBase, W.Widget):
     """A Drawio XML-native Document"""
+
     value = T.Unicode().tag(sync=True)
     _model_name = T.Unicode("XMLModel").tag(sync=True)
     _view_name = T.Unicode("XMLView").tag(sync=True)
@@ -64,7 +65,9 @@ class Diagram(DiagramBase, W.Box):
     _model_name = T.Unicode("DiagramModel").tag(sync=True)
     _view_name = T.Unicode("DiagramView").tag(sync=True)
 
-    source = T.Instance(XML, help="a drawio xml document").tag(sync=True, **W.widget_serialization)
+    source = T.Instance(XML, help="a drawio xml document").tag(
+        sync=True, **W.widget_serialization
+    )
 
     scroll_x = T.Float(help="the current viewport scroll x position").tag(sync=True)
     scroll_y = T.Float(help="the current viewport scroll y position").tag(sync=True)

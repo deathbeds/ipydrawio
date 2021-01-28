@@ -254,7 +254,7 @@ OK_EXT_BUILD = {k: BUILD / f"ext.build.{k}.ok" for k in JS_LABEXT_PY_HOST}
 
 PY_TEST_DEP["jupyter-drawio-export"] = [OK_PROVISION]
 
-HASH_DEPS = [*PY_WHEEL.values(), *JS_TARBALL.values()]
+HASH_DEPS = [*PY_SDIST.values(), *PY_WHEEL.values(), *JS_TARBALL.values()]
 SHA256SUMS = DIST / "SHA256SUMS"
 
 # built artifacts
