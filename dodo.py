@@ -116,8 +116,7 @@ def task_setup():
                             "--ignore-installed",
                             "--no-deps",
                             dist_af,
-                        ],
-                        ["python", "-m", "pip", "check"],
+                        ]
                     ],
                 ),
                 P.OK_PYSETUP[pkg],
@@ -152,11 +151,19 @@ def task_setup():
                             shell=False,
                             cwd=pkg_setup.parent,
                         ),
-                        ["python", "-m", "pip", "check"],
                     ],
                 ),
                 P.OK_PYSETUP[pkg],
             )
+
+    yield _ok(
+        dict(
+            name="pip:check",
+            file_dep=[*P.OK_PYSETUP.values()],
+            actions=[["python", "-m", "pip", "check"]],
+        ),
+        P.OK_PIP_CHECK,
+    )
 
     base_ext_args = [
         "jupyter",
@@ -175,7 +182,7 @@ def task_setup():
             dict(
                 name=f"ext:{ext}",
                 doc=f"ensure {ext} is a serverextension",
-                file_dep=[ext_py, P.OK_PYSETUP[ext]],
+                file_dep=[ext_py, P.OK_PIP_CHECK],
                 actions=[
                     enable_args,
                     ["jupyter", "serverextension", "list"],
@@ -499,7 +506,7 @@ if not P.TESTING_IN_CI:
 
         return dict(
             uptodate=[lambda: False],
-            file_dep=[*P.OK_SERVEREXT.values(), *P.OK_PYSETUP.values()],
+            file_dep=[*P.OK_SERVEREXT.values(), P.OK_PIP_CHECK],
             actions=[
                 P.CMD_LIST_EXTENSIONS,
                 PythonInteractiveAction(_make_lab(watch=True)),
@@ -557,8 +564,7 @@ def task_test():
                 file_dep=[
                     *P.PY_SRC[pkg],
                     *P.PY_TEST_DEP.get(pkg, []),
-                    P.OK_PROVISION,
-                    P.OK_PYSETUP[pkg],
+                    P.OK_PIP_CHECK,
                 ],
                 actions=[PythonInteractiveAction(_pytest(setup))],
             ),

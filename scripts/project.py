@@ -237,6 +237,7 @@ JS_PKG_PACK[IPDW.name][0] += [
 
 
 # built files
+OK_PIP_CHECK = BUILD / "pip.check.ok"
 OK_INTEGRITY = BUILD / "integrity.ok"
 OK_SUBMODULES = BUILD / "submodules.ok"
 OK_BLACK = BUILD / "black.ok"
@@ -259,7 +260,7 @@ OK_ATEST = BUILD / "atest.ok"
 
 OK_EXT_BUILD = {k: BUILD / f"ext.build.{k}.ok" for k in JS_LABEXT_PY_HOST}
 
-PY_TEST_DEP["jupyter-drawio-export"] = [OK_PROVISION]
+PY_TEST_DEP["ipydrawio-export"] = [OK_PROVISION]
 
 HASH_DEPS = [*PY_SDIST.values(), *PY_WHEEL.values(), *JS_TARBALL.values()]
 SHA256SUMS = DIST / "SHA256SUMS"
