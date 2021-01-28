@@ -37,13 +37,22 @@ def task_all():
     return dict(
         uptodate=[lambda: False],
         file_dep=[
+            *P.OK_PYTEST.values(),
+            P.OK_ATEST,
             P.OK_INTEGRITY,
             P.OK_PROVISION,
-            P.OK_ATEST,
-            *P.OK_PYTEST.values(),
             P.SHA256SUMS,
         ],
         actions=[lambda: [print("nothing left to do"), True][1]],
+    )
+
+
+def task_dist():
+    """create a minimum viable release product"""
+    return dict(
+        uptodate=[lambda: False],
+        file_dep=[P.OK_INTEGRITY, P.SHA256SUMS, P.OK_LINT],
+        actions=[lambda: print(P.SHA256SUMS.read_text())],
     )
 
 
@@ -157,7 +166,6 @@ def task_setup():
         "--py",
     ]
     for ext, ext_py in P.SERVER_EXT.items():
-        print(">>> MAKING EXT", ext, ext_py)
         enable_args = [*base_ext_args, ext_py.parent.name]
 
         if P.TESTING_IN_CI:

@@ -99,7 +99,7 @@ jobs:
         run: doit list --all --status
 
       - name: build
-        run: doit ${{ matrix.DOIT_N_BUILD }} build:hash || doit build:hash
+        run: doit ${{ matrix.DOIT_N_BUILD }} dist || doit dist
 
       - name: status
         run: doit list --all --status | sort
@@ -164,6 +164,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
           environment-file: environment.yml
           use-only-tar-bz2: true
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: ipydrawio ${{ github.run_number }} dist
+          path: ./dist
 
       - name: test (linux)
         if: ${{ contains(matrix.os, 'ubuntu') }}
