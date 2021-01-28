@@ -5,6 +5,7 @@ __pycache__
 .pabotsuitenames
 *.bundle.*
 *.egg-info/
+*.isorted
 *.log
 *.pdf
 *.sqlite
@@ -19,4 +20,3 @@ envs/
 node_modules/
 untitled*
 Untitled*
-*.isorted

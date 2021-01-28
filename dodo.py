@@ -93,11 +93,12 @@ def task_setup():
 
         if P.TESTING_IN_CI:
             ci_af = {"wheel": P.PY_WHEEL[pkg], "sdist": P.PY_SDIST[pkg]}[P.CI_ARTIFACT]
+            dist_af = P.DIST / ci_af.name
 
             yield _ok(
                 dict(
                     name=f"py:{pkg}",
-                    file_dep=[ci_af],
+                    file_dep=[dist_af],
                     actions=[
                         [
                             "pip",
@@ -105,7 +106,7 @@ def task_setup():
                             "-vv",
                             "--ignore-installed",
                             "--no-deps",
-                            ci_af,
+                            dist_af,
                         ],
                         ["python", "-m", "pip", "check"],
                     ],
@@ -148,26 +149,32 @@ def task_setup():
                 P.OK_PYSETUP[pkg],
             )
 
-    if not P.TESTING_IN_CI:
-        for ext, ext_py in P.SERVER_EXT.items():
-            yield _ok(
-                dict(
-                    name=f"ext:{ext}",
-                    file_dep=[ext_py, P.OK_PYSETUP[ext]],
-                    actions=[
-                        [
-                            "jupyter",
-                            "serverextension",
-                            "enable",
-                            "--py",
-                            "ipydrawio_export",
-                            "--sys-prefix",
-                        ],
-                        ["jupyter", "serverextension", "list"],
-                    ],
-                ),
-                P.OK_SERVEREXT[ext],
-            )
+    base_ext_args = [
+        "jupyter",
+        "serverextension",
+        "enable",
+        "--sys-prefix",
+        "--py",
+    ]
+    for ext, ext_py in P.SERVER_EXT.items():
+        print(">>> MAKING EXT", ext, ext_py)
+        enable_args = [*base_ext_args, ext_py.parent.name]
+
+        if P.TESTING_IN_CI:
+            enable_args = ["echo", "'(installed by pip)'"]
+
+        yield _ok(
+            dict(
+                name=f"ext:{ext}",
+                doc=f"ensure {ext} is a serverextension",
+                file_dep=[ext_py, P.OK_PYSETUP[ext]],
+                actions=[
+                    enable_args,
+                    ["jupyter", "serverextension", "list"],
+                ],
+            ),
+            P.OK_SERVEREXT[ext],
+        )
 
 
 if not P.TESTING_IN_CI:
