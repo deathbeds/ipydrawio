@@ -26,9 +26,11 @@ dependencies:
   - json-e
   - pyflakes
   - pytest
+  - requests_cache
   - robotframework
   - robotframework-lint
-  - requests_cache
+  - robotframework-jupyterlibrary
+  - robotframework-pabot
   # python cruft
   - python >=3.8,<3.9.0a0
   - pip
