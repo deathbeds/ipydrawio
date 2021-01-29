@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "jupyter.lab.setting-icon-label": "IpyDrawio",
+  "jupyter.lab.setting-icon-label": "Diagram Documents",
   "jupyter.lab.setting-icon": "drawio:drawio",
-  "title": "IPyDrawio",
-  "description": "IPyDrawio settings.",
+  "title": "Diagram Documents",
+  "description": "Configure Diagram Settings",
   "type": "object",
   "properties": {
     "drawioExportUrl": {

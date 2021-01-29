@@ -8,25 +8,27 @@ import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
 
 export const MIME_CLASS = 'jp-DiagramMedia';
 
-export const extensions: IRenderMime.IExtension[] = ALL_MIME_FORMATS.map((fmt) => {
-  const { name } = fmt;
-  return {
-    id: `${NS}:rendermime-${name}`,
-    name,
-    rendererFactory: {
-      safe: true,
-      mimeTypes: [fmt.mimetype],
-      createRenderer: (options) => {
-        DEBUG && console.error('creating renderer');
-        return new RenderedDiagram({
-          ...options,
-          format: fmt,
-        });
+export const extensions: IRenderMime.IExtension[] = ALL_MIME_FORMATS.map(
+  (fmt) => {
+    const { name } = fmt;
+    return {
+      id: `${NS}:rendermime-${name}`,
+      name,
+      rendererFactory: {
+        safe: true,
+        mimeTypes: [fmt.mimetype],
+        createRenderer: (options) => {
+          DEBUG && console.error('creating renderer');
+          return new RenderedDiagram({
+            ...options,
+            format: fmt,
+          });
+        },
       },
-    },
-    dataType: 'string',
-  };
-});
+      dataType: 'string',
+    };
+  }
+);
 
 export default extensions;
 
