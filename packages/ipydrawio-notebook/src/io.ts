@@ -7,7 +7,7 @@ import {
   DRAWIO_ICON_CLASS_RE,
   DRAWIO_ICON_SVG,
   JSON_FACTORY,
-  DRAWIO_METADATA,
+  IPYDRAWIO_METADATA,
 } from '@deathbeds/ipydrawio';
 
 import { LabIcon } from '@jupyterlab/ui-components';
@@ -42,20 +42,20 @@ export const IPYNB_EDITABLE: IFormat<any> = {
   },
   fromXML: (model: NotebookModel, xml) => {
     const meta = model.metadata.get(
-      DRAWIO_METADATA
+      IPYDRAWIO_METADATA
     ) as ReadonlyPartialJSONObject;
-    model.metadata.set(DRAWIO_METADATA, { ...(meta || {}), xml });
+    model.metadata.set(IPYDRAWIO_METADATA, { ...(meta || {}), xml });
   },
   toXML: (model: NotebookModel) => {
     const meta = model.metadata.get(
-      DRAWIO_METADATA
+      IPYDRAWIO_METADATA
     ) as ReadonlyPartialJSONObject;
     return meta?.xml ? `${meta.xml}` : '';
   },
   exporter: async (widget, key, settings) => {
     const xml = widget.adapter.toXML();
     const newModel = new NotebookModel();
-    newModel.metadata.set(DRAWIO_METADATA, { xml });
+    newModel.metadata.set(IPYDRAWIO_METADATA, { xml });
     return newModel.toJSON();
   },
 };
