@@ -23,12 +23,3 @@ Validate Media Display
     Add and Run JupyterLab Code Cell    display({"${media type}": data}, {}, raw=True)
     Sleep    5s
     Capture Page Screenshot    99-teardown.png
-
-Launch Untitled Notebook
-    Lab Command    New Launcher
-    Ensure Sidebar Is Closed
-    Click Element    ${XP LAUNCH TAB}
-    Wait Until Element is Enabled    ${CSS LAUNCH IPYNB}
-    Click Element    ${CSS LAUNCH IPYNB}
-    Sleep    1s
-    Wait Until Page Does Not Contain    css:${JLAB CSS SPINNER}

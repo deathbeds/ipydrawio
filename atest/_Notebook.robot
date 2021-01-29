@@ -25,3 +25,12 @@ Save JupyterLab Notebook
 Run Current JupyterLab Code Cell
     Click Element    css:${JLAB CSS ICON RUN}
     Sleep    0.5s
+
+Launch Untitled Notebook
+    Lab Command    New Launcher
+    Ensure Sidebar Is Closed
+    Click Element    ${XP LAUNCH TAB}
+    Wait Until Element is Enabled    ${CSS LAUNCH IPYNB}
+    Click Element    ${CSS LAUNCH IPYNB}
+    Sleep    1s
+    Wait Until Page Does Not Contain    css:${JLAB CSS SPINNER}

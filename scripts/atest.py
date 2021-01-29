@@ -36,7 +36,7 @@ def run_tests(attempt=0, extra_args=None):
         *runner,
         *extra_args,
         "--name",
-        f"""{P.PLATFORM} py{P.PY_MAJOR}s""",
+        f"""{P.PLATFORM[:3]}{P.PY_MAJOR}""",
         "--outputdir",
         out_dir,
         "--variable",
