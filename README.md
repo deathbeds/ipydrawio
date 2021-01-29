@@ -3,28 +3,39 @@
 [Drawio][] diagrams for [JupyterLab][]. Forked with ❤️ from
 [QuantStack/jupyterlab-drawio][].
 
-> **[Install](#installation)** &middot; > **[History](./CHANGELOG.md)** >
-> &middot; > **[Roadmap](./docs/ROADMAP.dio.ipynb)** &middot; >
-> **[Contribute](./CONTRIBUTING.md)** &middot; > **[Open Source](#open-source)**
+> **[Install](#installation)** &middot; **[History]** > &middot; **[Roadmap]** >
+> &middot; > **[Contribute](./CONTRIBUTING.md)** &middot; >
+> **[Open Source](#open-source)** > &middot; >
+> [![build][workflow-badge]][workflow]
 
-> > ![.github/workflows/ci.yml](https://github.com/deathbeds/ipydrawio/workflows/.github/workflows/ci.yml/badge.svg)
-> >
 > > This is ALPHA software. Native drawio files created with these tools
 > > _should_ work with any other [drawio][] client, but any UI/API is liable to
 > > change at any time.
 
+[history]: https://github.com/deathbeds/ipydrawio/blob/master/CHANGELOG.md
 [binder]:
   http://mybinder.org/v2/gh/deathbeds/ipydrawio/master?urlpath=lab/tree/docs/Poster.dio.svg
 [binder-badge]: https://mybinder.org/badge_logo.svg
+[workflow-badge]:
+  https://github.com/deathbeds/ipydrawio/workflows/.github/workflows/ci.yml/badge.svg
+[workflow]:
+  https://github.com/deathbeds/ipydrawio/actions?query=branch%3Amaster+workflow%3A.github%2Fworkflows%2Fci.yml
+[roadmap]:
+  https://github.com/deathbeds/ipydrawio/blob/master/docs/ROADMAP.dio.ipynb
 
 ## Examples
 
-|                                                                             Screenshot/Example | Note                                                                        |
-| ---------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------- |
-|                                                                    [![binder-badge][]][binder] | A Binder **demo** with a full [contributing](./CONTRIBUTING.md) environment |
-| [<img width="100" src="./docs/_static/images/poster.png" />](./docs/_static/images/poster.png) | Screenshot of drawio "minimal" UI with export options                       |
-|                       [<img width="100" src="./docs/Poster.dio.svg" />](./docs/Poster.dio.svg) | The beginning of an interactive computational **poster**                    |
-|                                               [~~Screenshot Needed~](./docs/ROADMAP.dio.ipynb) | A mixed computational/creative **roadmap** for this project                 |
+|                                                                        Note | Screenshot/Example                               |
+| --------------------------------------------------------------------------: | :----------------------------------------------- |
+| A Binder **demo** with a full [contributing](./CONTRIBUTING.md) environment | [![binder-badge][]][binder]                      |
+|                       Screenshot of drawio "minimal" UI with export options | [![poster-min]][poster-min]                      |
+|                    The beginning of an interactive computational **poster** | [![poster][]][poster]                            |
+|                 A mixed computational/creative **roadmap** for this project | [~~Screenshot Needed~](./docs/ROADMAP.dio.ipynb) |
+
+[poster-min]:
+  https://raw.githubusercontent.com/deathbeds/ipydrawio/master/docs/_static/images/poster.png
+[poster]:
+  https://raw.githubusercontent.com/deathbeds/ipydrawio/master/docs/Poster.dio.svg
 
 ## Features
 
@@ -33,10 +44,10 @@
   - in many file formats
     - Drawio/mxgraph XML, SVG, PNG
     - or Jupyter Notebooks
-
-> - Experimental: Export print-quality PDF from diagrams (_beware: some
->   **heavy** dependencies_)
->   - include editable Drawio metadata
+- Jupyter rich display output
+- Jupyter Widgets
+- Export print-quality PDF from diagrams (_beware: some **heavy** dependencies_)
+  - include editable Drawio metadata
 
 ## Usage
 
@@ -65,16 +76,16 @@ pip install ipydrawio
 
 ### PDF: Lab and Server extensions
 
-`@deathbeds/ipydrawio-pdf` and `jupyter-drawio-export` can generate
-print-quality PDF. This approach relies on a headless browser, powered by
-`jgraph/drawio-image-export2` and ultimately `puppeteer` and has a number of
-heavy-weight dependencies. To enable all the bells and whistles get:
+`ipydrawio-export` can generate print-quality PDF. This approach relies on a
+headless browser, powered by `jgraph/drawio-image-export2` and ultimately
+`puppeteer` and has a number of heavy-weight dependencies. To enable all the
+bells and whistles get:
 
-- `pypdf2` and `requests_cache` from `pip` or `conda`
 - `nodejs>10,<14` from `conda` or your system package manager
   - **NOTE**: this relies on being able to install `puppeteer` (and other
     **arbitrary dependencies** with `jlpm` for now **when first used**
     - _we'll figure out a better approach soon enough_
+- `pip install ipydrawio-export`
 - **native dependencies** as required to appease `puppeteer`
   - if running in `docker`, this can be a bit trial-and-error
   - for more, see the [binder](./binder/apt.txt) and ~~CI~~.
