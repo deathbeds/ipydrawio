@@ -1,5 +1,5 @@
 """
-CLI for jupyter-drawio-export
+CLI for ipydrawio-export
 
 Copyright 2021 ipydrawio contributors
 Copyright 2020 jupyterlab-drawio contributors

@@ -77,24 +77,27 @@ pip install ipydrawio
 ### PDF: Lab and Server extensions
 
 `ipydrawio-export` can generate print-quality PDF. This approach relies on a
-headless browser, powered by `jgraph/drawio-image-export2` and ultimately
-`puppeteer` and has a number of heavy-weight dependencies. To enable all the
-bells and whistles get:
+headless browser, powered by [@jgraph/draw-image-export2] and ultimately
+`puppeteer` which in turn requires `nodejs`.
 
+- **native dependencies** as required to appease `puppeteer`
+  - if running in `docker`, this can be a bit trial-and-error
+  - for more, see the [binder][apt-txt] and ~~CI~~.
 - `nodejs>10,<14` from `conda` or your system package manager
   - **NOTE**: this relies on being able to install `puppeteer` (and other
     **arbitrary dependencies** with `jlpm` for now **when first used**
     - _we'll figure out a better approach soon enough_
 - `pip install ipydrawio-export`
-- **native dependencies** as required to appease `puppeteer`
-  - if running in `docker`, this can be a bit trial-and-error
-  - for more, see the [binder](./binder/apt.txt) and ~~CI~~.
+
+[puppeteer]: https://github.com/puppeteer/puppeteer
+[@jgraph/draw-image-export2]: https://github.com/jgraph/draw-image-export2
+[apt-txt]: https://github.com/deathbeds/ipydrawio/blob/master/binder/apt.txt
 
 > For example:
 >
 > ```bash
 > conda install -yc conda-forge nodejs=12
-> pip install jupyter-drawio-export
+> pip install ipydrawio-export
 > ```
 
 ## Open Source
@@ -102,7 +105,9 @@ bells and whistles get:
 ### License
 
 All files herein, unless otherwise noted, are free software licensed under
-[Apache 2.0](./LICENSE.txt).
+[Apache 2.0].
+
+[apache 2.0]: https://github.com/deathbeds/ipydrawio/blob/master/LICENSE.txt
 
 ### Copyright
 

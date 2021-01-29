@@ -46,7 +46,7 @@ from .constants import DRAWIO_APP, PNG_DRAWIO_INFO
 
 VEND = Path(__file__).parent / "vendor" / "draw-image-export2"
 
-DRAWIO_STATIC = Path(get_app_dir()) / DRAWIO_APP
+DRAWIO_STATIC = (Path(get_app_dir()) / DRAWIO_APP).resolve()
 
 JLPM = shutil.which("jlpm")
 

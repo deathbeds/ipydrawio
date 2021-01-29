@@ -20,17 +20,21 @@ limitations under the License.
 from pathlib import Path
 
 from ._version import __version__
+from .manager import DRAWIO_STATIC, IPyDrawioExportManager
 from .serverextension import load_jupyter_server_extension
 
 __all__ = [
-    "load_jupyter_server_extension",
-    "_jupyter_server_extension_paths",
-    "_jupyter_labextension_paths",
     "__version__",
+    "_jupyter_labextension_paths",
+    "_jupyter_server_extension_paths",
+    "IPyDrawioExportManager",
+    "load_jupyter_server_extension",
+    "DRAWIO_STATIC",
 ]
 
 
 def _jupyter_labextension_paths():
+    """static paths to link for interactive installation"""
     here = Path(__file__).parent
 
     return [
@@ -43,4 +47,5 @@ def _jupyter_labextension_paths():
 
 
 def _jupyter_server_extension_paths():
+    """python module to load as extension"""
     return [{"module": "ipydrawio_export"}]

@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     jupyterlab-drawio
+Documentation     IPyDrawio
 Resource          _Keywords.robot
 Resource          _Variables.robot
 Suite Setup       Setup Server and Browser
