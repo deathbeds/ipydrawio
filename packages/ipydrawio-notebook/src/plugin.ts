@@ -50,7 +50,7 @@ function activate(
     execute: async () => {
       const path = notebooks.currentWidget?.context.path;
       if (path != null) {
-        app.commands.execute('docmanager:open', {
+        await app.commands.execute('docmanager:open', {
           path,
           factory: IPYNB_DIO.factoryName,
         });

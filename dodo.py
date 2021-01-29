@@ -573,6 +573,7 @@ def task_test():
         *P.ALL_ROBOT,
         P.OK_PROVISION,
         *sum(P.PY_SRC.values(), []),
+        *sum(P.JS_TSSRC.values(), []),
         P.SCRIPTS / "atest.py",
     ]
 

@@ -60,7 +60,7 @@ export const IPYNB_PLAIN: IFormat<any> = {
   },
 };
 
-export const IPYNB_DIO = {
+export const IPYNB_DIO: IFormat<any> = {
   ...IPYNB_PLAIN,
   factoryName: `${JSON_FACTORY} (Diagram Notebook)`,
   key: 'xmlipynb',
