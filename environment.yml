@@ -12,7 +12,6 @@ dependencies:
   - geckodriver >=0.28.0
   - ipywidgets >=7.6
   - isort >=5
-  - ipython >=7.19.0
   - jedi <0.18.0
   - jupyterlab >=3.0.6,<4.0.0a0
   - jupyterlab_widgets >=1

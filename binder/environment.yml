@@ -5,7 +5,6 @@ channels:
   - nodefaults
 
 dependencies:
-  - ipython >=7.19.0
   - ipywidgets >=7.6
   - jupyterlab >=3.0.6,<4.0.0a0
   - jupyterlab_widgets >=1
