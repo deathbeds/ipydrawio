@@ -35,3 +35,18 @@ doit
 ```bash
 doit all
 ```
+
+## Updating drawio
+
+- update the `version` in `packages/ipydrawio-webpack/package.json`
+- update dependencies in other `package.json`
+
+```bash
+pushd packages/ipydrawio-webpack/drawio
+git fetch
+git checkout v<the new version>
+popd
+doit dist
+```
+
+- validate everything looks good!
