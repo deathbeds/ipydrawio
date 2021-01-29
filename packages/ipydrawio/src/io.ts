@@ -25,6 +25,11 @@ import {
 
 import { stripDataURI, unbase64SVG } from './utils';
 
+export const drawioPlainIcon = new LabIcon({
+  name: 'drawio:plain',
+  svgstr: DRAWIO_ICON_SVG.replace(DRAWIO_ICON_CLASS_RE, 'jp-icon3'),
+});
+
 export const drawioIcon = new LabIcon({
   name: 'drawio:drawio',
   svgstr: DRAWIO_ICON_SVG,
@@ -89,6 +94,7 @@ export const SVG_PLAIN: IFormat = {
   mimetype: 'image/svg+xml',
   name: 'svg',
   save: unbase64SVG,
+  isDefault: false,
   isExport: true,
   isText: true,
   isTransformed: true,
@@ -143,5 +149,8 @@ export const ALL_TEXT_FORMATS = [
   XML_NATIVE,
   XML_LEGACY,
 ];
+
+/** these are last-in-wins, don't claim existing ones*/
+export const ALL_MIME_FORMATS = [XML_NATIVE];
 
 export const ALL_FORMATS = [...ALL_BINARY_FORMATS, ...ALL_TEXT_FORMATS];

@@ -1,6 +1,6 @@
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
 import { Panel, PanelLayout } from '@lumino/widgets';
-import { ALL_FORMATS } from './io';
+import { ALL_MIME_FORMATS } from './io';
 import { DEBUG, IFormat, IDiagramManager, NS } from './tokens';
 import { Diagram } from './editor';
 import { DRAWIO_URL } from '@deathbeds/ipydrawio-webpack';
@@ -8,7 +8,7 @@ import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
 
 export const MIME_CLASS = 'jp-DiagramMedia';
 
-export const extensions: IRenderMime.IExtension[] = ALL_FORMATS.map((fmt) => {
+export const extensions: IRenderMime.IExtension[] = ALL_MIME_FORMATS.map((fmt) => {
   const { name } = fmt;
   return {
     id: `${NS}:rendermime-${name}`,
@@ -24,7 +24,6 @@ export const extensions: IRenderMime.IExtension[] = ALL_FORMATS.map((fmt) => {
         });
       },
     },
-    rank: 0,
     dataType: 'string',
   };
 });

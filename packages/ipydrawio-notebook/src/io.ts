@@ -17,8 +17,8 @@ export const drawioIpynbIcon = new LabIcon({
   svgstr: DRAWIO_ICON_SVG.replace(DRAWIO_ICON_CLASS_RE, 'jp-icon-contrast3'),
 });
 
-export const IPYNB_EDITABLE: IFormat<any> = {
-  ext: '.dio.ipynb',
+export const IPYNB_PLAIN: IFormat<any> = {
+  ext: '.ipynb',
   factoryName: `${JSON_FACTORY} (Notebook)`,
   key: 'ipynb',
   format: 'json',
@@ -32,7 +32,7 @@ export const IPYNB_EDITABLE: IFormat<any> = {
   isJson: true,
   isEditable: true,
   isExport: true,
-  isDefault: true,
+  isDefault: false,
   isTransformed: false,
   wantsModel(contentsModel: Contents.IModel) {
     return contentsModel.type === 'notebook';
@@ -59,3 +59,15 @@ export const IPYNB_EDITABLE: IFormat<any> = {
     return newModel.toJSON();
   },
 };
+
+export const IPYNB_DIO = {
+  ...IPYNB_PLAIN,
+  factoryName: `${JSON_FACTORY} (Diagram Notebook)`,
+  key: 'xmlipynb',
+  ext: '.dio.ipynb',
+  name: 'xmlipynb',
+  isDefault: true,
+  pattern: '.*.ipynb$',
+};
+
+export const ALL_FORMATS = [IPYNB_DIO, IPYNB_PLAIN];

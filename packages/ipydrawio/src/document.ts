@@ -130,7 +130,9 @@ export class DiagramFactory extends ABCWidgetFactory<
               ?.drawioConfig as ReadonlyPartialJSONObject;
           },
           saveNeedsExport: () => {
-            return doc.format?.isTransformed || true;
+            const isTransformed = doc.format?.isTransformed;
+            DEBUG && console.warn('needs export', isTransformed);
+            return isTransformed == null ? true : isTransformed;
           },
           toXML: () => {
             const { model } = doc.context;

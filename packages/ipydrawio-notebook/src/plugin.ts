@@ -14,11 +14,12 @@
 
 import { JupyterLab, JupyterFrontEndPlugin } from '@jupyterlab/application';
 
-import { IDiagramManager } from '@deathbeds/ipydrawio';
+import { drawioPlainIcon, IDiagramManager } from '@deathbeds/ipydrawio';
 
-import { PLUGIN_ID } from './tokens';
-
-import { IPYNB_EDITABLE } from './io';
+import { CommandIds, PLUGIN_ID } from './tokens';
+import { IPyDrawioNotebookButton } from './toolbar';
+import { ALL_FORMATS, IPYNB_DIO } from './io';
+import { INotebookTracker } from '@jupyterlab/notebook';
 
 /**
  * The editor tracker extension.
@@ -26,12 +27,34 @@ import { IPYNB_EDITABLE } from './io';
 const plugin: JupyterFrontEndPlugin<void> = {
   activate,
   id: PLUGIN_ID,
-  requires: [IDiagramManager],
+  requires: [IDiagramManager, INotebookTracker],
   autoStart: true,
 };
 
 export default plugin;
 
-function activate(app: JupyterLab, diagrams: IDiagramManager) {
-  diagrams.addFormat(IPYNB_EDITABLE);
+function activate(
+  app: JupyterLab,
+  diagrams: IDiagramManager,
+  notebooks: INotebookTracker
+) {
+  for (const format of ALL_FORMATS) {
+    diagrams.addFormat(format);
+  }
+  const button = new IPyDrawioNotebookButton();
+  button.commands = app.commands;
+  app.docRegistry.addWidgetExtension('Notebook', button);
+  app.commands.addCommand(CommandIds.open, {
+    icon: drawioPlainIcon,
+    caption: 'Open as Diagram',
+    execute: async () => {
+      const path = notebooks.currentWidget?.context.path;
+      if (path != null) {
+        app.commands.execute('docmanager:open', {
+          path,
+          factory: IPYNB_DIO.factoryName,
+        });
+      }
+    },
+  });
 }
