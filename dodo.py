@@ -28,7 +28,7 @@ DOIT_CONFIG = dict(
     backend="sqlite3",
     verbosity=2,
     par_type="thread",
-    default_tasks=["setup", "lint"],
+    default_tasks=["setup"],
 )
 
 
