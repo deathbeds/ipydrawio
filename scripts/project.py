@@ -70,7 +70,7 @@ EXAMPLE_IPYNB = [
 ]
 DIST_NBHTML = DIST / "nbsmoke"
 ATEST = ROOT / "atest"
-ATEST_OUT = ATEST / "output"
+ATEST_OUT = BUILD / "atest"
 ATEST_OUT_XML = "output.xml"
 
 # js packages

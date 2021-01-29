@@ -26,7 +26,7 @@ from traitlets.config import Application
 
 from ._version import __version__
 from .constants import IPYNB_METADATA
-from .manager import DrawioExportManager
+from .manager import IPyDrawioExportManager
 
 
 class BaseApp(Application):
@@ -38,7 +38,7 @@ class BaseApp(Application):
 
 
 class ManagedApp(BaseApp):
-    drawio_manager = T.Instance(DrawioExportManager)
+    drawio_manager = T.Instance(IPyDrawioExportManager)
     io_loop = T.Instance(ioloop.IOLoop)
 
     @T.default("io_loop")
@@ -47,7 +47,7 @@ class ManagedApp(BaseApp):
 
     @T.default("drawio_manager")
     def _default_drawio_manager(self):
-        return DrawioExportManager(parent=self, log=self.log)
+        return IPyDrawioExportManager(parent=self, log=self.log)
 
     def start(self):
         self.drawio_manager.initialize()

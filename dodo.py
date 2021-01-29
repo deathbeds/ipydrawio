@@ -110,7 +110,7 @@ def task_setup():
                     file_dep=[dist_af],
                     actions=[
                         [
-                            "pip",
+                            *P.PIP,
                             "install",
                             "-vv",
                             "--ignore-installed",
@@ -129,9 +129,7 @@ def task_setup():
                     actions=[
                         CmdAction(
                             [
-                                "python",
-                                "-m",
-                                "pip",
+                                *P.PIP,
                                 "install",
                                 "-e",
                                 ".",
@@ -160,7 +158,7 @@ def task_setup():
         dict(
             name="pip:check",
             file_dep=[*P.OK_PYSETUP.values()],
-            actions=[["python", "-m", "pip", "check"]],
+            actions=[[*P.PIP, "check"]],
         ),
         P.OK_PIP_CHECK,
     )
@@ -574,6 +572,7 @@ def task_test():
     file_dep = [
         *P.ALL_ROBOT,
         P.OK_PROVISION,
+        *sum(P.PY_SRC.values(), []),
         P.SCRIPTS / "atest.py",
     ]
 

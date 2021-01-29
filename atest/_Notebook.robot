@@ -20,7 +20,7 @@ Wait Until JupyterLab Kernel Is Idle
     Wait Until Page Does Not Contain    ${JLAB TEXT BUSY PROMPT}
 
 Save JupyterLab Notebook
-    Execute JupyterLab Command    Save Notebook
+    Lab Command    Save Notebook
 
 Run Current JupyterLab Code Cell
     Click Element    css:${JLAB CSS ICON RUN}

@@ -19,14 +19,19 @@ limitations under the License.
 
 import traitlets
 
+from ._version import __version__
 from .handlers import add_handlers
-from .manager import DrawioExportManager
+from .manager import IPyDrawioExportManager
 
 
-def load_jupyter_server_extension(nbapp):
-    """create a DrawioExportManager and add handlers"""
-    nbapp.add_traits(drawio_manager=traitlets.Instance(DrawioExportManager))
-    manager = nbapp.drawio_manager = DrawioExportManager(parent=nbapp, log=nbapp.log)
+def load_jupyter_server_extension(app):
+    """create a IPyDrawioExportManager and add handlers"""
+    app.add_traits(
+        drawio_manager=traitlets.Instance(
+            IPyDrawioExportManager, help="a drawio export service"
+        )
+    )
+    manager = app.drawio_manager = IPyDrawioExportManager(parent=app, log=app.log)
     manager.initialize()
-    add_handlers(nbapp)
-    nbapp.log.warning("drawio initialized %s", manager)
+    add_handlers(app)
+    app.log.warning(f"[ipydrawio] initialized: v{__version__}")

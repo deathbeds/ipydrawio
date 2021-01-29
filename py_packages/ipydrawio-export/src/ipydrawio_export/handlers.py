@@ -16,20 +16,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-from notebook.base.handlers import IPythonHandler
-from notebook.utils import url_path_join as ujoin
+from jupyter_server.base.handlers import JupyterHandler
+from jupyter_server.utils import url_path_join as ujoin
+from tornado.web import authenticated
 
-from .manager import DrawioExportManager
+from .manager import IPyDrawioExportManager
 
 
-class BaseHandler(IPythonHandler):
-    manager = None  # type: DrawioExportManager
+class BaseHandler(JupyterHandler):
+    manager = None  # type: IPyDrawioExportManager
 
-    def initialize(self, manager: DrawioExportManager):
+    def initialize(self, manager: IPyDrawioExportManager):
         self.manager = manager
 
 
 class PDFHandler(BaseHandler):
+    @authenticated
     async def post(self, url=None):
         params = {k: v[-1] for k, v in self.request.arguments.items()}
         params.pop("_xsrf", None)
@@ -38,28 +40,32 @@ class PDFHandler(BaseHandler):
 
 
 class StatusHandler(BaseHandler):
+    @authenticated
     async def get(self):
         status = await self.manager.status()
         self.finish(status)
 
 
 class ProvisionHandler(BaseHandler):
+    @authenticated
     async def post(self):
         await self.manager.provision()
         status = await self.manager.status()
         self.finish(status)
 
 
-def add_handlers(nbapp):
-    """Add drawio routes to the notebook server web application"""
-    ns_url = ujoin(nbapp.base_url, "ipydrawio")
+def add_handlers(app):
+    """Add ipydrawio routes to the notebook server web application"""
+    ns_url = ujoin(app.base_url, "ipydrawio")
     pdf_url = ujoin(ns_url, "export", r"(?P<url>.*)")
     status_url = ujoin(ns_url, "status")
     provision_url = ujoin(ns_url, "provision")
 
-    opts = {"manager": nbapp.drawio_manager}
+    opts = {"manager": app.drawio_manager}
 
-    nbapp.web_app.add_handlers(
+    app.log.debug(f"[ipydrawio] API: {status_url}")
+
+    app.web_app.add_handlers(
         ".*",
         [
             (status_url, StatusHandler, opts),

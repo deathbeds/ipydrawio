@@ -24,6 +24,7 @@ import socket
 import subprocess
 import sys
 import tempfile
+import time
 import urllib
 from base64 import b64decode, b64encode
 from concurrent.futures import ThreadPoolExecutor
@@ -50,7 +51,7 @@ DRAWIO_STATIC = Path(get_app_dir()) / DRAWIO_APP
 JLPM = shutil.which("jlpm")
 
 
-class DrawioExportManager(LoggingConfigurable):
+class IPyDrawioExportManager(LoggingConfigurable):
     """manager of (currently) another node-based server"""
 
     drawio_server_url = Unicode().tag(config=True)
@@ -84,7 +85,7 @@ class DrawioExportManager(LoggingConfigurable):
 
     def stop_server(self):
         if self._server is not None:
-            self.log.warning("shutting down drawio export server")
+            self.log.warning("[ipydrawio-export] shutting down")
             self._server.terminate()
             self._server.wait()
             self._server = None
@@ -104,17 +105,23 @@ class DrawioExportManager(LoggingConfigurable):
 
     @default("drawio_port")
     def _default_drawio_port(self):
-        return self.get_unused_port()
+        port = self.get_unused_port()
+        self.log.debug(f"[ipydrawio-export] port: {port}")
+        return port
 
     @default("drawio_server_url")
     def _default_drawio_server_url(self):
-        return DRAWIO_STATIC.as_uri()
+        url = DRAWIO_STATIC.as_uri()
+        self.log.debug(f"[ipydrawio-export] URL: {url}")
+        return url
 
     @default("_session")
     def _default_session(self):
         if self.pdf_cache is not None:
+            self.log.debug("[ipydrawio-export] requests session: cached")
             return CachedSession(self.pdf_cache, allowable_methods=["POST"])
 
+        self.log.debug("[ipydrawio-export] requests session: regular")
         return Session()
 
     @default("core_params")
@@ -128,7 +135,10 @@ class DrawioExportManager(LoggingConfigurable):
         if "JUPYTER_DATA_DIR" in os.environ:
             data_root = Path(os.environ["JUPYTER_DATA_DIR"])
 
-        return str(data_root / "drawio_export")
+        workdir = str(data_root / "ipydrawio_export")
+
+        self.log.debug(f"[ipydrawio] workdir: {workdir}")
+        return workdir
 
     @default("attach_xml")
     def _default_attach_xml(self):
@@ -141,13 +151,15 @@ class DrawioExportManager(LoggingConfigurable):
         """
         data = dict(pdf_request)
         data.update(**self.core_params)
-        r = self._session.post(self.url, timeout=None, data=data)
+        for i in range(3):
+            r = self._session.post(self.url, timeout=None, data=data)
 
-        if r.status_code != 200:
-            self.log.error(r.text)
+            if r.status_code != 200:
+                self.log.warning(f"[ipydrawio] HTTP: {r.status_code} {r.text}")
+                time.sleep(i * 5)
 
         pdf_text = r.text
-        self.log.warning("drawio PDF: %s bytes", len(r.text))
+        self.log.debug("[ipydrawio] PDF-in-text %s bytes", len(r.text))
 
         return pdf_text
 
@@ -232,12 +244,13 @@ class DrawioExportManager(LoggingConfigurable):
 
             pdf_text = b64encode(final_pdf.read_bytes()).decode("utf-8")
 
-        self.log.warning("final pdf size %s", len(pdf_text))
+        self.log.warning("[ipydrawio-export] final PDF size %s", len(pdf_text))
         return pdf_text
 
     async def start_server(self):
-        self.is_starting = True
         self.stop_server()
+        self.log.debug("[ipydrawio-export] starting")
+        self.is_starting = True
 
         if not self.is_provisioned:
             await self.provision()
@@ -254,7 +267,7 @@ class DrawioExportManager(LoggingConfigurable):
 
         response = None
         while response is None:
-            self.log.warning("drawio export server starting...")
+            self.log.warning("[ipydrawio-export] waiting for initial response")
             await asyncio.sleep(2)
 
             try:
@@ -262,7 +275,7 @@ class DrawioExportManager(LoggingConfigurable):
             except Exception:
                 pass
 
-        self.log.warning("drawio export server started.")
+        self.log.warning("[ipydrawio-export] server started")
 
         self.is_starting = False
 

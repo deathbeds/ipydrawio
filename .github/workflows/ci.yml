@@ -192,4 +192,4 @@ jobs:
           name:
             ipydrawio ${{ github.run_number }} atest ${{ matrix.os }}${{
             matrix.python-version }}
-          path: ./atest/output
+          path: ./build/atest
