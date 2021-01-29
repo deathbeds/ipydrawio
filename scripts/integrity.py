@@ -26,11 +26,13 @@ def the_changelog():
     ],
 )
 def test_changelog(pkg, version, the_changelog):
+    """are the current versions referenced in the CHANGELOG?"""
     version_string = f"### {pkg} {version}"
     assert version_string in the_changelog, version_string
 
 
 def test_drawio_versions():
+    """is the drawio version up-to-date with the submodule?"""
     dv = (P.IPDW / "drawio/VERSION").read_text(encoding="utf-8")
     pdv = P.JS_PKG_DATA[P.IPDW.name]["version"]
     assert pdv.startswith(dv), "drawio version out of sync"
