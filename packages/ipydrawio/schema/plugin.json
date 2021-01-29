@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "jupyter.lab.setting-icon-label": "Drawio",
+  "jupyter.lab.setting-icon-label": "IpyDrawio",
   "jupyter.lab.setting-icon": "drawio:drawio",
-  "title": "Drawio",
-  "description": "Drawio settings.",
+  "title": "IPyDrawio",
+  "description": "IPyDrawio settings.",
   "type": "object",
   "properties": {
     "drawioExportUrl": {

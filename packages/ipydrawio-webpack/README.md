@@ -1,6 +1,6 @@
-# `@deathbeds/jupyterlab-drawio-weback`
+# `@deathbeds/ipydrawio-weback`
 
-> JupyterLab 2 Webpack-friendly [drawio](https://www.diagrams.net) assets for
+> JupyterLab 3 Webpack-friendly [drawio](https://www.diagrams.net) assets for
 > embedding
 
 See the [project repo](https://github.com/deathbeds/ipydrawio) for more

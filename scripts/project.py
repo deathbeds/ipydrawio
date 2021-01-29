@@ -133,7 +133,7 @@ JS_PY_SCRIPTS = {
     if (v.parent / "scripts").exists()
 }
 
-# special things for jupyterlab-drawio-webpack
+# special things for ipydrawio-webpack
 IPDW = JS_PKG_JSON["ipydrawio-webpack"].parent
 IPDW_APP = IPDW / "drawio/src/main/webapp/js/app.min.js"
 IPDW_PY = (IPDW / "scripts").rglob("*.py")

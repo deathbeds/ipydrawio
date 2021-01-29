@@ -25,8 +25,8 @@ ${DIALOG ACCEPT}    css:button.jp-Dialog-button.jp-mod-accept
 ${MENU EDITOR}    xpath://div[contains(@class, 'lm-Menu-itemLabel')][contains(., "Editor")]
 ${MENU SETTINGS}    xpath://div[contains(@class, 'lm-MenuBar-itemLabel')][contains(text(), "Settings")]
 # settings
-${DIO PLUGIN ID}    @deathbeds/jupyterlab-drawio:plugin
-${DIO PLUGIN SETTINGS FILE}    @deathbeds${/}jupyterlab-drawio${/}plugin.jupyterlab-settings
+${DIO PLUGIN ID}    @deathbeds/ipydrawio:plugin
+${DIO PLUGIN SETTINGS FILE}    @deathbeds${/}ipydrawio${/}plugin.jupyterlab-settings
 ${CSS USER SETTINGS}    .jp-SettingsRawEditor-user
 ${JLAB XP CLOSE SETTINGS}    ${JLAB XP DOCK TAB}\[contains(., 'Settings')]/*[contains(@class, 'm-TabBar-tabCloseIcon')]
 # launcher

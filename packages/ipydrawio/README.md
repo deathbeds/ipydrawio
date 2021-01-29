@@ -1,4 +1,4 @@
-# `@deathbeds/jupyterlab-drawio`
+# `@deathbeds/ipydrawio`
 
 > Native XML (`.d[rawi]io` and `.xml`) and Image (`[.dio].png` and `[.dio].svg`)
 > support for [drawio](https://www.diagrams.net) in

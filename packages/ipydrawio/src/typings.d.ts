@@ -17,6 +17,6 @@ declare module '*.svg' {
   export default script;
 }
 
-declare module '@deathbeds/jupyterlab-drawio-webpack' {
+declare module '@deathbeds/ipydrawio-webpack' {
   export const DRAWIO_URL: string;
 }

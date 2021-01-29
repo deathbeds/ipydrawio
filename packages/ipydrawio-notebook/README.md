@@ -1,4 +1,4 @@
-# `@deathbeds/jupyterlab-drawio-notebook`
+# `@deathbeds/ipydrawio-notebook`
 
 > Jupyter Notebook (`.ipynb` and `.dio.ipynb`) integration for
 > [drawio](https://www.diagrams.net) in

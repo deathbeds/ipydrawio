@@ -14,9 +14,7 @@ IGNORED = {
 STATIC = ROOT / "lib" / "_static.js"
 HEADER = """
 /**
-    All files that should be copied to the jupyterlab static folder, available as:
-
-    {:base_url}static/lab/node_modules/@deathbeds/jupyterlab-drawio-webpack/src/{:path}
+    All files that should be copied to the labextension folder, available as:
 
     This file generated from https://github.com/jgraph/drawio
 */

@@ -4,4 +4,4 @@ PNG_DRAWIO_INFO = "mxfile"
 DRAWIO_APP = (
     "../labextensions/@deathbeds/ipydrawio-webpack/static/drawio/src/main/webapp"
 )
-IPYNB_METADATA = "@deathbeds/jupyterlab-drawio"
+IPYNB_METADATA = "@deathbeds/ipydrawio"
