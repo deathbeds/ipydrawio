@@ -44,6 +44,8 @@ CI = ROOT / ".github"
 DODO = ROOT / "dodo.py"
 BUILD = ROOT / "build"
 DIST = ROOT / "dist"
+README = ROOT / "README.md"
+CHANGELOG = ROOT / "CHANGELOG.md"
 
 # tools
 PY = ["python"]

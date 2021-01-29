@@ -1,12 +1,15 @@
-# @deathbeds/ipydrawio
+# IPyDrawio
 
 [Drawio][] diagrams for [JupyterLab][]. Forked with ❤️ from
 [QuantStack/jupyterlab-drawio][].
 
-> **[Install](#installation)** &middot; **[History]** > &middot; **[Roadmap]** >
-> &middot; > **[Contribute](./CONTRIBUTING.md)** &middot; >
-> **[Open Source](#open-source)** > &middot; >
-> [![build][workflow-badge]][workflow]
+---
+
+**[Install](#installation)** &middot; **[History]** &middot; **[Roadmap]**
+&middot; **[Contribute](./CONTRIBUTING.md)** &middot;
+**[Open Source](#open-source)** &middot; [![build][workflow-badge]][workflow]
+
+---
 
 > > This is ALPHA software. Native drawio files created with these tools
 > > _should_ work with any other [drawio][] client, but any UI/API is liable to
@@ -23,6 +26,35 @@
 [roadmap]:
   https://github.com/deathbeds/ipydrawio/blob/master/docs/ROADMAP.dio.ipynb
 
+## Installation
+
+```bash
+pip install ipydrawio ipydrawio-export
+# TBD: conda install -c conda-forge ipydrawio
+```
+
+## Features
+
+- `ipydrawio`
+  - Edit multi-page [documents][]
+    - with nearly the same UI and features as [diagrams.net][drawio]
+    - in many file formats
+      - Drawio/mxgraph XML, SVG, PNG
+      - or Jupyter Notebooks
+  - Jupyter [rich display][] output
+  - Jupyter [Widgets][]
+- `ipydrawio-export`
+  - Export print-quality PDF from diagrams
+    - > _BEWARE: some **heavy**, maybe fragile dependencies_
+    - include editable Drawio metadata
+
+[documents]:
+  https://github.com/deathbeds/ipydrawio/blob/master/docs/Diagram%20Document.ipynb
+[rich display]:
+  https://github.com/deathbeds/ipydrawio/blob/master/docs/Diagram%20Rich%20Display.ipynb
+[widgets]:
+  https://github.com/deathbeds/ipydrawio/blob/master/docs/Diagram%20Widgets.ipynb
+
 ## Examples
 
 |                                                                        Note | Screenshot/Example                               |
@@ -36,18 +68,6 @@
   https://raw.githubusercontent.com/deathbeds/ipydrawio/master/docs/_static/images/poster.png
 [poster]:
   https://raw.githubusercontent.com/deathbeds/ipydrawio/master/docs/Poster.dio.svg
-
-## Features
-
-- Edit multi-page diagrams
-  - with nearly the same UI and features as [diagrams.net][drawio]
-  - in many file formats
-    - Drawio/mxgraph XML, SVG, PNG
-    - or Jupyter Notebooks
-- Jupyter rich display output
-- Jupyter Widgets
-- Export print-quality PDF from diagrams (_beware: some **heavy** dependencies_)
-  - include editable Drawio metadata
 
 ## Usage
 
@@ -66,13 +86,6 @@
 [launcher]:
   https://jupyterlab.readthedocs.io/en/stable/user/files.html?highlight=Launcher#creating-files-and-activities
 [file manager]: https://jupyterlab.readthedocs.io/en/stable/user/files.html
-
-## Installation
-
-```bash
-pip install ipydrawio
-# TBD: conda install -c conda-forge ipydrawio
-```
 
 ### PDF: Lab and Server extensions
 

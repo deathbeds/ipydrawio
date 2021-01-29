@@ -311,6 +311,17 @@ if not P.TESTING_IN_CI:
             P.OK_JS_BUILD,
         )
 
+        yield dict(
+            name="readme:ipydrawio",
+            file_dep=[P.README],
+            targets=[P.IPD / "README.md"],
+            actions=[
+                lambda: [(P.IPD / "README.md").write_text(P.README.read_text()), None][
+                    -1
+                ]
+            ],
+        )
+
         for pkg, (file_dep, targets) in P.JS_PKG_PACK.items():
             yield dict(
                 name=f"pack:{pkg}",

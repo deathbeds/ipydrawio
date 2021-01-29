@@ -17,10 +17,10 @@
 
 ### Recommended: conda
 
-- Get [Miniconda3](https://repo.anaconda.com/miniconda/)
+- Get [Miniforge/Mambaforge](https://github.com/conda-forge/miniforge/releases)
 
 ```bash
-conda env update --file environment.yml
+mamba env update --file environment.yml
 source activate ipydrawio
 ```
 
@@ -31,6 +31,12 @@ doit
 ```
 
 ## Prepare a Release
+
+```bash
+doit dist
+```
+
+## Do everything
 
 ```bash
 doit all
