@@ -17,7 +17,7 @@
     "@jupyter-widgets/jupyterlab-manager": "3"
   },
   "peerDependencies": {
-    "@deathbeds/ipydrawio-webpack": "^13.6.10-alpha0",
+    "@deathbeds/ipydrawio-webpack": "^14.2.6-alpha0",
     "@jupyter-widgets/base": "4",
     "@jupyter-widgets/controls": "3",
     "@jupyter-widgets/jupyterlab-manager": "3"

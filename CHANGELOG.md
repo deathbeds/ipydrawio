@@ -20,7 +20,7 @@
 
 ### @deathbeds/ipydrawio-pdf 1.0.0-alpha0
 
-### @deathbeds/ipydrawio-webpack 13.6.10-alpha0
+### @deathbeds/ipydrawio-webpack 14.2.6-alpha0
 
 ## Historic Releases
 
