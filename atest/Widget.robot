@@ -15,6 +15,12 @@ Diagram Widget
     Update The Diagram Widget Value    ${FIXTURES}${/}test.dio
     Diagram Should Contain    TEST123
     Capture Page Screenshot    02-updated.png
+    Change Paper Size    a3
+    Should Be True In Cell    d.page_format["width"] == 1169
+    Capture Page Screenshot    03-resized.png
+    Change Paper Size    letter
+    Should Be True In Cell    d.page_format["width"] == 850
+    Capture Page Screenshot    04-resized-again.png
 
 *** Keywords ***
 Create Diagram Widget
@@ -24,6 +30,12 @@ Create Diagram Widget
     Add and Run JupyterLab Code Cell    from ipydrawio import Diagram
     Add and Run JupyterLab Code Cell    d = Diagram(layout\=dict(min_height\="60vh")); d
     Wait Until Page Contains Element    ${CSS DIO READY} iframe
+
+Should Be True In Cell
+    [Arguments]    ${code}
+    Add and Run JupyterLab Code Cell    assert (${code})
+    Wait Until JupyterLab Kernel Is Idle
+    Page Should Not Contain Element    css:[data-mime-type\="${MIME STDERR}"]
 
 Edit the Widget
     Select Frame    ${CSS DIO IFRAME}
@@ -44,3 +56,14 @@ Update The Diagram Widget Value
     [Arguments]    ${path}
     ${xml} =    Get File    ${path}
     Add and Run JupyterLab Code Cell    d.source.value = '''${xml.strip()}'''
+
+Change Paper Size
+    [Arguments]    ${size}=letter
+    Select Frame    ${CSS DIO IFRAME}
+    ${el} =    Get WebElement    xpath:${XP DIO PAGE SIZE}
+    Select From List By Value    ${el}    ${size}
+    [Teardown]    Unselect Frame
+
+Measure Paper
+    ${size} =    Get Element Size    css:.geBackgroundPage
+    [Return]    ${size}

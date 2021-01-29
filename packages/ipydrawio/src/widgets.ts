@@ -1,10 +1,16 @@
+import { Throttler } from '@lumino/polling';
+import { JSONExt } from '@lumino/coreutils';
+
+import {
+  unpack_models as deserialize,
+  WidgetModel,
+  WidgetView,
+} from '@jupyter-widgets/base';
 import { BoxModel, BoxView } from '@jupyter-widgets/controls';
-import { Diagram } from './editor';
+
 import { DRAWIO_URL } from '@deathbeds/ipydrawio-webpack';
 
-import { unpack_models as deserialize } from '@jupyter-widgets/base';
-
-import { Throttler } from '@lumino/polling';
+import { Diagram } from './editor';
 
 import {
   DEBUG,
@@ -24,7 +30,6 @@ import {
 } from './tokens';
 
 import '../style/widget.css';
-import { WidgetModel, WidgetView } from '@jupyter-widgets/base';
 
 const A_SHORT_DRAWIO = `<mxfile version="13.3.6">
 <diagram id="x" name="Page-1">
@@ -242,7 +247,8 @@ export class DiagramView extends BoxView {
     }
 
     // wire up listeners from opposite direction
-    const bounceOpts: Throttler.IOptions = { edge: 'trailing', limit: 50 };
+    // edge: 'trailing',
+    const bounceOpts: Throttler.IOptions = { limit: 10 };
     [
       { evt: 'change:zoom', fn: this.onModelZoom },
       { evt: 'change:scroll_x change:scroll_y', fn: this.onModelScroll },
@@ -277,7 +283,12 @@ export class DiagramView extends BoxView {
   };
 
   onModelPageFormat = () => {
-    this.app.setPageFormat(this.model.get('page_format'));
+    const newFmt = this.model.get('page_format');
+    const oldFmt = this.app.editor.graph.pageFormat as any;
+    if (!JSONExt.deepEqual(newFmt, oldFmt)) {
+      DEBUG && console.warn('pageFormat', newFmt);
+      this.app.setPageFormat({ ...newFmt });
+    }
   };
 
   onModelPageSelected = () => {
@@ -356,7 +367,13 @@ export class DiagramView extends BoxView {
         break;
     }
 
-    if (Object.keys(needsUpdate).length) {
+    const old: any = {};
+
+    for (const k of Object.keys(needsUpdate)) {
+      old[k] = this.model.attributes[k];
+    }
+
+    if (!JSONExt.deepEqual(old, needsUpdate)) {
       this.model.set(needsUpdate);
       this.touch();
     }

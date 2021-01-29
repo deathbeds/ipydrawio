@@ -113,6 +113,10 @@ Close All Tabs
 Try to Close All Tabs
     Wait Until Keyword Succeeds    5x    50ms    Close All Tabs
 
+Maybe Reset Application State
+    ${pabot} =    Get Variable Value    ${PABOTEXECUTIONPOOLID}    ${EMPTY}
+    Run Keyword If    not(len("${pabot}"))    Reset Application State
+
 Reset Application State
     Try to Close All Tabs
     Accept Default Dialog Option

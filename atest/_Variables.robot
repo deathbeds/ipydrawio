@@ -61,6 +61,11 @@ ${JLAB ID SPLASH}    jupyterlab-splash
 ${JLAB TEXT BUSY PROMPT}    In [*]:
 ${JLAB XP CARD}    //div[@class='jp-LauncherCard']
 ${JLAB XP DOCK}    //div[@id='jp-main-dock-panel']
+${JW XP ACCORD CHILD}    //div[contains(@class, '-Accordion-child')]
+${JW XP ACCORD CHILD HEAD}    ${JW XP ACCORD CHILD}/div[contains(@class, 'p-Collapse-header')]
 # notebook
 ${JLAB CSS ICON ADD}    .jp-ToolbarButtonComponent [data-icon='ui-components:add']
 ${JLAB CSS ICON RUN}    .jp-ToolbarButtonComponent [data-icon='ui-components:run']
+${XP DIO PAGE SIZE}    //div[contains(@class, "geFormatSection")][contains(., "Paper Size")]//select
+# mime
+${MIME STDERR}    application/vnd.jupyter.stderr
