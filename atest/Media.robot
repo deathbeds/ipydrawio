@@ -30,3 +30,5 @@ Launch Untitled Notebook
     Click Element    ${XP LAUNCH TAB}
     Wait Until Element is Enabled    ${CSS LAUNCH IPYNB}
     Click Element    ${CSS LAUNCH IPYNB}
+    Sleep    1s
+    Wait Until Page Does Not Contain    css:${JLAB CSS SPINNER}
