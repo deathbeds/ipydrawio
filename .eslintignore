@@ -1,8 +1,9 @@
-node_modules/
-**/drawio/**
-packages/ipydrawio/lib/
-packages/ipydrawio-pdf/lib/
-py_packages/
-**/labextensions/
 .yarn-packages
+**/drawio/**
+**/labextensions/
 docs/
+node_modules/
+packages/ipydrawio-pdf/lib/
+packages/ipydrawio-webpack/drawio/
+packages/ipydrawio/lib/
+py_packages/

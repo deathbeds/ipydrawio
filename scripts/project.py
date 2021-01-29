@@ -184,11 +184,12 @@ def NOT_LABEXTENSIONS(paths):
 
 
 ALL_PY = [
-    DODO,
+    *ATEST.rglob("*.py"),
+    *IPDW_PY,
     *SCRIPTS.glob("*.py"),
     *sum(JS_PY_SCRIPTS.values(), []),
     *sum(PY_SRC.values(), []),
-    *ATEST.rglob("*.py"),
+    DODO,
 ]
 ALL_YML = [*ROOT.glob("*.yml"), *CI.rglob("*.yml"), *BINDER.glob("*.yml")]
 ALL_JSON = [

@@ -294,8 +294,8 @@ if not P.TESTING_IN_CI:
         yield _ok(
             dict(
                 name="js:pre",
-                file_dep=[P.YARN_INTEGRITY, P.IPDW_IGNORE, P.OK_SUBMODULES],
-                actions=[[*P.LERNA, "run", "build:pre"]],
+                file_dep=[P.YARN_INTEGRITY, P.IPDW_IGNORE, P.OK_SUBMODULES, *P.IPDW_PY],
+                actions=[[*P.LERNA, "run", "build:pre", "--stream"]],
                 targets=[P.IPDW_APP],
             ),
             P.OK_JS_BUILD_PRE,

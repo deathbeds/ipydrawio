@@ -11,8 +11,8 @@ PATCHES = {
     APP_MIN: [
         {
             "name": "global ref so we can get at the App at runtime",
-            "before": "b=null!=e?e():new App(new Editor",
-            "after": "\nwindow.JUPYTERLAB_DRAWIO_APP = b=null!=e?e():new App(new Editor",
+            "before": "new App(new Editor",
+            "after": "window.IPYDRAWIO_APP = new App(new Editor",
         },
         {
             "name": "plugin path so this can be hosted on non-root",

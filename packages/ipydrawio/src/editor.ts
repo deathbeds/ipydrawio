@@ -97,10 +97,14 @@ export class Diagram extends IFrame {
     DEBUG && console.warn('drawio app', app);
     if (this._app != app) {
       this._app = app;
-      // TODO: get a much better understanding of this
-      app.container.addEventListener('mousedown', () => {
-        this._frameClicked.emit(void 0);
-      });
+      if (app == null) {
+        console.warn('drawio app was not available');
+      } else {
+        // TODO: get a much better understanding of this
+        app?.container.addEventListener('mousedown', () => {
+          this._frameClicked.emit(void 0);
+        });
+      }
       this._appChanged.emit(void 0);
     }
 
@@ -138,7 +142,7 @@ export class Diagram extends IFrame {
         this.onContentChanged();
         break;
       case 'load':
-        this.app = (this._frame?.contentWindow as any).JUPYTERLAB_DRAWIO_APP;
+        this.app = (this._frame?.contentWindow as any).IPYDRAWIO_APP;
         this._ready.resolve(void 0);
         this._initialLoad = true;
         this.addClass(READY_CLASS);
