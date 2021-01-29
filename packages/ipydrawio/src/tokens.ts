@@ -39,7 +39,7 @@ export const JSON_FACTORY = 'Diagram Notebook';
 
 export const DRAWIO_ICON_SVG = ICON_SVG;
 
-export const DRAWIO_METADATA = NS;
+export const IPYDRAWIO_METADATA = NS;
 
 /**
  * Escape hatch for runtime debugging.
