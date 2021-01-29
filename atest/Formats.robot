@@ -29,7 +29,7 @@ Notebook
 PDF
     [Documentation]    does read-only PDF work?
     Wait Until Keyword Succeeds    5x    30s    IPyDrawio Export Server Should be Provisioned
-    Wait Until Keyword Succeeds    5x    10s    Validate Export Format    PDF    pdf    timeout=20s    extra_text=ready, saving...
+    Wait Until Keyword Succeeds    5x    10s    Validate Export Format    PDF    pdf    timeout=30s    extra_text=Exporting Diagram
 # TODO: restore someday
 # PDF (Editable)
 #    [Documentation]    does editable PDF work?
@@ -51,11 +51,12 @@ Validate Export Format
     Unselect Frame
     Capture Page Screenshot    10-edited.png
     Lab Command    Export Diagram as ${format}
-    Run Keyword If    "${extra_text}"    Wait Until Page Contains    ${extra_text}
-    Run Keyword If    "${extra_text}"    Wait Until Page Does Not Contain    ${extra_text}
-    Wait Until Page Contains Element
-    ...    ${JLAB XP DOCK TAB}\[contains(., 'untitled')][contains(., '.${ext}')]
-    ...    timeout=${timeout}
+    Ensure File Browser is Open
+    Run Keyword If    "${extra_text}"    Wait Until Page Contains    ${extra_text}    timeout=${timeout}
+    Run Keyword If    "${extra_text}"    Wait Until Page Does Not Contain    ${extra_text}    timeout=${timeout}
+    ${sel} =    Set Variable    css:.jp-DirListing-item[title*\="${ext}"]
+    Wait Until Page Contains Element    ${sel}    timeout=${timeout}
+    Double Click Element    ${sel}
     Run Keyword If    ${editable}    Validate Editable Format    ${format}    ${ext}    ${doc id}
     Ensure Sidebar Is Closed
     Capture Page Screenshot    99-exported.png
