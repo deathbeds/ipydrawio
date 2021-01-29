@@ -1,4 +1,4 @@
-include LICENSE.txt install.json
+include README.md LICENSE.txt install.json
 recursive-exclude src/ipydrawio_export/vendor/draw-image-export2 node_modules
 recursive-include src/ipydrawio_export/etc *.json
 recursive-include src/ipydrawio_export/labextensions *.*

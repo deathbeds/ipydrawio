@@ -1,2 +1,2 @@
-include LICENSE.txt install.json
+include README.md LICENSE.txt install.json
 recursive-include src/ipydrawio/labextensions *.*

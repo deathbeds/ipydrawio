@@ -379,6 +379,8 @@ if not P.TESTING_IN_CI:
                         py_setup,
                         py_setup.parent / "setup.cfg",
                         py_setup.parent / "MANIFEST.in",
+                        py_setup.parent / "README.md",
+                        py_setup.parent / "LICENSE.txt",
                     ]
                 )
             )
