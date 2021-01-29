@@ -33,7 +33,7 @@ export const IPYNB_EDITABLE: IFormat<any> = {
   isEditable: true,
   isExport: true,
   isDefault: true,
-  isTransformed: true,
+  isTransformed: false,
   wantsModel(contentsModel: Contents.IModel) {
     return contentsModel.type === 'notebook';
   },
