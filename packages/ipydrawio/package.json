@@ -17,7 +17,7 @@
     "@jupyter-widgets/jupyterlab-manager": "3"
   },
   "peerDependencies": {
-    "@deathbeds/ipydrawio-webpack": "^14.2.6-alpha0",
+    "@deathbeds/ipydrawio-webpack": "^14.2.9-alpha1",
     "@jupyter-widgets/base": "4",
     "@jupyter-widgets/controls": "3",
     "@jupyter-widgets/jupyterlab-manager": "3"
@@ -67,5 +67,5 @@
     "url": "https://github.com/deathbeds/ipydrawio.git"
   },
   "types": "lib/index.d.ts",
-  "version": "1.0.0-alpha0"
+  "version": "1.0.0-alpha1"
 }

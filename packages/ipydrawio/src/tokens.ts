@@ -21,7 +21,7 @@ import { DocumentRegistry } from '@jupyterlab/docregistry';
 import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
 
 export const NS = '@deathbeds/ipydrawio';
-export const VERSION = '1.0.0-alpha0';
+export const VERSION = '1.0.0-alpha1';
 export const PLUGIN_ID = `${NS}:plugin`;
 
 import { Diagram } from './editor';

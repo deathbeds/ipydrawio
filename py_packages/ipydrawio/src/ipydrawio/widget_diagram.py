@@ -2,7 +2,7 @@ import ipywidgets as W
 import traitlets as T
 
 module_name = "@deathbeds/ipydrawio"
-module_version = "^1.0.0-alpha0"
+module_version = "^1.0.0-alpha1"
 
 A_SHORT_DRAWIO = """<mxfile version="13.3.6">
 <diagram id="x" name="Page-1">
