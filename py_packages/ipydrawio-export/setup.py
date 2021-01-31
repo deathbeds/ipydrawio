@@ -38,7 +38,11 @@ for ext_path in [EXT] + [d for d in EXT.rglob("*") if d.is_dir()]:
 ALL_FILES = sum(EXT_FILES.values(), [])
 
 EXT_FILES[str(SHARE)] += ["install.json"]
-EXT_FILES["etc/jupyter/jupyter_server_config.d"] = ["src/ipydrawio_export/etc/ipydrawio-export.json"]
+
+for app  in ["server", "notebook"]:
+    EXT_FILES[f"etc/jupyter/jupyter_{app}_config.d"] = [
+        f"src/ipydrawio_export/etc/jupyter_{app}_config.d/ipydrawio-export.json"
+    ]
 
 if __name__ == "__main__":
     import setuptools

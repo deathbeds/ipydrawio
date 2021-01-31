@@ -1,13 +1,16 @@
 # IPyDrawio
 
-[Drawio][] diagrams for [JupyterLab][]. Forked with ❤️ from
-[QuantStack/jupyterlab-drawio][].
+> [Drawio][] diagrams for [JupyterLab][]. Forked with ❤️ from
+> [QuantStack/jupyterlab-drawio][].
 
 ---
 
 **[Install](#installation)** &middot; **[History]** &middot; **[Roadmap]**
 &middot; **[Contribute](./CONTRIBUTING.md)** &middot;
-**[Open Source](#open-source)** &middot; [![build][workflow-badge]][workflow]
+**[Open Source](#open-source)**
+
+[![install from pypi][pypi-badge]][pypi] [![reuse from npm][npm-badge]][npm]
+[![build][workflow-badge]][workflow]
 
 ---
 
@@ -25,6 +28,10 @@
   https://github.com/deathbeds/ipydrawio/actions?query=branch%3Amaster+workflow%3A.github%2Fworkflows%2Fci.yml
 [roadmap]:
   https://github.com/deathbeds/ipydrawio/blob/master/docs/ROADMAP.dio.ipynb
+[npm]: https://npmjs.com/package/@deathbeds/ipydrawio
+[pypi-badge]: https://img.shields.io/pypi/v/ipydrawio
+[pypi]: https://pypi.org/project/ipydrawio/
+[npm-badge]: https://img.shields.io/npm/v/@deathbeds/ipydrawio
 
 ## Installation
 
