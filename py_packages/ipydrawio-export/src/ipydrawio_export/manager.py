@@ -135,6 +135,9 @@ class IPyDrawioExportManager(LoggingConfigurable):
         if "JUPYTER_DATA_DIR" in os.environ:
             data_root = Path(os.environ["JUPYTER_DATA_DIR"])
 
+        if "IPYDRAWIO_DATA_DIR" in os.environ:
+            data_root = Path(os.environ["IPYDRAWIO_DATA_DIR"])
+
         workdir = str(data_root / "ipydrawio_export")
 
         self.log.debug(f"[ipydrawio] workdir: {workdir}")

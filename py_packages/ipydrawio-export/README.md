@@ -65,6 +65,23 @@ when building a `docker` container).
 jupyter ipydrawio-export provision
 ```
 
+### Provision locations
+
+If defined, these environment variables will be respected, and an
+`ipydrawio_export` folder will be created:
+
+- `$JUPYTER_DATA_DIR`
+- `$IPYDRAWIO_DATA_DIR`
+
+Otherwise, `ipydrawio-export` will provision its files into
+`{sys.prefix}/ipydrawio_export`.
+
+Of note:
+
+- access to the internet is required
+- this location must be writeable by the user
+- there must be about 400MiB available, primarily for `puppeteer`'s `chromium`
+
 ## Open Source
 
 This work is licensed under the [Apache-2.0] License.
