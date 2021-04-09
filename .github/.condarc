@@ -2,7 +2,6 @@ add_pip_as_python_dependency: False
 aggressive_update_packages: []
 always_yes: True
 auto_update_conda: False
-default_channels: []
 local_repodata_ttl: 99999
 notify_outdated_conda: False
 remote_connect_timeout_secs: 600.0
