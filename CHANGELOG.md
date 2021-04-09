@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-### ipydrawio 1.0.0a1
+### ipydrawio 1.0.0
 
 - ipywidgets support
 - Supports JupyterLab 3
@@ -12,15 +12,15 @@
     unavailable
 - A future release may unpack various dependencies into sub-packages
 
-### ipydrawio-export 1.0.0a1
+### ipydrawio-export 1.0.0
 
-### @deathbeds/ipydrawio 1.0.0-alpha1
+### @deathbeds/ipydrawio 1.0.0
 
-### @deathbeds/ipydrawio-notebook 1.0.0-alpha1
+### @deathbeds/ipydrawio-notebook 1.0.0
 
-### @deathbeds/ipydrawio-pdf 1.0.0-alpha1
+### @deathbeds/ipydrawio-pdf 1.0.0
 
-### @deathbeds/ipydrawio-webpack 14.2.9-alpha1
+### @deathbeds/ipydrawio-webpack 14.5.7
 
 ---
 

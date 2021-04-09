@@ -62,6 +62,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/edit16.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/edit32.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/edit80.png';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/embed-icon.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/expanded.gif';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/facebook.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/images/favicon-16x16.png';
@@ -681,6 +682,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/img/lib/azure2/networking/Network_Interfaces.svg';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/img/lib/azure2/networking/Network_Security_Groups.svg';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/img/lib/azure2/networking/Network_Watcher.svg';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/img/lib/azure2/networking/Private_Endpoint.svg';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/img/lib/azure2/networking/Private_Link.svg';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/img/lib/azure2/networking/Private_Link_Service.svg';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/img/lib/azure2/networking/Proximity_Placement_Groups.svg';
@@ -1755,6 +1757,8 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webap
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/rough/rough.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/sanitizer/sanitizer.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/shapes.min.js';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/socket.io/simplepeer9.10.0.min.js';
+import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/socket.io/socket.io.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/spin/spin.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/stencils.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../drawio/src/main/webapp/js/viewer-static.min.js';
