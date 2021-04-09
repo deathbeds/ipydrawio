@@ -25,7 +25,7 @@ dependencies:
   - pytest-cov
   - python
   - requests_cache
-  - robotframework
+  - robotframework >=4
   - robotframework-lint
   - robotframework-pabot
   - robotframework-seleniumlibrary

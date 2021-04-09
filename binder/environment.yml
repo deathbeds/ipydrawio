@@ -27,7 +27,7 @@ dependencies:
   - pyflakes
   - pytest
   - requests_cache
-  - robotframework
+  - robotframework >=4
   - robotframework-lint
   - robotframework-jupyterlibrary
   - robotframework-pabot

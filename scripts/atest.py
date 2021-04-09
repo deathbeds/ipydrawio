@@ -45,7 +45,6 @@ def run_tests(attempt=0, extra_args=None):
         f"PY:{P.PY_MAJOR}",
         "--randomize",
         "all",
-        "--xunitskipnoncritical",
         "--xunit",
         ".".join(["xunit", "xml"]),
         ".",
