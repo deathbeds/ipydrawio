@@ -20,7 +20,7 @@
 
 ### @deathbeds/ipydrawio-pdf 1.0.0
 
-### @deathbeds/ipydrawio-webpack 14.5.7
+### @deathbeds/ipydrawio-webpack 14.5.9
 
 ---
 
