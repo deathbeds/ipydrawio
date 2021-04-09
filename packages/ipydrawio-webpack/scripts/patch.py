@@ -14,11 +14,11 @@ PATCHES = {
             "before": "new App(new Editor",
             "after": "window.IPYDRAWIO_APP = new App(new Editor",
         },
-        {
-            "name": "plugin path so this can be hosted on non-root",
-            "before": """;window.PLUGINS_BASE_PATH=window.PLUGINS_BASE_PATH||"";""",
-            "after": """;window.PLUGINS_BASE_PATH=window.PLUGINS_BASE_PATH||".";""",
-        },
+        # {
+        #     "name": "plugin path so this can be hosted on non-root",
+        #     "before": """;window.PLUGINS_BASE_PATH=window.PLUGINS_BASE_PATH||"";""",
+        #     "after": """;window.PLUGINS_BASE_PATH=window.PLUGINS_BASE_PATH||"";""",
+        # },
     ]
 }
 
