@@ -1,6 +1,7 @@
 {
   "name": "@deathbeds/ipydrawio-meta",
   "version": "0.0.0",
+  "private": true,
   "dependencies": {
     "@deathbeds/ipydrawio-notebook": "file:../ipydrawio-notebook",
     "@deathbeds/ipydrawio-pdf": "file:../ipydrawio-pdf",
@@ -8,7 +9,7 @@
     "@deathbeds/ipydrawio": "file:../ipydrawio"
   },
   "devDependencies": {
-    "typescript": "~4.1.3"
+    "typescript": "~4.2.4"
   },
   "scripts": {
     "build": "tsc -b",
