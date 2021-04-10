@@ -175,7 +175,7 @@ class IPyDrawioExportManager(LoggingConfigurable):
                 status_code = res.status_code
             except Exception as err:  # pragma: no cover
                 self.log.warning(f"[ipydrawio-export] Pre-HTTP Error: {err}")
-                time.sleep((retries - 3) * self.init_wait_sec)
+                time.sleep((3 - retries) * self.init_wait_sec)
             if status_code is not None:
                 if status_code <= 400:
                     break
