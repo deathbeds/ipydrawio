@@ -13,7 +13,7 @@ env:
 
   # our stuff
   ATEST_RETRIES: '3'
-  CACHE_EPOCH: '0'
+  CACHE_EPOCH: '1'
   DOIT_N_BUILD: '-n4'
   DOIT_N_TEST: '-n4'
 
@@ -65,7 +65,7 @@ jobs:
             ${{ env.CACHE_EPOCH }}-${{ runner.os }}-node-build-${{ hashFiles('yarn.lock', '.gitub/pip-build.txt') }}
 
       - name: cache (yarn)
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         id: cache-yarn-packages
         with:
@@ -136,7 +136,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: cache (conda)
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/conda_pkgs_dir
           key: |
@@ -176,7 +176,7 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         shell: cmd /C CALL {0}
         env:
-          DOIT_N_TEST: '1'
+          DOIT_N_TEST: '-n1'
         run: |
           doit %DOIT_N_TEST% test || doit test
 
