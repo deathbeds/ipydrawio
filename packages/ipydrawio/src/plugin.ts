@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { IStatusBar } from '@jupyterlab/statusbar';
+import { Menu } from '@lumino/widgets';
 
 import {
   ILayoutRestorer,
@@ -33,7 +34,15 @@ import { IMainMenu } from '@jupyterlab/mainmenu';
 import * as IO from './io';
 import { DrawioStatus } from './status';
 
-import { IDiagramManager, CommandIds, DEBUG, NS, PLUGIN_ID } from './tokens';
+import {
+  IDiagramManager,
+  CommandIds,
+  DEBUG,
+  NS,
+  PLUGIN_ID,
+  DIAGRAM_MENU_RANK,
+  UI_THEMES,
+} from './tokens';
 import { DiagramManager } from './manager';
 import { RenderedDiagram } from './mime';
 import widgetPlugin from './widgetPlugin';
@@ -68,6 +77,7 @@ function activate(
   launcher: ILauncher | null,
   statusBar: IStatusBar | null
 ): IDiagramManager {
+  const { commands } = app;
   const manager = new DiagramManager({
     app,
     restorer,
@@ -108,9 +118,67 @@ function activate(
     });
   }
 
+  commands.addCommand(CommandIds.setUrlParams, {
+    label: (args) => {
+      const { drawioUrlParams } = args;
+      const entries = Object.entries(drawioUrlParams || {});
+      if (entries.length == 1 && args.justValue) {
+        return entries.map(([k, v]) => v).join(', ');
+      } else {
+        const msg = entries.map(([k, v]) => `${k}: ${v}`.trim(), '');
+        return `${IO.XML_NATIVE.label} ` + msg.join(', ');
+      }
+    },
+    isToggleable: true,
+    isToggled: (args) => {
+      const drawioUrlParams = manager.settings.composite.drawioUrlParams || {};
+      for (const [k, v] of Object.entries(args.drawioUrlParams || {})) {
+        if (
+          drawioUrlParams.hasOwnProperty(k) &&
+          (drawioUrlParams as any)[k] !== v
+        ) {
+          return false;
+        }
+      }
+      return true;
+    },
+    execute: async (args) => {
+      const drawioUrlParams = manager.settings.composite.drawioUrlParams || {};
+      await manager.settings.set('drawioUrlParams', {
+        ...(drawioUrlParams as any),
+        ...(args.drawioUrlParams as any),
+      });
+    },
+  });
+
+  for (const ui of UI_THEMES) {
+    palette.addItem({
+      command: CommandIds.setUrlParams,
+      args: { drawioUrlParams: { ui } },
+      category: `${IO.XML_NATIVE.label} Settings`,
+    });
+  }
+
   if (menu) {
     // Add new text file creation to the file menu.
     menu.fileMenu.newMenu.addGroup([{ command: CommandIds.createNew }], 40);
+
+    const theme = new Menu({ commands });
+    theme.title.label = `${IO.XML_NATIVE.label} Theme`;
+
+    for (const ui of UI_THEMES) {
+      theme.addItem({
+        command: CommandIds.setUrlParams,
+        args: { drawioUrlParams: { ui }, justValue: true },
+        type: 'command',
+      });
+    }
+
+    // actually add the thing
+    menu.settingsMenu.addGroup(
+      [{ submenu: theme, type: 'submenu' }],
+      DIAGRAM_MENU_RANK
+    );
   }
 
   RenderedDiagram.manager = manager;

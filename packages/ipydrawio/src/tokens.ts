@@ -59,10 +59,16 @@ export interface IDiagramManager {
 
 export const DRAWIO_ICON_CLASS_RE = /jp-icon-warn0/;
 
+export const DIAGRAM_MENU_RANK = 99;
+
+// TODO: this is duplicated in schema
+export const UI_THEMES = ['min', 'atlas', 'dark', 'kennedy'];
+
 export const IDiagramManager = new Token<IDiagramManager>(PLUGIN_ID);
 
 export namespace CommandIds {
   export const createNew = 'drawio:create-new';
+  export const setUrlParams = 'drawio:url-params';
 }
 
 export namespace IDiagramManager {
