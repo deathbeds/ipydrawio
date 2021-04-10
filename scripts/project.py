@@ -30,7 +30,7 @@ ATEST_PROCS = int(os.environ.get("ATEST_PROCS", "4"))
 # find root
 SCRIPTS = Path(__file__).parent.resolve()
 ROOT = SCRIPTS.parent
-BINDER = ROOT / "binder"
+BINDER = ROOT / ".binder"
 PY_MAJOR = "".join(map(str, sys.version_info[:2]))
 
 # top-level stuff
