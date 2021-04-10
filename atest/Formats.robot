@@ -10,6 +10,7 @@ Force Tags        component:document
 ...               dio.ipynb=Diagram Notebook (Diagram Notebook),Notebook,Editor,JSON
 ...               dio.png=Diagram Image (Editable PNG),Image,Editor,Diagram Image (PNG)
 ...               dio.svg=Diagram (Editable SVG),Image (Text),Editor,Image,Diagram (SVG)
+...               ipynb=Notebook,Editor,Diagram Notebook (Notebook),JSON
 ...               pdf=PDF,Editor
 ...               png=Image,Editor,Diagram Image (PNG)
 ...               svg=Image (Text),Editor,Image,Diagram (SVG)
@@ -31,9 +32,13 @@ PNG (Editable)
     [Documentation]    does editable PNG work?
     Validate Export Format    PNG (Editable)    dio.png    editable=${True}
 
-Notebook
-    [Documentation]    does editable Notebook work?
+Diagram Notebook
+    [Documentation]    does editable Diagram Notebook work?
     Validate Export Format    Notebook    dio.ipynb    editable=${True}
+
+Notebook
+    [Documentation]    does plain Notebook work?
+    Validate Export Format    Notebook    ipynb    editable=${True}    rename=renamed.ipynb
 
 PDF
     [Documentation]    does read-only PDF work?
@@ -51,12 +56,14 @@ Validate Export Format
     ...    ${before}=${EMPTY}    ${after}=${EMPTY}
     # page text that must appear while an export is occuring (then disappear)
     ...    ${extra_text}=${EMPTY}
+    # will we rename the file
+    ...    ${rename}=${EMPTY}
     ...    ${timeout}=10s
     Set Tags    format:${ext}    editable:${editable}
     Set Screenshot Directory    ${OUTPUT DIR}${/}screenshots${/}${ext}
     ${doc id} =    Prepare a Diagram for Export
     Add a Shape to a Diagram
-    Export a Diagram    ${format}    ${ext}    ${timeout}    ${extra_text}
+    Export a Diagram    ${format}    ${ext}    ${timeout}    ${extra_text}    ${rename}
     Verify a Diagram    ${format}    ${ext}    ${editable}    ${doc id}
     [Teardown]    Clean Up After Export Test
 
@@ -76,13 +83,15 @@ Add a Shape to a Diagram
     Capture Page Screenshot    10-edited.png
 
 Export a Diagram
-    [Arguments]    ${format}    ${ext}    ${timeout}    ${extra_text}
+    [Arguments]    ${format}    ${ext}    ${timeout}    ${extra_text}    ${rename}
     Lab Command    Export Diagram as ${format}
     Ensure File Browser is Open
     Run Keyword If    "${extra_text}"    Wait Until Page Contains    ${extra_text}    timeout=${timeout}
     Run Keyword If    "${extra_text}"    Wait Until Page Does Not Contain    ${extra_text}    timeout=${timeout}
     ${file item} =    Get File Item    ${ext}
     Wait Until Page Contains Element    ${file item}    timeout=${timeout}
+    ${filename} =    Get File Item    ${ext}    name
+    Run Keyword If    ${rename.__len__()}    Rename Jupyter File    ${filename}    ${rename}
     [Return]    ${file item}
 
 Get File Item

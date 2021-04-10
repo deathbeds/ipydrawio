@@ -24,6 +24,7 @@ ${DIALOG ACCEPT}    css:button.jp-Dialog-button.jp-mod-accept
 # ${STATUSBAR}    css:div.lsp-statusbar-item
 ${MENU EDITOR}    xpath://div[contains(@class, 'lm-Menu-itemLabel')][contains(., "Editor")]
 ${MENU SETTINGS}    xpath://div[contains(@class, 'lm-MenuBar-itemLabel')][contains(text(), "Settings")]
+${MENU RENAME}    xpath://div[contains(@class, 'lm-Menu-itemLabel')][contains(., "ename")]
 # settings
 ${DIO PLUGIN ID}    @deathbeds/ipydrawio:plugin
 ${DIO PLUGIN SETTINGS FILE}    @deathbeds${/}ipydrawio${/}plugin.jupyterlab-settings
