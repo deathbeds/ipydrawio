@@ -301,9 +301,8 @@ class IPyDrawioExportManager(LoggingConfigurable):
 
         self.log.debug(f"[ipydrawio-export] extra env: {env_updates}")
 
-        self._server = subprocess.Popen(
-            [NODE, self.drawio_export_app / "export.js"], env=env
-        )
+        args = [NODE, self.drawio_export_app / "export.js"]
+        self._server = subprocess.Popen([*map(str, args)], env=env)
         return self._server
 
     @property
@@ -345,7 +344,7 @@ class IPyDrawioExportManager(LoggingConfigurable):
             self.log.warning(
                 "installing drawio export dependencies %s", self.drawio_export_app
             )
-            subprocess.check_call([JLPM, "--silent"], cwd=str(self.drawio_export_app))
+            subprocess.check_call([str(JLPM), "--silent"], cwd=str(self.drawio_export_app))
         self.is_provisioning = False
 
     def get_unused_port(self):
