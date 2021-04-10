@@ -181,6 +181,7 @@ jobs:
           doit %DOIT_N_TEST% test || doit test
 
       - name: upload coverage
+        shell: bash -l {0}
         run: |
           codecov --file py_packages/ipydrawio/.coverage --file py_packages/ipydrawio-export/.coverage
 

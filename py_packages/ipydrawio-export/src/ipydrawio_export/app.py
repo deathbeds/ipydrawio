@@ -33,7 +33,7 @@ class BaseApp(Application):
     version = __version__
 
     @property
-    def description(self):
+    def description(self):  # pragma: no cover
         return self.__doc__.splitlines()[0].strip()
 
 

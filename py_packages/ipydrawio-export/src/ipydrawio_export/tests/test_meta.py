@@ -6,8 +6,8 @@ def test_version():
 
 
 def test_magiclabextensions():
-    assert len(_jupyter_labextension_paths) == 1
+    assert len(_jupyter_labextension_paths()) == 1
 
 
 def test_magic_serverextensions():
-    assert len(_jupyter_server_extension_paths) == 1
+    assert len(_jupyter_server_extension_paths()) == 1

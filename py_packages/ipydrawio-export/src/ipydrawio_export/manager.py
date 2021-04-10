@@ -77,7 +77,7 @@ class IPyDrawioExportManager(LoggingConfigurable):
         atexit.register(self.stop_server)
 
     async def pdf(self, pdf_requests):
-        if not self._server:
+        if not self._server:  # pragma: no cover
             await self.start_server()
 
         for pdf_request in pdf_requests:
@@ -121,7 +121,7 @@ class IPyDrawioExportManager(LoggingConfigurable):
         return url
 
     @default("_session")
-    def _default_session(self):
+    def _default_session(self):  # pragma: no cover
         if self.pdf_cache is not None:
             self.log.debug("[ipydrawio-export] requests session: cached")
             return CachedSession(self.pdf_cache, allowable_methods=["POST"])
@@ -160,14 +160,17 @@ class IPyDrawioExportManager(LoggingConfigurable):
         data = dict(pdf_request)
         data.update(**self.core_params)
         status_code = None
+        pdf_text = None
+
         for i in range(3):
-            if self._server.returncode is not None:
+            if self._server.returncode is not None:  # pragma: no cover
                 self.start_server()
                 time.sleep(self.init_wait_sec)
             try:
                 r = self._session.post(self.url, timeout=None, data=data)
+                pdf_text = r.text
                 status_code = r.status_code
-            except Exception as err:
+            except Exception as err:  # pragma: no cover
                 self.log.warning(f"[ipydrawio-export] Pre-HTTP Error: {err}")
                 time.sleep((i + 1) * self.init_wait_sec)
             if status_code is not None:
@@ -178,10 +181,6 @@ class IPyDrawioExportManager(LoggingConfigurable):
                         f"[ipydrawio-export] HTTP: {r.status_code} {r.text}"
                     )
 
-        if status_code is None:
-            raise Exception("UHOH")
-
-        pdf_text = r.text
         self.log.debug("[ipydrawio-export] PDF-in-text %s bytes", len(r.text))
 
         return pdf_text

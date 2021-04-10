@@ -8,6 +8,8 @@ from ..app import PDFApp, ProvisionApp
 FIXTURES = Path(__file__).parent / "fixtures"
 FIXTURE_FILES = sorted([f for f in FIXTURES.glob("*") if not f.is_dir()])
 
+pytest_plugins = ["jupyter_server.pytest_plugin"]
+
 
 @pytest.fixture(params=FIXTURE_FILES)
 def any_diagram(request, tmp_path):

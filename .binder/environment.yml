@@ -26,6 +26,8 @@ dependencies:
   - json-e
   - pyflakes
   - pytest
+  - pytest-tornasync
+  - pytest-cov
   - requests_cache
   - robotframework >=4
   - robotframework-lint

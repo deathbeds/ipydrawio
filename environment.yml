@@ -24,6 +24,7 @@ dependencies:
   - pypdf2
   - pytest
   - pytest-cov
+  - pytest-tornasync
   - python
   - requests_cache
   - robotframework >=4
