@@ -37,21 +37,19 @@ dependencies:
   - twine
   - wheel
   # demo toys
-  - matplotlib-base
+  - bqplot
+  - graphviz2drawio
   - jupyter-lsp-python-plugins
+  - jupyter-videochat
   - jupyterlab-classic
   - jupyterlab-lsp
+  - matplotlib-base
   - nbgitpuller
+  - pygraphviz
+  - python-graphviz
   - wxyz_datagrid
   - wxyz_lab
-  - bqplot
-  # for graphviz2drawio
-  - raven
-  - python-graphviz
-  - pygraphviz
   # for ipython
   - jedi <0.18.0
   # binder pins
   - jupyter_telemetry >=0.1.0 # ick, but fails pip check
-  - pip:
-      - graphviz2drawio
