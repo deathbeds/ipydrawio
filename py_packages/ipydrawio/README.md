@@ -87,6 +87,10 @@ pip install ipydrawio ipydrawio-export
     <img src="./packages/ipydrawio/style/img/drawio.svg" width="24"/> _Diagram_
     from the [Launcher][]
 - Use the _[Command Palette][]_ to _Export Diagram_ to various formats
+  - > **NOTE**: some of the built-in UI features of drawio don't work properly
+    > inside an IFrame in JupyterLab, and are difficult to robustly disable:
+    > please see _Diagram_ options available in the _Command Palette_ and
+    > various _Main Menu_ manus.
 
 [command palette]:
   https://jupyterlab.readthedocs.io/en/stable/user/commands.html?highlight=command%20palette
