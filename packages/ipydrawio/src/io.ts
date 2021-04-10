@@ -107,7 +107,7 @@ export const SVG_EDITABLE: IFormat = {
   key: 'xmlsvg',
   label: 'SVG (Editable)',
   name: 'diosvg',
-  pattern: '^.*.dio.svg$',
+  pattern: '^.*\\.dio\\.svg$',
   isEditable: true,
   isDefault: true,
   isTransformed: true,
@@ -136,7 +136,7 @@ export const PNG_EDITABLE: IFormat = {
   key: 'xmlpng',
   label: 'PNG (Editable)',
   name: 'diopng',
-  pattern: '^.*.dio.png$',
+  pattern: '^.*\\.dio\\.png$',
   isEditable: true,
   isDefault: true,
 };

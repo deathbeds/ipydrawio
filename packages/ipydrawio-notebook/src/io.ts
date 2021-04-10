@@ -26,7 +26,7 @@ export const IPYNB_PLAIN: IFormat<any> = {
   label: 'Diagram Notebook',
   mimetype: 'application/x-ipynb+json',
   name: 'dionotebook',
-  pattern: '.ipynb$',
+  pattern: '\\.*\\.ipynb$',
   contentType: 'notebook',
   modelName: 'notebook',
   isJson: true,
@@ -67,7 +67,7 @@ export const IPYNB_DIO: IFormat<any> = {
   ext: '.dio.ipynb',
   name: 'xmlipynb',
   isDefault: true,
-  pattern: '.*.dio.ipynb$',
+  pattern: '.*\\.dio\\.ipynb$',
 };
 
 export const ALL_FORMATS = [IPYNB_DIO, IPYNB_PLAIN];
