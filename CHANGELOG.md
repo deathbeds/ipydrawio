@@ -14,21 +14,25 @@
 
 ### ipydrawio-export 1.0.0
 
-- correctly handle finding/resolving `node` on windows
+- [#22] correctly handle finding/resolving `node.*` on windows
 
 ### @deathbeds/ipydrawio 1.0.0
 
-- adds more _Main Menu_ options and _Command Palette_ Commands
+- [#22] adds more _Main Menu_ options and _Command Palette_ Commands
+- [#22] new file names created by _Export Diagram as..._ commands use
+  best-effort, two-digit numbers (if needed) incrementer instead of timestamp
 
 ### @deathbeds/ipydrawio-notebook 1.0.0
 
-- fixes overload of default edtior factory for _Notebook_ [#21]
+- [#21] fixes overload of default _Notebook_ activity for _Edit with_ for
+  `.ipynb` files
 
 ### @deathbeds/ipydrawio-pdf 1.0.0
 
 ### @deathbeds/ipydrawio-webpack 14.5.9
 
 [#21]: https://github.com/deathbeds/ipydrawio/issues/21
+[#22]: https://github.com/deathbeds/ipydrawio/pull/22
 
 ---
 

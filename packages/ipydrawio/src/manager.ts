@@ -199,7 +199,10 @@ export class DiagramManager implements IDiagramManager {
     const save = exportFormat.save || String;
     const _exporter = async (cwd: string) => {
       let drawio = this._app.shell.currentWidget as DiagramDocument;
-      let stem = PathExt.basename(drawio.context.path).replace(/\.dio$/, '');
+      let stem = PathExt.basename(drawio.context.path).replace(
+        /\.dio($|\.(svg|png|ipynb|pdf)$)/,
+        ''
+      );
 
       this._status.status = `Exporting Diagram ${stem} to ${label}...`;
 
@@ -225,7 +228,8 @@ export class DiagramManager implements IDiagramManager {
         }
       );
 
-      const newPath = PathExt.join(cwd, `${stem}-${+new Date()}${ext}`);
+      const newPath = await this._getAvaialablePath(cwd, stem, ext);
+
       model = await this._app.serviceManager.contents.rename(
         model.path,
         newPath
@@ -274,6 +278,41 @@ export class DiagramManager implements IDiagramManager {
       command: `drawio:export-${key}`,
       category: `${IO.XML_NATIVE.label} Export`,
     });
+  }
+
+  /**
+   * Create a best-effort short file derived from the original stem
+   * e.g. from Untitled.dio, get in order:
+   * - Untitled.png.dio
+   * - Untitled-01.png.dio
+   * - Untitled-02.png.dio
+   *
+   * In the future, this may become configurable via settings.
+   */
+  protected async _getAvaialablePath(
+    cwd: string,
+    stem: string,
+    ext: string,
+    retries = 99
+  ): Promise<string> {
+    let newPath = `${stem}ext`;
+    const opts = { content: false };
+    const { contents } = this._app.serviceManager;
+    for (const salt in [...Array(retries).keys()]) {
+      const padded = salt.length == 1 ? `0${salt}` : `${salt}`;
+      newPath = PathExt.join(
+        cwd,
+        salt ? `${stem}-${padded}${ext}` : `${stem}ext`
+      );
+      try {
+        const model = await contents.get(newPath, opts);
+        console.warn('Path not available', model);
+      } catch {
+        return newPath;
+      }
+    }
+
+    throw new Error(`Couldn't find a writeable path for ${stem}${ext}`);
   }
 
   /**

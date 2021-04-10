@@ -5,6 +5,15 @@ Library           OperatingSystem
 Library           ./pdf.py
 Force Tags        component:document
 
+*** Variables ***
+&{EXT EDIT WITH} =
+...               dio.ipynb=Diagram Notebook (Diagram Notebook),Notebook,Editor,JSON
+...               dio.png=Diagram Image (Editable PNG),Image,Editor,Diagram Image (PNG)
+...               dio.svg=Diagram (Editable SVG),Image (Text),Editor,Image,Diagram (SVG)
+...               pdf=PDF,Editor
+...               png=Image,Editor,Diagram Image (PNG)
+...               svg=Image (Text),Editor,Image,Diagram (SVG)
+
 *** Test Cases ***
 SVG
     [Documentation]    does read-only SVG work?
@@ -37,30 +46,82 @@ PDF
 
 *** Keywords ***
 Validate Export Format
-    [Arguments]    ${format}    ${ext}    ${editable}=${False}    ${timeout}=10s    ${extra_text}=${EMPTY}
+    [Arguments]    ${format}    ${ext}    ${editable}=${False}
+    # menu items the format should appear before/after in _Edit With_ menu
+    ...    ${before}=${EMPTY}    ${after}=${EMPTY}
+    # page text that must appear while an export is occuring (then disappear)
+    ...    ${extra_text}=${EMPTY}
+    ...    ${timeout}=10s
     Set Tags    format:${ext}    editable:${editable}
     Set Screenshot Directory    ${OUTPUT DIR}${/}screenshots${/}${ext}
+    ${doc id} =    Prepare a Diagram for Export
+    Add a Shape to a Diagram
+    Export a Diagram    ${format}    ${ext}    ${timeout}    ${extra_text}
+    Verify a Diagram    ${format}    ${ext}    ${editable}    ${doc id}
+    [Teardown]    Clean Up After Export Test
+
+Prepare a Diagram for Export
     Launch Untitled Diagram
     ${doc id} =    Get Element Attribute    ${CSS DIO READY}    id
-    Capture Page Screenshot    00-launched.png
     Select Frame    ${CSS DIO IFRAME}
     Double Click Element    ${CSS DIO BG}
+    Capture Page Screenshot    00-launched.png
+    [Return]    ${doc id}
+
+Add a Shape to a Diagram
     ${a shape} =    Set Variable    ${CSS DIO SHAPE POPUP SHAPE}:nth-child(2)
     Wait Until Element Is Visible    ${a shape}
     Click Element    ${a shape}
     Unselect Frame
     Capture Page Screenshot    10-edited.png
+
+Export a Diagram
+    [Arguments]    ${format}    ${ext}    ${timeout}    ${extra_text}
     Lab Command    Export Diagram as ${format}
     Ensure File Browser is Open
     Run Keyword If    "${extra_text}"    Wait Until Page Contains    ${extra_text}    timeout=${timeout}
     Run Keyword If    "${extra_text}"    Wait Until Page Does Not Contain    ${extra_text}    timeout=${timeout}
-    ${sel} =    Set Variable    css:.jp-DirListing-item[title*\="${ext}"]
-    Wait Until Page Contains Element    ${sel}    timeout=${timeout}
-    Double Click Element    ${sel}
-    Run Keyword If    ${editable}    Validate Editable Format    ${format}    ${ext}    ${doc id}
+    ${file item} =    Get File Item    ${ext}
+    Wait Until Page Contains Element    ${file item}    timeout=${timeout}
+    [Return]    ${file item}
+
+Get File Item
+    [Arguments]    ${frag}    ${field}=${EMPTY}
+    ${sel} =    Set Variable    css:.jp-DirListing-item[title*\="${frag}"]
+    ${title} =    Get Element Attribute    ${sel}    title
+    ${res} =    Set Variable If    "${field}"
+    ...    ${title.strip().splitlines()[0].split(":", 1)[1].strip()}
+    ...    ${sel}
+    [Return]    ${res}
+
+Verify a Diagram
+    [Arguments]    ${format}    ${ext}    ${editable}    ${doc id}
+    Ensure File Browser is Open
+    ${file item} =    Get File Item    ${ext}
+    Click Element    ${file item}
+    ${filename} =    Get File Item    ${ext}    Name
+    Run Keyword If    '''${ext}''' in &{EXT EDIT WITH}
+    ...    Verify Edit With Menu    ${ext}    ${filename}
+    Double Click Element    ${file item}
     Ensure Sidebar Is Closed
+    Run Keyword If    ${editable}
+    ...    Validate Editable Format    ${format}    ${ext}    ${doc id}
     Capture Page Screenshot    99-exported.png
-    [Teardown]    Clean Up After Export Test
+
+Verify Edit With Menu
+    [Arguments]    ${ext}    ${filename}
+    Open Context Menu for File    ${filename}
+    Mouse Over    ${MENU OPEN WITH}
+    Click Element    ${MENU OPEN WITH}
+    Sleep    0.25s
+    Capture Page Screenshot    98-edit-with-menu.png
+    ${opener} =    Set Variable    xpath://li[@data-command\="filebrowser:open"]
+    @{factories} =    Set Variable    ${EXT EDIT WITH.get('''${ext}''').strip().split(',')}
+    FOR    ${i}    IN RANGE    ${factories.__len__()}
+        ${factory} =    Set Variable    ${factories[${i}].strip()}
+        Mouse Over
+        ...    ${opener}\[position()=${i + 1}]/div[contains(@class, 'lm-Menu-itemLabel')][contains(., '${factory}')]
+    END
 
 IPyDrawio Export Server Should be Provisioned
     Lab Command    Provision Drawio PDF Export Server
@@ -75,11 +136,3 @@ Clean Up After Export Test
 Validate Editable Format
     [Arguments]    ${format}    ${ext}    ${doc id}
     Wait Until Element is Visible    ${CSS DIO READY}:not([id='${doc id}']) iframe
-
-Launch Untitled Diagram
-    Lab Command    New Launcher
-    Ensure Sidebar Is Closed
-    Click Element    ${XP LAUNCH TAB}
-    Wait Until Element is Enabled    ${CSS LAUNCH DIO}
-    Click Element    ${CSS LAUNCH DIO}
-    Wait Until Element is Visible    ${CSS DIO IFRAME}

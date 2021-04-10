@@ -9,8 +9,8 @@ ${HEADLESS}       1
 ${CMD PALETTE INPUT}    css:#command-palette .lm-CommandPalette-input
 ${CMD PALETTE ITEM ACTIVE}    css:#command-palette .lm-CommandPalette-item.lm-mod-active
 ${JLAB XP TOP}    //div[@id='jp-top-panel']
-${JLAB XP MENU ITEM LABEL}    //div[@class='lm-Menu-itemLabel']
-${JLAB XP MENU LABEL}    //div[@class='lm-MenuBar-itemLabel']
+${JLAB XP MENU ITEM LABEL}    //div[contains(@class, 'lm-Menu-itemLabel')]
+${JLAB XP MENU LABEL}    //div[contains(@class, 'lm-MenuBar-itemLabel')]
 ${JLAB XP DOCK TAB}    xpath://div[contains(@class, 'lm-DockPanel-tabBar')]//li[contains(@class, 'lm-TabBar-tab')]
 ${JLAB CSS VERSION}    css:.jp-About-version
 ${CSS DIALOG OK}    css:.jp-Dialog .jp-mod-accept

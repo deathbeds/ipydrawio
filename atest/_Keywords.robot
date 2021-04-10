@@ -68,7 +68,7 @@ Initialize User Settings
     ...    {"modal": false}
 
 Reset Plugin Settings
-    Create File    ${SETTINGS DIR}${/}${LSP PLUGIN SETTINGS FILE}    {}
+    Create File    ${SETTINGS DIR}${/}${DIO PLUGIN SETTINGS FILE}    {}
 
 Tear Down Everything
     Close All Browsers
@@ -205,7 +205,7 @@ Open Context Menu for File
     [Arguments]    ${file}
     Ensure File Browser is Open
     Click Element    css:button[title="Refresh File List"]
-    ${selector} =    Set Variable    xpath://span[@class='jp-DirListing-itemText']\[text() = '${file}']
+    ${selector} =    Set Variable    xpath://span[@class\='jp-DirListing-itemText']/span[text() = '${file}']
     Wait Until Page Contains Element    ${selector}
     Open Context Menu    ${selector}
 
@@ -261,8 +261,12 @@ Open in Advanced Settings
     Click Element    ${sel}
     Wait Until Page Contains    System Defaults
 
+Set Editor Content
+    [Arguments]    ${text}    ${css}=${EMPTY}
+    Execute JavaScript    return document.querySelector('${css} .CodeMirror').CodeMirror.setValue(`${text}`)
+
 Configure JupyterLab Plugin
-    [Arguments]    ${settings json}    ${plugin id}=${LSP PLUGIN ID}
+    [Arguments]    ${settings json}={}    ${plugin id}=${DIO PLUGIN ID}
     Open in Advanced Settings    ${plugin id}
     Set Editor Content    ${settings json}    ${CSS USER SETTINGS}
     Wait Until Page Contains    No errors found
@@ -273,3 +277,11 @@ Clean Up After Working with File and Settings
     [Arguments]    ${file}
     Clean Up After Working With File    ${file}
     Reset Plugin Settings
+
+Launch Untitled Diagram
+    Lab Command    New Launcher
+    Ensure Sidebar Is Closed
+    Click Element    ${XP LAUNCH TAB}
+    Wait Until Element is Enabled    ${CSS LAUNCH DIO}
+    Click Element    ${CSS LAUNCH DIO}
+    Wait Until Element is Visible    ${CSS DIO IFRAME}
