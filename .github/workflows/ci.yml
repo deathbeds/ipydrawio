@@ -182,7 +182,7 @@ jobs:
 
       - name: upload coverage
         run: |
-          codecov
+          codecov --file py_packages/ipydrawio/.coverage --file py_packages/ipydrawio-export/.coverage
 
       # - name: clean (windows)
       #   if: ${{ contains(matrix.os, 'windows') }}
