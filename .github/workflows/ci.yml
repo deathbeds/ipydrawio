@@ -183,7 +183,11 @@ jobs:
       - name: upload coverage
         shell: bash -l {0}
         run: |
-          codecov --file py_packages/ipydrawio/.coverage py_packages/ipydrawio-export/.coverage
+          set -eux
+          cd py_packages/ipydrawio
+          codecov
+          cd ../ipydrawio-export
+          codecov
 
       # - name: clean (windows)
       #   if: ${{ contains(matrix.os, 'windows') }}

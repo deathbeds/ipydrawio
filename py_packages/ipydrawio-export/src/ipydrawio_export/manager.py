@@ -163,7 +163,9 @@ class IPyDrawioExportManager(LoggingConfigurable):
         pdf_text = None
         res = None
 
-        for i in range(3):
+        retries = 3
+
+        while retries:
             if self._server.returncode is not None:  # pragma: no cover
                 self.start_server()
                 time.sleep(self.init_wait_sec)
@@ -173,16 +175,21 @@ class IPyDrawioExportManager(LoggingConfigurable):
                 status_code = res.status_code
             except Exception as err:  # pragma: no cover
                 self.log.warning(f"[ipydrawio-export] Pre-HTTP Error: {err}")
-                time.sleep((i + 1) * self.init_wait_sec)
+                time.sleep((retries - 3) * self.init_wait_sec)
             if status_code is not None:
                 if status_code <= 400:
                     break
-                else:  # pragma: no cover
+                elif res:  # pragma: no cover
                     self.log.warning(
                         f"[ipydrawio-export] HTTP {res.status_code}: {res.text}"
                     )
+                else:
+                    self.log.warning("[ipydrawio-export] retrying...")
 
-        self.log.debug("[ipydrawio-export] PDF-in-text %s bytes", len(res.text))
+            retries -= 1
+
+        if res:
+            self.log.debug(f"[ipydrawio-export] PDF-in-text {len(res.text)} bytes")
 
         return pdf_text
 
