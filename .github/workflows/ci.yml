@@ -180,11 +180,11 @@ jobs:
         run: |
           doit %DOIT_N_TEST% test || doit test
 
-      - name: clean (windows)
-        if: ${{ contains(matrix.os, 'windows') }}
-        run: |
-          taskkill /F /IM python.exe || echo "no python"
-          taskkill /F /IM node.exe || echo "no node"
+      # - name: clean (windows)
+      #   if: ${{ contains(matrix.os, 'windows') }}
+      #   run: |
+      #     taskkill /F /IM python.exe || echo "no python"
+      #     taskkill /F /IM node.exe || echo "no node"
 
       - name: report (atest)
         if: ${{ always() }}
