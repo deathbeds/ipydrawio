@@ -100,20 +100,23 @@ class PDFApp(ManagedApp):
 
                 pdf_requests += [pdf_request]
 
-            # TODO: traitelt for output name
+            # TODO: traitlet for output name
             out = self.dio_files[0].parent / f"{self.dio_files[0].stem}.pdf"
             pdf_text = await self.drawio_manager.pdf(pdf_requests)
-            pdf_bytes = base64.b64decode(pdf_text)
-            self.log.warning("Writing %s bytes to %s", len(pdf_bytes), out)
-            out.write_bytes(pdf_bytes)
+            if pdf_text is None:
+                self.log.error("Nothing PDF text was created")
+            else:
+                pdf_bytes = base64.b64decode(pdf_text)
+                self.log.warning("Writing %s bytes to %s", len(pdf_bytes), out)
+                out.write_bytes(pdf_bytes)
         finally:
             self.stop()
 
 
 class DrawioExportApp(BaseApp):
-    """drawio export tools"""
+    """ipydrawio export tools"""
 
-    name = "drawio-export"
+    name = "ipydrawio-export"
     subcommands = dict(
         provision=(ProvisionApp, ProvisionApp.__doc__.splitlines()[0]),
         pdf=(PDFApp, PDFApp.__doc__.splitlines()[0]),
