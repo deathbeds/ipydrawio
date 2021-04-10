@@ -15,12 +15,15 @@
 ### ipydrawio-export 1.0.0
 
 - [#22] correctly handle finding/resolving `node.*` on windows
+- [#22] upgrade to newer `puppeteer`-based `draw-image-export`
 
 ### @deathbeds/ipydrawio 1.0.0
 
 - [#22] adds more _Main Menu_ options and _Command Palette_ Commands
 - [#22] new file names created by _Export Diagram as..._ commands use
   best-effort, two-digit numbers (if needed) incrementer instead of timestamp
+- [#20] add `allow-downloads` sandbox exception for the drawio `iframe`,
+  enabling some more built-in features
 
 ### @deathbeds/ipydrawio-notebook 1.0.0
 
@@ -31,6 +34,9 @@
 
 ### @deathbeds/ipydrawio-webpack 14.5.9
 
+- [#22] improved PDF export
+
+[#20]: https://github.com/deathbeds/ipydrawio/issues/20
 [#21]: https://github.com/deathbeds/ipydrawio/issues/21
 [#22]: https://github.com/deathbeds/ipydrawio/pull/22
 
