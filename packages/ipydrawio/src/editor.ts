@@ -35,6 +35,7 @@ const CORE_EMBED_PARAMS = {
  * Additional capabilities to allow to sandbox
  */
 const SANDBOX_EXCEPTIONS: IFrame.SandboxExceptions[] = [
+  'allow-downloads',
   'allow-forms',
   'allow-modals',
   'allow-orientation-lock',
