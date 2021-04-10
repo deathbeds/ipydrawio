@@ -282,7 +282,7 @@ class IPyDrawioExportManager(LoggingConfigurable):
         self.log.debug("[ipydrawio-export] starting")
         self.is_starting = True
 
-        if not self.is_provisioned:
+        if not self.is_provisioned:  # pragma: no cover
             await self.provision()
 
         self._start_process()
