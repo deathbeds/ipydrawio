@@ -23,6 +23,7 @@ dependencies:
   - pyflakes
   - pypdf2
   - pytest
+  - pytest-console-scripts
   - pytest-cov
   - pytest-tornasync
   - python

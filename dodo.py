@@ -574,6 +574,7 @@ def task_test():
                 uptodate=[config_changed(dict(PYTEST_ARGS=P.PYTEST_ARGS))],
                 file_dep=[
                     *P.PY_SRC[pkg],
+                    P.PY_SETUP_CFG[pkg],
                     *P.PY_TEST_DEP.get(pkg, []),
                     P.OK_PIP_CHECK,
                 ],
