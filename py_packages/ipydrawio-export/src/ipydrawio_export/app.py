@@ -78,7 +78,7 @@ class PDFApp(ManagedApp):
 
     def parse_command_line(self, argv=None):
         super().parse_command_line(argv)
-        self.dio_files = [Path(p) for p in self.extra_args]
+        self.dio_files = [Path(p).resolve() for p in self.extra_args]
 
     async def start_async(self):
         try:
