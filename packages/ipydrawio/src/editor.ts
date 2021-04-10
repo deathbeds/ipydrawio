@@ -124,7 +124,14 @@ export class Diagram extends IFrame {
    * Handle messages from the iframe over the drawio embed protocol
    */
   handleMessageEvent(evt: MessageEvent) {
-    const msg = JSON.parse(evt.data);
+    let msg: any;
+
+    try {
+      msg = JSON.parse(evt.data);
+    } catch {
+      return;
+    }
+
     if (
       this._frame?.contentWindow == null ||
       evt.source !== this._frame.contentWindow
