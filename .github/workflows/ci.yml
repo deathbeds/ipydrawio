@@ -185,9 +185,9 @@ jobs:
         run: |
           set -eux
           cd py_packages/ipydrawio
-          codecov
+          codecov --root ../..
           cd ../ipydrawio-export
-          codecov
+          codecov --root ../..
 
       # - name: clean (windows)
       #   if: ${{ contains(matrix.os, 'windows') }}
