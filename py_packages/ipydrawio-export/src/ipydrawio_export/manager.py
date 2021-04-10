@@ -344,7 +344,9 @@ class IPyDrawioExportManager(LoggingConfigurable):
             self.log.warning(
                 "installing drawio export dependencies %s", self.drawio_export_app
             )
-            subprocess.check_call([str(JLPM), "--silent"], cwd=str(self.drawio_export_app))
+            subprocess.check_call(
+                [str(JLPM), "--silent"], cwd=str(self.drawio_export_app)
+            )
         self.is_provisioning = False
 
     def get_unused_port(self):
