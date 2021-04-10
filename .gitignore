@@ -17,6 +17,7 @@ atest/output/
 build/
 dist/
 envs/
+htmlcov/
 node_modules/
 untitled*
 Untitled*
