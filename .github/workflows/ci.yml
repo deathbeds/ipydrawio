@@ -180,6 +180,10 @@ jobs:
         run: |
           doit %DOIT_N_TEST% test || doit test
 
+      - name: upload coverage
+        run: |
+          codecov
+
       # - name: clean (windows)
       #   if: ${{ contains(matrix.os, 'windows') }}
       #   run: |

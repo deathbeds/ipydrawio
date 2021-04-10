@@ -6,6 +6,7 @@ channels:
 
 dependencies:
   - black
+  - codecov
   - doit
   - firefox =78
   - flake8

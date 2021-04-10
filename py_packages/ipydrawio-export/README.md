@@ -4,10 +4,18 @@
 
 ---
 
-[![install from pypi][pypi-badge]][pypi]
+[![install from pypi][pypi-badge]][pypi] [![build][workflow-badge]][workflow]
+[![coverage][cov-badge]][cov]
 
 [pypi-badge]: https://img.shields.io/pypi/v/ipydrawio-export
 [pypi]: https://pypi.org/project/ipydrawio-export
+[workflow-badge]:
+  https://github.com/deathbeds/ipydrawio/workflows/.github/workflows/ci.yml/badge.svg
+[workflow]:
+  https://github.com/deathbeds/ipydrawio/actions?query=branch%3Amaster+workflow%3A.github%2Fworkflows%2Fci.yml
+[cov-badge]:
+  https://codecov.io/gh/deathbeds/ipydrawio/branch/master/graph/badge.svg?token=9B74VKHQDK
+[cov]: https://codecov.io/gh/deathbeds/ipydrawio
 
 ---
 
