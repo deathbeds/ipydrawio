@@ -103,8 +103,8 @@ class PDFApp(ManagedApp):
             # TODO: traitlet for output name
             out = self.dio_files[0].parent / f"{self.dio_files[0].stem}.pdf"
             pdf_text = await self.drawio_manager.pdf(pdf_requests)
-            if pdf_text is None:
-                self.log.error("Nothing PDF text was created")
+            if pdf_text is None:  # pragma: no cover
+                self.log.error("No PDF text was created")
             else:
                 pdf_bytes = base64.b64decode(pdf_text)
                 self.log.warning("Writing %s bytes to %s", len(pdf_bytes), out)

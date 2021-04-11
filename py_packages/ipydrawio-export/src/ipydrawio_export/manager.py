@@ -30,7 +30,6 @@ from base64 import b64decode, b64encode
 from concurrent.futures import ThreadPoolExecutor
 from io import BytesIO
 from pathlib import Path
-from tempfile import TemporaryDirectory
 
 import lxml.etree as E
 from jupyterlab.commands import get_app_dir
@@ -166,6 +165,8 @@ class IPyDrawioExportManager(LoggingConfigurable):
         retries = 3
 
         while retries:
+            status_code = None
+
             if self._server.returncode is not None:  # pragma: no cover
                 self.start_server()
                 time.sleep(self.init_wait_sec)
@@ -176,6 +177,7 @@ class IPyDrawioExportManager(LoggingConfigurable):
             except Exception as err:  # pragma: no cover
                 self.log.warning(f"[ipydrawio-export] Pre-HTTP Error: {err}")
                 time.sleep((3 - retries) * self.init_wait_sec)
+
             if status_code is not None:
                 if status_code <= 400:
                     break
@@ -249,33 +251,11 @@ class IPyDrawioExportManager(LoggingConfigurable):
             composite_xml = E.tostring(tree).decode("utf-8")
             final = PdfFileWriter()
             final.appendPagesFromReader(PdfFileReader(str(output_pdf), "rb"))
-            final.addAttachment("drawing.drawio", composite_xml.encode("utf-8"))
+            if self.attach_xml:
+                final.addAttachment("drawing.drawio", composite_xml.encode("utf-8"))
             with final_pdf.open("wb") as fpt:
                 final.write(fpt)
             return b64encode(final_pdf.read_bytes()).decode("utf-8")
-
-    def add_files(self, pdf_text, attachments):
-        with TemporaryDirectory() as td:
-            tdp = Path(td)
-            output_pdf = tdp / "output.pdf"
-            final_pdf = tdp / "final.pdf"
-            output_pdf.write_bytes(b64decode(pdf_text))
-            writer = PdfFileWriter()
-            writer.appendPagesFromReader(PdfFileReader(str(output_pdf), "rb"))
-
-            for path, content in attachments.items():
-                self.log.warning(
-                    "adding PDF attachment %s %s %s", len(content), type(content), path
-                )
-                writer.addAttachment(path, content)
-
-            with final_pdf.open("wb") as fpt:
-                writer.write(fpt)
-
-            pdf_text = b64encode(final_pdf.read_bytes()).decode("utf-8")
-
-        self.log.warning("[ipydrawio-export] final PDF size %s", len(pdf_text))
-        return pdf_text
 
     async def start_server(self):
         self.stop_server()

@@ -88,7 +88,7 @@ Export a Diagram
     Ensure File Browser is Open
     Run Keyword If    "${extra_text}"    Wait Until Page Contains    ${extra_text}    timeout=${timeout}
     Run Keyword If    "${extra_text}"    Wait Until Page Does Not Contain    ${extra_text}    timeout=${timeout}
-    ${file item} =    Get File Item    ${ext}
+    ${file item} =    Wait Until Keyword Succeeds    5x    1s    Get File Item    ${ext}
     Wait Until Page Contains Element    ${file item}    timeout=${timeout}
     ${filename} =    Get File Item    ${ext}    name
     Run Keyword If    ${rename.__len__()}    Rename Jupyter File    ${filename}    ${rename}

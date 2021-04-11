@@ -1,5 +1,5 @@
 __pycache__
-.coverage
+.coverage*
 .doit*
 .ipynb_checkpoints
 .pabotsuitenames
