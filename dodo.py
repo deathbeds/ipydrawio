@@ -615,6 +615,7 @@ def task_test():
                     *P.PY_SRC[pkg],
                     P.PY_SETUP_CFG[pkg],
                     *P.PY_TEST_DEP.get(pkg, []),
+                    P.OK_PROVISION,
                     P.OK_PIP_CHECK,
                 ],
                 actions=[PythonInteractiveAction(_pytest(setup))],

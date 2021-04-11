@@ -19,6 +19,7 @@ import json
 from pathlib import Path
 
 import traitlets as T
+from jupyter_core.application import base_flags
 from tornado import ioloop
 from traitlets.config import Application
 
@@ -62,7 +63,22 @@ class ManagedApp(BaseApp):
 class ProvisionApp(ManagedApp):
     """pre-provision drawio export tools"""
 
+    show_workdir = T.Bool(False).tag(config=True)
+
+    flags = dict(
+        **base_flags,
+        workdir=(
+            {"ProvisionApp": {"show_workdir": True}},
+            "Print the export working directory",
+        ),
+    )
+
     async def start_async(self):
+        if self.show_workdir:
+            print(str(Path(self.drawio_manager.drawio_export_workdir).resolve()))
+            self.stop()
+            return
+
         try:
             await self.drawio_manager.provision(force=True)
         finally:

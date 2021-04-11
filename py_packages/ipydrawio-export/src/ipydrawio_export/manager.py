@@ -39,7 +39,13 @@ from tornado.concurrent import run_on_executor
 from traitlets import Bool, Dict, Instance, Int, Unicode, default
 from traitlets.config import LoggingConfigurable
 
-from .constants import DRAWIO_APP, PNG_DRAWIO_INFO
+from .constants import (
+    DRAWIO_APP,
+    ENV_IPYDRAWIO_DATA_DIR,
+    ENV_JUPYTER_DATA_DIR,
+    PNG_DRAWIO_INFO,
+    WORK_DIR,
+)
 
 VEND = Path(__file__).parent / "vendor" / "draw-image-export2"
 
@@ -134,15 +140,15 @@ class IPyDrawioExportManager(LoggingConfigurable):
     def _default_drawio_export_workdir(self):
         data_root = Path(sys.prefix) / "share/jupyter"
 
-        if "JUPYTER_DATA_DIR" in os.environ:
-            data_root = Path(os.environ["JUPYTER_DATA_DIR"])
+        if ENV_JUPYTER_DATA_DIR in os.environ:
+            data_root = Path(os.environ[ENV_JUPYTER_DATA_DIR])
 
-        if "IPYDRAWIO_DATA_DIR" in os.environ:
-            data_root = Path(os.environ["IPYDRAWIO_DATA_DIR"])
+        if ENV_IPYDRAWIO_DATA_DIR in os.environ:
+            data_root = Path(os.environ[ENV_IPYDRAWIO_DATA_DIR])
 
-        workdir = str(data_root / "ipydrawio_export")
+        workdir = str(data_root if data_root.name == WORK_DIR else data_root / WORK_DIR)
 
-        self.log.debug(f"[ipydrawio] workdir: {workdir}")
+        self.log.debug(f"[ipydrawio-export] workdir: {workdir}")
         return workdir
 
     @default("attach_xml")
@@ -316,18 +322,21 @@ class IPyDrawioExportManager(LoggingConfigurable):
         if not self.drawio_export_app.exists():
             if not self.drawio_export_app.parent.exists():
                 self.drawio_export_app.parent.mkdir(parents=True)
-            self.log.warning(
-                "initializing drawio export app %s", self.drawio_export_app
+            self.log.info(
+                "[ipydrawio-export] initializing drawio export app %s",
+                self.drawio_export_app,
             )
             shutil.copytree(VEND, self.drawio_export_app)
         else:
-            self.log.warning(
-                "using existing drawio export folder %s", self.drawio_export_app
+            self.log.info(
+                "[ipydrawio-export] using existing drawio export folder %s",
+                self.drawio_export_app,
             )
 
         if not self.drawio_export_node_modules.exists() or force:
-            self.log.warning(
-                "installing drawio export dependencies %s", self.drawio_export_app
+            self.log.info(
+                "[ipydrawio-export] installing drawio export dependencies %s",
+                self.drawio_export_app,
             )
             subprocess.check_call(
                 [str(JLPM), "--silent"], cwd=str(self.drawio_export_app)

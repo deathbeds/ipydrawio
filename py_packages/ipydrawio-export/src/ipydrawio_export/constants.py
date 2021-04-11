@@ -14,10 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# the header to look for in PNG metadata
 PNG_DRAWIO_INFO = "mxfile"
 
 # TODO: hoist this to `package.json` and consume directly
 DRAWIO_APP = (
     "../labextensions/@deathbeds/ipydrawio-webpack/static/drawio/src/main/webapp"
 )
+
+# key set in notebook#/metadata/
 IPYNB_METADATA = "@deathbeds/ipydrawio"
+
+# environment variables
+ENV_JUPYTER_DATA_DIR = "JUPYTER_DATA_DIR"
+ENV_IPYDRAWIO_DATA_DIR = "IPYDRAWIO_DATA_DIR"
+
+# always appended to *_DATA_DIR
+WORK_DIR = "ipydrawio_export"

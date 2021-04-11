@@ -277,6 +277,8 @@ JS_PKG_PACK[IPDW.name][0] += [
     *ALL_IPDW_JS,
 ]
 
+# provisioning stuff
+IPYDRAWIO_DATA_DIR = Path(sys.prefix) / "share/jupyter/ipydrawio_export"
 
 # built files
 OK_PIP_CHECK = BUILD / "pip.check.ok"
@@ -326,3 +328,6 @@ def get_atest_stem(attempt=1, extra_args=None, browser=None):
         stem += "_dry_run"
 
     return stem
+
+
+os.environ.update(IPYDRAWIO_DATA_DIR=str(IPYDRAWIO_DATA_DIR))

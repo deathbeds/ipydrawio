@@ -16,6 +16,6 @@
 
 
 def test_app_args(export_app):
-    assert not export_app.dio_files
+    assert not export_app.dio_files, "shouldn't have any files by default"
     export_app.parse_command_line(["foo.dio"])
-    assert export_app.dio_files
+    assert export_app.dio_files, "shouldn't have some files"
