@@ -49,6 +49,7 @@ PY_MAJOR = "".join(map(str, sys.version_info[:2]))
 # demo
 BINDER = ROOT / ".binder"
 OVERRIDES = BINDER / "overrides.json"
+POSTBUILD_PY = BINDER / "postBuild"
 ENV_BINDER = BINDER / "environment.yml"
 
 # top-level stuff
@@ -215,6 +216,7 @@ ALL_PY = [
     *sum(JS_PY_SCRIPTS.values(), []),
     *sum(PY_SRC.values(), []),
     *BINDER.glob("*.py"),
+    POSTBUILD_PY,
     DODO,
 ]
 ALL_YML = [*ROOT.glob("*.yml"), *CI.rglob("*.yml"), *BINDER.glob("*.yml")]
