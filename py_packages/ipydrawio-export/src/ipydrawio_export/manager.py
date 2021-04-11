@@ -47,7 +47,7 @@ from .constants import (
     WORK_DIR,
 )
 
-VEND = Path(__file__).parent / "vendor" / "draw-image-export2"
+VEND = Path(__file__).parent / "vendor/draw-image-export2"
 
 DRAWIO_STATIC = (Path(get_app_dir()) / DRAWIO_APP).resolve()
 
@@ -68,6 +68,7 @@ class IPyDrawioExportManager(LoggingConfigurable):
     drawio_export_workdir = Unicode().tag(config=True)
     pdf_cache = Unicode(allow_none=True).tag(config=True)
     attach_xml = Bool().tag(config=True)
+    attachment_name = Unicode("diagram.drawio").tag(config=True)
     is_provisioning = Bool(False)
     is_starting = Bool(False)
     init_wait_sec = Int(2).tag(config=True)
@@ -195,7 +196,30 @@ class IPyDrawioExportManager(LoggingConfigurable):
             retries -= 1
 
         if res:
-            self.log.debug(f"[ipydrawio-export] PDF-in-text {len(res.text)} bytes")
+            self.log.debug(f"[ipydrawio-export] {len(res.text)} bytes")
+
+        if pdf_text and self.attach_xml and self.attachments:
+            self.log.info(
+                f"[ipydrawio-export] attaching drawio XML as {self.attachment_name}"
+            )
+            with tempfile.TemporaryDirectory() as td:
+                tdp = Path(td)
+                output_pdf = tdp / "original.pdf"
+                output_pdf.write_bytes(b64decode(pdf_text))
+                final_pdf = tdp / "final.pdf"
+                final = PdfFileWriter()
+                final.appendPagesFromReader(PdfFileReader(str(output_pdf), "rb"))
+                xml = pdf_request["xml"]
+                if hasattr(xml, "encode"):
+                    xml = xml.encode("utf-8")
+                final.addAttachment(self.attachment_name, xml)
+                with final_pdf.open("wb") as fpt:
+                    final.write(fpt)
+
+                pdf_text = b64encode(final_pdf.read_bytes())
+                self.log.debug(
+                    f"[ipydrawio-export] {len(pdf_text)} bytes (with attachment)"
+                )
 
         return pdf_text
 
@@ -244,9 +268,7 @@ class IPyDrawioExportManager(LoggingConfigurable):
                 for diagram in self.extract_diagrams(pdf_request):
                     tree.append(diagram)
                 next_pdf = tdp / f"doc-{i}.pdf"
-                wrote = next_pdf.write_bytes(
-                    b64decode(pdf_request["pdf"].encode("utf-8"))
-                )
+                wrote = next_pdf.write_bytes(b64decode(pdf_request["pdf"]))
                 if wrote:
                     merger.append(PdfFileReader(str(next_pdf)))
             output_pdf = tdp / "output.pdf"
@@ -256,7 +278,7 @@ class IPyDrawioExportManager(LoggingConfigurable):
             final = PdfFileWriter()
             final.appendPagesFromReader(PdfFileReader(str(output_pdf), "rb"))
             if self.attach_xml:
-                final.addAttachment("drawing.drawio", composite_xml.encode("utf-8"))
+                final.addAttachment(self.attachment_name, composite_xml.encode("utf-8"))
             with final_pdf.open("wb") as fpt:
                 final.write(fpt)
             return b64encode(final_pdf.read_bytes()).decode("utf-8")
@@ -354,3 +376,16 @@ class IPyDrawioExportManager(LoggingConfigurable):
         port = sock.getsockname()[1]
         sock.close()
         return port
+
+    def attachments(self, pdf_path):
+        """iterate over the name, attachment pairs in the PDF"""
+        reader = PdfFileReader(str(pdf_path), "rb")
+        attachments = []
+        try:
+            attachments = reader.trailer["/Root"]["/Names"]["/EmbeddedFiles"]["/Names"]
+        except KeyError:
+            pass
+        for i, name in enumerate(attachments, 1):
+            if not isinstance(name, str):
+                continue
+            yield name, attachments[i].getObject()["/EF"]["/F"].getData()
