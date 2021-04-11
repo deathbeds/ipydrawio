@@ -13,6 +13,10 @@ doit("list", "--all", "--status")
 SETTINGS = Path(sys.prefix) / "share/jupyter/lab/settings"
 SETTINGS.mkdir(parents=True, exist_ok=True)
 
-shutil.copy2(Path(".binder/overrides.json"), SETTINGS / "overrides.json")
+shutil.copy2(".binder/overrides.json", SETTINGS / "overrides.json")
+shutil.copy2(
+    ".binder/jupyter_notebook_config.json",
+    "jupyter_notebook_config.json"
+)
 
 sys.exit(doit())

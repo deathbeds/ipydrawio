@@ -58,3 +58,24 @@ doit dist
 ```
 
 - validate everything looks good!
+
+## Releasing
+
+- [ ] start a release issue with a checklist (maybe like this one)
+- [ ] ensure the versions have been bumped (check with `doit test:integrity`)
+- [ ] validate on binder
+- [ ] wait for a successful build of `master`
+- [ ] download the `dist` archive and unpack somewhere (maybe a fresh `dist`)
+- [ ] actually upload
+  ```bash
+  export VERSION=<the next version>
+  cd dist
+  twine upload ipydrawio*
+  npm login
+  npm publish deathbeds-ipydrawio-$VERSION.tgz
+  npm publish deathbeds-ipydrawio-notebook-$VERSION.tgz
+  npm publish deathbeds-ipydrawio-pdf-$VERSION.tgz
+  npm publish deathbeds-ipydrawio-webpack-$VERSION.tgz
+  npm logout
+  ```
+- [ ] handle `conda-forge` feedstock tasks

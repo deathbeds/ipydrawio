@@ -192,6 +192,7 @@ ALL_PY = [
     *SCRIPTS.glob("*.py"),
     *sum(JS_PY_SCRIPTS.values(), []),
     *sum(PY_SRC.values(), []),
+    *BINDER.glob("*.py"),
     DODO,
 ]
 ALL_YML = [*ROOT.glob("*.yml"), *CI.rglob("*.yml"), *BINDER.glob("*.yml")]
@@ -200,6 +201,7 @@ ALL_JSON = [
     *PACKAGES.glob("*/*.json"),
     *PACKAGES.glob("*/schema/*.json"),
     *ATEST.glob("fixtures/*.json"),
+    *BINDER.glob("*.json"),
 ]
 ALL_MD = [
     *ROOT.glob("*.md"),
