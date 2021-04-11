@@ -298,4 +298,6 @@ Launch Untitled Diagram
     Click Element    ${XP LAUNCH TAB}
     Wait Until Element is Enabled    ${CSS LAUNCH DIO}
     Click Element    ${CSS LAUNCH DIO}
-    Wait Until Element is Visible    ${CSS DIO IFRAME}
+    Sleep    1s
+    Unselect Frame
+    Wait Until Element is Visible    ${CSS DIO IFRAME}    timeout=20s

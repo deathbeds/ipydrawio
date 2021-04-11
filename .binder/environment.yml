@@ -34,12 +34,15 @@ dependencies:
   - networkx
   - pygraphviz
   - python-graphviz
+  - segno
   - shapely
   - tabulate
   - wxyz_datagrid
   - wxyz_json_schema_form
   - wxyz_lab
   - wxyz_svg
+  # TODO: get on conda-forge
+  # - qrcode-artistic
 
   ### ipydrawio-dev-deps ###
 
