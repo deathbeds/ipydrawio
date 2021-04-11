@@ -5,7 +5,6 @@
 import json
 import os
 import platform
-import re
 import shutil
 import sys
 from pathlib import Path
@@ -157,26 +156,29 @@ PY_PACKAGES = ROOT / "py_packages"
 PY_SETUP = {p.parent.name: p for p in (ROOT / "py_packages").glob("*/setup.py")}
 PY_SRC = {k: sorted((v.parent / "src").rglob("*.py")) for k, v in PY_SETUP.items()}
 PY_SETUP_CFG = {k: v.parent / "setup.cfg" for k, v in PY_SETUP.items()}
+
 PY_VERSION = {
-    k: re.findall(
-        r"""__version__ = "([^"]+)""",
-        [vv for vv in v if vv.name == "_version.py"][0].read_text(),
-    )[0]
-    for k, v in PY_SRC.items()
+    "ipydrawio": JS_PKG_DATA["ipydrawio"]["version"],
+    "ipydrawio-export": JS_PKG_DATA["ipydrawio-pdf"]["version"],
 }
 
 IPD = PY_SETUP["ipydrawio"].parent
 IPDE = PY_SETUP["ipydrawio-export"].parent
 
+IPD_VERSION = PY_VERSION["ipydrawio"]
+IPDE_VERSION = PY_VERSION["ipydrawio-export"]
+
 PY_SDIST = {
-    IPDE.name: IPDE / "dist" / f"{IPDE.name}-1.0.0.tar.gz",
-    IPD.name: IPD / "dist" / f"{IPD.name}-1.0.0.tar.gz",
+    IPDE.name: IPDE / "dist" / f"{IPDE.name}-{IPDE_VERSION}.tar.gz",
+    IPD.name: IPD / "dist" / f"{IPD.name}-{IPD_VERSION}.tar.gz",
 }
 PY_WHEEL = {
     IPDE.name: IPDE
     / "dist"
-    / f"""{IPDE.name.replace("-", "_")}-1.0.0-py3-none-any.whl""",
-    IPD.name: IPD / "dist" / f"""{IPD.name.replace("-", "_")}-1.0.0-py3-none-any.whl""",
+    / f"""{IPDE.name.replace("-", "_")}-{IPDE_VERSION}-py3-none-any.whl""",
+    IPD.name: IPD
+    / "dist"
+    / f"""{IPD.name.replace("-", "_")}-{IPD_VERSION}-py3-none-any.whl""",
 }
 PY_TEST_DEP = {}
 

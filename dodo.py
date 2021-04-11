@@ -160,6 +160,7 @@ def task_setup():
                             [
                                 *P.LAB_EXT,
                                 "develop",
+                                "--debug",
                                 "--overwrite",
                                 ".",
                             ],
