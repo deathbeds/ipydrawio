@@ -2,12 +2,17 @@
 from pathlib import Path
 import subprocess
 import sys
+import shutil
 
-LAB_EXT = ["jupyter", "labextension"]
+doit = lambda *args: subprocess.call(["doit", *args])
 
-subprocess.call([*LAB_EXT, "uninstall", "--no-build", "jupyter-offlinenotebook"])
+doit("list", "--all", "--status")
+doit("-n4")
+doit("list", "--all", "--status")
 
-subprocess.call(["doit", "list", "--all", "--status"])
-subprocess.call(["doit", "-n4"])
-subprocess.call(["doit", "list", "--all", "--status"])
-sys.exit(subprocess.call(["doit"]))
+SETTINGS = Path(sys.prefix) / "share/jupyter/lab/settings"
+SETTINGS.mkdir(parents=True, exist_ok=True)
+
+shutil.copy2(Path(".binder/overrides.json"), SETTINGS / "overrides.json")
+
+sys.exit(doit())
