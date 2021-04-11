@@ -78,11 +78,11 @@ class ProvisionApp(ManagedApp):
             print(str(Path(self.drawio_manager.drawio_export_workdir).resolve()))
             self.stop()
             return
-
-        try:
-            await self.drawio_manager.provision(force=True)
-        finally:
-            self.stop()
+        else:  # pragma: no cover
+            try:
+                await self.drawio_manager.provision(force=True)
+            finally:
+                self.stop()
 
 
 class PDFApp(ManagedApp):

@@ -42,14 +42,6 @@ def export_app(tmp_path):
 
 
 @pytest.fixture
-def provision_app(tmp_path):
-    app = ProvisionApp()
-    app.drawio_manager.drawio_export_workdir = str(tmp_path)
-    yield app
-    app.drawio_manager.stop_server()
-
-
-@pytest.fixture
 def empty_dio(tmp_path):
     src = FIXTURES / "empty.dio"
     dest = tmp_path / src.name
