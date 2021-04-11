@@ -17,7 +17,7 @@ Use Dark Theme
     [Documentation]    Does the dark theme work?
     Validate a Diagram Theme    dark
 
-Use Kenedy Theme
+Use Kennedy Theme
     [Documentation]    Does the kennedy theme work?
     Validate a Diagram Theme    kennedy
 
