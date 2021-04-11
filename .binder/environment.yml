@@ -5,40 +5,6 @@ channels:
   - nodefaults
 
 dependencies:
-  - ipywidgets >=7.6
-  - jupyterlab >=3.0.13,<4.0.0a0
-  - jupyterlab_widgets >=1
-  - lxml
-  - networkx
-  - nodejs >=12,!=13.*,<15
-  - pandas
-  - pillow
-  - pypdf2
-  - shapely
-  - tabulate
-  # linting and testing
-  - babel
-  - black
-  - doit
-  - flake8
-  - httpx
-  - isort <5
-  - json-e
-  - pyflakes
-  - pytest
-  - pytest-console-scripts
-  - pytest-cov
-  - pytest-tornasync
-  - requests_cache
-  - robotframework >=4
-  - robotframework-lint
-  - robotframework-jupyterlibrary
-  - robotframework-pabot
-  # python cruft
-  - python >=3.8,<3.9.0a0
-  - pip
-  - twine
-  - wheel
   # demo toys
   - bqplot
   - graphviz2drawio
@@ -49,13 +15,53 @@ dependencies:
   - jupyterlab-tour
   - matplotlib-base
   - nbgitpuller
+  - networkx
   - pygraphviz
   - python-graphviz
+  - shapely
+  - tabulate
   - wxyz_datagrid
   - wxyz_json_schema_form
   - wxyz_lab
   - wxyz_svg
-  # for ipython
+
+  ### ipydrawio-dev-deps ###
+
+  # core
+  - doit
+  - nodejs >=12,!=13.*,<15
+  - python # this gets patched in ci
+  # run
+  - ipywidgets >=7.6
   - jedi <0.18.0
-  # binder pins
-  - jupyter_telemetry >=0.1.0 # ick, but fails pip check
+  - jupyterlab >=3.0.13,<4.0.0a0
+  - jupyterlab_widgets >=1
+  - lxml
+  - pillow
+  - pypdf2
+  - requests_cache
+  # building
+  - pip
+  - twine
+  - wheel
+  # linting
+  - black
+  - flake8
+  - isort >=5
+  - pyflakes
+  - robotframework-lint
+  # unit testing
+  - pytest
+  - pytest-console-scripts
+  - pytest-cov
+  - pytest-tornasync
+  # acceptance testing
+  - firefox =78
+  - geckodriver >=0.28.0
+  - robotframework >=4
+  - robotframework-pabot
+  - robotframework-seleniumlibrary
+  # reporting
+  - codecov
+
+  ### ipydrawio-dev-deps ###

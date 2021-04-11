@@ -56,6 +56,23 @@ def task_dist():
     )
 
 
+def task_env():
+    def _update_binder():
+        comment = "  ### ipydrawio-dev-deps ###"
+        old_binder = P.ENV_BINDER.read_text(encoding="utf-8").split(comment)
+        ci = P.ENV_CI.read_text(encoding="utf-8").split(comment)
+        P.ENV_BINDER.write_text(
+            "\n".join([old_binder[0], comment, ci[1], comment, old_binder[2]])
+        )
+
+    yield dict(
+        name="binder",
+        file_dep=[P.ENV_CI],
+        actions=[_update_binder],
+        targets=[P.ENV_BINDER],
+    )
+
+
 def task_submodules():
     """ensure submodules are available"""
     subs = subprocess.check_output(["git", "submodule"]).decode("utf-8").splitlines()

@@ -1,36 +1,48 @@
-name: ipydrawio
+# a sufficient environment for acceptance testing
+name: ipydrawio-dev
 
 channels:
   - conda-forge
   - nodefaults
 
 dependencies:
-  - black
-  - codecov
+  ### ipydrawio-dev-deps ###
+
+  # core
   - doit
-  - firefox =78
-  - flake8
-  - geckodriver >=0.28.0
+  - nodejs >=12,!=13.*,<15
+  - python # this gets patched in ci
+  # run
   - ipywidgets >=7.6
-  - isort >=5
   - jedi <0.18.0
   - jupyterlab >=3.0.13,<4.0.0a0
   - jupyterlab_widgets >=1
   - lxml
-  - nodejs >=12,!=13.*,<15
   - pillow
-  - pip
-  - pyflakes
   - pypdf2
+  - requests_cache
+  # building
+  - pip
+  - twine
+  - wheel
+  # linting
+  - black
+  - flake8
+  - isort >=5
+  - pyflakes
+  - robotframework-lint
+  # unit testing
   - pytest
   - pytest-console-scripts
   - pytest-cov
   - pytest-tornasync
-  - python
-  - requests_cache
+  # acceptance testing
+  - firefox =78
+  - geckodriver >=0.28.0
   - robotframework >=4
-  - robotframework-lint
   - robotframework-pabot
   - robotframework-seleniumlibrary
-  - twine
-  - wheel
+  # reporting
+  - codecov
+
+  ### ipydrawio-dev-deps ###

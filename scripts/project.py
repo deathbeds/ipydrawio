@@ -35,6 +35,7 @@ PY_MAJOR = "".join(map(str, sys.version_info[:2]))
 # demo
 BINDER = ROOT / ".binder"
 OVERRIDES = BINDER / "overrides.json"
+ENV_BINDER = BINDER / "environment.yml"
 
 # top-level stuff
 NODE_MODULES = ROOT / "node_modules"
@@ -42,13 +43,16 @@ PACKAGE = ROOT / "package.json"
 PACKAGES = ROOT / "packages"
 YARN_INTEGRITY = NODE_MODULES / ".yarn-integrity"
 YARN_LOCK = ROOT / "yarn.lock"
-CI = ROOT / ".github"
 DODO = ROOT / "dodo.py"
 BUILD = ROOT / "build"
 DIST = ROOT / "dist"
 README = ROOT / "README.md"
 CHANGELOG = ROOT / "CHANGELOG.md"
 SETUP_CFG = ROOT / "setup.cfg"
+
+# ci
+CI = ROOT / ".github"
+ENV_CI = CI / "environment.yml"
 
 # tools
 PY = ["python"]
