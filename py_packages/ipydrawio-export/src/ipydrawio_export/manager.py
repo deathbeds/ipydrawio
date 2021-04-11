@@ -317,7 +317,7 @@ class IPyDrawioExportManager(LoggingConfigurable):
         return self.drawio_export_node_modules / ".yarn-integrity"
 
     @run_on_executor
-    def provision(self, force=False):
+    def provision(self, force=False):  # pragma: no cover
         self.is_provisioning = True
         if not self.drawio_export_app.exists():
             if not self.drawio_export_app.parent.exists():
