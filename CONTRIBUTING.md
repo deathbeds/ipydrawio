@@ -20,9 +20,11 @@
 - Get [Miniforge/Mambaforge](https://github.com/conda-forge/miniforge/releases)
 
 ```bash
-mamba env update --file environment.yml
+mamba env update --file .github/environment.yml
 source activate ipydrawio
 ```
+
+> or use the demo environment in `.binder`
 
 ## Get to a working Lab
 
