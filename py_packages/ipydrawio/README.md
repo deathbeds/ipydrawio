@@ -36,13 +36,6 @@ pip install ipydrawio ipydrawio-export
     - > _BEWARE: some **heavy**, maybe fragile dependencies_
     - optionally include editable Drawio XML as a PDF attachment
 
-[documents]:
-  https://github.com/deathbeds/ipydrawio/blob/master/docs/Diagram%20Document.ipynb
-[rich display]:
-  https://github.com/deathbeds/ipydrawio/blob/master/docs/Diagram%20Rich%20Display.ipynb
-[widgets]:
-  https://github.com/deathbeds/ipydrawio/blob/master/docs/Diagram%20Widgets.ipynb
-
 ## Examples
 
 |                                                        Note | Screenshot/Example               |
@@ -50,13 +43,6 @@ pip install ipydrawio ipydrawio-export
 |       Screenshot of drawio "minimal" UI with export options | [![poster-min]][poster-min]      |
 |    The beginning of an interactive computational **poster** | [![poster][]][poster]            |
 | A mixed computational/creative **roadmap** for this project | [~~Screenshot Needed~~][roadmap] |
-
-[poster-min]:
-  https://raw.githubusercontent.com/deathbeds/ipydrawio/master/docs/_static/images/poster.png
-[poster]:
-  https://raw.githubusercontent.com/deathbeds/ipydrawio/master/docs/Poster.dio.svg
-[roadmap]:
-  https://nbviewer.jupyter.org/github/deathbeds/ipydrawio/blob/master/docs/ROADMAP.dio.ipynb
 
 ## Usage
 
@@ -74,12 +60,6 @@ pip install ipydrawio ipydrawio-export
     > please see _Diagram_ options available in the _Command Palette_ and
     > various _Main Menu_ menus.
 
-[command palette]:
-  https://jupyterlab.readthedocs.io/en/stable/user/commands.html?highlight=command%20palette
-[launcher]:
-  https://jupyterlab.readthedocs.io/en/stable/user/files.html?highlight=Launcher#creating-files-and-activities
-[file manager]: https://jupyterlab.readthedocs.io/en/stable/user/files.html
-
 ### PDF: Lab and Server extensions
 
 `ipydrawio-export` can generate print-quality PDF. This approach relies on a
@@ -95,10 +75,6 @@ headless browser, powered by [@jgraph/draw-image-export2] and ultimately
     - _we'll figure out a better approach soon enough_
 - `pip install ipydrawio-export`
 
-[puppeteer]: https://github.com/puppeteer/puppeteer
-[@jgraph/draw-image-export2]: https://github.com/jgraph/draw-image-export2
-[apt-txt]: https://github.com/deathbeds/ipydrawio/blob/master/.binder/apt.txt
-
 > For example:
 >
 > ```bash
@@ -112,8 +88,6 @@ headless browser, powered by [@jgraph/draw-image-export2] and ultimately
 
 All files herein, unless otherwise noted, are free software licensed under
 [Apache 2.0].
-
-[apache 2.0]: https://github.com/deathbeds/ipydrawio/blob/master/LICENSE.txt
 
 ### Copyright
 
@@ -131,6 +105,7 @@ The original source code vendored in this package from:
 - [@jgraph/drawio][]
 - [@jgraph/draw-image-export2][]
 
+[apache 2.0]: https://github.com/deathbeds/ipydrawio/blob/master/LICENSE.txt
 [@jgraph/drawio]: https://github.com/jgraph/drawio
 [@jgraph/draw-image-export2]: https://github.com/jgraph/draw-image-export2
 [jupyterlab]: https://github.com/jupyterlab/jupyterlab
@@ -156,3 +131,23 @@ The original source code vendored in this package from:
 [cov]: https://codecov.io/gh/deathbeds/ipydrawio
 [contributing]:
   https://github.com/deathbeds/ipydrawio/blob/master/CONTRIBUTING.md
+[documents]:
+  https://github.com/deathbeds/ipydrawio/blob/master/docs/Diagram%20Document.ipynb
+[rich display]:
+  https://github.com/deathbeds/ipydrawio/blob/master/docs/Diagram%20Rich%20Display.ipynb
+[widgets]:
+  https://github.com/deathbeds/ipydrawio/blob/master/docs/Diagram%20Widgets.ipynb
+[puppeteer]: https://github.com/puppeteer/puppeteer
+[@jgraph/draw-image-export2]: https://github.com/jgraph/draw-image-export2
+[apt-txt]: https://github.com/deathbeds/ipydrawio/blob/master/.binder/apt.txt
+[poster-min]:
+  https://raw.githubusercontent.com/deathbeds/ipydrawio/master/docs/_static/images/poster.png
+[poster]:
+  https://raw.githubusercontent.com/deathbeds/ipydrawio/master/docs/Poster.dio.svg
+[roadmap]:
+  https://nbviewer.jupyter.org/github/deathbeds/ipydrawio/blob/master/docs/ROADMAP.dio.ipynb
+[command palette]:
+  https://jupyterlab.readthedocs.io/en/stable/user/commands.html?highlight=command%20palette
+[launcher]:
+  https://jupyterlab.readthedocs.io/en/stable/user/files.html?highlight=Launcher#creating-files-and-activities
+[file manager]: https://jupyterlab.readthedocs.io/en/stable/user/files.html

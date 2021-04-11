@@ -19,5 +19,7 @@ dist/
 envs/
 htmlcov/
 node_modules/
+py_packages/ipydrawio-export/ipydrawio-export-*
+py_packages/ipydrawio/ipydrawio-*
 untitled*
 Untitled*
