@@ -140,7 +140,7 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-${{ matrix.python-version }}-${{ hashFiles('environment.yml') }}
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-${{ matrix.python-version }}-${{ hashFiles('.github/environment.yml') }}
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-${{ matrix.python-version }}-
 
@@ -151,7 +151,7 @@ jobs:
           miniforge-variant: Mambaforge
           miniforge-version: latest
           python-version: ${{ matrix.python-version }}
-          environment-file: environment.yml
+          environment-file: .github/environment.yml
           use-only-tar-bz2: true
           use-mamba: true
 
