@@ -30,8 +30,11 @@ ATEST_PROCS = int(os.environ.get("ATEST_PROCS", "4"))
 # find root
 SCRIPTS = Path(__file__).parent.resolve()
 ROOT = SCRIPTS.parent
-BINDER = ROOT / ".binder"
 PY_MAJOR = "".join(map(str, sys.version_info[:2]))
+
+# demo
+BINDER = ROOT / ".binder"
+OVERRIDES = BINDER / "overrides.json"
 
 # top-level stuff
 NODE_MODULES = ROOT / "node_modules"
@@ -39,13 +42,13 @@ PACKAGE = ROOT / "package.json"
 PACKAGES = ROOT / "packages"
 YARN_INTEGRITY = NODE_MODULES / ".yarn-integrity"
 YARN_LOCK = ROOT / "yarn.lock"
-OVERRIDES = ROOT / "overrides.json"
 CI = ROOT / ".github"
 DODO = ROOT / "dodo.py"
 BUILD = ROOT / "build"
 DIST = ROOT / "dist"
 README = ROOT / "README.md"
 CHANGELOG = ROOT / "CHANGELOG.md"
+SETUP_CFG = ROOT / "setup.cfg"
 
 # tools
 PY = ["python"]
