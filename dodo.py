@@ -240,7 +240,13 @@ if not P.TESTING_IN_CI:
         yield _ok(
             dict(
                 name="eslint",
-                file_dep=[P.YARN_INTEGRITY, *P.ALL_TS, P.OK_PRETTIER, P.ESLINTRC],
+                file_dep=[
+                    P.YARN_INTEGRITY,
+                    *P.ALL_TS,
+                    P.OK_PRETTIER,
+                    P.ESLINTRC,
+                    P.TSCONFIGBASE,
+                ],
                 actions=[["jlpm", "eslint"]],
             ),
             P.OK_ESLINT,

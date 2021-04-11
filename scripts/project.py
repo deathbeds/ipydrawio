@@ -81,6 +81,7 @@ ATEST_OUT_XML = "output.xml"
 # js packages
 JS_NS = "deathbeds"
 IPYDIO = PACKAGES / "ipydrawio"
+TSCONFIGBASE = PACKAGES / "tsconfigbase.json"
 
 # so many js packages
 JS_PKG_JSON = {p.parent.name: p for p in PACKAGES.glob("*/package.json")}
@@ -208,11 +209,12 @@ ALL_MD = [
     *PACKAGES.glob("*/*.md"),
     *NOT_LABEXTENSIONS(PY_PACKAGES.glob("*/*.md")),
 ]
+ALL_JS = [PACKAGES / ".eslintrc.js"]
 ALL_TS = sum(JS_TSSRC.values(), [])
 ALL_CSS = sum(JS_STYLE.values(), [])
 ALL_ROBOT = [*ATEST.rglob("*.robot")]
-ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS, *ALL_CSS]
-ESLINTRC = ROOT / ".eslintrc.js"
+ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS, *ALL_CSS, *ALL_JS]
+ESLINTRC = PACKAGES / ".eslintrc.js"
 
 RFLINT_OPTS = sum(
     [

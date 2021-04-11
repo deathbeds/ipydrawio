@@ -1,0 +1,9 @@
+.eslintrc.js
+_meta/lib/**
+ipydrawio-notebook/lib/**
+ipydrawio-pdf/lib/**
+ipydrawio-webpack/drawio/**
+ipydrawio/lib/**
+**/node_modules/**
+**/drawio/**
+**/lib/**

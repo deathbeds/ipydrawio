@@ -18,8 +18,8 @@
   },
   "scripts": {
     "bootstrap": "jlpm --prefer-offline && lerna bootstrap",
-    "eslint": "eslint --ext .js,.ts,.tsx --fix packages",
-    "eslint:check": "eslint --ext .js,.ts,.tsx packages"
+    "eslint": "cd packages && eslint --ext .js,.ts,.tsx --fix .",
+    "eslint:check": "cd packages && eslint --ext .js,.ts,.tsx ."
   },
   "workspaces": [
     "packages/*"

@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfigbase",
+  "include": [
+    "**/*"
+  ]
+}
