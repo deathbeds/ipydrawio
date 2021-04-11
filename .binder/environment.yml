@@ -46,12 +46,15 @@ dependencies:
   - jupyter-videochat
   - jupyterlab-classic
   - jupyterlab-lsp
+  - jupyterlab-tour
   - matplotlib-base
   - nbgitpuller
   - pygraphviz
   - python-graphviz
   - wxyz_datagrid
+  - wxyz_json_schema_form
   - wxyz_lab
+  - wxyz_svg
   # for ipython
   - jedi <0.18.0
   # binder pins
