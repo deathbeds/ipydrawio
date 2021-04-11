@@ -5,19 +5,19 @@ Library           OperatingSystem
 Force Tags        component:settings
 
 *** Test Cases ***
-Use Min Theme
+Min
     [Documentation]    Does the min theme work?
     Validate a Diagram Theme    min
 
-Use Atlas Theme
+Atlas
     [Documentation]    Does the atlas theme work?
     Validate a Diagram Theme    atlas
 
-Use Dark Theme
+Dark
     [Documentation]    Does the dark theme work?
     Validate a Diagram Theme    dark
 
-Use Kennedy Theme
+Kennedy
     [Documentation]    Does the kennedy theme work?
     Validate a Diagram Theme    kennedy
 
@@ -25,7 +25,7 @@ Use Kennedy Theme
 Validate a Diagram Theme
     [Arguments]    ${ui}
     [Documentation]    Change the theme
-    Set Tags    settings:urlParams:ui    settings:urlParams:ui:${ui}
+    Set Tags    settings:urlparams:ui    settings:urlparams:ui:${ui}
     Set Screenshot Directory    ${OUTPUT DIR}${/}settings${/}ui${/}${ui}
     Reset Plugin Settings
     Launch Untitled Diagram
