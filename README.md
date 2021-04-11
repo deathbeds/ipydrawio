@@ -1,40 +1,18 @@
 # IPyDrawio
 
+[![binder-badge][]][binder] [![install from pypi][pypi-badge]][pypi]
+[![reuse from npm][npm-badge]][npm] [![build][workflow-badge]][workflow]
+[![coverage][cov-badge]][cov]
+
 > [Drawio][] diagrams for [JupyterLab][]. Forked with ❤️ from
 > [QuantStack/jupyterlab-drawio][].
 
----
-
 **[Install](#installation)** &middot; **[History]** &middot; **[Roadmap]**
-&middot; **[Contribute](./CONTRIBUTING.md)** &middot;
-**[Open Source](#open-source)**
-
-[![install from pypi][pypi-badge]][pypi] [![reuse from npm][npm-badge]][npm]
-[![build][workflow-badge]][workflow] [![coverage][cov-badge]][cov]
-
----
+&middot; **[Contribute][contributing]** &middot; **[Open Source](#open-source)**
 
 > > This is BETA software. Native drawio files created with these tools _should_
 > > work with any other [drawio][] client, but any UI/API is liable to change at
 > > any time.
-
-[history]: https://github.com/deathbeds/ipydrawio/blob/master/CHANGELOG.md
-[binder]:
-  http://mybinder.org/v2/gh/deathbeds/ipydrawio/master?urlpath=lab/tree/docs/Poster.dio.svg
-[binder-badge]: https://mybinder.org/badge_logo.svg
-[workflow-badge]:
-  https://github.com/deathbeds/ipydrawio/workflows/.github/workflows/ci.yml/badge.svg
-[workflow]:
-  https://github.com/deathbeds/ipydrawio/actions?query=branch%3Amaster+workflow%3A.github%2Fworkflows%2Fci.yml
-[roadmap]:
-  https://github.com/deathbeds/ipydrawio/blob/master/docs/ROADMAP.dio.ipynb
-[npm]: https://npmjs.com/package/@deathbeds/ipydrawio
-[pypi-badge]: https://img.shields.io/pypi/v/ipydrawio
-[pypi]: https://pypi.org/project/ipydrawio/
-[npm-badge]: https://img.shields.io/npm/v/@deathbeds/ipydrawio
-[cov-badge]:
-  https://codecov.io/gh/deathbeds/ipydrawio/branch/master/graph/badge.svg?token=9B74VKHQDK
-[cov]: https://codecov.io/gh/deathbeds/ipydrawio
 
 ## Installation
 
@@ -56,7 +34,7 @@ pip install ipydrawio ipydrawio-export
 - `ipydrawio-export`
   - Export print-quality PDF from diagrams
     - > _BEWARE: some **heavy**, maybe fragile dependencies_
-    - include editable Drawio metadata
+    - optionally include editable Drawio XML as a PDF attachment
 
 [documents]:
   https://github.com/deathbeds/ipydrawio/blob/master/docs/Diagram%20Document.ipynb
@@ -67,17 +45,18 @@ pip install ipydrawio ipydrawio-export
 
 ## Examples
 
-|                                                                        Note | Screenshot/Example                               |
-| --------------------------------------------------------------------------: | :----------------------------------------------- |
-| A Binder **demo** with a full [contributing](./CONTRIBUTING.md) environment | [![binder-badge][]][binder]                      |
-|                       Screenshot of drawio "minimal" UI with export options | [![poster-min]][poster-min]                      |
-|                    The beginning of an interactive computational **poster** | [![poster][]][poster]                            |
-|                 A mixed computational/creative **roadmap** for this project | [~~Screenshot Needed~](./docs/ROADMAP.dio.ipynb) |
+|                                                        Note | Screenshot/Example               |
+| ----------------------------------------------------------: | :------------------------------- |
+|       Screenshot of drawio "minimal" UI with export options | [![poster-min]][poster-min]      |
+|    The beginning of an interactive computational **poster** | [![poster][]][poster]            |
+| A mixed computational/creative **roadmap** for this project | [~~Screenshot Needed~~][roadmap] |
 
 [poster-min]:
   https://raw.githubusercontent.com/deathbeds/ipydrawio/master/docs/_static/images/poster.png
 [poster]:
   https://raw.githubusercontent.com/deathbeds/ipydrawio/master/docs/Poster.dio.svg
+[roadmap]:
+  https://nbviewer.jupyter.org/github/deathbeds/ipydrawio/blob/master/docs/ROADMAP.dio.ipynb
 
 ## Usage
 
@@ -93,7 +72,7 @@ pip install ipydrawio ipydrawio-export
   - > **NOTE**: some of the built-in UI features of drawio don't work properly
     > inside an IFrame in JupyterLab, and are difficult to robustly disable:
     > please see _Diagram_ options available in the _Command Palette_ and
-    > various _Main Menu_ manus.
+    > various _Main Menu_ menus.
 
 [command palette]:
   https://jupyterlab.readthedocs.io/en/stable/user/commands.html?highlight=command%20palette
@@ -109,7 +88,7 @@ headless browser, powered by [@jgraph/draw-image-export2] and ultimately
 
 - **native dependencies** as required to appease `puppeteer`
   - if running in `docker`, this can be a bit trial-and-error
-  - for more, see the [binder][apt-txt] and ~~CI~~.
+  - for more, see the [binder][apt-txt] and CI.
 - `nodejs>10,<14` from `conda` or your system package manager
   - **NOTE**: this relies on being able to install `puppeteer` (and other
     **arbitrary dependencies** with `jlpm` for now **when first used**
@@ -118,7 +97,7 @@ headless browser, powered by [@jgraph/draw-image-export2] and ultimately
 
 [puppeteer]: https://github.com/puppeteer/puppeteer
 [@jgraph/draw-image-export2]: https://github.com/jgraph/draw-image-export2
-[apt-txt]: https://github.com/deathbeds/ipydrawio/blob/master/binder/apt.txt
+[apt-txt]: https://github.com/deathbeds/ipydrawio/blob/master/.binder/apt.txt
 
 > For example:
 >
@@ -154,8 +133,26 @@ The original source code vendored in this package from:
 
 [@jgraph/drawio]: https://github.com/jgraph/drawio
 [@jgraph/draw-image-export2]: https://github.com/jgraph/draw-image-export2
-[contributing.md]: ./CONTRIBUTING.md
 [jupyterlab]: https://github.com/jupyterlab/jupyterlab
 [drawio]: https://www.diagrams.net
 [quantstack/jupyterlab-drawio]: https://github.com/QuantStack/jupyterlab-drawio
 [contributors]: https://github.com/deathbeds/ipydrawio/graphs/contributors
+[history]: https://github.com/deathbeds/ipydrawio/blob/master/CHANGELOG.md
+[binder]:
+  http://mybinder.org/v2/gh/deathbeds/ipydrawio/master?urlpath=lab/tree/docs/Poster.dio.svg
+[binder-badge]: https://mybinder.org/badge_logo.svg
+[workflow-badge]:
+  https://github.com/deathbeds/ipydrawio/workflows/.github/workflows/ci.yml/badge.svg
+[workflow]:
+  https://github.com/deathbeds/ipydrawio/actions?query=branch%3Amaster+workflow%3A.github%2Fworkflows%2Fci.yml
+[roadmap]:
+  https://github.com/deathbeds/ipydrawio/blob/master/docs/ROADMAP.dio.ipynb
+[npm]: https://npmjs.com/package/@deathbeds/ipydrawio
+[pypi-badge]: https://img.shields.io/pypi/v/ipydrawio
+[pypi]: https://pypi.org/project/ipydrawio/
+[npm-badge]: https://img.shields.io/npm/v/@deathbeds/ipydrawio
+[cov-badge]:
+  https://codecov.io/gh/deathbeds/ipydrawio/branch/master/graph/badge.svg?token=9B74VKHQDK
+[cov]: https://codecov.io/gh/deathbeds/ipydrawio
+[contributing]:
+  https://github.com/deathbeds/ipydrawio/blob/master/CONTRIBUTING.md

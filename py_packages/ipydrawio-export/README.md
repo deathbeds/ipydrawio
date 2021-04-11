@@ -1,25 +1,11 @@
 # IPyDrawio Export
 
+[![binder-badge][]][binder] [![install from pypi][pypi-badge]][pypi]
+[![build][workflow-badge]][workflow] [![coverage][cov-badge]][cov]
+
 > PDF export of [drawio](https://www.diagrams.net) diagrams for JupyterLab.
 
----
-
-[![install from pypi][pypi-badge]][pypi] [![build][workflow-badge]][workflow]
-[![coverage][cov-badge]][cov]
-
-[pypi-badge]: https://img.shields.io/pypi/v/ipydrawio-export
-[pypi]: https://pypi.org/project/ipydrawio-export
-[workflow-badge]:
-  https://github.com/deathbeds/ipydrawio/workflows/.github/workflows/ci.yml/badge.svg
-[workflow]:
-  https://github.com/deathbeds/ipydrawio/actions?query=branch%3Amaster+workflow%3A.github%2Fworkflows%2Fci.yml
-[cov-badge]:
-  https://codecov.io/gh/deathbeds/ipydrawio/branch/master/graph/badge.svg?token=9B74VKHQDK
-[cov]: https://codecov.io/gh/deathbeds/ipydrawio
-
----
-
-See the [project repo](https://github.com/deathbeds/ipydrawio) for more
+See the [main project repo](https://github.com/deathbeds/ipydrawio) for more
 information.
 
 ## Installation
@@ -104,3 +90,15 @@ The vendored code from [@jgraph/draw-image-export2][] is also licensed under the
   https://github.com/jgraph/draw-image-export2/blob/master/LICENSE
 [serverext]:
   https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/Distributing%20Jupyter%20Extensions%20as%20Python%20Packages.html
+[binder]:
+  http://mybinder.org/v2/gh/deathbeds/ipydrawio/master?urlpath=lab/tree/docs/Poster.dio.svg
+[binder-badge]: https://mybinder.org/badge_logo.svg
+[pypi-badge]: https://img.shields.io/pypi/v/ipydrawio-export
+[pypi]: https://pypi.org/project/ipydrawio-export
+[workflow-badge]:
+  https://github.com/deathbeds/ipydrawio/workflows/.github/workflows/ci.yml/badge.svg
+[workflow]:
+  https://github.com/deathbeds/ipydrawio/actions?query=branch%3Amaster+workflow%3A.github%2Fworkflows%2Fci.yml
+[cov-badge]:
+  https://codecov.io/gh/deathbeds/ipydrawio/branch/master/graph/badge.svg?token=9B74VKHQDK
+[cov]: https://codecov.io/gh/deathbeds/ipydrawio
