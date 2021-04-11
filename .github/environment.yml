@@ -17,7 +17,7 @@ dependencies:
   - jupyterlab >=3.0.13,<4.0.0a0
   - jupyterlab_widgets >=1
   - lxml
-  - nodejs >=12,<13.0.0a0
+  - nodejs >=12,!=13.*,<15
   - pillow
   - pip
   - pyflakes

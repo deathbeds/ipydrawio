@@ -1,4 +1,4 @@
-name: ipydrawio
+name: ipydrawio-demo
 
 channels:
   - conda-forge
@@ -10,7 +10,7 @@ dependencies:
   - jupyterlab_widgets >=1
   - lxml
   - networkx
-  - nodejs >=12,<13.0.0a0
+  - nodejs >=12,!=13.*,<15
   - pandas
   - pillow
   - pypdf2
