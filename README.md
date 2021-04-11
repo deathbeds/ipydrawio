@@ -60,11 +60,17 @@ pip install ipydrawio ipydrawio-export
     > please see _Diagram_ options available in the _Command Palette_ and
     > various _Main Menu_ menus.
 
+## Configuring
+
+- Change the _Diagram Theme_ from the _Settings_
+
+> Use _Advanced Settings_ to modify drawio embedding parameters
+
 ### PDF: Lab and Server extensions
 
 `ipydrawio-export` can generate print-quality PDF. This approach relies on a
-headless browser, powered by [@jgraph/draw-image-export2] and ultimately
-`puppeteer` which in turn requires `nodejs`.
+headless browser, powered by [@jgraph/draw-image-export2], `puppeteer`, and
+`nodejs`.
 
 - **native dependencies** as required to appease `puppeteer`
   - if running in `docker`, this can be a bit trial-and-error
