@@ -1,4 +1,4 @@
-[submodule "src/drawio"]
+[submodule "packages/ipydrawio-webpack/drawio"]
 	path = packages/ipydrawio-webpack/drawio
 	url = https://github.com/jgraph/drawio.git
 [submodule "py_packages/jupyter-drawio-export/src/jupyter_drawio_export/vendor/draw-image-export2"]
