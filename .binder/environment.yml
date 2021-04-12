@@ -43,9 +43,7 @@ dependencies:
   - wxyz_lab
   - wxyz_svg
 
-
   ### ipydrawio-dev-deps ###
-
 
   # core
   - doit
@@ -84,6 +82,4 @@ dependencies:
   # reporting
   - codecov
 
-
   ### ipydrawio-dev-deps ###
-
