@@ -122,8 +122,10 @@ def task_setup():
     for pkg, pkg_setup in P.PY_SETUP.items():
         # TODO: refactor
         ext_deps = [
-            P.JS_PKG_JSON[ext].parent
-            / P.JS_PKG_DATA[ext]["jupyterlab"]["outputDir"]
+            (
+                P.JS_PKG_JSON[ext].parent
+                / P.JS_PKG_DATA[ext]["jupyterlab"]["outputDir"]
+            ).resolve()
             / "package.json"
             for ext, mod in P.JS_LABEXT_PY_HOST.items()
             if mod == pkg_setup.parent.name
@@ -374,7 +376,9 @@ if not P.TESTING_IN_CI:
             if "jupyterlab" not in pkg_data:
                 continue
 
-            out_dir = pkg_data["jupyterlab"]["outputDir"]
+            out_dir = (
+                P.JS_PKG_JSON[pkg].parent / pkg_data["jupyterlab"]["outputDir"]
+            ).resolve()
 
             yield _ok(
                 dict(
@@ -387,15 +391,17 @@ if not P.TESTING_IN_CI:
                         )
                     ],
                     file_dep=targets,
-                    targets=[P.JS_PKG_JSON[pkg] / f"{out_dir}/package.json"],
+                    targets=[out_dir / "package.json"],
                 ),
                 P.OK_EXT_BUILD[pkg],
             )
 
         for py_pkg, py_setup in P.PY_SETUP.items():
             ext_deps = [
-                P.JS_PKG_JSON[ext].parent
-                / P.JS_PKG_DATA[ext]["jupyterlab"]["outputDir"]
+                (
+                    P.JS_PKG_JSON[ext].parent
+                    / P.JS_PKG_DATA[ext]["jupyterlab"]["outputDir"]
+                ).resolve()
                 / "package.json"
                 for ext, mod in P.JS_LABEXT_PY_HOST.items()
                 if mod == py_setup.parent.name

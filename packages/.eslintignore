@@ -3,6 +3,7 @@ _meta/lib/**
 ipydrawio-notebook/lib/**
 ipydrawio-pdf/lib/**
 ipydrawio-webpack/drawio/**
+ipydrawio-webpack/dio/**
 ipydrawio/lib/**
 **/node_modules/**
 **/drawio/**

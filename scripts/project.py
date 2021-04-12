@@ -160,7 +160,7 @@ JS_PY_SCRIPTS = {
 
 # special things for ipydrawio-webpack
 IPDW = JS_PKG_JSON["ipydrawio-webpack"].parent
-IPDW_APP = IPDW / "drawio/src/main/webapp/js/app.min.js"
+IPDW_APP = IPDW / "d/js/app.min.js"
 IPDW_PY = (IPDW / "scripts").rglob("*.py")
 DRAWIO = IPDW / "drawio"
 IPDW_LIB = IPDW / "lib"

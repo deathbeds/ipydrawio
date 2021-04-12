@@ -20,12 +20,12 @@ from pprint import pprint
 
 HERE = Path(__file__).parent
 ROOT = HERE.parent.resolve()
-DRAWIO = ROOT / "drawio"
+DIO = ROOT / "dio"
 IGNORE = ROOT / ".npmignore"
 IGNORED = {
     glob.strip(): 0
     for glob in IGNORE.read_text().strip().splitlines()
-    if glob.startswith("drawio/")
+    if glob.startswith("dio/")
 }
 STATIC = ROOT / "lib" / "_static.js"
 HEADER = """
@@ -36,7 +36,7 @@ HEADER = """
 */
 """
 TMPL = """
-import '!!file-loader?name=[path][name].[ext]&context=.!../drawio{}';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio{}';
 """
 
 
@@ -52,15 +52,13 @@ def update_static():
     print("ignoring\n", "\n".join(IGNORED))
     lines = []
 
-    for path in sorted(DRAWIO.rglob("*")):
+    for path in sorted(DIO.rglob("*")):
         if path.is_dir():
             continue
         if is_ignored(path):
             continue
         lines += [
-            TMPL.format(
-                str(path.as_posix()).replace(str(DRAWIO.as_posix()), "")
-            ).strip()
+            TMPL.format(str(path.as_posix()).replace(str(DIO.as_posix()), "")).strip()
         ]
 
     assert lines
