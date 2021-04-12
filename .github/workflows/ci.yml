@@ -157,7 +157,8 @@ jobs:
         with:
           condarc-file: .github/.condarc
           environment-file: .github/environment-conda-build.yml
-          miniforge-variant: Miniforge3
+          miniforge-variant: Mambaforge
+          use-mamba: true
 
       - name: download (dist)
         uses: actions/download-artifact@v2
@@ -216,7 +217,6 @@ jobs:
         with:
           condarc-file: .github/.condarc
           miniforge-variant: Mambaforge
-          miniforge-version: latest
           python-version: ${{ matrix.python-version }}
           environment-file: .github/environment.yml
           use-only-tar-bz2: true
