@@ -7,13 +7,13 @@
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../ipydrawio"
+      "path": "../ipydrawio/src"
     },
     {
-      "path": "../ipydrawio-pdf"
+      "path": "../ipydrawio-pdf/src"
     },
     {
-      "path": "../ipydrawio-notebook"
+      "path": "../ipydrawio-notebook/src"
     }
   ]
 }

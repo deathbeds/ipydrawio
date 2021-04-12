@@ -16,6 +16,8 @@
   limitations under the License.
 */
 
+import * as PACKAGE from '../package.json';
+
 import { Token } from '@lumino/coreutils';
 import { Contents } from '@jupyterlab/services';
 import { LabIcon } from '@jupyterlab/ui-components';
@@ -23,8 +25,8 @@ import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
 
-export const NS = '@deathbeds/ipydrawio';
-export const VERSION = '1.0.1';
+export const NS = PACKAGE.name;
+export const VERSION = PACKAGE.version;
 export const PLUGIN_ID = `${NS}:plugin`;
 
 import { Diagram } from './editor';

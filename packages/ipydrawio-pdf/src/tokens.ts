@@ -14,7 +14,9 @@
   limitations under the License.
 */
 
-export const NS = '@deathbeds/ipydrawio-pdf';
+import * as PACKAGE from '../package.json';
+
+export const NS = PACKAGE.name;
 export const PLUGIN_ID = `${NS}:plugin`;
 export const CMD_NS = `ipydrawio-pdf`;
 

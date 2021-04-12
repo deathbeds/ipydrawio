@@ -1,13 +1,9 @@
 {
   "extends": "../tsconfigbase",
   "compilerOptions": {
-    "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": ".",
+    "outDir": ".",
+    "tsBuildInfoFile": ".root.tsbuildinfo"
   },
-  "include": ["src/**/*"],
-  "references": [
-    {
-      "path": "../ipydrawio"
-    }
-  ]
+  "files": ["package.json"]
 }
