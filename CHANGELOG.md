@@ -4,11 +4,13 @@
 
 ### ipydrawio 1.0.1
 
-- on-disk file paths are shorter to avoid Windows issues
+- [#32] on-disk file paths are shorter to avoid Windows issues
+- [#31] `install.json` is properly placed
 
 ### ipydrawio-export 1.0.1
 
-- on-disk file paths are shorter to avoid Windows issues
+- [#32] on-disk file paths are shorter to avoid Windows issues
+- [#31] `install.json` is properly placed
 
 ### @deathbeds/ipydrawio 1.0.1
 
@@ -17,6 +19,9 @@
 ### @deathbeds/ipydrawio-pdf 1.0.1
 
 ### @deathbeds/ipydrawio-webpack 14.5.9
+
+[#31]: https://github.com/deathbeds/ipydrawio/issues/31
+[#32]: https://github.com/deathbeds/ipydrawio/issues/32
 
 ---
 
