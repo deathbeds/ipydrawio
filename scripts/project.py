@@ -312,6 +312,16 @@ CMD_LIST_EXTENSIONS = ["jupyter", "labextension", "list"]
 
 CMD_LAB = ["jupyter", "lab", "--no-browser", "--debug"]
 
+# conda building
+RECIPE = ROOT / "conda.recipe/meta.yaml"
+CONDA_BLD = BUILD / "conda-bld"
+# could be mambabuild
+CONDA_BUILDERER = os.environ.get("CONDA_BUILDERER", "build")
+CONDA_PKGS = {
+    pkg: CONDA_BLD / f"noarch/{pkg}-{ver}-py_0.tar.bz2"
+    for pkg, ver in PY_VERSION.items()
+}
+
 
 def get_atest_stem(attempt=1, extra_args=None, browser=None):
     """get the directory in ATEST_OUT for this platform/apps"""
@@ -326,4 +336,6 @@ def get_atest_stem(attempt=1, extra_args=None, browser=None):
     return stem
 
 
-os.environ.update(IPYDRAWIO_DATA_DIR=str(IPYDRAWIO_DATA_DIR))
+os.environ.update(
+    IPYDRAWIO_DATA_DIR=str(IPYDRAWIO_DATA_DIR), PIP_DISABLE_PIP_VERSION_CHECK="1"
+)

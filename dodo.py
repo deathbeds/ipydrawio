@@ -472,6 +472,25 @@ if not P.TESTING_IN_CI:
         )
 
 
+def task_conda():
+    yield dict(
+        name="build",
+        file_dep=[*P.PY_SDIST.values(), P.RECIPE],
+        actions=[
+            [
+                "conda",
+                P.CONDA_BUILDERER,
+                "-c",
+                "conda-forge",
+                P.RECIPE.parent,
+                "--output-folder",
+                P.CONDA_BLD,
+            ]
+        ],
+        targets=[*P.CONDA_PKGS.values()],
+    )
+
+
 if not P.TESTING_IN_CI:
 
     def task_lab():
