@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfigbase",
+  "compilerOptions": {
+    "outDir": "../lib",
+    "rootDir": "."
+  },
+  "include": ["./**/*"],
+  "references": [
+    {
+      "path": "..",
+    },
+    {
+      "path": "../../ipydrawio/src"
+    },
+    {
+      "path": "../../ipydrawio-pdf/src"
+    },
+    {
+      "path": "../../ipydrawio-notebook/src"
+    }
+  ]
+}
