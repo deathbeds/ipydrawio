@@ -127,6 +127,45 @@ jobs:
           name: ipydrawio ${{ github.run_number }} dist
           path: ./dist
 
+  conda-build:
+    needs: [build]
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu', 'macos', 'windows']
+    steps:
+      - name: configure line endings
+        run: |
+          git config --global core.autocrlf false
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: install (conda)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          condarc-file: .github/.condarc
+          miniforge-variant: Miniforge
+          conda-build-version: '*'
+
+      - name: download (dist)
+        uses: actions/download-artifact@v2
+        with:
+          name: ipydrawio ${{ github.run_number }} dist
+          path: ./dist
+
+      - name: conda-build
+        run: |
+          conda install -c conda-forge doit
+          doit -s conda
+
+      - name: upload (conda)
+        uses: actions/upload-artifact@v2
+        with:
+          name: ipydrawio ${{ github.run_number }} conda
+          path: ./build/conda-bld
+
   test:
     needs: [build]
     name: ${{ matrix.os }} ${{ matrix.python-version }}
