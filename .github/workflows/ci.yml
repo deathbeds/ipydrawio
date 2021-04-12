@@ -167,6 +167,8 @@ jobs:
 
       - name: build (conda)
         shell: bash -l {0}
+        env:
+          CONDA_BUILDERER: mambabuild
         run: |
           doit -s conda
 

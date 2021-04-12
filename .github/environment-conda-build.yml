@@ -21,5 +21,6 @@ channels:
   - nodefaults
 
 dependencies:
+  - boa
   - conda-build
   - doit
