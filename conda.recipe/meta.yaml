@@ -3,7 +3,7 @@
 
 {% set build_number = 0 %}
 
-{% set url_base = "file://" + RECIPE_DIR.replace("\\", "/") + "../dist" %}
+{% set url_base = "file://" + RECIPE_DIR.replace("\\", "/") + "/../dist" %}
 
 package:
   name: {{ name }}-build
