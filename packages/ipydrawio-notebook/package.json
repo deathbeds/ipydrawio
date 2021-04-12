@@ -1,6 +1,6 @@
 {
   "name": "@deathbeds/ipydrawio-notebook",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "@jupyterlab/application": "3",
     "@jupyterlab/notebook": "3"
@@ -10,7 +10,7 @@
     "typescript": "~4.2.4"
   },
   "peerDependencies": {
-    "@deathbeds/ipydrawio": "^1.0.0"
+    "@deathbeds/ipydrawio": "^1.0.1"
   },
   "files": [
     "{lib,schema,style,src}/**/*.{ts,tsx,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css}",
@@ -18,7 +18,7 @@
   ],
   "jupyterlab": {
     "extension": "lib/plugin.js",
-    "outputDir": "../../py_packages/ipydrawio/src/ipydrawio/labextensions/@deathbeds/ipydrawio-notebook",
+    "outputDir": "../../py_packages/ipydrawio/src/ipydrawio/ext/ipdnb",
     "sharedPackages": {
       "@deathbeds/ipydrawio": {
         "bundled": false,

@@ -1,6 +1,6 @@
-include README.md LICENSE.txt install.json
+include README.md LICENSE.txt
 recursive-exclude src/ipydrawio_export/vendor/draw-image-export2 node_modules
 recursive-include src/ipydrawio_export/etc *.json
-recursive-include src/ipydrawio_export/labextensions *.*
+recursive-include src/ipydrawio_export/ext *.*
 recursive-include src/ipydrawio_export/tests/fixtures *.*
 recursive-include src/ipydrawio_export/vendor/draw-image-export2 *.json *.js README.md LICENSE yarn.lock

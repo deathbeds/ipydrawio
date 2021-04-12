@@ -31,7 +31,7 @@
     "extension": "lib/plugin.js",
     "mimeExtension": "lib/mime.js",
     "schemaDir": "schema",
-    "outputDir": "../../py_packages/ipydrawio/src/ipydrawio/labextensions/@deathbeds/ipydrawio",
+    "outputDir": "../../py_packages/ipydrawio/src/ipydrawio/ext/ipd",
     "sharedPackages": {
       "@deathbeds/ipydrawio-webpack": {
         "bundled": false,
@@ -67,5 +67,5 @@
     "url": "https://github.com/deathbeds/ipydrawio.git"
   },
   "types": "lib/index.d.ts",
-  "version": "1.0.0"
+  "version": "1.0.1"
 }

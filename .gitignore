@@ -12,7 +12,6 @@ __pycache__
 *.tgz
 *.tsbuildinfo
 **/*DRAWIO_DEBUG*
-**/labextensions/**
 atest/output/
 build/
 dist/
@@ -21,5 +20,6 @@ htmlcov/
 node_modules/
 py_packages/ipydrawio-export/ipydrawio-export-*
 py_packages/ipydrawio/ipydrawio-*
+py_packages/**/src/*/ext/**
 untitled*
 Untitled*

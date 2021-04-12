@@ -20,11 +20,7 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 
-__js__ = json.loads(
-    (HERE / "labextensions/@deathbeds/ipydrawio/package.json").read_text(
-        encoding="utf-8"
-    )
-)
+__js__ = json.loads((HERE / "ext/ipd/package.json").read_text(encoding="utf-8"))
 
 __version__ = __js__["version"]
 

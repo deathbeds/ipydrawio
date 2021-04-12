@@ -21,7 +21,7 @@
   "name": "@deathbeds/ipydrawio-webpack",
   "jupyterlab": {
     "extension": "lib/plugin.js",
-    "outputDir": "../../py_packages/ipydrawio/src/ipydrawio/labextensions/@deathbeds/ipydrawio-webpack",
+    "outputDir": "../../py_packages/ipydrawio/src/ipydrawio/ext/ipdwp",
     "webpackConfig": "./webpack.config.js",
     "discovery": {
       "server": {

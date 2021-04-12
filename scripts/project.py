@@ -205,19 +205,16 @@ SERVER_EXT = {
 }
 
 
-def NOT_LABEXTENSIONS(paths):
-    return [p for p in paths if "labextensions" not in str(p)]
-
-
 ALL_PY = [
     *ATEST.rglob("*.py"),
+    *BINDER.glob("*.py"),
     *IPDW_PY,
+    *PY_SETUP.values(),
     *SCRIPTS.glob("*.py"),
     *sum(JS_PY_SCRIPTS.values(), []),
     *sum(PY_SRC.values(), []),
-    *BINDER.glob("*.py"),
-    POSTBUILD_PY,
     DODO,
+    POSTBUILD_PY,
 ]
 ALL_YML = [*ROOT.glob("*.yml"), *CI.rglob("*.yml"), *BINDER.glob("*.yml")]
 ALL_JSON = [
@@ -230,7 +227,6 @@ ALL_JSON = [
 ALL_MD = [
     *ROOT.glob("*.md"),
     *PACKAGES.glob("*/*.md"),
-    *NOT_LABEXTENSIONS(PY_PACKAGES.glob("*/*.md")),
 ]
 ALL_SETUP_CFG = [SETUP_CFG, *PY_SETUP_CFG.values()]
 ALL_JS = [PACKAGES / ".eslintrc.js"]

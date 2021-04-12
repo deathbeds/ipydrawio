@@ -18,42 +18,41 @@ import json
 from pathlib import Path
 
 HERE = Path(__file__).parent
-EXT = HERE / "src/ipydrawio_export/labextensions"
+EXT = HERE / "src/ipydrawio_export/ext"
 
-PDF = EXT / "@deathbeds/ipydrawio-pdf"
+PDF = EXT / "ipdpdf"
 
 SHARE = "share/jupyter/labextensions"
 
 __js__ = json.loads((PDF / "package.json").read_text(encoding="utf-8"))
 
-EXT_FILES = {}
+FILES = []
 
-for ext_path in [EXT] + [d for d in EXT.rglob("*") if d.is_dir()]:
-    if ext_path == EXT:
-        target = str(SHARE)
-    else:
-        target = f"{SHARE}/{ext_path.relative_to(EXT)}"
-    EXT_FILES[target] = [
-        str(p.relative_to(HERE).as_posix())
-        for p in ext_path.glob("*")
-        if not p.is_dir()
-    ]
+for package_json in EXT.glob("*/package.json"):
+    pkg = json.loads(package_json.read_text(encoding="utf-8"))
 
-ALL_FILES = sum(EXT_FILES.values(), [])
+    FILES += [(f"""{SHARE}/{pkg["name"]}""", ["src/ipydrawio_export/etc/install.json"])]
 
-EXT_FILES[str(SHARE)] += ["install.json"]
+    for path in package_json.parent.rglob("*"):
+        if path.is_dir():
+            continue
+        parent = path.parent.relative_to(package_json.parent).as_posix()
+        FILES += [
+            (
+                f"""{SHARE}/{pkg["name"]}/{parent}""",
+                [str(path.relative_to(HERE).as_posix())],
+            )
+        ]
 
-for app  in ["server", "notebook"]:
-    EXT_FILES[f"etc/jupyter/jupyter_{app}_config.d"] = [
-        f"src/ipydrawio_export/etc/jupyter_{app}_config.d/ipydrawio-export.json"
+for app in ["server", "notebook"]:
+    FILES += [
+        (
+            f"etc/jupyter/jupyter_{app}_config.d",
+            [f"src/ipydrawio_export/etc/jupyter_{app}_config.d/ipydrawio-export.json"],
+        )
     ]
 
 if __name__ == "__main__":
     import setuptools
 
-    setuptools.setup(
-        version=__js__["version"],
-        data_files=[
-            *[(k, v) for k, v in EXT_FILES.items()],
-        ],
-    )
+    setuptools.setup(version=__js__["version"], data_files=FILES)
