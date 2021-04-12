@@ -473,6 +473,13 @@ if not P.TESTING_IN_CI:
 
 
 def task_conda():
+    args = [
+        "conda",
+        P.CONDA_BUILDERER,
+        "-c",
+        "conda-forge",
+    ]
+
     yield dict(
         name="build",
         file_dep=[
@@ -481,16 +488,23 @@ def task_conda():
         ],
         actions=[
             [
-                "conda",
-                P.CONDA_BUILDERER,
-                "-c",
-                "conda-forge",
-                P.RECIPE.parent,
+                *args,
+                "--no-test",
                 "--output-folder",
                 P.CONDA_BLD,
+                P.RECIPE.parent,
             ]
         ],
         targets=[*P.CONDA_PKGS.values()],
+    )
+
+    yield _ok(
+        dict(
+            name="test",
+            file_dep=[*P.CONDA_PKGS.values()],
+            actions=[[*args, "--test", *P.CONDA_PKGS.values()]],
+        ),
+        P.OK_CONDA_TEST,
     )
 
 

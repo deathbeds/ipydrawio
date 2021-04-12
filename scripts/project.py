@@ -297,6 +297,7 @@ OK_PROVISION = BUILD / "provision.ok"
 OK_ROBOT_DRYRUN = BUILD / "robot.dryrun.ok"
 OK_RFLINT = BUILD / "robot.rflint.ok"
 OK_ATEST = BUILD / "atest.ok"
+OK_CONDA_TEST = BUILD / "conda-build.test.ok"
 
 OK_EXT_BUILD = {k: BUILD / f"ext.build.{k}.ok" for k in JS_LABEXT_PY_HOST}
 
