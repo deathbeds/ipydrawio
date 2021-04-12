@@ -222,7 +222,8 @@ jobs:
           use-only-tar-bz2: true
           use-mamba: true
 
-      - uses: actions/download-artifact@v2
+      - name: download (dist)
+        uses: actions/download-artifact@v2
         with:
           name: ipydrawio ${{ github.run_number }} dist
           path: ./dist
