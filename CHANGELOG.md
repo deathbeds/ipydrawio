@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### ipydrawio 1.0.2
+
+### ipydrawio-export 1.0.2
+
+### @deathbeds/ipydrawio 1.0.2
+
+### @deathbeds/ipydrawio-notebook 1.0.2
+
+### @deathbeds/ipydrawio-pdf 1.0.2
+
+### @deathbeds/ipydrawio-webpack 14.5.902
+
+---
+
 ### ipydrawio 1.0.1
 
 - [#32] on-disk file paths are shorter to avoid Windows issues
