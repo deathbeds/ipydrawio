@@ -475,7 +475,10 @@ if not P.TESTING_IN_CI:
 def task_conda():
     yield dict(
         name="build",
-        file_dep=[*P.PY_SDIST.values(), P.RECIPE],
+        file_dep=[
+            P.RECIPE,
+            *[P.DIST / p.name for p in P.PY_SDIST.values()],
+        ],
         actions=[
             [
                 "conda",

@@ -3,18 +3,20 @@
 
 {% set build_number = 0 %}
 
+{% set url_base = "file://" + RECIPE_DIR.replace("\\", "/") + "../dist" %}
+
 package:
   name: {{ name }}-build
   version: {{ version }}
 
 source:
   - folder: {{ name }}
-    url: file://{{ RECIPE_DIR }}/../dist/{{ name }}-{{ version }}.tar.gz
+    url: {{ url_base }}/{{ name }}-{{ version }}.tar.gz
     # url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
     # sha256:
 
   - folder: {{ name }}-export
-    url: file://{{ RECIPE_DIR }}/../dist/{{ name }}-export-{{ version }}.tar.gz
+    url: {{ url_base }}/{{ name }}-export-{{ version }}.tar.gz
     # url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}-export/{{ name }}-export-{{ version }}.tar.gz
     # sha256:
 
@@ -53,7 +55,7 @@ outputs:
         - python >=3.6
     test:
       imports:
-        - ipydrawio
+        - {{ name }}
       requires:
         - pip
         - pytest-cov
@@ -61,10 +63,10 @@ outputs:
         - pip check
         - jupyter labextension list
         - jupyter labextension list 1>labextensions 2>&1
-        - cat labextensions | grep "@deathbeds/ipydrawio.*OK"  # [unix]
+        - cat labextensions | grep "@deathbeds/{{ name }}.*OK"  # [unix]
         - pytest -vv --pyargs {{ name }} --cov={{ name }} --cov-fail-under=100 --cov-report=term-missing:skip-covered
     about:
-      home: https://github.com/deathbeds/ipydrawio
+      home: https://github.com/deathbeds/{{ name }}
       summary: Draw.io Diagrams as Jupyter Widgets
       license: Apache-2.0
       license_file: {{ name }}/LICENSE.txt
@@ -77,7 +79,7 @@ outputs:
       script:
         - cd {{ name }}-export && {{ PYTHON }} -m pip install . -vv --no-deps
       entry_points:
-      - jupyter-ipydrawio-export = ipydrawio_export.app:main
+      - jupyter-{{ name }}-export = {{ name }}_export.app:main
     requirements:
       host:
         - pip
@@ -91,10 +93,9 @@ outputs:
         - nodejs
     test:
       imports:
-        - ipydrawio_export
+        - {{ name }}_export
       requires:
         - pip
-        - ipydrawio
         - pytest-cov
         - pytest-tornasync
         - pytest-console-scripts
@@ -102,19 +103,19 @@ outputs:
         - pip check
         - jupyter labextension list
         - jupyter labextension list 1>labextensions 2>&1
-        - cat labextensions | grep "@deathbeds/ipydrawio-pdf.*OK"  # [unix]
+        - cat labextensions | grep "@deathbeds/{{ name }}-pdf.*OK"  # [unix]
         - jupyter serverextension list
         - jupyter serverextension list 1>serverextensions 2>&1
-        - cat serverextensions | grep "ipydrawio_export.*OK"  # [unix]
+        - cat serverextensions | grep "{{ name }}_export.*OK"  # [unix]
         - pytest -vv --pyargs {{ name }}_export --script-launch-mode=subprocess --cov={{ name }}_export --cov-fail-under=96 --cov-report=term-missing:skip-covered
     about:
-      home: https://github.com/deathbeds/ipydrawio
-      summary: PDF export for ipydrawio
+      home: https://github.com/deathbeds/{{ name }}
+      summary: PDF export for IPyDrawio
       license: Apache-2.0
       license_file: {{ name }}-export/LICENSE.txt
 
 about:
-  home: https://github.com/deathbeds/ipydrawio
+  home: https://github.com/deathbeds/{{ name }}
   summary: Draw.io Diagrams as Jupyter Widgets
   license: Apache-2.0
   license_file: {{ name }}/LICENSE.txt
