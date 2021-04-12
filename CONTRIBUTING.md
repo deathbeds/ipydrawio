@@ -66,19 +66,24 @@ doit dist
 - [ ] validate on binder
 - [ ] wait for a successful build of `master`
 - [ ] download the `dist` archive and unpack somewhere (maybe a fresh `dist`)
-- [ ] actually upload
+- [ ] create a new release through the GitHub UI
+  - [ ] paste in the relevant CHANGELOG entries
+  - [ ] upload the artifacts
+- [ ] actually upload to npm.com, pypi.org
   ```bash
-  export VERSION=<the next version>
   cd dist
   twine upload ipydrawio*
   npm login
   npm publish deathbeds-ipydrawio-$VERSION.tgz
   npm publish deathbeds-ipydrawio-notebook-$VERSION.tgz
   npm publish deathbeds-ipydrawio-pdf-$VERSION.tgz
-  npm publish deathbeds-ipydrawio-webpack-$VERSION.tgz
+  npm publish deathbeds-ipydrawio-webpack-$OTHER_VERSION.tgz
   npm logout
   ```
-- [ ] handle `conda-forge` feedstock tasks
+- [ ] postmortem
+  - [ ] handle `conda-forge` feedstock tasks
+  - [ ] validate on binder via simplest-possible gists
+  - [ ] bump to next development version
 
 ```
 Copyright 2021 ipydrawio contributors
