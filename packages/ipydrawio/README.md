@@ -6,6 +6,8 @@
 If you'd just like to _use_ this extension, please run:
 
 ```bash
+mamba install -c conda-forge ipydrawio  # recommended, or...
+conda install -c conda-forge ipydrawio  # or...
 pip install ipydrawio
 ```
 

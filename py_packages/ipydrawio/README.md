@@ -18,8 +18,9 @@
 ## Installation
 
 ```bash
-pip install ipydrawio ipydrawio-export
-# TBD: conda install -c conda-forge ipydrawio
+mamba install -c conda-forge ipydrawio  # recommended, or...
+conda install -c conda-forge ipydrawio  # or...
+pip install ipydrawio ipydrawio
 ```
 
 ## Features
@@ -34,8 +35,14 @@ pip install ipydrawio ipydrawio-export
   - Jupyter [Widgets][]
 - `ipydrawio-export`
   - Export print-quality PDF from diagrams
-    - > _BEWARE: some **heavy**, maybe fragile dependencies_
     - optionally include editable Drawio XML as a PDF attachment
+    - > _BEWARE: some **heavy**, maybe fragile dependencies, `mamba`
+      > recommended_
+      ```bash
+      mamba install -c conda-forge ipydrawio-export  # recommended, or...
+      conda install -c conda-forge ipydrawio-export  # or...
+      pip install ipydrawio ipydrawio-export
+      ```
 
 ## Examples
 
@@ -80,13 +87,13 @@ headless browser, powered by [@jgraph/draw-image-export2], `puppeteer`, and
   - **NOTE**: this relies on being able to install `puppeteer` (and other
     **arbitrary dependencies** with `jlpm` for now **when first used**
     - _we'll figure out a better approach soon enough_
-- `pip install ipydrawio-export`
+- `pip install ipydrawio-export` or
+  `conda install -c conda-forge ipydrawio-export`
 
-> For example:
+> For example to install all the dependencies:
 >
 > ```bash
-> conda install -yc conda-forge nodejs=12
-> pip install ipydrawio-export
+> conda install -yc conda-forge ipydrawio-export
 > ```
 
 ## Open Source
