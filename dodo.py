@@ -498,14 +498,15 @@ def task_conda():
         targets=[*P.CONDA_PKGS.values()],
     )
 
-    yield _ok(
-        dict(
-            name="test",
-            file_dep=[*P.CONDA_PKGS.values()],
-            actions=[[*args, "--test", *P.CONDA_PKGS.values()]],
-        ),
-        P.OK_CONDA_TEST,
-    )
+    for name, pkg in P.CONDA_PKGS.items():
+        yield _ok(
+            dict(
+                name=f"test:{name}",
+                file_dep=[pkg],
+                actions=[[*args, "--test", pkg]],
+            ),
+            P.OK_CONDA_TEST / f"{name}.ok",
+        )
 
 
 if not P.TESTING_IN_CI:
