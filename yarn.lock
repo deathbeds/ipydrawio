@@ -72,23 +72,23 @@
     tslib "~1.13.0"
 
 "@deathbeds/ipydrawio-notebook@file:packages/ipydrawio-notebook":
-  version "1.0.0"
+  version "1.0.1"
   dependencies:
     "@jupyterlab/application" "3"
     "@jupyterlab/notebook" "3"
 
 "@deathbeds/ipydrawio-pdf@file:packages/ipydrawio-pdf":
-  version "1.0.0"
+  version "1.0.1"
   dependencies:
     "@jupyterlab/application" "3"
 
 "@deathbeds/ipydrawio-webpack@file:packages/ipydrawio-webpack":
-  version "14.5.9"
+  version "14.5.901"
   dependencies:
     "@jupyterlab/application" "3"
 
 "@deathbeds/ipydrawio@file:packages/ipydrawio":
-  version "1.0.0"
+  version "1.0.1"
   dependencies:
     "@jupyterlab/application" "3"
     "@jupyterlab/launcher" "3"

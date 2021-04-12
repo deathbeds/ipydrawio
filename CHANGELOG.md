@@ -18,7 +18,11 @@
 
 ### @deathbeds/ipydrawio-pdf 1.0.1
 
-### @deathbeds/ipydrawio-webpack 14.5.9
+### @deathbeds/ipydrawio-webpack 14.5.901
+
+- [#32] drawio assets are copied into a shorter path
+- changing version scheme to allow for patch releases.
+  - going forward, the upstream patch release will be multiplied by 100
 
 [#31]: https://github.com/deathbeds/ipydrawio/issues/31
 [#32]: https://github.com/deathbeds/ipydrawio/issues/32
