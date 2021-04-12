@@ -1,6 +1,7 @@
 # IPyDrawio
 
 [![binder-badge][]][binder] [![install from pypi][pypi-badge]][pypi]
+[![install from conda-forge][conda-badge]][conda]
 [![reuse from npm][npm-badge]][npm] [![build][workflow-badge]][workflow]
 [![coverage][cov-badge]][cov]
 
@@ -144,9 +145,11 @@ limitations under the License.
   https://github.com/deathbeds/ipydrawio/actions?query=branch%3Amaster+workflow%3A.github%2Fworkflows%2Fci.yml
 [roadmap]:
   https://github.com/deathbeds/ipydrawio/blob/master/docs/ROADMAP.dio.ipynb
-[npm]: https://npmjs.com/package/@deathbeds/ipydrawio
+[conda-badge]: https://img.shields.io/conda/vn/conda-forge/ipydrawio
+[conda]: https://anaconda.org/conda-forge/ipydrawio
 [pypi-badge]: https://img.shields.io/pypi/v/ipydrawio
 [pypi]: https://pypi.org/project/ipydrawio/
+[npm]: https://npmjs.com/package/@deathbeds/ipydrawio
 [npm-badge]: https://img.shields.io/npm/v/@deathbeds/ipydrawio
 [cov-badge]:
   https://codecov.io/gh/deathbeds/ipydrawio/branch/master/graph/badge.svg?token=9B74VKHQDK
