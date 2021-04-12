@@ -20,6 +20,7 @@ htmlcov/
 node_modules/
 py_packages/ipydrawio-export/ipydrawio-export-*
 py_packages/ipydrawio/ipydrawio-*
-py_packages/**/src/*/ext/**
+py_packages/**/src/*/ext/
+packages/ipydrawio-webpack/dio/
 untitled*
 Untitled*

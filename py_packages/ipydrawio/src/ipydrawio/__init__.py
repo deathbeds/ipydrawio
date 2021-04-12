@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 from pathlib import Path
 
 from ._version import __js__, __version__
@@ -23,13 +24,13 @@ from .widget_diagram import Diagram
 def _jupyter_labextension_paths():
     here = Path(__file__).parent
 
-    return [
-        dict(
-            src=f"{pkg.parent.relative_to(here).as_posix()}",
-            dest=f"{pkg.parent.parent.name}/{pkg.parent.name}",
-        )
-        for pkg in here.glob("ext/*/package.json")
-    ]
+    exts = []
+    for pkg in here.glob("ext/*/package.json"):
+        exts += [dict(
+            src=str(pkg.parent.relative_to(here).as_posix()),
+            dest=json.loads(pkg.read_text(encoding="utf-8"))["name"]
+        )]
+    return exts
 
 
 __all__ = [

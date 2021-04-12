@@ -4,5 +4,5 @@ import { URLExt, PageConfig } from '@jupyterlab/coreutils';
  */
 export const DRAWIO_URL = URLExt.join(
   PageConfig.getBaseUrl(),
-  'static/extensions/@deathbeds/ipydrawio-webpack/static/drawio/src/main/webapp/index.html'
+  'lab/extensions/@deathbeds/ipydrawio-webpack/static/dio/index.html'
 );

@@ -27,7 +27,7 @@ IGNORED = {
     for glob in IGNORE.read_text().strip().splitlines()
     if glob.startswith("dio/")
 }
-STATIC = ROOT / "lib" / "_static.js"
+STATIC = ROOT / "lib/_static.js"
 HEADER = """
 /**
     All files that should be copied to the labextension folder, available as:

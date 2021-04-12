@@ -18,9 +18,7 @@
 PNG_DRAWIO_INFO = "mxfile"
 
 # TODO: hoist this to `package.json` and consume directly
-DRAWIO_APP = (
-    "../labextensions/@deathbeds/ipydrawio-webpack/static/drawio/src/main/webapp"
-)
+DRAWIO_APP = "../labextensions/@deathbeds/ipydrawio-webpack/static/dio"
 
 # key set in notebook#/metadata/
 IPYNB_METADATA = "@deathbeds/ipydrawio"
