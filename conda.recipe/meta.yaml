@@ -3,7 +3,10 @@
 
 {% set build_number = 0 %}
 
-{% set url_base = "file://" + RECIPE_DIR.replace("\\", "/") + "/../dist" %}
+{% set url_base = RECIPE_DIR.replace("\\", "/") + "/../dist" %}
+{% if not url_base.startswith("/") %}
+{% set url_base = "/" + url_base %}
+{% endif %}
 
 package:
   name: {{ name }}-build
@@ -11,12 +14,12 @@ package:
 
 source:
   - folder: {{ name }}
-    url: {{ url_base }}/{{ name }}-{{ version }}.tar.gz
+    url: file://{{ url_base }}/{{ name }}-{{ version }}.tar.gz
     # url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
     # sha256:
 
   - folder: {{ name }}-export
-    url: {{ url_base }}/{{ name }}-export-{{ version }}.tar.gz
+    url: file://{{ url_base }}/{{ name }}-export-{{ version }}.tar.gz
     # url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}-export/{{ name }}-export-{{ version }}.tar.gz
     # sha256:
 
