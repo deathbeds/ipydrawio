@@ -146,7 +146,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
-          miniforge-variant: Miniforge
+          miniforge-variant: Miniforge3
           conda-build-version: '*'
 
       - name: download (dist)
