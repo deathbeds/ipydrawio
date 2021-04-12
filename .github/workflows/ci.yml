@@ -148,9 +148,9 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-${{ matrix.python-version }}-${{ hashFiles('.github/environment-conda-build.yml') }}
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-build-${{ hashFiles('.github/environment-conda-build.yml') }}
           restore-keys: |
-            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-${{ matrix.python-version }}-
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-build-
 
       - name: install (conda)
         uses: conda-incubator/setup-miniconda@v2
