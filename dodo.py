@@ -614,6 +614,19 @@ if not P.TESTING_IN_CI:
         )
 
 
+if not P.TESTING_IN_CI:
+
+    def task_docs():
+        """build the docs"""
+        yield dict(
+            name="sphinx",
+            doc="build the documentation site with sphinx",
+            file_dep=[P.DOCS_CONF],
+            actions=[["sphinx-build", "-b", "html", P.DOCS, P.DOCS_BUILD]],
+            targets=[P.DOCS_BUILDINFO],
+        )
+
+
 def task_provision():
     """ensure the ipydrawio-export server has been provisioned with npm (ick)"""
     return _ok(

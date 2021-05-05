@@ -241,6 +241,8 @@ SERVER_EXT = {
 # docs
 DOCS_CONF = DOCS / "conf.py"
 ENV_DOCS = DOCS / "rtd.yml"
+DOCS_BUILD = BUILD / "docs"
+DOCS_BUILDINFO = DOCS_BUILD / ".buildinfo"
 
 ALL_PY = [
     *ATEST.rglob("*.py"),
