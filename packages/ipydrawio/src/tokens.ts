@@ -16,7 +16,9 @@
   limitations under the License.
 */
 
-import * as PACKAGE from '../package.json';
+import * as _PACKAGE from '../package.json';
+
+export const PACKAGE = _PACKAGE;
 
 import { Token } from '@lumino/coreutils';
 import { Contents } from '@jupyterlab/services';

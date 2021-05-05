@@ -64,6 +64,7 @@ YARN_LOCK = ROOT / "yarn.lock"
 DODO = ROOT / "dodo.py"
 BUILD = ROOT / "build"
 DIST = ROOT / "dist"
+DOCS = ROOT / "docs"
 README = ROOT / "README.md"
 CHANGELOG = ROOT / "CHANGELOG.md"
 SETUP_CFG = ROOT / "setup.cfg"
@@ -236,6 +237,9 @@ SERVER_EXT = {
 }
 
 
+# docs
+DOCS_CONF = DOCS / "conf.py"
+
 ALL_PY = [
     *ATEST.rglob("*.py"),
     *BINDER.glob("*.py"),
@@ -246,8 +250,14 @@ ALL_PY = [
     *sum(PY_SRC.values(), []),
     DODO,
     POSTBUILD_PY,
+    DOCS_CONF,
 ]
-ALL_YML = [*ROOT.glob("*.yml"), *CI.rglob("*.yml"), *BINDER.glob("*.yml")]
+ALL_YML = [
+    *ROOT.glob("*.yml"),
+    *CI.rglob("*.yml"),
+    *BINDER.glob("*.yml"),
+    *DOCS.rglob("*.yml"),
+]
 ALL_JSON = [
     *ROOT.glob("*.json"),
     *PACKAGES.glob("*/*.json"),
