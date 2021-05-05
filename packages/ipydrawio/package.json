@@ -3,6 +3,7 @@
   "bugs": {
     "url": "https://github.com/deathbeds/ipydrawio/issues"
   },
+  "homepage": "https://ipydrawio.rtfd.io",
   "dependencies": {
     "@jupyterlab/application": "3",
     "@jupyterlab/launcher": "3",
@@ -26,7 +27,6 @@
     "{lib,schema,style,src}/**/*.{ts,tsx,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css}",
     "LICENSE.txt"
   ],
-  "homepage": "https://github.com/deathbeds/ipydrawio",
   "jupyterlab": {
     "extension": "lib/plugin.js",
     "mimeExtension": "lib/mime.js",

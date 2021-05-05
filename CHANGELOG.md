@@ -6,6 +6,7 @@
 
 - the `sketch` theme is now the default `ui`
   - additional configuration defaults have been added to `urlParams`
+- plugin schema updated
 
 ### ipydrawio-export 1.1.0
 
@@ -19,6 +20,7 @@
 
 - drawio 14.6.10
   - improved pipeline for updating schema from drawio documentation for settings
+  - adds `sketch` theme for `ui`
 
 ---
 
