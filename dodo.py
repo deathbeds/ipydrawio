@@ -29,6 +29,7 @@ maybe before you push
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pprint
 import shutil
 import subprocess
 import time
@@ -38,6 +39,20 @@ from doit.action import CmdAction
 from doit.tools import PythonInteractiveAction, config_changed
 
 import scripts.project as P
+
+print_ = pprint.pprint
+console = None
+
+try:
+    import rich.console
+    import rich.markdown
+
+    console = rich.console.Console()
+    print_ = console.print
+
+except ImportError:
+    # nothing to see here
+    pass
 
 DOIT_CONFIG = dict(
     backend="sqlite3",
@@ -58,7 +73,7 @@ def task_all():
             P.OK_PROVISION,
             P.SHA256SUMS,
         ],
-        actions=[lambda: [print("nothing left to do"), True][1]],
+        actions=[(_show, ["nothing left to do"], {"shasums": P.SHA256SUMS.read_text})],
     )
 
 
@@ -696,3 +711,11 @@ def _ok(task, ok):
         lambda: [ok.parent.mkdir(exist_ok=True), ok.write_text("ok"), True][-1],
     ]
     return task
+
+
+def _show(*args, **kwargs):
+    for arg in args:
+        print_(arg()) if callable(arg) else print_(arg)
+    for kw, kwarg in kwargs.items():
+        print_(rich.markdown.Markdown(f"# {kw}") if console else kw)
+        print_(kwarg()) if callable(kwarg) else print_(kwarg)
