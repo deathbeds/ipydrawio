@@ -1,6 +1,6 @@
 {
   "name": "@deathbeds/ipydrawio-pdf",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "dependencies": {
     "@jupyterlab/application": "3"
   },
@@ -9,7 +9,7 @@
     "typescript": "~4.2.4"
   },
   "peerDependencies": {
-    "@deathbeds/ipydrawio": "^1.0.2"
+    "@deathbeds/ipydrawio": "^1.1.0"
   },
   "files": [
     "{lib,schema,style,src}/**/*.{ts,tsx,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css}",

@@ -2,15 +2,18 @@
 
 ## Unreleased
 
-### ipydrawio 1.0.2
+### ipydrawio 1.1.0
 
-### ipydrawio-export 1.0.2
+- the `sketch` theme is now the default `ui`
+  - additional configuration defaults have been added to `urlParams`
 
-### @deathbeds/ipydrawio 1.0.2
+### ipydrawio-export 1.1.0
 
-### @deathbeds/ipydrawio-notebook 1.0.2
+### @deathbeds/ipydrawio 1.1.0
 
-### @deathbeds/ipydrawio-pdf 1.0.2
+### @deathbeds/ipydrawio-notebook 1.1.0
+
+### @deathbeds/ipydrawio-pdf 1.1.0
 
 ### @deathbeds/ipydrawio-webpack 14.6.1000
 
