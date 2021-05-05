@@ -35,6 +35,7 @@ dependencies:
   - pygraphviz
   - python-graphviz
   - qrcode-artistic
+  - rich
   - segno
   - shapely
   - tabulate
