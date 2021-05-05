@@ -240,7 +240,7 @@ SERVER_EXT = {
 
 # docs
 DOCS_CONF = DOCS / "conf.py"
-ENV_DOCS = DOCS / "rtd.yml"
+ENV_DOCS = DOCS / "environment.yml"
 DOCS_BUILD = BUILD / "docs"
 DOCS_BUILDINFO = DOCS_BUILD / ".buildinfo"
 
