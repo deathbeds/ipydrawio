@@ -127,18 +127,17 @@
     "drawio-url-params": {
       "properties": {
         "base": {
-          "description": "url: Sets the base URL to use for links (use this if document.referrer is not available in embed mode).",
+          "description": "url: Sets the base URL to use for links (use this if `document.referrer` is not available in embed mode).",
           "format": "uri",
           "type": "string"
         },
         "border": {
-          "description": "60: Sets the border used in lightbox mode (default is 60).",
-          "minimum": 0,
+          "description": "60: Sets the border width used in lightbox mode (the default is `60`).",
           "type": "number"
         },
         "browser": {
           "$ref": "#/definitions/on-off-switch",
-          "description": "0/1: Disables local storage as a storage location (0) or shows the browser option in the storage dialog (1)."
+          "description": "0/1: Disables local storage as a storage location (`0`) or shows the browser option in the storage dialog (`1`)."
         },
         "chrome": {
           "$ref": "#/definitions/off-switch",
@@ -146,27 +145,31 @@
         },
         "clibs": {
           "$ref": "#/definitions/library-keys-string",
-          "description": "key1;key2;key;...;keyN: Specifies custom libraries (keys are file IDs or URLs with a U-prefix)"
+          "description": "key1;key2;key;...;keyN: Specifies custom libraries (keys are file IDs or _URLs with a U-prefix_)"
         },
         "client": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Runs diagrams.net in client mode. This displays a normal UI and sends a ready message to the opener or parent when the page is loaded. After receiving a message containing XML or compressed XML, a local file is created. The file is then set to modified so the connection to the window can be closed after sending the initial XML. Whether the XML is loaded again after a page refresh, depends on the caller implementation. Use proto=json to use a custom protocol for special cases."
+          "description": "1: Runs diagrams.net in client mode. This displays a normal UI and sends a `ready` message to the opener or parent when the page is loaded. After receiving a message containing XML or compressed XML, a local file is created. The file is then set to `modified` so the connection to the window can be closed after sending the initial XML. Whether the XML is loaded again after a page refresh, depends on the caller implementation. Use `proto=json` to use a custom protocol for special cases."
         },
         "close": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Shows the Close button in chromeless mode which closes the window when selected."
+          "description": "1: Shows the *Close* button in chromeless mode which closes the window when selected."
+        },
+        "configure": {
+          "$ref": "#/definitions/off-switch",
+          "description": "1: Sends the `configure` event and waits for the `configure` action. See more about the _embed mode_. **NEW `14.6.10`**"
         },
         "cors": {
-          "description": "regex: Checks whether URLS have CORS enabled using a URL encoded regular expression, e.g.cors=%5Ehttps%3F%3A%5C%2F%5C%2F.*%5C.github%5C.io%5C%2F",
+          "description": "regex: Checks whether URLS have CORS enabled using a URL encoded regular expression, e.g.cors=%5Ehttps%3F%3A%5C%2F%5C%2F.*%5C.github%5C.io%5C%2F **TBD `14.6.10`**",
           "format": "regex",
           "type": "string"
         },
         "create": {
-          "description": "url/name: Creates a new file from a template URL. If the value is not a URL and is not empty, the script will try to use window.opener[url]. In embed mode, window.opener[name] will be used to get the initial XML. Note that this requires the same origin policy in the opener/parent for reading the variable.",
+          "description": "url/name: Creates a new file from a template URL. If the value is not a URL and is not empty, the script will try to use `window.opener_url]`. In [embed mode_, `window.opener[name]` will be used to get the initial XML. Note that this requires the same origin policy in the opener/parent for reading the variable.",
           "type": "string"
         },
         "data": {
-          "description": "data: Gets the XML data for the diagram (used in client mode to bypass message passing and cross frame access).",
+          "description": "data: Gets the XML data for the diagram (used in client mode to bypass message passing and cross frame access). **TBD `14.6.10`**",
           "type": "string"
         },
         "db": {
@@ -175,15 +178,18 @@
         },
         "demo": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Shortcut for db=0&gapi=0&math=0&picker=0, disables the splash screen and creates an empty, local diagram file."
+          "description": "1: Shortcut for `db=0&gapi=0&math=0&picker=0`, disables the splash screen and creates an empty, local diagram file."
+        },
+        "desc": {
+          "description": "{compressed-json}: Passes the CSV import descriptor (_example](https://web.archive.org/web/20210425055302/https://www.draw.io/?desc=SnVTtjpswEHwafl50gUP5nZC7F7i+gIMdvI3xIrMkSp++u7bh0tKoVSUE9sx6PPuRFLtDUZZTcPwuqj2/LdEwxuUHP9+7oAa76YDsdNoAMqSDugG+aFDM9aMgX0sMXWtVoE07XkWybPh9xtArWm54pLQitRBFWTl1Mi7uXouy9qo3/Cmq5hSK6p2/wMRId2eK6ljUotCiQyb37OBeVIcESnBZDzgCAfokwe4gicxifPOrDea8aPUKHGG8vjaykZOz4HsEoo6S83XDwlU2I4az9wP0qov+yjot5frDzQKZz0G1Qt24qoxZ6vnAccvLgJPXRufdGZxrUmIiI9ukMlLAi3mgEpDIbAm08QR0T65eMiq1HNP1AnMToB8w0My36L1pKdd+lwt5DtjPFYhErpPnvEImpJGZ4OKtgmMTV5HgrybQYzSFyTxGpHI+uXv8XTE+kkecnCdPPJM6ttJtp3Bd6m+83oeAN96eHLaXbxZ8gj+kFblJ6OkTfkg/t9uv0dsd/6OiPIWrlP5cTtDruH9J6W9unTnTclgAwuGX/Q002YSoKToT1BroLK3gQWkNvssjuC3n0ew8hjyBnEjZ5B9Ikya8ydOcHYG/pFD5f8pTjDpO8aL9NtszunvCOHXH6dFiTPsn)). Works with the [www.draw.io_ domain only. **NEW `14.6.10`**"
         },
         "drafts": {
           "$ref": "#/definitions/off-switch",
-          "description": "0: Disables draft states (does not save unsaved files in IndexedDB)."
+          "description": "0: Disables draft states (does not save unsaved files in *IndexedDB*)."
         },
         "drive": {
           "$ref": "#/definitions/off-switch",
-          "description": "0: Simulates app.diagrams.net regardless of the domain name (uses the old app ID)."
+          "description": "0: Simulates _app.diagrams.net_ regardless of the domain name (uses the old app ID)."
         },
         "edge": {
           "description": "move: Disables the handling of connector segments without having previously selected the connector.",
@@ -191,7 +197,10 @@
         },
         "edit": {
           "$ref": "#/definitions/url-param-url-or-blank",
-          "description": "url: Adds a link for the Edit button in chromeless mode (use edit=_blank to edit the diagram as a new copy)."
+          "description": "`edit=url`: Adds a link for the *Edit* button in chromeless mode (use `edit=_blank` to edit the diagram as a new copy)."
+        },
+        "embed": {
+          "description": "`embed=1:` Runs diagrams.net in _embed mode](/web/20210425055302/https://www.diagrams.net/doc/faq/embed-mode.html). Use this mode with [embed.diagrams.net_ only. **NEW `14.6.10`**"
         },
         "format": {
           "$ref": "#/definitions/off-switch",
@@ -203,15 +212,15 @@
         },
         "gh": {
           "$ref": "#/definitions/off-switch",
-          "description": "0: Disables the GitHub integration."
+          "description": "0: Disables the Github integration."
         },
         "gitlab": {
-          "description": "url: Sets the URL encoded path to a custom Gitlab installation to use for Gitlab file operations.",
+          "description": "url: Sets the URL-encoded path to a custom GitLab installation to use for GitLab file operations.",
           "format": "uri",
           "type": "string"
         },
         "gitlab-id": {
-          "description": "ID: Specifies the client ID of the custom Gitlab application when using custom Gitlab instance.",
+          "description": "ID: Specifies the _client ID of the custom GitLab application_ when using a custom GitLab instance.",
           "type": "string"
         },
         "gl": {
@@ -222,29 +231,70 @@
           "$ref": "#/definitions/on-switch",
           "description": "1: Uses the chromeles mode with the grid enabled."
         },
+        "hide-pages": {
+          "$ref": "#/definitions/on-off-switch",
+          "description": "1: Hides the controls that allow you to change the current page in lightbox mode. **NEW `14.6.10`**"
+        },
         "highlight": {
           "$ref": "#/definitions/color",
-          "description": "hex: Specifies the highlight colour (with no leading #) for links in chromeless mode."
+          "description": "hex: Specifies the highlight colour (with no leading `#`) for links in chromeless mode."
         },
         "keepmodified": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: If modified specifies a resource key, this is used to keep the modified state after Save is selected."
+          "description": "1: If modified specifies a resource key, this is used to keep the modified state after Save is selected. **TBD `14.6.10`**"
         },
         "lang": {
-          "description": "xy: Specifies the language of the user interface.",
+          "description": "xy: Specifies the language of the user interface. Possible values for `xy` include  *i18n* ar, bs, ca, cs, da, de, el, en, es, et, fi, fil, fr, he, hu, id, it, ja, ko, ms, nl, no, pl, pt, pt-br, ro, ru, sr, sv, th, tr, uk, vi, zh, zh-tw",
+          "examples": [
+            "ar",
+            "bs",
+            "ca",
+            "cs",
+            "da",
+            "de",
+            "el",
+            "en",
+            "es",
+            "et",
+            "fi",
+            "fil",
+            "fr",
+            "he",
+            "hu",
+            "id",
+            "it",
+            "ja",
+            "ko",
+            "ms",
+            "nl",
+            "no",
+            "pl",
+            "pt",
+            "pt-br",
+            "ro",
+            "ru",
+            "sr",
+            "sv",
+            "th",
+            "tr",
+            "uk",
+            "vi",
+            "zh",
+            "zh-tw"
+          ],
           "type": "string"
         },
         "layers": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Adds layer control in chromeless mode."
+          "description": "1: Adds layer control in chromeless mode"
         },
         "libraries": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Specifies whether libraries should be enabled in embed mode. The default is disabled (0)."
+          "description": "1: Specifies whether libraries should be enabled in embed mode. The default is disabled (0). **TBD `14.6.10`**"
         },
         "libs": {
           "$ref": "#/definitions/library-keys-string",
-          "description": "key1;key2;...;keyN: Specifies the current libraries. Possible keys are allied_telesis, android, archimate, archimate3, arrows2, atlassian, aws3, aws3d, aws4, azure, basic, bootstrap, bpmn, cabinets, cisco, cisco_safe, citrix, clipart, dfd, eip, electrical, er, floorplan, flowchart, gcp2, general, gmdl, ibm, images, infographic, ios, lean_mapping, mockups, mscae, network, office, pid, rack, signs, sitemap, sysml, uml, veeam and webicons."
+          "description": "key1;key2;...;keyN: Specifies the current libraries. Possible keys are allied\\_telesis, android, archimate, archimate3, arrows2, atlassian, aws3, aws3d, aws4, azure, basic, bootstrap, bpmn, cabinets, cisco, cisco\\_safe, citrix, clipart, dfd, eip, electrical, er, floorplan, flowchart, gcp2, general, gmdl, ibm, images, infographic, ios, lean\\_mapping, mockups, mscae, network, office, pid, rack, signs, sitemap, sysml, uml, veeam and webicons."
         },
         "lightbox": {
           "$ref": "#/definitions/on-switch",
@@ -259,8 +309,12 @@
           "description": "0: Disables MathJax support."
         },
         "math-font": {
-          "description": ": Sets the font to use for math typesetting. Possible values are STIX-Web and TeX (default).",
+          "description": ": Sets the font to use for math typesetting. Possible values are STIX-Web and TeX (default). **TBD `14.6.10`**",
           "type": "string"
+        },
+        "math-output": {
+          "description": "html: Sets the math typesetting output to `HTML-CSS`. **NEW `14.6.10`**",
+          "examples": ["html"]
         },
         "mode": {
           "$ref": "#/definitions/url-param-mode",
@@ -272,19 +326,19 @@
         },
         "noExitBtn": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Displays no Exit button. Instead of using this URL parameter, you can specify this setting in the load message."
+          "description": "1: Displays no Exit button. Instead of using this URL parameter, you can specify this setting in the load message. **TBD `14.6.10`**"
         },
         "noSaveBtn": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Displays a Save and Exit button instead of a Save button. Instead of using this URL parameter, you can specify this setting in the load message. If this is used, then saveAndExit is ignored."
+          "description": "1: Displays a Save and Exit button instead of a Save button. Instead of using this URL parameter, you can specify this setting in the load message. If this is used, then saveAndExit is ignored. **TBD `14.6.10`**"
         },
         "notitle": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Uses the default filename for new files (used with the url parameter)."
+          "description": "1: Uses the default filename for new files (used with the `url` parameter)"
         },
         "nowarn": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Suppresses the warning before unload for local files."
+          "description": "1: Suppresses the warning before an unload for local files."
         },
         "od": {
           "$ref": "#/definitions/off-switch",
@@ -295,24 +349,23 @@
           "description": "[1|0]: Registers or unregisters the progressive web app (all remote storage locations are disabled)."
         },
         "open": {
-          "description": "prefix+ID: If location hash properties are not available, this can be used as a replacement. The browser will add the hash property to the URL immediately and not remove the URL parameter. Existing hash property has precedence.",
+          "description": "prefix+ID: If _location hash properties_ are not available, use this as a replacement. The browser will add the hash property to the URL immediately and not remove the URL parameter. Existing hash property takes precedence.",
           "type": "string"
         },
         "override-mime": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Saves all Google Drive files as application/vnd.jgraph.mxfile."
+          "description": "1: Saves all Google Drive files as `application/vnd.jgraph.mxfile`."
         },
         "p": {
           "$ref": "#/definitions/library-keys-string",
-          "description": "id1;id2;...;idN: Selects which plugins to load. See list of available plugins."
+          "description": "id1;id2;...;idN: Selects which plugins to load. _See the list of available plugins_."
         },
         "page": {
-          "description": "index: Starts with the given page (the default is first page, index for first page is 0)",
-          "minimum": 0,
+          "description": "index: Starts with the given page (the default is the first page, where the index for the first page is `0`)",
           "type": "number"
         },
         "page-id": {
-          "description": "ID: Starts with the given page ID (has precedence over page parameter). To find the ID of the current page, right click on the canvas and select Edit Data. The ID is the first entry in the dialog.",
+          "description": "ID: Starts with the given page ID (has precedence over the `page` URL parameter). To find the ID of the current page, right click on the canvas and select *Edit Data*. The ID is the first entry in this dialog.",
           "type": "string"
         },
         "picker": {
@@ -321,15 +374,22 @@
         },
         "plugins": {
           "$ref": "#/definitions/off-switch",
-          "description": "0: Does not load plugins."
+          "description": "0: Does not load _plugins_."
+        },
+        "proto": {
+          "description": "`client=1`: Runs diagrams.net in client mode. This displays a normal UI and sends a `ready` message to the opener or parent when the page is loaded. After receiving a message containing XML or compressed XML, a local file is created. The file is then set to `modified` so the connection to the window can be closed after sending the initial XML. Whether the XML is loaded again after a page refresh, depends on the caller implementation. Use `proto=json` to use a custom protocol for special cases. **NEW `14.6.10`**"
         },
         "pv": {
           "$ref": "#/definitions/off-switch",
-          "description": "0: Sets the default pageVisible to false."
+          "description": "0: Sets the default `pageVisible` to `false`."
+        },
+        "pwa": {
+          "$ref": "#/definitions/off-switch",
+          "description": "0: Disables the ability to (un)register the progressive web app (when installed it will stay installed). **NEW `14.6.10`**"
         },
         "returnbounds": {
-          "$ref": "#/definitions/on-switch",
-          "description": "1: Returns a JSON structure with the diagram bounds in embed and client mode. This message is dispatched immediately after receiving the diagram XML."
+          "$ref": "#/definitions/off-switch",
+          "description": "1: Returns a JSON structure with the diagram bounds in embed and client mode. This message is dispatched immediately after receiving the diagram XML. **TBD `14.6.10`**"
         },
         "rev": {
           "description": "id: Selects a specific revision of a Google Drive or Dropbox file.",
@@ -345,19 +405,23 @@
         },
         "save": {
           "$ref": "#/definitions/url-param-save",
-          "description": "local/remote: Enables/disables saving files locally (default is local). If this is disabled then files are echoed via a servlet for a local save."
+          "description": "local/remote: Enables/disables saving files locally (default is `local`). If this is disabled, then files are echoed via a servlet for a local save."
         },
         "saveAndExit": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Displays a Save and Exit button ne. Instead of using this URL parameter, you can specify this setting in the load message."
+          "description": "1: Displays a Save and Exit button ne. Instead of using this URL parameter, you can specify this setting in the load message. **TBD `14.6.10`**"
         },
         "sb": {
           "$ref": "#/definitions/off-switch",
           "description": "0: Starts with scrollbars disabled."
         },
+        "search-shapes": {
+          "description": "value: Starts with given value in the search shapes box.  ## Modes **NEW `14.6.10`**",
+          "type": "string"
+        },
         "spin": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Shows a Loading... spinner while waiting for the diagram data to load in embed mode."
+          "description": "1: Shows a Loading... spinner while waiting for the diagram data to load in embed mode. **TBD `14.6.10`**"
         },
         "splash": {
           "$ref": "#/definitions/off-switch",
@@ -365,22 +429,26 @@
         },
         "stealth": {
           "$ref": "#/definitions/on-switch",
-          "description": "1: Disables all features that require external web services (such as PDF export)."
+          "description": "1: Disables all features that require external web services (such as _PDF export_)."
         },
         "storage": {
           "$ref": "#/definitions/url-param-storage",
           "description": "device: Adds a device storage option for touch devices."
         },
+        "svg-warning": {
+          "$ref": "#/definitions/off-switch",
+          "description": "0: Suppresses the warning for old viewers in SVG export. **NEW `14.6.10`**"
+        },
         "sync": {
           "$ref": "#/definitions/url-param-sync",
-          "description": "[none|manual|auto]: Enables/disables collaborative editing (default is auto)."
+          "description": "[none|manual|auto]: Enables/disables collaborative editing (default is `auto`)."
         },
         "target": {
           "$ref": "#/definitions/url-param-target",
-          "description": "[auto|self|frame|blank]: Opens links in the same window or frame or in a blank window in chromeless mode (auto is the default which opens relative links and anchors in same window in chromeless mode, and all links in a new window in editing mode)."
+          "description": "[auto|self|frame|blank]: Opens links in the same window or frame or in a blank window in chromeless mode (`auto` is the default which opens relative links and anchors in the same window in chromeless mode, and all links in a new window in editing mode)."
         },
         "template-filename": {
-          "description": "name: If #U hash property is used but the URL does not contain a filename to determine binary mode. See https://desk.draw.io/support/solutions/articles/16000080686",
+          "description": "name: If the \\#U hash property is used but the URL does not contain a filename to determine binary mode. See the list of _supported location hash properties_.",
           "type": "string"
         },
         "thumb": {
@@ -388,7 +456,7 @@
           "description": "0: Disables the creation of thumbnails in Drive."
         },
         "title": {
-          "description": "title: Sets a new file title (used with the create and url parameters).",
+          "description": "title: Sets a new file title (used with the `create` and `url` parameters).",
           "type": "string"
         },
         "toolbar": {
@@ -401,11 +469,18 @@
         },
         "ui": {
           "$ref": "#/definitions/ui-theme",
-          "description": "[min|atlas|dark]: Uses the Minimal, Atlas or Dark UI theme (default is Kennedy)."
+          "description": "[min|atlas|dark|sketch]: Uses the Minimal, Atlas, Dark or Sketch UI theme (default is Kennedy).",
+          "examples": ["min", "atlas", "dark", "sketch"]
+        },
+        "url": {
+          "description": "url: *Deprecated* - Use U hash property `#U{uri_encoded_url}` to open a diagram from a URI-encoded URL, eg. https://app.diagrams.net/\\#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjgraph%2Fdrawio-diagrams%2Fmaster%2Fdiagrams%2Fschema.xml **NEW `14.6.10`**"
         },
         "vars": {
-          "description": "json: Uses a URI encoded JSON string for global placeholders for use in labels and tooltips where enabled, e.g. vars={%22key%22:%22value%22}",
+          "description": "`vars=json`: Uses a URI-encoded JSON string for global _placeholders for use in labels and tooltips_ where enabled, e.g. `vars={\"key\":\"value\"}`.",
           "type": "string"
+        },
+        "viewbox": {
+          "description": "{\"x\": int, \"y\": int, \"width\": int, \"height\": int}: Sets the initial viewport when you specify file IDs. **NEW `14.6.10`**"
         },
         "zoom": {
           "description": "nocss: Disables the CSS zoom preview.",
@@ -543,7 +618,7 @@
       "type": "array"
     },
     "ui-theme": {
-      "enum": ["min", "atlas", "dark", "kennedy"],
+      "enum": ["min", "atlas", "dark", "kennedy", "sketch"],
       "type": "string"
     },
     "url-param-mode": {

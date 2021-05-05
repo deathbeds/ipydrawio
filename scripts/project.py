@@ -65,6 +65,28 @@ README = ROOT / "README.md"
 CHANGELOG = ROOT / "CHANGELOG.md"
 SETUP_CFG = ROOT / "setup.cfg"
 
+# external URLs
+# archive.org template
+CACHE_EPOCH = 0
+
+
+def A_O(archive_id, url, cache_bust=CACHE_EPOCH):
+    return "https://web.archive.org/web/{}/{}#{}".format(archive_id, url, cache_bust)
+
+
+DIA_FAQ = "https://www.diagrams.net/doc/faq"
+
+FETCHED = BUILD / "fetched"
+
+DIA_URLS = {
+    FETCHED
+    / "supported-url-parameters.html": (
+        A_O(20210425055302, f"{DIA_FAQ}/supported-url-parameters")
+    ),
+    FETCHED / "embed-mode.html": (A_O(20200924053756, f"{DIA_FAQ}/embed-mode")),
+}
+
+
 # ci
 CI = ROOT / ".github"
 ENV_CI = CI / "environment.yml"
@@ -345,3 +367,17 @@ def get_atest_stem(attempt=1, extra_args=None, browser=None):
 os.environ.update(
     IPYDRAWIO_DATA_DIR=str(IPYDRAWIO_DATA_DIR), PIP_DISABLE_PIP_VERSION_CHECK="1"
 )
+
+
+def fetch_one(url, path, R):
+    import doit
+
+    yield dict(
+        uptodate=[doit.tools.config_changed({"url": url})],
+        name=path.name,
+        actions=[
+            (doit.tools.create_folder, [path.parent]),
+            lambda: [path.write_bytes(R.get(url).content), None][-1],
+        ],
+        targets=[path],
+    )

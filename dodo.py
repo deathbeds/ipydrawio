@@ -35,10 +35,20 @@ import subprocess
 import time
 from hashlib import sha256
 
+import requests
 from doit.action import CmdAction
 from doit.tools import PythonInteractiveAction, config_changed
 
 import scripts.project as P
+
+R = requests.Session()
+
+try:
+    import requests_cache
+
+    R = requests_cache.CachedSession(cache_name=f"""{P.BUILD / ".requests-cache"}""")
+except ImportError:
+    pass
 
 print_ = pprint.pprint
 console = None
@@ -51,8 +61,8 @@ try:
     print_ = console.print
 
 except ImportError:
-    # nothing to see here
     pass
+
 
 DOIT_CONFIG = dict(
     backend="sqlite3",
@@ -75,6 +85,11 @@ def task_all():
         ],
         actions=[(_show, ["nothing left to do"], {"shasums": P.SHA256SUMS.read_text})],
     )
+
+
+def task_fetch():
+    for path, url in P.DIA_URLS.items():
+        yield P.fetch_one(url, path, R)
 
 
 def task_dist():
