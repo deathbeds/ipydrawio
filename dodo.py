@@ -35,18 +35,16 @@ import subprocess
 import time
 from hashlib import sha256
 
-import requests
+from requests import Session
 from doit.action import CmdAction
 from doit.tools import PythonInteractiveAction, config_changed
 
 import scripts.project as P
 
-R = requests.Session()
+_session = None
 
 try:
-    import requests_cache
-
-    R = requests_cache.CachedSession(cache_name=f"""{P.BUILD / ".requests-cache"}""")
+    from requests_cache import Session
 except ImportError:
     pass
 
@@ -88,8 +86,9 @@ def task_all():
 
 
 def task_fetch():
+    
     for path, url in P.DIA_URLS.items():
-        yield P.fetch_one(url, path, R)
+        yield P.fetch_one(url, path, Session)
 
 
 def task_dist():
