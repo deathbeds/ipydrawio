@@ -24,7 +24,7 @@ dependencies:
 
   - sphinx
   - pydata-sphinx-theme
-  - mystnb
+  - myst-nb
 
   ### ipydrawio-docs-deps ###
 

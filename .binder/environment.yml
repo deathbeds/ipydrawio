@@ -43,7 +43,19 @@ dependencies:
   - wxyz_json_schema_form
   - wxyz_lab
   - wxyz_svg
+  - sphinx-autobuild
+  ############################################################################
+  ### ipydrawio-docs-deps ###
 
+  - sphinx
+  - pydata-sphinx-theme
+  - myst-nb
+
+  ### ipydrawio-docs-deps ###
+
+  ############################################################################
+
+  ############################################################################
   ### ipydrawio-dev-deps ###
 
   # core
@@ -84,3 +96,5 @@ dependencies:
   - codecov
 
   ### ipydrawio-dev-deps ###
+
+  ############################################################################

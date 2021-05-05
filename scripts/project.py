@@ -20,6 +20,7 @@
 import json
 import os
 import platform
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -239,6 +240,7 @@ SERVER_EXT = {
 
 # docs
 DOCS_CONF = DOCS / "conf.py"
+ENV_DOCS = DOCS / "rtd.yml"
 
 ALL_PY = [
     *ATEST.rglob("*.py"),
@@ -364,6 +366,9 @@ CONDA_PKGS = {
     for pkg, ver in PY_VERSION.items()
 }
 
+# env inheritance
+ENV_INHERITS = {ENV_BINDER: [ENV_CI, ENV_DOCS], ENV_DOCS: [ENV_CI]}
+
 
 def get_atest_stem(attempt=1, extra_args=None, browser=None):
     """get the directory in ATEST_OUT for this platform/apps"""
@@ -405,6 +410,28 @@ def fetch_one(url, path):
             lambda: [path.write_bytes(_SESSION.get(url).content), None][-1],
         ],
         targets=[path],
+    )
+
+
+def patch_one_env(source, target):
+    print("env", source)
+    print("-->", target)
+    source_text = source.read_text(encoding="utf-8")
+    name = re.findall(r"name: (.*)", source_text)[0]
+
+    comment = f"  ### {name}-deps ###"
+    old_target = target.read_text(encoding="utf-8").split(comment)
+    new_source = source_text.split(comment)
+    target.write_text(
+        "\n".join(
+            [
+                old_target[0].strip(),
+                comment,
+                new_source[1],
+                comment.rstrip(),
+                old_target[2],
+            ]
+        )
     )
 
 
