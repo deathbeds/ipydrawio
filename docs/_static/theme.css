@@ -4,7 +4,7 @@
   --ipd-card-shadow-1: 0.125em 0.125em 0.125em 0.125em rgba(0, 0, 0, 0.05);
   --ipd-card-shadow-2: 0.25em 0.25em 0.25em 0.125em rgba(0, 0, 0, 0.1);
   --ipd-card-text-base: 0.8em;
-  --ipd-card-padding: calc(var(--ipd-card-text-base) * 0.5);
+  --ipd-card-padding: var(--ipd-card-text-base);
   --ipd-card-text-header: calc(var(--ipd-card-text-base) * 1.25);
 }
 
@@ -48,10 +48,11 @@ footer .container,
 .toctree-wrapper.compound > ul > .toctree-l1,
 footer .container > .footer-item,
 #prev-link,
-#next-link {
+#next-link,
+#bd-toc-nav {
   flex: 1;
-  min-width: calc(30 * var(--ipd-card-padding));
-  max-width: calc(40 * var(--ipd-card-padding));
+  min-width: calc(10 * var(--ipd-card-padding));
+  max-width: calc(30 * var(--ipd-card-padding));
   list-style: none;
   border: var(--ipd-card-border);
   background-color: var(--ipd-card-background);
@@ -60,15 +61,30 @@ footer .container > .footer-item,
   margin: calc(var(--ipd-card-padding) / 2);
   text-align: center;
   transition: box-shadow 0.5s ease-in-out;
+  border-radius: calc(var(--ipd-card-padding) * 0.25);
+}
+
+.tocsection {
+  border: 0;
 }
 
 #navbar-main:hover,
 .toctree-wrapper.compound > ul > .toctree-l1:hover,
 footer .container > .footer-item:hover,
 #prev-link:hover,
-#next-link:hover {
+#next-link:hover,
+#bd-toc-nav:hover {
   box-shadow: var(--ipd-card-shadow-2);
   transition: box-shadow 1s ease-in-out;
+}
+
+#bd-toc-nav {
+  padding: var(--ipd-card-padding) 0;
+  text-align: left;
+}
+
+#bd-toc-nav:empty {
+  opacity: 0;
 }
 
 .toctree-wrapper.compound > ul > .toctree-l1 > a {
@@ -76,6 +92,7 @@ footer .container > .footer-item:hover,
   font-weight: bold;
   color: #000;
   font-size: var(--ipd-card-text-header);
+  padding-bottom: var(--ipd-card-padding);
 }
 
 .toctree-wrapper.compound > ul > .toctree-l1 > ul {
