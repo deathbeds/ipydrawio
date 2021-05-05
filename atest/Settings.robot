@@ -35,6 +35,10 @@ Kennedy
     [Documentation]    Does the kennedy theme work?
     Validate a Diagram Theme    kennedy
 
+Sketch
+    [Documentation]    Does the kennedy theme work?
+    Validate a Diagram Theme    sketch
+
 *** Keywords ***
 Validate a Diagram Theme
     [Arguments]    ${ui}

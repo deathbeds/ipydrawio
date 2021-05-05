@@ -14,7 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-A_SHORT_DRAWIO = """<mxfile version="13.3.6">
+
+A_SHORT_DRAWIO = """<mxfile version="14.6.10">
 <diagram id="x" name="Page-1">
   <mxGraphModel dx="1450" dy="467" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
   <root>
@@ -27,19 +28,6 @@ A_SHORT_DRAWIO = """<mxfile version="13.3.6">
 """
 
 DEFAULT_PAGE_FORMAT = {"x": 0, "y": 0, "width": 850, "height": 1100}
-
-DEFAULT_URL_PARAMS = {
-    "gapi": 0,
-    "gl": 0,
-    "noExitBtn": 1,
-    "noSaveBtn": 1,
-    "od": 0,
-    "stealth": 1,
-    "tr": 0,
-    "ui": "min",
-    "format": 0,
-    "p": "ex;tips;svgdata;sql;anim;trees;replay;anon;flow;webcola;tags",
-}
 
 DEFAULT_DRAWIO_CONFIG = {
     "compressXml": False,

@@ -1,7 +1,6 @@
-"""source of truth for ipydrawio version"""
+"""constants for ipydrawio"""
 
 # Copyright 2021 ipydrawio contributors
-# Copyright 2020 jupyterlab-drawio contributors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,13 +15,19 @@
 # limitations under the License.
 
 import json
-from pathlib import Path
 
-HERE = Path(__file__).parent
-PKG_JSON = HERE / "ext/ipd/package.json"
+from ._version import PKG_JSON, __js__
 
-__js__ = json.loads(PKG_JSON.read_text(encoding="utf-8"))
 
-__version__ = __js__["version"]
+def get_schema():
+    return json.loads(
+        (PKG_JSON.parent / f"""schemas/{__js__["name"]}/plugin.json""").read_text(
+            encoding="utf-8"
+        )
+    )
 
-__all__ = ["__version__", "__js__"]
+
+def get_validator(schema):
+    import jsonschema
+
+    return jsonschema.Draft7Validator(schema or get_schema())

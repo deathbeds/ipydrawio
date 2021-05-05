@@ -15,6 +15,7 @@
 ### @deathbeds/ipydrawio-webpack 14.6.1000
 
 - drawio 14.6.10
+  - improved pipeline for updating schema from drawio documentation for settings
 
 ---
 

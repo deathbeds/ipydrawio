@@ -5,5 +5,5 @@
     "outDir": ".",
     "tsBuildInfoFile": ".root.tsbuildinfo"
   },
-  "files": ["package.json"]
+  "files": ["package.json", "schema/plugin.json"]
 }

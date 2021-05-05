@@ -19,12 +19,7 @@ import ipywidgets as W
 import traitlets as T
 
 from ._version import __js__
-from .constants import (
-    A_SHORT_DRAWIO,
-    DEFAULT_DRAWIO_CONFIG,
-    DEFAULT_PAGE_FORMAT,
-    DEFAULT_URL_PARAMS,
-)
+from .constants import A_SHORT_DRAWIO, DEFAULT_DRAWIO_CONFIG, DEFAULT_PAGE_FORMAT
 
 module_name = __js__["name"]
 module_version = "^{version}".format(**__js__)
@@ -92,7 +87,9 @@ class Diagram(DiagramBase, W.Box):
 
     @T.default("url_params")
     def _default_url_params(self):
-        return {**DEFAULT_URL_PARAMS}
+        from .schema import get_schema
+
+        return get_schema()["properties"]["drawioUrlParams"]["default"]
 
     @T.default("config")
     def _default_config(self):
