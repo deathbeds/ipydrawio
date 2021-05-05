@@ -35,18 +35,10 @@ import subprocess
 import time
 from hashlib import sha256
 
-from requests import Session
 from doit.action import CmdAction
 from doit.tools import PythonInteractiveAction, config_changed
 
 import scripts.project as P
-
-_session = None
-
-try:
-    from requests_cache import Session
-except ImportError:
-    pass
 
 print_ = pprint.pprint
 console = None
@@ -86,9 +78,9 @@ def task_all():
 
 
 def task_fetch():
-    
+
     for path, url in P.DIA_URLS.items():
-        yield P.fetch_one(url, path, Session)
+        yield P.fetch_one(url, path)
 
 
 def task_dist():

@@ -24,6 +24,9 @@ import shutil
 import sys
 from pathlib import Path
 
+_SESSION = None
+
+
 # platform
 PLATFORM = os.environ.get("FAKE_PLATFORM", platform.system())
 WIN = PLATFORM == "Windows"
@@ -68,6 +71,7 @@ SETUP_CFG = ROOT / "setup.cfg"
 # external URLs
 # archive.org template
 CACHE_EPOCH = 0
+HTTP_CACHE = BUILD / ".requests-cache"
 
 
 def A_O(archive_id, url, cache_bust=CACHE_EPOCH):
@@ -364,26 +368,37 @@ def get_atest_stem(attempt=1, extra_args=None, browser=None):
     return stem
 
 
-os.environ.update(
-    IPYDRAWIO_DATA_DIR=str(IPYDRAWIO_DATA_DIR), PIP_DISABLE_PIP_VERSION_CHECK="1"
-)
-
-_SESSION = None
-
-def fetch_one(url, path, Session, cache_path=None):
+def ensure_session():
     global _SESSION
-    
+
     if _SESSION is None:
-        _SESSION = Session()
-        
+        try:
+            import requests_cache
+
+            _SESSION = requests_cache.CachedSession(cache_name=str(HTTP_CACHE))
+        except ImportError:
+            import requests
+
+            _SESSION = requests.Session()
+
+
+def fetch_one(url, path):
     import doit
 
     yield dict(
         uptodate=[doit.tools.config_changed({"url": url})],
         name=path.name,
         actions=[
+            (doit.tools.create_folder, [HTTP_CACHE]),
             (doit.tools.create_folder, [path.parent]),
-            lambda: [path.write_bytes(R.get(url).content), None][-1],
+            (ensure_session, []),
+            lambda: [path.write_bytes(_SESSION.get(url).content), None][-1],
         ],
         targets=[path],
     )
+
+
+# Late environment hacks
+os.environ.update(
+    IPYDRAWIO_DATA_DIR=str(IPYDRAWIO_DATA_DIR), PIP_DISABLE_PIP_VERSION_CHECK="1"
+)
