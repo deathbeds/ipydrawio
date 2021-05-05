@@ -368,8 +368,14 @@ os.environ.update(
     IPYDRAWIO_DATA_DIR=str(IPYDRAWIO_DATA_DIR), PIP_DISABLE_PIP_VERSION_CHECK="1"
 )
 
+_SESSION = None
 
-def fetch_one(url, path, R):
+def fetch_one(url, path, Session, cache_path=None):
+    global _SESSION
+    
+    if _SESSION is None:
+        _SESSION = Session()
+        
     import doit
 
     yield dict(
