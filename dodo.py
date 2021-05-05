@@ -107,7 +107,7 @@ def task_submodules():
 
 
 def task_setup():
-    """ perform general steps to get ready for development, testing, or releasing"""
+    """perform general steps to get ready for development, testing, or releasing"""
     if not P.TESTING_IN_CI:
         yield dict(
             name="js",

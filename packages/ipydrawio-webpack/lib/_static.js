@@ -1751,6 +1751,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/orgchart.min.j
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/rough/rough.js.modified';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/rough/rough.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/sanitizer/sanitizer.min.js';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/shapes-14-6-5.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/shapes.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/socket.io/simplepeer9.10.0.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/socket.io/socket.io.min.js';
@@ -2211,6 +2212,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../dio/resources/dia_vi.
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/resources/dia_zh-tw.txt';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/resources/dia_zh.txt';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/service-worker.js';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/service-worker.js.map';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/shapes/bpmn/mxBpmnShape2.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/shapes/er/mxER.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/shapes/ios7/mxIOS7Ui.js';
@@ -2758,3 +2760,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/wirefra
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/wireframes/home_page_hero_video_1.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/wireframes/home_page_hero_video_1.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/vsdxImporter.html';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/workbox-9fe249eb.js';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/workbox-9fe249eb.js.map';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/workbox-f163abaa.js';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/workbox-f163abaa.js.map';

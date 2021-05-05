@@ -12,7 +12,9 @@
 
 ### @deathbeds/ipydrawio-pdf 1.0.2
 
-### @deathbeds/ipydrawio-webpack 14.5.902
+### @deathbeds/ipydrawio-webpack 14.6.1000
+
+- drawio 14.6.10
 
 ---
 

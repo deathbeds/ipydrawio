@@ -24,7 +24,7 @@ dependencies:
   # demo toys
   - bqplot
   - graphviz2drawio
-  - jupyter-lsp-python-plugins
+  - jupyter-lsp-python-lsp-server
   - jupyter-videochat
   - jupyterlab-classic
   - jupyterlab-lsp
