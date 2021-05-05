@@ -1,0 +1,44 @@
+@media (min-width: 1200px) {
+  .container,
+  .container-xl {
+    max-width: 100%;
+  }
+}
+
+#navbar-start {
+  font-family: var(--pst-font-family-heading);
+  font-size: 1.6em;
+}
+
+@media (min-width: 960px) {
+  #navbar-center {
+    display: flex;
+    align-items: baseline;
+  }
+}
+
+.toctree-wrapper.compound > ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.toctree-wrapper.compound > ul > .toctree-l1 {
+  flex: 1;
+  min-width: 10em;
+  max-width: 25vw;
+  list-style: none;
+}
+
+.toctree-wrapper.compound > ul > .toctree-l1 > a {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.toctree-wrapper.compound > ul > .toctree-l1 > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

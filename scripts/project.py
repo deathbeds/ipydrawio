@@ -269,14 +269,11 @@ ALL_JSON = [
     *ATEST.glob("fixtures/*.json"),
     *BINDER.glob("*.json"),
 ]
-ALL_MD = [
-    *ROOT.glob("*.md"),
-    *PACKAGES.glob("*/*.md"),
-]
+ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md"), *DOCS.rglob("*.md")]
 ALL_SETUP_CFG = [SETUP_CFG, *PY_SETUP_CFG.values()]
 ALL_JS = [PACKAGES / ".eslintrc.js"]
 ALL_TS = sum(JS_TSSRC.values(), [])
-ALL_CSS = sum(JS_STYLE.values(), [])
+ALL_CSS = [*sum(JS_STYLE.values(), []), *DOCS.rglob("*.css")]
 ALL_ROBOT = [*ATEST.rglob("*.robot")]
 ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS, *ALL_CSS, *ALL_JS]
 ALL_HEADERS = [

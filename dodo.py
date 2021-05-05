@@ -599,19 +599,29 @@ def _make_lab(watch=False):
     return _lab
 
 
-if not P.TESTING_IN_CI:
+def task_watch():
+    """watch things"""
+    if P.TESTING_IN_CI:
+        return
 
-    def task_watch():
-        """watch labextensions for changes, rebuilding"""
+    yield dict(
+        name="lab",
+        doc="watch labextensions for changes, rebuilding",
+        uptodate=[lambda: False],
+        file_dep=[*P.OK_SERVEREXT.values(), P.OK_PIP_CHECK],
+        actions=[
+            P.CMD_LIST_EXTENSIONS,
+            PythonInteractiveAction(_make_lab(watch=True)),
+        ],
+    )
 
-        return dict(
-            uptodate=[lambda: False],
-            file_dep=[*P.OK_SERVEREXT.values(), P.OK_PIP_CHECK],
-            actions=[
-                P.CMD_LIST_EXTENSIONS,
-                PythonInteractiveAction(_make_lab(watch=True)),
-            ],
-        )
+    yield dict(
+        name="docs",
+        doc="watch docs for changes, rebuilding",
+        uptodate=[lambda: False],
+        file_dep=[P.DOCS_BUILDINFO],
+        actions=[["sphinx-autobuild", "-a", "-j8", P.DOCS, P.DOCS_BUILD]],
+    )
 
 
 if not P.TESTING_IN_CI:

@@ -60,9 +60,9 @@ suppress_warnings = ["autosectionlabel.*"]
 # }
 
 # files
-templates_path = ["_templates"]
+# templates_path = ["_templates"]
 # html_favicon = "../app/lab/favicon.ico"
-# html_static_path = ["_static", "../app"]
+html_static_path = ["_static"]
 exclude_patterns = [
     ".ipynb_checkpoints",
     "**/.ipynb_checkpoints",
@@ -83,7 +83,7 @@ html_css_files = [
 html_theme = "pydata_sphinx_theme"
 # html_logo = "_static/icon.svg"
 html_theme_options = {
-    "github_url": APP_DATA["homepage"],
+    "github_url": APP_DATA["repository"]["url"],
     "use_edit_page_button": True,
     # "navbar_start": ["launch.html"],
     # "navbar_center": ["navbar-logo.html", "navbar-nav.html"],

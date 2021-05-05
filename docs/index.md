@@ -1,3 +1,6 @@
-```{include} ../README.md
+## IPyDrawio Documentation
 
+```{toctree}
+diagrams/index
+about/index
 ```
