@@ -1,6 +1,9 @@
 ## IPyDrawio Documentation
 
 ```{toctree}
-diagrams/index
+:maxdepth: 2
 about/index
+diagrams/index
+about/contributing
+about/changelog
 ```

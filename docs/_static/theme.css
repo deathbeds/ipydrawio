@@ -1,3 +1,13 @@
+:root {
+  --ipd-card-background: rgb(255, 249, 240);
+  --ipd-card-border: solid 1px rgba(0, 0, 0, 0.125);
+  --ipd-card-shadow-1: 0.125em 0.125em 0.125em 0.125em rgba(0, 0, 0, 0.05);
+  --ipd-card-shadow-2: 0.25em 0.25em 0.25em 0.125em rgba(0, 0, 0, 0.1);
+  --ipd-card-text-base: 0.8em;
+  --ipd-card-padding: calc(var(--ipd-card-text-base) * 0.5);
+  --ipd-card-text-header: calc(var(--ipd-card-text-base) * 1.25);
+}
+
 @media (min-width: 1200px) {
   .container,
   .container-xl {
@@ -17,28 +27,60 @@
   }
 }
 
+footer .container,
 .toctree-wrapper.compound > ul {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin-left: 0;
   padding-left: 0;
+  justify-content: space-between;
 }
 
-.toctree-wrapper.compound > ul > .toctree-l1 {
+/* the cards */
+#navbar-main {
+  border-bottom: var(--ipd-card-border);
+  background-color: var(--ipd-card-background) !important;
+  box-shadow: var(--ipd-card-shadow-1);
+  padding: var(--ipd-card-padding);
+}
+
+.toctree-wrapper.compound > ul > .toctree-l1,
+footer .container > .footer-item,
+#prev-link,
+#next-link {
   flex: 1;
-  min-width: 10em;
-  max-width: 25vw;
+  min-width: calc(30 * var(--ipd-card-padding));
+  max-width: calc(40 * var(--ipd-card-padding));
   list-style: none;
+  border: var(--ipd-card-border);
+  background-color: var(--ipd-card-background);
+  box-shadow: var(--ipd-card-shadow-1);
+  padding: var(--ipd-card-padding);
+  margin: calc(var(--ipd-card-padding) / 2);
+  text-align: center;
+  transition: box-shadow 0.5s ease-in-out;
+}
+
+#navbar-main:hover,
+.toctree-wrapper.compound > ul > .toctree-l1:hover,
+footer .container > .footer-item:hover,
+#prev-link:hover,
+#next-link:hover {
+  box-shadow: var(--ipd-card-shadow-2);
+  transition: box-shadow 1s ease-in-out;
 }
 
 .toctree-wrapper.compound > ul > .toctree-l1 > a {
   text-transform: uppercase;
   font-weight: bold;
+  color: #000;
+  font-size: var(--ipd-card-text-header);
 }
 
 .toctree-wrapper.compound > ul > .toctree-l1 > ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  text-align: left;
 }

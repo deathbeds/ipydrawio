@@ -1,4 +1,4 @@
-# Make Diagrams
+# Making Diagrams
 
 IPyDrawio lets you build and interact with diagrams comptible with
 [diagrams.net](https://diagrams.net). The same renderer powers different kinds
