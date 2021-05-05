@@ -751,15 +751,24 @@
     "drawioUrlParams": {
       "$ref": "#/definitions/drawio-url-params",
       "default": {
+        "db": 0,
+        "drafts": 0,
         "gapi": 0,
+        "gh": 0,
         "gl": 0,
         "noExitBtn": 1,
         "noSaveBtn": 1,
         "od": 0,
         "p": "ex;tips;svgdata;sql;anim;trees;replay;anon;flow;webcola;tags",
+        "picker": 0,
+        "saveAndExit": 0,
+        "spin": 0,
+        "splash": 0,
         "stealth": 1,
+        "svg-warning": 0,
+        "thumb": 0,
         "tr": 0,
-        "ui": "min"
+        "ui": "sketch"
       },
       "description": "URL parameters for the drawio iframe https://web.archive.org/web/20210425055302/https://www.diagrams.net/doc/faq/supported-url-parameters"
     }
