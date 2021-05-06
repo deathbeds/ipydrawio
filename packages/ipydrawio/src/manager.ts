@@ -337,7 +337,7 @@ export class DiagramManager implements IDiagramManager {
       name,
       fileTypes: fileTypes.map(({ name }) => name),
       defaultFor: defaultFor.map(({ name }) => name),
-      getSettings: () => this._settings.composite,
+      getSettings: () => this._settings.composite || {},
       manager: this,
     });
     const tracker = new WidgetTracker<DiagramDocument>({ namespace });

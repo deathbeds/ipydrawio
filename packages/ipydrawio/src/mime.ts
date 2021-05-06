@@ -70,8 +70,8 @@ export class RenderedDiagram extends Panel implements IRenderMime.IRenderer {
           const { manager } = RenderedDiagram;
           if (manager != null) {
             params =
-              (manager.settings.composite
-                .drawioUrlParams as ReadonlyPartialJSONObject) || {};
+              (manager.settings?.composite
+                ?.drawioUrlParams as ReadonlyPartialJSONObject) || {};
           }
           const meta = this.lastModel?.metadata;
           const mimeParams = ((meta[this.format.mimetype] || {}) as any)[
@@ -92,8 +92,8 @@ export class RenderedDiagram extends Panel implements IRenderMime.IRenderer {
           const { manager } = RenderedDiagram;
           if (manager != null) {
             config =
-              (manager.settings.composite
-                .drawioConfig as ReadonlyPartialJSONObject) || {};
+              (manager.settings?.composite
+                ?.drawioConfig as ReadonlyPartialJSONObject) || {};
           }
 
           const meta = this.lastModel?.metadata;

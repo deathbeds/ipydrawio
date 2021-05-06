@@ -88,7 +88,7 @@ export class DrawioPDFManager {
   exportUrl(settings: ISettingRegistry.ISettings) {
     let url = DEFAULT_EXPORT_URL;
     try {
-      url = (settings.composite['drawioExportUrl'] as any)['url'];
+      url = (settings?.composite?.drawioExportUrl as any)['url'];
     } catch (err) {
       DEBUG && console.warn('using fallback url', err);
     }

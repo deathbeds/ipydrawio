@@ -74,9 +74,15 @@ Update The Diagram Widget Value
 Change Paper Size
     [Arguments]    ${size}=letter
     Select Frame    ${CSS DIO IFRAME}
+    Maybe Open Layout Pane
     ${el} =    Get WebElement    xpath:${XP DIO PAGE SIZE}
     Select From List By Value    ${el}    ${size}
     [Teardown]    Unselect Frame
+
+Maybe Open Layout Pane
+    ${els} =    Get WebElements    xpath:${XP DIO LAYOUT PANE VISIBLE}
+    Run Keyword If    not ${els.__len__()}    Click Element    xpath:${XP DIO LAYOUT TITLE}
+    Wait Until Page Contains Element    xpath:${XP DIO LAYOUT PANE VISIBLE}
 
 Measure Paper
     ${size} =    Get Element Size    css:.geBackgroundPage

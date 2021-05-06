@@ -28,7 +28,7 @@ def validator():
 @pytest.mark.parametrize("example,valid", [[{}, True], [0, False]])
 def test_validator(validator, example, valid):
     if valid:
-        assert validator.validate(example)
+        validator.validate(example)
     else:
         with pytest.raises(jsonschema.ValidationError):
             validator.validate(example)

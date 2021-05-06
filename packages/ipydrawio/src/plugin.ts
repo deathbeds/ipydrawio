@@ -135,7 +135,8 @@ function activate(
     },
     isToggleable: true,
     isToggled: (args) => {
-      const drawioUrlParams = manager.settings.composite.drawioUrlParams || {};
+      const drawioUrlParams =
+        manager.settings?.composite?.drawioUrlParams || {};
       for (const [k, v] of Object.entries(args.drawioUrlParams || {})) {
         if (
           drawioUrlParams.hasOwnProperty(k) &&
@@ -147,7 +148,8 @@ function activate(
       return true;
     },
     execute: async (args) => {
-      const drawioUrlParams = manager.settings.composite.drawioUrlParams || {};
+      const drawioUrlParams =
+        manager.settings?.composite?.drawioUrlParams || {};
       await manager.settings.set('drawioUrlParams', {
         ...(drawioUrlParams as any),
         ...(args.drawioUrlParams as any),
