@@ -35,6 +35,6 @@ validator = get_validator()
 )
 def test_validator(example, expected_errors):
     errors = [*validator.iter_errors(example)]
-    if errors and not expected_errors:
+    if errors and not expected_errors:  # pragma: no cover
         [print(e.__dict__) for e in errors]
     assert len(errors) == expected_errors
