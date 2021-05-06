@@ -100,7 +100,7 @@ def task_env():
     for env, inherits in P.ENV_INHERITS.items():
         yield dict(
             name=f"""{env.parent.name}:{':'.join([inh.parent.name for inh in inherits])}""",
-            file_dep=inherits,
+            file_dep=[*inherits, P.YARN_INTEGRITY],
             actions=[(P.patch_one_env, [inh, env]) for inh in inherits]
             + [["jlpm", "prettier", "--list-different", "--write", env]],
             targets=[env],
