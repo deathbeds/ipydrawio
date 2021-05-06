@@ -27,6 +27,8 @@ dependencies:
   - pytest-check-links
   - sphinx
   - sphinx-jsonschema
+  # TODO: resolve upstream
+  - sqlalchemy <1.4
 
   ### ipydrawio-docs-deps ###
 
