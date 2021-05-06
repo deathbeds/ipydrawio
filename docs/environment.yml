@@ -26,6 +26,7 @@ dependencies:
   - pydata-sphinx-theme
   - pytest-check-links
   - sphinx
+  - sphinx-jsonschema
 
   ### ipydrawio-docs-deps ###
 
