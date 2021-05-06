@@ -35,6 +35,7 @@ import subprocess
 import time
 from hashlib import sha256
 
+import doit
 from doit.action import CmdAction
 from doit.tools import PythonInteractiveAction, config_changed
 
@@ -66,12 +67,14 @@ def task_all():
     """do _everything_ (except start long-running servers)"""
     return dict(
         uptodate=[lambda: False],
+        task_dep=["check"],
         file_dep=[
             *P.OK_PYTEST.values(),
             P.OK_ATEST,
             P.OK_INTEGRITY,
             P.OK_PROVISION,
             P.SHA256SUMS,
+            P.DOCS_BUILDINFO,
         ],
         actions=[(_show, ["nothing left to do"], {"shasums": P.SHA256SUMS.read_text})],
     )
@@ -654,6 +657,24 @@ def task_docs():
         file_dep=[P.DOCS_CONF, P.DOCS_FAVICON_ICO],
         actions=[["sphinx-build", "-j8", "-b", "html", P.DOCS, P.DOCS_BUILD]],
         targets=[P.DOCS_BUILDINFO],
+    )
+
+
+@doit.create_after("docs")
+def task_check():
+    file_dep = [*P.DOCS_BUILD.rglob("*.html")]
+    yield dict(
+        name="links",
+        file_dep=[*file_dep, P.DOCS_BUILDINFO],
+        actions=[
+            [
+                "pytest-check-links",
+                "--check-anchors",
+                "--check-links-ignore",
+                "^https?://",
+                *file_dep,
+            ]
+        ],
     )
 
 

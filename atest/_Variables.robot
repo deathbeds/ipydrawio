@@ -52,7 +52,7 @@ ${CSS LAUNCH IPYNB}    css:.jp-LauncherCard[data-category='Notebook'][title='Pyt
 ${CSS DIO READY}    css:.jp-Diagram-ready
 ${CSS DIO IFRAME}    ${CSS DIO READY} iframe
 # drawio
-${CSS DIO BG}     css:.geBackgroundPage
+${CSS DIO BG}     css:.geDiagramContainer svg
 ${CSS DIO SHAPE POPUP}    css:.geToolbarContainer.geSidebarContainer.geSidebar
 ${CSS DIO SHAPE POPUP SHAPE}    ${CSS DIO SHAPE POPUP} .geItem
 ${CSS DIO EDITABLE}    css:.mxCellEditor.geContentEditable

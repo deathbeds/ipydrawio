@@ -47,9 +47,10 @@ dependencies:
   ############################################################################
   ### ipydrawio-docs-deps ###
 
-  - sphinx
-  - pydata-sphinx-theme
   - myst-nb
+  - pydata-sphinx-theme
+  - pytest-check-links
+  - sphinx
 
   ### ipydrawio-docs-deps ###
 

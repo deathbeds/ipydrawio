@@ -1,7 +1,3 @@
-```{include} ../../README.md
-
-```
-
 <!--
 # Copyright 2021 ipydrawio contributors
 #
