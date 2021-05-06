@@ -290,7 +290,7 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-docs-${{ matrix.python-version }}-${{ hashFiles('.github/environment.yml') }}
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-docs-${{ matrix.python-version }}-${{ hashFiles('./docs/environment.yml') }}
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-docs-${{ matrix.python-version }}-
 
@@ -300,7 +300,7 @@ jobs:
           condarc-file: .github/.condarc
           miniforge-variant: Mambaforge
           python-version: ${{ matrix.python-version }}
-          environment-file: .docs/environment.yml
+          environment-file: ./docs/environment.yml
           use-only-tar-bz2: true
           use-mamba: true
 
