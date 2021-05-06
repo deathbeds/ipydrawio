@@ -294,6 +294,16 @@ jobs:
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-docs-${{ matrix.python-version }}-
 
+      - name: cache (yarn)
+        uses: actions/cache@v2
+        with:
+          path: .yarn-packages
+          key: |
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-
+            ${{ env.CACHE_EPOCH }}-yarn-
+
       - name: install (conda)
         uses: conda-incubator/setup-miniconda@v2
         with:
