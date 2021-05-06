@@ -624,17 +624,41 @@ def task_watch():
     )
 
 
-if not P.TESTING_IN_CI:
+def task_docs():
+    """build the docs"""
+    if P.TESTING_IN_CI:
+        return
 
-    def task_docs():
-        """build the docs"""
+    if shutil.which("convert"):
         yield dict(
-            name="sphinx",
-            doc="build the documentation site with sphinx",
-            file_dep=[P.DOCS_CONF],
-            actions=[["sphinx-build", "-b", "html", P.DOCS, P.DOCS_BUILD]],
-            targets=[P.DOCS_BUILDINFO],
+            name="favicon",
+            doc="regenerate the favicon",
+            file_dep=[P.DOCS_FAVICON_SVG],
+            actions=[
+                [
+                    "convert",
+                    "-density",
+                    "256x256",
+                    "-background",
+                    "transparent",
+                    P.DOCS_FAVICON_SVG,
+                    "-define",
+                    "icon:auto-resize",
+                    "-colors",
+                    "256",
+                    P.DOCS_FAVICON_ICO,
+                ]
+            ],
+            targets=[P.DOCS_FAVICON_ICO],
         )
+
+    yield dict(
+        name="sphinx",
+        doc="build the documentation site with sphinx",
+        file_dep=[P.DOCS_CONF, P.DOCS_FAVICON_ICO],
+        actions=[["sphinx-build", "-j8", "-b", "html", P.DOCS, P.DOCS_BUILD]],
+        targets=[P.DOCS_BUILDINFO],
+    )
 
 
 def task_provision():

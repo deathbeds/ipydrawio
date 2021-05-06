@@ -243,6 +243,9 @@ DOCS_CONF = DOCS / "conf.py"
 ENV_DOCS = DOCS / "environment.yml"
 DOCS_BUILD = BUILD / "docs"
 DOCS_BUILDINFO = DOCS_BUILD / ".buildinfo"
+DOCS_STATIC = DOCS / "_static"
+DOCS_FAVICON_SVG = DOCS_STATIC / "icon.svg"
+DOCS_FAVICON_ICO = DOCS_STATIC / "favicon.ico"
 
 ALL_PY = [
     *ATEST.rglob("*.py"),
