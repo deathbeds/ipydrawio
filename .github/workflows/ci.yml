@@ -274,6 +274,7 @@ jobs:
 
   docs:
     name: docs
+    needs: [build]
     runs-on: ${{ matrix.os }}-latest
     strategy:
       fail-fast: false
