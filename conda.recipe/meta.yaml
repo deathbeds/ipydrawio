@@ -54,7 +54,6 @@ outputs:
         - ipywidgets >=7.6
         - jupyterlab ==3.*
         - jupyterlab_widgets >=1
-        - lxml
         - python >=3.6
     test:
       imports:
@@ -89,11 +88,12 @@ outputs:
         - python >=3.6
       run:
         - ipydrawio =={{ version }}.*
-        - python >=3.6
+        - lxml
+        - nodejs
         - pillow
         - pypdf2
+        - python >=3.6
         - requests_cache
-        - nodejs
     test:
       imports:
         - ipydrawio_export
