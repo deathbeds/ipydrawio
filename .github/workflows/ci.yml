@@ -271,3 +271,39 @@ jobs:
             ipydrawio ${{ github.run_number }} atest ${{ matrix.os }}${{
             matrix.python-version }}
           path: ./build/atest
+
+  docs:
+    name: docs
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu']
+        python-version: ['3.9']
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: cache (conda)
+        uses: actions/cache@v2
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-docs-${{ matrix.python-version }}-${{ hashFiles('.github/environment.yml') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-docs-${{ matrix.python-version }}-
+
+      - name: install (conda)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          condarc-file: .github/.condarc
+          miniforge-variant: Mambaforge
+          python-version: ${{ matrix.python-version }}
+          environment-file: .docs/environment.yml
+          use-only-tar-bz2: true
+          use-mamba: true
+
+      - name: build docs
+        shell: bash -l {0}
+        run: |
+          doit $DOIT_N_TEST docs || doit docs
