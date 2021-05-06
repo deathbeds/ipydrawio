@@ -16,12 +16,12 @@
 import datetime
 import json
 import os
+import re
 
-# import re
 # import subprocess
 from pathlib import Path
 
-# from sphinx.application import Sphinx
+from sphinx.application import Sphinx
 
 HERE = Path(__file__).parent
 ROOT = HERE.parent
@@ -45,7 +45,7 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     # "sphinxext.rediraffe",
     "sphinx.ext.autodoc",
-    # "sphinx-jsonschema",
+    "sphinx-jsonschema",
     "myst_nb",
 ]
 
@@ -101,19 +101,19 @@ html_context = {
 #     subprocess.check_call(["doit", "build", "docs:typedoc:mystify"], cwd=str(ROOT))
 
 
-# def clean_schema(app: Sphinx, error):
-#     if error:
-#         return
-#     for schema_html in Path(app.builder.outdir).glob("schema-v*.html"):
-#         text = schema_html.read_text(encoding="utf-8")
-#         new_text = re.sub(r'<span id="([^"]*)"></span>', "", text)
-#         if text != new_text:
-#             schema_html.write_text(new_text, encoding="utf-8")
+def clean_schema(app: Sphinx, error):
+    if error:
+        return
+    for schema_html in Path(app.builder.outdir).glob("api/schema.html"):
+        text = schema_html.read_text(encoding="utf-8")
+        new_text = re.sub(r'<span id="([^"]*)"></span>', "", text)
+        if text != new_text:
+            schema_html.write_text(new_text, encoding="utf-8")
 
-#     # decide which labextensions to install
-#     # if RTD:
-#     #     subprocess.check_call(["doit", "docs:extensions"], cwd=str(ROOT))
+    # decide which labextensions to install
+    # if RTD:
+    #     subprocess.check_call(["doit", "docs:extensions"], cwd=str(ROOT))
 
 
-# def setup(app):
-#     app.connect("build-finished", clean_schema)
+def setup(app):
+    app.connect("build-finished", clean_schema)

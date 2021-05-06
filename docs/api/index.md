@@ -1,0 +1,5 @@
+# API
+
+```{toctree}
+schema
+```

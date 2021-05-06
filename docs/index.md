@@ -1,9 +1,10 @@
-## IPyDrawio Documentation
+# IPyDrawio Documentation
 
 ```{toctree}
 :maxdepth: 2
 about/index
 diagrams/index
+api/index
 about/contributing
 about/changelog
 ```
