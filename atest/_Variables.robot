@@ -81,7 +81,7 @@ ${JW XP ACCORD CHILD HEAD}    ${JW XP ACCORD CHILD}/div[contains(@class, 'p-Coll
 # notebook
 ${JLAB CSS ICON ADD}    .jp-ToolbarButtonComponent [data-icon='ui-components:add']
 ${JLAB CSS ICON RUN}    .jp-ToolbarButtonComponent [data-icon='ui-components:run']
-${XP DIO LAYOUT TITLE}    //div[contains(@class, 'mxWindowTitle')][contains(text(), 'Layout')]
+${XP DIO LAYOUT TITLE}    //div[contains(@class, 'mxWindowTitle')][contains(text(), 'Format')]
 ${XP DIO LAYOUT PANE}    ${XP DIO LAYOUT TITLE}/../../../div[contains(@class, 'mxWindowPane')]
 ${XP DIO LAYOUT PANE VISIBLE}    ${XP DIO LAYOUT PANE}\[not(contains(@style, 'display: none'))]
 ${XP DIO PAGE SIZE}    //div[contains(@class, "geFormatSection")][contains(., "Paper Size")]//select
