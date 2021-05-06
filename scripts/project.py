@@ -306,7 +306,10 @@ RFLINT_OPTS = sum(
 )
 
 # package: [dependencies, targets]
-JS_PKG_PACK = {k: [[v.parent / "package.json"], [v]] for k, v in JS_TARBALL.items()}
+JS_PKG_PACK = {
+    k: [[v.parent / "package.json", *v.parent.glob("schema/*.json")], [v]]
+    for k, v in JS_TARBALL.items()
+}
 [
     JS_PKG_PACK[k][0].append(v)
     for k, v in JS_TSBUILDINFO.items()

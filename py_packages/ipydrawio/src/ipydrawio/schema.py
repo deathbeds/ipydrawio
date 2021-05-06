@@ -18,13 +18,11 @@ import json
 
 from ._version import PKG_JSON, __js__
 
+SCHEMA = PKG_JSON.parent / f"""schemas/{__js__["name"]}/plugin.json"""
+
 
 def get_schema():
-    return json.loads(
-        (PKG_JSON.parent / f"""schemas/{__js__["name"]}/plugin.json""").read_text(
-            encoding="utf-8"
-        )
-    )
+    return json.loads(SCHEMA.read_text(encoding="utf-8"))
 
 
 def get_validator(schema=None):

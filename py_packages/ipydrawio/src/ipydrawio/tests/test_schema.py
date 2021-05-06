@@ -14,21 +14,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import jsonschema
 import pytest
 
 from ipydrawio.schema import get_validator
 
-
-@pytest.fixture
-def validator():
-    return get_validator()
+validator = get_validator()
 
 
-@pytest.mark.parametrize("example,valid", [[{}, True], [0, False]])
-def test_validator(validator, example, valid):
-    if valid:
-        validator.validate(example)
-    else:
-        with pytest.raises(jsonschema.ValidationError):
-            validator.validate(example)
+@pytest.mark.parametrize(
+    "example,expected_errors",
+    [
+        [{}, 0],
+        [0, 1],
+        *[
+            [{p: v["default"]}, 0]
+            for p, v in validator.schema["properties"].items()
+            if "default" in v
+        ],
+    ],
+)
+def test_validator(example, expected_errors):
+    errors = [*validator.iter_errors(example)]
+    if errors and not expected_errors:
+        [print(e.__dict__) for e in errors]
+    assert len(errors) == expected_errors
