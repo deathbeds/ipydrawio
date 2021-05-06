@@ -238,254 +238,252 @@ def task_setup():
         )
 
 
-if not P.TESTING_IN_CI:
+def task_lint():
+    """format all source files"""
 
-    def task_lint():
-        """format all source files"""
+    if P.TESTING_IN_CI:
+        return
 
-        yield _ok(
-            dict(
-                name="isort",
-                file_dep=[*P.ALL_PY, P.SETUP_CFG],
-                actions=[["isort", *P.ALL_PY]],
-            ),
-            P.OK_ISORT,
-        )
-        yield _ok(
-            dict(
-                name="black",
-                file_dep=[*P.ALL_PY, P.OK_ISORT],
-                actions=[["black", "--quiet", *P.ALL_PY]],
-            ),
-            P.OK_BLACK,
-        )
-        yield _ok(
-            dict(
-                name="flake8",
-                file_dep=[*P.ALL_PY, P.OK_BLACK, P.SETUP_CFG],
-                actions=[["flake8", *P.ALL_PY]],
-            ),
-            P.OK_FLAKE8,
-        )
-        yield _ok(
-            dict(
-                name="pyflakes",
-                file_dep=[*P.ALL_PY, P.OK_BLACK],
-                actions=[["pyflakes", *P.ALL_PY]],
-            ),
-            P.OK_PYFLAKES,
-        )
-        yield _ok(
-            dict(
-                name="prettier",
-                file_dep=[P.YARN_INTEGRITY, *P.ALL_PRETTIER],
-                actions=[
-                    ["jlpm", "prettier", "--list-different", "--write", *P.ALL_PRETTIER]
-                ],
-            ),
-            P.OK_PRETTIER,
-        )
-        yield _ok(
-            dict(
-                name="eslint",
-                file_dep=[
-                    P.YARN_INTEGRITY,
-                    *P.ALL_TS,
-                    P.OK_PRETTIER,
-                    P.ESLINTRC,
-                    P.TSCONFIGBASE,
-                ],
-                actions=[["jlpm", "eslint"]],
-            ),
-            P.OK_ESLINT,
-        )
-        yield _ok(
-            dict(
-                name="all",
-                actions=[_echo_ok("all ok")],
-                file_dep=[
-                    P.OK_BLACK,
-                    P.OK_FLAKE8,
-                    P.OK_ISORT,
-                    P.OK_PRETTIER,
-                    P.OK_PYFLAKES,
-                ],
-            ),
-            P.OK_LINT,
-        )
-
-        yield _ok(
-            dict(
-                name="robot:tidy",
-                file_dep=P.ALL_ROBOT,
-                actions=[[*P.PYM, "robot.tidy", "--inplace", *P.ALL_ROBOT]],
-            ),
-            P.OK_ROBOTIDY,
-        )
-
-        yield _ok(
-            dict(
-                name="robot:lint",
-                file_dep=[*P.ALL_ROBOT, P.OK_ROBOTIDY],
-                actions=[["rflint", *P.RFLINT_OPTS, *P.ALL_ROBOT]],
-            ),
-            P.OK_RFLINT,
-        )
-
-        yield _ok(
-            dict(
-                name="robot:dryrun",
-                file_dep=[*P.ALL_ROBOT, P.OK_RFLINT],
-                actions=[[*P.PYM, "scripts.atest", "--dryrun"]],
-            ),
-            P.OK_ROBOT_DRYRUN,
-        )
-
-
-if not P.TESTING_IN_CI:
-
-    def task_build():
-        yield _ok(
-            dict(
-                name="js:pre",
-                file_dep=[P.YARN_INTEGRITY, P.IPDW_IGNORE, P.OK_SUBMODULES, *P.IPDW_PY],
-                actions=[[*P.LERNA, "run", "build:pre", "--stream"]],
-                targets=[P.IPDW_APP],
-            ),
-            P.OK_JS_BUILD_PRE,
-        )
-
-        yield _ok(
-            dict(
-                name="js",
-                file_dep=[P.YARN_INTEGRITY, P.OK_JS_BUILD_PRE, *P.ALL_TS, *P.ALL_CSS],
-                actions=[[*P.LERNA, "run", "build", "--stream"]],
-                targets=sorted(P.JS_TSBUILDINFO.values()),
-            ),
-            P.OK_JS_BUILD,
-        )
-
-        yield dict(
-            name="readme:ipydrawio",
-            file_dep=[P.README],
-            targets=[P.IPD / "README.md"],
+    yield _ok(
+        dict(
+            name="isort",
+            file_dep=[*P.ALL_PY, P.SETUP_CFG],
+            actions=[["isort", *P.ALL_PY]],
+        ),
+        P.OK_ISORT,
+    )
+    yield _ok(
+        dict(
+            name="black",
+            file_dep=[*P.ALL_PY, P.OK_ISORT],
+            actions=[["black", "--quiet", *P.ALL_PY]],
+        ),
+        P.OK_BLACK,
+    )
+    yield _ok(
+        dict(
+            name="flake8",
+            file_dep=[*P.ALL_PY, P.OK_BLACK, P.SETUP_CFG],
+            actions=[["flake8", *P.ALL_PY]],
+        ),
+        P.OK_FLAKE8,
+    )
+    yield _ok(
+        dict(
+            name="pyflakes",
+            file_dep=[*P.ALL_PY, P.OK_BLACK],
+            actions=[["pyflakes", *P.ALL_PY]],
+        ),
+        P.OK_PYFLAKES,
+    )
+    yield _ok(
+        dict(
+            name="prettier",
+            file_dep=[P.YARN_INTEGRITY, *P.ALL_PRETTIER],
             actions=[
-                lambda: [(P.IPD / "README.md").write_text(P.README.read_text()), None][
-                    -1
-                ]
+                ["jlpm", "prettier", "--list-different", "--write", *P.ALL_PRETTIER]
             ],
-        )
+        ),
+        P.OK_PRETTIER,
+    )
+    yield _ok(
+        dict(
+            name="eslint",
+            file_dep=[
+                P.YARN_INTEGRITY,
+                *P.ALL_TS,
+                P.OK_PRETTIER,
+                P.ESLINTRC,
+                P.TSCONFIGBASE,
+            ],
+            actions=[["jlpm", "eslint"]],
+        ),
+        P.OK_ESLINT,
+    )
+    yield _ok(
+        dict(
+            name="all",
+            actions=[_echo_ok("all ok")],
+            file_dep=[
+                P.OK_BLACK,
+                P.OK_FLAKE8,
+                P.OK_ISORT,
+                P.OK_PRETTIER,
+                P.OK_PYFLAKES,
+            ],
+        ),
+        P.OK_LINT,
+    )
 
-        for pkg, (file_dep, targets) in P.JS_PKG_PACK.items():
-            yield dict(
-                name=f"pack:{pkg}",
-                file_dep=file_dep,
+    yield _ok(
+        dict(
+            name="robot:tidy",
+            file_dep=P.ALL_ROBOT,
+            actions=[[*P.PYM, "robot.tidy", "--inplace", *P.ALL_ROBOT]],
+        ),
+        P.OK_ROBOTIDY,
+    )
+
+    yield _ok(
+        dict(
+            name="robot:lint",
+            file_dep=[*P.ALL_ROBOT, P.OK_ROBOTIDY],
+            actions=[["rflint", *P.RFLINT_OPTS, *P.ALL_ROBOT]],
+        ),
+        P.OK_RFLINT,
+    )
+
+    yield _ok(
+        dict(
+            name="robot:dryrun",
+            file_dep=[*P.ALL_ROBOT, P.OK_RFLINT],
+            actions=[[*P.PYM, "scripts.atest", "--dryrun"]],
+        ),
+        P.OK_ROBOT_DRYRUN,
+    )
+
+
+def task_build():
+    if P.TESTING_IN_CI:
+        return
+
+    yield _ok(
+        dict(
+            name="js:pre",
+            file_dep=[P.YARN_INTEGRITY, P.IPDW_IGNORE, P.OK_SUBMODULES, *P.IPDW_PY],
+            actions=[[*P.LERNA, "run", "build:pre", "--stream"]],
+            targets=[P.IPDW_APP],
+        ),
+        P.OK_JS_BUILD_PRE,
+    )
+
+    yield _ok(
+        dict(
+            name="js",
+            file_dep=[P.YARN_INTEGRITY, P.OK_JS_BUILD_PRE, *P.ALL_TS, *P.ALL_CSS],
+            actions=[[*P.LERNA, "run", "build", "--stream"]],
+            targets=sorted(P.JS_TSBUILDINFO.values()),
+        ),
+        P.OK_JS_BUILD,
+    )
+
+    yield dict(
+        name="readme:ipydrawio",
+        file_dep=[P.README],
+        targets=[P.IPD / "README.md"],
+        actions=[
+            lambda: [(P.IPD / "README.md").write_text(P.README.read_text()), None][-1]
+        ],
+    )
+
+    for pkg, (file_dep, targets) in P.JS_PKG_PACK.items():
+        yield dict(
+            name=f"pack:{pkg}",
+            file_dep=file_dep,
+            actions=[
+                CmdAction([P.NPM, "pack", "."], cwd=str(targets[0].parent), shell=False)
+            ],
+            targets=targets,
+        )
+        pkg_data = P.JS_PKG_DATA[pkg]
+
+        if "jupyterlab" not in pkg_data:
+            continue
+
+        out_dir = (
+            P.JS_PKG_JSON[pkg].parent / pkg_data["jupyterlab"]["outputDir"]
+        ).resolve()
+
+        yield _ok(
+            dict(
+                name=f"ext:build:{pkg}",
                 actions=[
                     CmdAction(
-                        [P.NPM, "pack", "."], cwd=str(targets[0].parent), shell=False
+                        [*P.LAB_EXT, "build", "."],
+                        shell=False,
+                        cwd=P.JS_PKG_JSON[pkg].parent,
                     )
                 ],
-                targets=targets,
-            )
-            pkg_data = P.JS_PKG_DATA[pkg]
-
-            if "jupyterlab" not in pkg_data:
-                continue
-
-            out_dir = (
-                P.JS_PKG_JSON[pkg].parent / pkg_data["jupyterlab"]["outputDir"]
-            ).resolve()
-
-            yield _ok(
-                dict(
-                    name=f"ext:build:{pkg}",
-                    actions=[
-                        CmdAction(
-                            [*P.LAB_EXT, "build", "."],
-                            shell=False,
-                            cwd=P.JS_PKG_JSON[pkg].parent,
-                        )
-                    ],
-                    file_dep=targets,
-                    targets=[out_dir / "package.json"],
-                ),
-                P.OK_EXT_BUILD[pkg],
-            )
-
-        for py_pkg, py_setup in P.PY_SETUP.items():
-            ext_deps = [
-                (
-                    P.JS_PKG_JSON[ext].parent
-                    / P.JS_PKG_DATA[ext]["jupyterlab"]["outputDir"]
-                ).resolve()
-                / "package.json"
-                for ext, mod in P.JS_LABEXT_PY_HOST.items()
-                if mod == py_setup.parent.name
-            ]
-            file_dep = sorted(
-                set(
-                    [
-                        *ext_deps,
-                        *P.PY_SRC[py_pkg],
-                        P.OK_SUBMODULES,
-                        py_setup,
-                        py_setup.parent / "setup.cfg",
-                        py_setup.parent / "MANIFEST.in",
-                        py_setup.parent / "README.md",
-                        py_setup.parent / "LICENSE.txt",
-                    ]
-                )
-            )
-            yield dict(
-                name=f"sdist:{py_pkg}",
-                file_dep=file_dep,
-                actions=[
-                    CmdAction(
-                        ["python", "setup.py", "sdist"],
-                        shell=False,
-                        cwd=str(py_setup.parent),
-                    ),
-                ],
-                targets=[P.PY_SDIST[py_pkg]],
-            )
-            yield dict(
-                name=f"whl:{py_pkg}",
-                file_dep=file_dep,
-                actions=[
-                    CmdAction(
-                        ["python", "setup.py", "bdist_wheel"],
-                        shell=False,
-                        cwd=str(py_setup.parent),
-                    ),
-                ],
-                targets=[P.PY_WHEEL[py_pkg]],
-            )
-
-        def _make_hashfile():
-            # mimic sha256sum CLI
-            if P.SHA256SUMS.exists():
-                P.SHA256SUMS.unlink()
-
-            if not P.DIST.exists():
-                P.DIST.mkdir(parents=True)
-
-            [shutil.copy2(p, P.DIST / p.name) for p in P.HASH_DEPS]
-
-            lines = []
-
-            for p in P.HASH_DEPS:
-                lines += ["  ".join([sha256(p.read_bytes()).hexdigest(), p.name])]
-
-            output = "\n".join(lines)
-            print(output)
-            P.SHA256SUMS.write_text(output)
-
-        yield dict(
-            name="hash",
-            file_dep=[*P.HASH_DEPS],
-            targets=[P.SHA256SUMS, *[P.DIST / d.name for d in P.HASH_DEPS]],
-            actions=[_make_hashfile],
+                file_dep=targets,
+                targets=[out_dir / "package.json"],
+            ),
+            P.OK_EXT_BUILD[pkg],
         )
+
+    for py_pkg, py_setup in P.PY_SETUP.items():
+        ext_deps = [
+            (
+                P.JS_PKG_JSON[ext].parent
+                / P.JS_PKG_DATA[ext]["jupyterlab"]["outputDir"]
+            ).resolve()
+            / "package.json"
+            for ext, mod in P.JS_LABEXT_PY_HOST.items()
+            if mod == py_setup.parent.name
+        ]
+        file_dep = sorted(
+            set(
+                [
+                    *ext_deps,
+                    *P.PY_SRC[py_pkg],
+                    P.OK_SUBMODULES,
+                    py_setup,
+                    py_setup.parent / "setup.cfg",
+                    py_setup.parent / "MANIFEST.in",
+                    py_setup.parent / "README.md",
+                    py_setup.parent / "LICENSE.txt",
+                ]
+            )
+        )
+        yield dict(
+            name=f"sdist:{py_pkg}",
+            file_dep=file_dep,
+            actions=[
+                CmdAction(
+                    ["python", "setup.py", "sdist"],
+                    shell=False,
+                    cwd=str(py_setup.parent),
+                ),
+            ],
+            targets=[P.PY_SDIST[py_pkg]],
+        )
+        yield dict(
+            name=f"whl:{py_pkg}",
+            file_dep=file_dep,
+            actions=[
+                CmdAction(
+                    ["python", "setup.py", "bdist_wheel"],
+                    shell=False,
+                    cwd=str(py_setup.parent),
+                ),
+            ],
+            targets=[P.PY_WHEEL[py_pkg]],
+        )
+
+    def _make_hashfile():
+        # mimic sha256sum CLI
+        if P.SHA256SUMS.exists():
+            P.SHA256SUMS.unlink()
+
+        if not P.DIST.exists():
+            P.DIST.mkdir(parents=True)
+
+        [shutil.copy2(p, P.DIST / p.name) for p in P.HASH_DEPS]
+
+        lines = []
+
+        for p in P.HASH_DEPS:
+            lines += ["  ".join([sha256(p.read_bytes()).hexdigest(), p.name])]
+
+        output = "\n".join(lines)
+        print(output)
+        P.SHA256SUMS.write_text(output)
+
+    yield dict(
+        name="hash",
+        file_dep=[*P.HASH_DEPS],
+        targets=[P.SHA256SUMS, *[P.DIST / d.name for d in P.HASH_DEPS]],
+        actions=[_make_hashfile],
+    )
 
 
 def task_conda():
@@ -525,30 +523,28 @@ def task_conda():
         )
 
 
-if not P.TESTING_IN_CI:
+def task_lab():
+    """run JupyterLab "normally" (not watching sources)"""
+    if P.TESTING_IN_CI:
+        return
 
-    def task_lab():
-        """run JupyterLab "normally" (not watching sources)"""
+    def lab():
+        proc = subprocess.Popen(P.CMD_LAB, stdin=subprocess.PIPE)
 
-        def lab():
-            proc = subprocess.Popen(P.CMD_LAB, stdin=subprocess.PIPE)
-
-            try:
-                proc.wait()
-            except KeyboardInterrupt:
-                print(
-                    "attempting to stop lab, you may want to check your process monitor"
-                )
-                proc.terminate()
-                proc.communicate(b"y\n")
-
+        try:
             proc.wait()
+        except KeyboardInterrupt:
+            print("attempting to stop lab, you may want to check your process monitor")
+            proc.terminate()
+            proc.communicate(b"y\n")
 
-        return dict(
-            uptodate=[lambda: False],
-            file_dep=[*P.OK_SERVEREXT.values()],
-            actions=[PythonInteractiveAction(lab)],
-        )
+        proc.wait()
+
+    return dict(
+        uptodate=[lambda: False],
+        file_dep=[*P.OK_SERVEREXT.values()],
+        actions=[PythonInteractiveAction(lab)],
+    )
 
 
 def _make_lab(watch=False):
@@ -729,7 +725,7 @@ def task_test():
     ]
 
     if not P.TESTING_IN_CI:
-        file_dep += [P.OK_ROBOT_DRYRUN]
+        file_dep += [P.OK_ROBOT_DRYRUN, *P.OK_SERVEREXT.values()]
 
     yield _ok(
         dict(

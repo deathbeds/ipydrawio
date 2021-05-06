@@ -27,7 +27,7 @@ def get_schema():
     )
 
 
-def get_validator(schema):
+def get_validator(schema=None):
     import jsonschema
 
     return jsonschema.Draft7Validator(schema or get_schema())

@@ -1,8 +1,5 @@
-```{include} ../../CONTRIBUTING.md
+"""minimal tests of schema"""
 
-```
-
-<!--
 # Copyright 2021 ipydrawio contributors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,4 +13,22 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
--->
+
+import jsonschema
+import pytest
+
+from ipydrawio.schema import get_validator
+
+
+@pytest.fixture
+def validator():
+    return get_validator()
+
+
+@pytest.mark.parametrize("example,valid", [[{}, True], [0, False]])
+def test_validator(validator, example, valid):
+    if valid:
+        assert validator.validate(example)
+    else:
+        with pytest.raises(jsonschema.ValidationError):
+            validator.validate(example)
