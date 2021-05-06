@@ -64,7 +64,6 @@ dependencies:
   - python # this gets patched in ci
   # run
   - ipywidgets >=7.6
-  - jedi <0.18.0
   - jupyterlab >=3.0.13,<4.0.0a0
   - jupyterlab_widgets >=1
   - lxml
