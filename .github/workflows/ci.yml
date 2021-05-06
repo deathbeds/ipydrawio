@@ -318,3 +318,8 @@ jobs:
         shell: bash -l {0}
         run: |
           doit $DOIT_N_TEST docs || doit docs
+
+      - name: check docs
+        shell: bash -l {0}
+        run: |
+          doit $DOIT_N_TEST check
