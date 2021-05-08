@@ -90,6 +90,10 @@ DIA_URLS = {
         A_O(20210425055302, f"{DIA_FAQ}/supported-url-parameters")
     ),
     FETCHED / "embed-mode.html": (A_O(20200924053756, f"{DIA_FAQ}/embed-mode")),
+    FETCHED
+    / "configure-diagram-editor.html": (
+        A_O(20210503071537, f"{DIA_FAQ}/configure-diagram-editor")
+    ),
 }
 
 

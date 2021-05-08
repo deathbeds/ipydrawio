@@ -2,128 +2,186 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "definitions": {
     "color": {
-      "type": "string",
-      "uniqueItems": true
+      "type": "string"
+    },
+    "color-scheme": {
+      "properties": {
+        "fill": {
+          "$ref": "#/definitions/color"
+        },
+        "font": {
+          "type": "string"
+        },
+        "gradient": {
+          "$ref": "#/definitions/color"
+        },
+        "stroke": {
+          "$ref": "#/definitions/color"
+        }
+      }
     },
     "color-set": {
       "items": {
         "$ref": "#/definitions/color"
       },
-      "type": "array"
+      "type": "array",
+      "uniqueItems": true
     },
     "drawio-config": {
-      "autosaveDelay": {
-        "description": "Defines the delay (in ms) between the last change and the autosave of the file",
-        "type": "number"
-      },
-      "compressXml": {
-        "description": "Specifies if the XML output should be compressed.",
-        "type": "boolean"
-      },
-      "css": {
-        "description": "Defines a string with CSS rules to be used to configure the diagrams.net user interface.",
-        "type": "string"
-      },
-      "customColorSchemes": {
-        "description": "TBD: see https://desk.draw.io/support/solutions/articles/16000058316"
-      },
-      "customFonts": {
-        "$ref": "#/definitions/font-set",
-        "description": "An array of font family names to be added before defaultFonts"
-      },
-      "customPresetColors": {
-        "$ref": "#/definitions/color-set",
-        "description": "Colour codes to be added before presetColors (no leading # for the colour codes)"
-      },
-      "defaultColorSchemes": {
-        "description": "TBD: see https://desk.draw.io/support/solutions/articles/16000058316"
-      },
-      "defaultColors": {
-        "$ref": "#/definitions/color-set",
-        "description": "Colour codes for the lower palette in the colour dialog (no leading # for the colour codes)."
-      },
-      "defaultCustomLibraries": {
-        "$ref": "#/definitions/library-id-list",
-        "description": "Defines an array of IDs to load custom libraries."
-      },
-      "defaultEdgeLength": {
-        "description": "Defines the default length for new connectors",
-        "type": "number"
-      },
-      "defaultEdgeStyle": {
-        "description": "TBD: see https://desk.draw.io/support/solutions/articles/16000058316"
-      },
-      "defaultFonts": {
-        "$ref": "#/definitions/font-set",
-        "description": "An array of font family names in the format panel font drop-down list. All fonts must be installed on the server and all clients or be added using the fontCss option."
-      },
-      "defaultLibraries": {
-        "$ref": "#/definitions/library-keys-string",
-        "default": "general;uml;er;bpmn;flowchart;basic;arrows2",
-        "description": "Defines a semicolon-separated list of library keys (unique names) in a string to be initially displayed in the left panel (e.g. general;uml;company-graphics). Possible keys include custom entry IDs from the libraries field, or keys for the libs URL parameter "
-      },
-      "defaultVertexStyle": {
-        "description": "TBD: see https://desk.draw.io/support/solutions/articles/16000058316"
-      },
-      "emptyDiagramXml": {
-        "description": "Defines the XML for blank diagrams",
-        "type": "string"
-      },
-      "emptyLibraryXml": {
-        "description": "Defines the XML for blank diagrams and libraries",
-        "type": "string"
-      },
-      "enableCustomLibraries": {
-        "description": "Specifies if the open and new library functions are enabled (true or false, the default true).",
-        "type": "boolean"
-      },
-      "enabledLibraries": {
-        "$ref": "#/definitions/library-key-list",
-        "description": "Defines an array of strings of library keys which will be available in the More Shapes dialog. If you define this as null, all libraries will be visible. If you leave the array empty, no libraries will be visible"
-      },
-      "fontCss": {
-        "description": "Defines a string with CSS rules for web fonts to be used in diagrams. This should be one or more @font-face rule,",
-        "type": "string"
-      },
-      "globalVars": {
-        "description": "JSON structure with key, value pairs to define global variables for system-wide placeholders. You should keep the number of entries small.",
-        "type": "object"
-      },
-      "libraries": {
-        "$ref": "#/definitions/library-def-list",
-        "description": "Defines an array of objects that list additional libraries and sections in the left panel and the More Shapes dialog"
-      },
-      "override": {
-        "description": "Ignores the current settings on the client-side if this is set to true",
-        "type": "boolean"
-      },
-      "plugins": {
-        "$ref": "#/definitions/plugin-url-list",
-        "description": "Defines an array of plugin URLs that should be loaded with the diagram editor. Plugins are JavaScript files that can modify the editor UI and behaviour."
-      },
-      "presetColors": {
-        "$ref": "#/definitions/color-set",
-        "description": "Colour codes for the upper palette in the colour dialog (no leading # for the colour codes)."
-      },
-      "templateFile": {
-        "description": "Defines the URL of the source file for the Templates dialog (multiple <template> tags are allowed).",
-        "format": "uri",
-        "type": "string"
-      },
-      "thumbHeight": {
-        "description": "Defines the height for the entries in the left panel",
-        "type": "number"
-      },
-      "thumbWidth": {
-        "description": "Defines the width for the entries in the left panel",
-        "type": "number"
+      "properties": {
+        "autosaveDelay": {
+          "description": "Defines the delay (in ms) between the last change and the autosave of the file",
+          "type": "number"
+        },
+        "compressXml": {
+          "description": "Specifies if the XML output should be compressed.",
+          "type": "boolean"
+        },
+        "css": {
+          "description": "Defines a string with CSS rules to be used to configure the diagrams.net user interface.",
+          "type": "string"
+        },
+        "customColorSchemes": {
+          "description": "TBD: see https://www.diagrams.net/doc/faq/configure-diagram-editor"
+        },
+        "customFonts": {
+          "$ref": "#/definitions/font-set",
+          "description": "An array of font family names to be added before defaultFonts"
+        },
+        "customPresetColors": {
+          "$ref": "#/definitions/color-set",
+          "description": "Colour codes to be added before presetColors (no leading # for the colour codes)"
+        },
+        "dataGovernance": {
+          "description": "Set the server endpoint region. The default is to use your closest region, (either EU or US). If lockdown is set to true, dataGovernance is ignored.",
+          "type": "string"
+        },
+        "defaultColorSchemes": {
+          "$ref": "#/definitions/color-scheme",
+          "description": "TBD: see https://www.diagrams.net/doc/faq/configure-diagram-editor"
+        },
+        "defaultColors": {
+          "$ref": "#/definitions/color-set",
+          "description": "Colour codes for the lower palette in the colour dialog (no leading # for the colour codes)."
+        },
+        "defaultCustomLibraries": {
+          "$ref": "#/definitions/library-id-list",
+          "description": "Defines an array of IDs to load custom libraries."
+        },
+        "defaultEdgeLength": {
+          "description": "Defines the default length for new connectors",
+          "type": "number"
+        },
+        "defaultEdgeStyle": {
+          "description": "TBD: see https://www.diagrams.net/doc/faq/configure-diagram-editor"
+        },
+        "defaultFonts": {
+          "$ref": "#/definitions/font-set",
+          "description": "An array of font family names in the format panel font drop-down list. All fonts must be installed on the server and all clients or be added using the fontCss option."
+        },
+        "defaultLibraries": {
+          "$ref": "#/definitions/library-keys-string",
+          "default": "general;uml;er;bpmn;flowchart;basic;arrows2",
+          "description": "Defines a semicolon-separated list of library keys (unique names) in a string to be initially displayed in the left panel (e.g. general;uml;company-graphics). Possible keys include custom entry IDs from the libraries field, or keys for the libs URL parameter "
+        },
+        "defaultVertexStyle": {
+          "description": "TBD: see https://www.diagrams.net/doc/faq/configure-diagram-editor"
+        },
+        "emptyDiagramXml": {
+          "description": "Defines the XML for blank diagrams",
+          "type": "string"
+        },
+        "emptyLibraryXml": {
+          "description": "Defines the XML for blank diagrams and libraries",
+          "type": "string"
+        },
+        "enableCustomLibraries": {
+          "description": "Specifies if the open and new library functions are enabled (true or false, the default true).",
+          "type": "boolean"
+        },
+        "enabledLibraries": {
+          "$ref": "#/definitions/library-key-list",
+          "description": "Defines an array of strings of library keys which will be available in the More Shapes dialog. If you define this as null, all libraries will be visible. If you leave the array empty, no libraries will be visible"
+        },
+        "fontCss": {
+          "description": "Defines a string with CSS rules for web fonts to be used in diagrams. This should be one or more @font-face rule,",
+          "type": "string"
+        },
+        "globalVars": {
+          "description": "JSON structure with key, value pairs to define global variables for system-wide placeholders. You should keep the number of entries small.",
+          "type": "object"
+        },
+        "gridSteps": {
+          "description": "Defines the number of minor grid steps (14.3.2 and later).",
+          "type": "number"
+        },
+        "libraries": {
+          "$ref": "#/definitions/library-def-list",
+          "description": "Defines an array of objects that list additional libraries and sections in the left panel and the More Shapes dialog"
+        },
+        "lockdown": {
+          "default": false,
+          "description": "Disable data transmission, apart from directly between your browser and your selected data storage location. Default is false.",
+          "type": "boolean"
+        },
+        "maxImageBytes": {
+          "default": 1000000,
+          "description": "Defines the maximum size for images in bytes. Default is 1000000.",
+          "type": "number"
+        },
+        "maxImageSize": {
+          "default": 520,
+          "description": "Defines the maximum width or height of the image, where the lowest value is used.",
+          "type": "number"
+        },
+        "override": {
+          "description": "Ignores the current settings on the client-side if this is set to true",
+          "type": "boolean"
+        },
+        "plugins": {
+          "$ref": "#/definitions/plugin-url-list",
+          "description": "Defines an array of plugin URLs that should be loaded with the diagram editor. Plugins are JavaScript files that can modify the editor UI and behaviour."
+        },
+        "presetColors": {
+          "$ref": "#/definitions/color-set",
+          "description": "Colour codes for the upper palette in the colour dialog (no leading # for the colour codes)."
+        },
+        "simpleLabels": {
+          "default": true,
+          "description": "Disables word wrap and complex formatting for labels by default to avoid foreignObjects in the SVG output (14.5.9 and later).",
+          "type": "boolean"
+        },
+        "styles": {
+          "items": {
+            "$ref": "#/definitions/style"
+          },
+          "type": "array"
+        },
+        "templateFile": {
+          "description": "Defines the URL of the source file for the Templates dialog (multiple <template> tags are allowed).",
+          "format": "uri",
+          "type": "string"
+        },
+        "thumbHeight": {
+          "description": "Defines the height for the entries in the left panel",
+          "type": "number"
+        },
+        "thumbWidth": {
+          "description": "Defines the width for the entries in the left panel",
+          "type": "number"
+        },
+        "version": {
+          "description": "The current version of the configuration (any string, e.g. 1.0). If this is different from the last used version, then the current settings on the client-side (.drawio-config) will be reset. The default is null. Change this to force the stored settings in the client to be reset and apply the current configuration",
+          "type": "string"
+        },
+        "zoomFactor": {
+          "default": 1.2,
+          "description": "Defines the zoom factor for mouse wheel and trackpad zoom. Default is 1.2. (14.7.0 and later).",
+          "type": "number"
+        }
       },
       "title": "Drawio Configuration",
-      "type": "object",
-      "version": {
-        "description": "The current version of the configuration (any string, e.g. 1.0). If this is different from the last used version, then the current settings on the client-side (.drawio-config) will be reset. The default is null. Change this to force the stored settings in the client to be reset and apply the current configuration",
-        "type": "string"
-      }
+      "type": "object"
     },
     "drawio-url-params": {
       "properties": {
@@ -493,7 +551,23 @@
     },
     "font-set": {
       "items": {
-        "type": "string",
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "properties": {
+              "fontFamily": {
+                "type": "string"
+              },
+              "fontUrl": {
+                "format": "uri",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "uniqueItems": true
       },
       "type": "array"
@@ -620,6 +694,19 @@
       },
       "type": "array"
     },
+    "style": {
+      "properties": {
+        "commonStyle": {
+          "type": "object"
+        },
+        "edgeStyle": {
+          "type": "object"
+        },
+        "graph": {
+          "type": "object"
+        }
+      }
+    },
     "ui-theme": {
       "enum": ["min", "atlas", "dark", "kennedy", "sketch"],
       "title": "UI Theme",
@@ -669,7 +756,7 @@
         "override": true,
         "showStartScreen": false
       },
-      "description": "Configuration options sent to each drawio editor. https://desk.draw.io/support/solutions/articles/16000058316"
+      "description": "Configuration options sent to each drawio editor. https://www.diagrams.net/doc/faq/configure-diagram-editor"
     },
     "drawioExportUrl": {
       "properties": {

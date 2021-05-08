@@ -20,6 +20,7 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+export type Color = string;
 /**
  * [min|atlas|dark|sketch]: Uses the Minimal, Atlas, Dark or Sketch UI theme (default is Kennedy).
  */
@@ -114,9 +115,223 @@ export interface DiagramDocuments {
   [k: string]: unknown;
 }
 /**
- * Configuration options sent to each drawio editor. https://desk.draw.io/support/solutions/articles/16000058316
+ * Configuration options sent to each drawio editor. https://www.diagrams.net/doc/faq/configure-diagram-editor
  */
 export interface DrawioConfiguration {
+  /**
+   * Defines the delay (in ms) between the last change and the autosave of the file
+   */
+  autosaveDelay?: number;
+  /**
+   * Specifies if the XML output should be compressed.
+   */
+  compressXml?: boolean;
+  /**
+   * Defines a string with CSS rules to be used to configure the diagrams.net user interface.
+   */
+  css?: string;
+  /**
+   * TBD: see https://www.diagrams.net/doc/faq/configure-diagram-editor
+   */
+  customColorSchemes?: {
+    [k: string]: unknown;
+  };
+  /**
+   * An array of font family names to be added before defaultFonts
+   */
+  customFonts?: (
+    | string
+    | {
+        fontFamily?: string;
+        fontUrl?: string;
+        [k: string]: unknown;
+      }
+  )[];
+  /**
+   * Colour codes to be added before presetColors (no leading # for the colour codes)
+   */
+  customPresetColors?: Color[];
+  /**
+   * Set the server endpoint region. The default is to use your closest region, (either EU or US). If lockdown is set to true, dataGovernance is ignored.
+   */
+  dataGovernance?: string;
+  /**
+   * TBD: see https://www.diagrams.net/doc/faq/configure-diagram-editor
+   */
+  defaultColorSchemes?: {
+    fill?: Color;
+    font?: string;
+    gradient?: Color;
+    stroke?: Color;
+    [k: string]: unknown;
+  };
+  /**
+   * Colour codes for the lower palette in the colour dialog (no leading # for the colour codes).
+   */
+  defaultColors?: Color[];
+  /**
+   * Defines an array of IDs to load custom libraries.
+   */
+  defaultCustomLibraries?: string[];
+  /**
+   * Defines the default length for new connectors
+   */
+  defaultEdgeLength?: number;
+  /**
+   * TBD: see https://www.diagrams.net/doc/faq/configure-diagram-editor
+   */
+  defaultEdgeStyle?: {
+    [k: string]: unknown;
+  };
+  /**
+   * An array of font family names in the format panel font drop-down list. All fonts must be installed on the server and all clients or be added using the fontCss option.
+   */
+  defaultFonts?: (
+    | string
+    | {
+        fontFamily?: string;
+        fontUrl?: string;
+        [k: string]: unknown;
+      }
+  )[];
+  /**
+   * Defines a semicolon-separated list of library keys (unique names) in a string to be initially displayed in the left panel (e.g. general;uml;company-graphics). Possible keys include custom entry IDs from the libraries field, or keys for the libs URL parameter
+   */
+  defaultLibraries?: string;
+  /**
+   * TBD: see https://www.diagrams.net/doc/faq/configure-diagram-editor
+   */
+  defaultVertexStyle?: {
+    [k: string]: unknown;
+  };
+  /**
+   * Defines the XML for blank diagrams
+   */
+  emptyDiagramXml?: string;
+  /**
+   * Defines the XML for blank diagrams and libraries
+   */
+  emptyLibraryXml?: string;
+  /**
+   * Specifies if the open and new library functions are enabled (true or false, the default true).
+   */
+  enableCustomLibraries?: boolean;
+  /**
+   * Defines an array of strings of library keys which will be available in the More Shapes dialog. If you define this as null, all libraries will be visible. If you leave the array empty, no libraries will be visible
+   */
+  enabledLibraries?: string[];
+  /**
+   * Defines a string with CSS rules for web fonts to be used in diagrams. This should be one or more @font-face rule,
+   */
+  fontCss?: string;
+  /**
+   * JSON structure with key, value pairs to define global variables for system-wide placeholders. You should keep the number of entries small.
+   */
+  globalVars?: {
+    [k: string]: unknown;
+  };
+  /**
+   * Defines the number of minor grid steps (14.3.2 and later).
+   */
+  gridSteps?: number;
+  /**
+   * Defines an array of objects that list additional libraries and sections in the left panel and the More Shapes dialog
+   */
+  libraries?: LibrarySection[];
+  /**
+   * Disable data transmission, apart from directly between your browser and your selected data storage location. Default is false.
+   */
+  lockdown?: boolean;
+  /**
+   * Defines the maximum size for images in bytes. Default is 1000000.
+   */
+  maxImageBytes?: number;
+  /**
+   * Defines the maximum width or height of the image, where the lowest value is used.
+   */
+  maxImageSize?: number;
+  /**
+   * Ignores the current settings on the client-side if this is set to true
+   */
+  override?: boolean;
+  /**
+   * Defines an array of plugin URLs that should be loaded with the diagram editor. Plugins are JavaScript files that can modify the editor UI and behaviour.
+   */
+  plugins?: string[];
+  /**
+   * Colour codes for the upper palette in the colour dialog (no leading # for the colour codes).
+   */
+  presetColors?: Color[];
+  /**
+   * Disables word wrap and complex formatting for labels by default to avoid foreignObjects in the SVG output (14.5.9 and later).
+   */
+  simpleLabels?: boolean;
+  styles?: Style[];
+  /**
+   * Defines the URL of the source file for the Templates dialog (multiple <template> tags are allowed).
+   */
+  templateFile?: string;
+  /**
+   * Defines the height for the entries in the left panel
+   */
+  thumbHeight?: number;
+  /**
+   * Defines the width for the entries in the left panel
+   */
+  thumbWidth?: number;
+  /**
+   * The current version of the configuration (any string, e.g. 1.0). If this is different from the last used version, then the current settings on the client-side (.drawio-config) will be reset. The default is null. Change this to force the stored settings in the client to be reset and apply the current configuration
+   */
+  version?: string;
+  /**
+   * Defines the zoom factor for mouse wheel and trackpad zoom. Default is 1.2. (14.7.0 and later).
+   */
+  zoomFactor?: number;
+  [k: string]: unknown;
+}
+export interface LibrarySection {
+  entries?: LibraryEntry[];
+  title?: LibraryResource;
+  [k: string]: unknown;
+}
+export interface LibraryEntry {
+  desc?: LibraryResource;
+  id?: string;
+  libs?: DrawioLibrary[];
+  preview?: string;
+  title?: LibraryResource;
+  [k: string]: unknown;
+}
+export interface LibraryResource {
+  main?: string;
+  [k: string]: unknown;
+}
+export interface DrawioLibrary {
+  data?: {
+    aspect?: string;
+    h?: number;
+    w?: number;
+    /**
+     * NB: appears to be base64-encoded
+     */
+    xml?: string;
+    [k: string]: unknown;
+  };
+  tags?: string;
+  title?: LibraryResource;
+  url?: string;
+  [k: string]: unknown;
+}
+export interface Style {
+  commonStyle?: {
+    [k: string]: unknown;
+  };
+  edgeStyle?: {
+    [k: string]: unknown;
+  };
+  graph?: {
+    [k: string]: unknown;
+  };
   [k: string]: unknown;
 }
 /**
