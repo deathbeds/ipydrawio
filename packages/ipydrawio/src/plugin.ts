@@ -116,13 +116,19 @@ function activate(
 
   // Add a launcher item if the launcher is available.
   if (launcher) {
+    launcher.add({
+      command: CommandIds.createNew,
+      rank: 1,
+      category: IO.XML_NATIVE.label,
+    });
+
     for (const ui of UI_THEMES) {
       launcher.add({
         command: CommandIds.createNew,
         args: {
           drawioUrlParams: { ui },
         },
-        rank: 1,
+        rank: 2,
         category: IO.XML_NATIVE.label,
       });
     }
