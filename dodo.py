@@ -284,7 +284,13 @@ def task_lint():
             name="prettier",
             file_dep=[P.YARN_INTEGRITY, *P.ALL_PRETTIER],
             actions=[
-                ["jlpm", "prettier", "--list-different", "--write", *P.ALL_PRETTIER]
+                [
+                    "jlpm",
+                    "prettier",
+                    "--list-different",
+                    "--write",
+                    *sorted(p.relative_to(P.ROOT) for p in P.ALL_PRETTIER),
+                ]
             ],
         ),
         P.OK_PRETTIER,
@@ -360,7 +366,10 @@ def task_build():
                 *P.IPDW_PY,
                 *P.PACKAGES.glob("*/schema/*.json"),
             ],
-            actions=[[*P.LERNA, "run", "build:pre", "--stream"]],
+            actions=[
+                [*P.LERNA, "run", "build:pre", "--stream"],
+                [*P.JLPM, "prettier", "--write", P.PACKAGES / "ipydrawio/src/_schema.d.ts"]
+            ],
             targets=[P.IPDW_APP],
         ),
         P.OK_JS_BUILD_PRE,

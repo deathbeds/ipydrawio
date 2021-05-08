@@ -8,7 +8,7 @@
 /**
  * [min|atlas|dark|sketch]: Uses the Minimal, Atlas, Dark or Sketch UI theme (default is Kennedy).
  */
-export type UITheme = "min" | "atlas" | "dark" | "kennedy" | "sketch";
+export type UITheme = 'min' | 'atlas' | 'dark' | 'kennedy' | 'sketch';
 
 /**
  * Configure Diagram Settings
@@ -181,7 +181,7 @@ export interface DrawioURLParams {
   /**
    * `edit=url`: Adds a link for the *Edit* button in chromeless mode (use `edit=_blank` to edit the diagram as a new copy).
    */
-  edit?: string | "_blank";
+  edit?: string | '_blank';
   /**
    * `embed=1:` Runs diagrams.net in _embed mode](/web/20210425055302/https://www.diagrams.net/doc/faq/embed-mode.html). Use this mode with [embed.diagrams.net_ only. **NEW `14.6.10`**
    */
@@ -207,7 +207,7 @@ export interface DrawioURLParams {
   /**
    * ID: Specifies the _client ID of the custom GitLab application_ when using a custom GitLab instance.
    */
-  "gitlab-id"?: string;
+  'gitlab-id'?: string;
   /**
    * 0: Disables the GitLab integration.
    */
@@ -219,7 +219,7 @@ export interface DrawioURLParams {
   /**
    * 1: Hides the controls that allow you to change the current page in lightbox mode. **NEW `14.6.10`**
    */
-  "hide-pages"?: number;
+  'hide-pages'?: number;
   /**
    * hex: Specifies the highlight colour (with no leading `#`) for links in chromeless mode.
    */
@@ -259,17 +259,17 @@ export interface DrawioURLParams {
   /**
    * : Sets the font to use for math typesetting. Possible values are STIX-Web and TeX (default). **TBD `14.6.10`**
    */
-  "math-font"?: string;
+  'math-font'?: string;
   /**
    * html: Sets the math typesetting output to `HTML-CSS`. **NEW `14.6.10`**
    */
-  "math-output"?: {
+  'math-output'?: {
     [k: string]: unknown;
   };
   /**
    * [google|onedrive|github|dropobox|device|browser]: Switches to the specified mode.
    */
-  mode?: "google" | "onedrive" | "github" | "dropobox" | "device" | "browser";
+  mode?: 'google' | 'onedrive' | 'github' | 'dropobox' | 'device' | 'browser';
   /**
    * 1: Enables folding in chromeless mode.
    */
@@ -305,7 +305,7 @@ export interface DrawioURLParams {
   /**
    * 1: Saves all Google Drive files as `application/vnd.jgraph.mxfile`.
    */
-  "override-mime"?: number;
+  'override-mime'?: number;
   /**
    * id1;id2;...;idN: Selects which plugins to load. _See the list of available plugins_.
    */
@@ -317,7 +317,7 @@ export interface DrawioURLParams {
   /**
    * ID: Starts with the given page ID (has precedence over the `page` URL parameter). To find the ID of the current page, right click on the canvas and select *Edit Data*. The ID is the first entry in this dialog.
    */
-  "page-id"?: string;
+  'page-id'?: string;
   /**
    * 0/1: Disables/enables the Google file picker in dialogs.
    */
@@ -359,7 +359,7 @@ export interface DrawioURLParams {
   /**
    * local/remote: Enables/disables saving files locally (default is `local`). If this is disabled, then files are echoed via a servlet for a local save.
    */
-  save?: "local" | "remote";
+  save?: 'local' | 'remote';
   /**
    * 1: Displays a Save and Exit button ne. Instead of using this URL parameter, you can specify this setting in the load message. **TBD `14.6.10`**
    */
@@ -371,7 +371,7 @@ export interface DrawioURLParams {
   /**
    * value: Starts with given value in the search shapes box.  ## Modes **NEW `14.6.10`**
    */
-  "search-shapes"?: string;
+  'search-shapes'?: string;
   /**
    * 1: Shows a Loading... spinner while waiting for the diagram data to load in embed mode. **TBD `14.6.10`**
    */
@@ -387,23 +387,23 @@ export interface DrawioURLParams {
   /**
    * device: Adds a device storage option for touch devices.
    */
-  storage?: "device";
+  storage?: 'device';
   /**
    * 0: Suppresses the warning for old viewers in SVG export. **NEW `14.6.10`**
    */
-  "svg-warning"?: number;
+  'svg-warning'?: number;
   /**
    * [none|manual|auto]: Enables/disables collaborative editing (default is `auto`).
    */
-  sync?: "none" | "manual" | "auto";
+  sync?: 'none' | 'manual' | 'auto';
   /**
    * [auto|self|frame|blank]: Opens links in the same window or frame or in a blank window in chromeless mode (`auto` is the default which opens relative links and anchors in the same window in chromeless mode, and all links in a new window in editing mode).
    */
-  target?: "auto" | "self" | "frame" | "blank";
+  target?: 'auto' | 'self' | 'frame' | 'blank';
   /**
    * name: If the \#U hash property is used but the URL does not contain a filename to determine binary mode. See the list of _supported location hash properties_.
    */
-  "template-filename"?: string;
+  'template-filename'?: string;
   /**
    * 0: Disables the creation of thumbnails in Drive.
    */

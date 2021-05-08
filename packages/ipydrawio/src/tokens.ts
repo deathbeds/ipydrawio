@@ -73,7 +73,21 @@ export const DIAGRAM_MENU_RANK = 99;
 
 // TODO: this is duplicated in schema
 export type TUIThemes = SCHEMA.UITheme;
-export const UI_THEMES = SCHEMA_JSON.definitions['ui-theme']['enum'] as TUIThemes[];
+export const UI_THEMES = SCHEMA_JSON.definitions['ui-theme'][
+  'enum'
+] as TUIThemes[];
+export const UI_THEME_BASE_COLOR = '#f08705';
+
+export type TStringReplacement = [string, string];
+export type TUIThemeOverrides = Record<SCHEMA.UITheme, TStringReplacement[]>;
+
+export const UI_THEME_COLORS: TUIThemeOverrides = {
+  sketch: [[UI_THEME_BASE_COLOR, '#fff2a1']],
+  dark: [[UI_THEME_BASE_COLOR, '#666']],
+  min: [[UI_THEME_BASE_COLOR, '#eee']],
+  kennedy: [[UI_THEME_BASE_COLOR, '#0052cc']],
+  atlas: [['UI_THEME_BASE_COLOR', '#0049B0']],
+};
 
 export const IDiagramManager = new Token<IDiagramManager>(PLUGIN_ID);
 
@@ -81,7 +95,6 @@ export namespace CommandIds {
   export const createNew = 'drawio:create-new';
   export const setUrlParams = 'drawio:url-params';
 }
-
 
 export interface ISetUrlParamsArgs {
   drawioUrlParams: SCHEMA.DrawioURLParams;

@@ -71,10 +71,17 @@ export class DiagramManager implements IDiagramManager {
     // Add a command for creating a new diagram file.
     this._app.commands.addCommand(CommandIds.createNew, {
       label: (args) => {
-        const {drawioUrlParams} = args as any as ICreateNewArgs;
-        return `${IO.XML_NATIVE.label} (${drawioUrlParams?.ui})`
+        const { drawioUrlParams } = (args as any) as ICreateNewArgs;
+        const { ui } = drawioUrlParams || {};
+        return !ui
+          ? IO.XML_NATIVE.label
+          : `${IO.XML_NATIVE.label} [${drawioUrlParams?.ui}]`;
       },
-      icon: IO.drawioIcon,
+      icon: (args) => {
+        const { drawioUrlParams } = (args as any) as ICreateNewArgs;
+        const { ui } = drawioUrlParams || {};
+        return ui ? IO.drawioThemeIcons[ui] : IO.drawioIcon;
+      },
       caption: `Create a new ${IO.XML_NATIVE.name} file`,
       execute: async (args) => {
         let cwd = this._browserFactory.defaultBrowser.model.path;

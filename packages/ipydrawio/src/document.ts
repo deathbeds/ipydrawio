@@ -140,7 +140,7 @@ export class DiagramFactory extends ABCWidgetFactory<
             return {
               ...(this.getSettings()
                 ?.drawioUrlParams as ReadonlyPartialJSONObject),
-              ...doc.urlParams
+              ...doc.urlParams,
             } as any;
           },
           drawioConfig: () => {

@@ -116,22 +116,16 @@ function activate(
 
   // Add a launcher item if the launcher is available.
   if (launcher) {
-    launcher.add({
-      command: CommandIds.createNew,
-      args: {
-        drawioUrlParams: { ui: 'kennedy' },
-      },
-      rank: 1,
-      category: 'Diagrams',
-    });
-    launcher.add({
-      command: CommandIds.createNew,
-      args: {
-        drawioUrlParams: { ui: 'sketch' },
-      },
-      rank: 1,
-      category: 'Diagrams',
-    });
+    for (const ui of UI_THEMES) {
+      launcher.add({
+        command: CommandIds.createNew,
+        args: {
+          drawioUrlParams: { ui },
+        },
+        rank: 1,
+        category: IO.XML_NATIVE.label,
+      });
+    }
   }
 
   commands.addCommand(CommandIds.setUrlParams, {

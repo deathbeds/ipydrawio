@@ -24,7 +24,10 @@ import {
   DRAWIO_ICON_CLASS_RE,
   TEXT_FACTORY,
   BINARY_FACTORY,
+  UI_THEME_COLORS,
 } from './tokens';
+
+import SCHEMA from './_schema';
 
 import { stripDataURI, unbase64SVG } from './utils';
 
@@ -32,6 +35,22 @@ export const drawioPlainIcon = new LabIcon({
   name: 'drawio:plain',
   svgstr: DRAWIO_ICON_SVG.replace(DRAWIO_ICON_CLASS_RE, 'jp-icon3'),
 });
+
+export const drawioThemeIcons = Object.entries(UI_THEME_COLORS).reduce(
+  (memo, [ui, replacements]) => {
+    let svgstr = DRAWIO_ICON_SVG.replace(DRAWIO_ICON_CLASS_RE, '');
+    for (const [fromColor, toColor] of replacements) {
+      svgstr = svgstr.replace(fromColor, toColor);
+    }
+    memo[ui as SCHEMA.UITheme] = new LabIcon({
+      name: `drawio:ui:${ui}`,
+      svgstr,
+    });
+
+    return memo;
+  },
+  {} as Record<SCHEMA.UITheme, LabIcon>
+);
 
 export const drawioIcon = new LabIcon({
   name: 'drawio:drawio',
