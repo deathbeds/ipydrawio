@@ -83,7 +83,7 @@ def task_all():
 
 
 def task_fetch():
-
+    """fetch local copies of key configuration documentation"""
     for path, url in P.DIA_URLS.items():
         yield P.fetch_one(url, path)
 
@@ -98,7 +98,7 @@ def task_dist():
 
 
 def task_env():
-
+    """sync environments"""
     for env, inherits in P.ENV_INHERITS.items():
         yield dict(
             name=f"""{env.parent.name}:{':'.join([inh.parent.name for inh in inherits])}""",
@@ -355,6 +355,7 @@ def task_lint():
 
 
 def task_build():
+    """build intermediates and release artifacts"""
     if P.TESTING_IN_CI:
         return
 
@@ -504,6 +505,7 @@ def task_build():
 
 
 def task_conda():
+    """test building with conda-build"""
     args = [
         "conda",
         P.CONDA_BUILDERER,
@@ -676,6 +678,7 @@ def task_docs():
 
 @doit.create_after("docs")
 def task_check():
+    """check built artifacts"""
     file_dep = [*P.DOCS_BUILD.rglob("*.html")]
     yield _ok(
         dict(
@@ -719,6 +722,7 @@ def _pytest(setup_py):
 
 
 def task_test():
+    """run tests"""
     if not P.TESTING_IN_CI:
         yield _ok(
             dict(
