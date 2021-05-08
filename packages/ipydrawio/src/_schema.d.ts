@@ -31,86 +31,7 @@ export type UITheme = 'min' | 'atlas' | 'dark' | 'kennedy' | 'sketch';
  */
 export interface DiagramDocuments {
   drawioConfig?: DrawioConfiguration;
-  drawioExportUrl?: {
-    params?: {
-      /**
-       * Whether all pages should be rendered 0 0 1
-       */
-      allPages?: string;
-      /**
-       * Whether the response data should be base64 (and png embedded data) encoded 0 or 1
-       */
-      base64?: string;
-      /**
-       * The background colour for the image #ff8888
-       */
-      bg?: string;
-      /**
-       * The size of the border for the page 0 10
-       */
-      border?: number;
-      /**
-       * The data to embed into the png -
-       */
-      data?: string;
-      /**
-       * The key to use when embedding the data into the png myKey
-       */
-      dataHeader?: string;
-      /**
-       * Embed data in the png with the dataHeader key null 0 or 1
-       */
-      embedData?: string;
-      /**
-       * Embed the diagram data in the png 0 or 1
-       */
-      embedXml?: string;
-      /**
-       * Additional detail how what should be rendered, e.g. layer-names
-       */
-      extras?: {
-        [k: string]: unknown;
-      };
-      /**
-       * The filename to included in the content-disposition header myFile.png
-       */
-      filename?: string;
-      /**
-       * The renderering format for the diagram png pdf
-       */
-      format?: string;
-      /**
-       * The index of the page to start rendering from 1
-       */
-      from?: number;
-      /**
-       * Set the view port width 0 10
-       */
-      h?: number;
-      /**
-       * The id of the page to render page id
-       */
-      pageId?: string;
-      /**
-       * The scale for the rendered diagram 1 1.5
-       */
-      scale?: number;
-      /**
-       * The index of the page to finish rendering at 2
-       */
-      to?: number;
-      /**
-       * Set the view port height 0 10
-       */
-      w?: number;
-      [k: string]: unknown;
-    };
-    /**
-     * URL for (local) drawio-export server https://github.com/jgraph/draw-image-export2
-     */
-    url?: string;
-    [k: string]: unknown;
-  };
+  drawioExportUrl?: DrawioExportURL;
   drawioUrlParams?: DrawioURLParams;
   [k: string]: unknown;
 }
@@ -332,6 +253,89 @@ export interface Style {
   graph?: {
     [k: string]: unknown;
   };
+  [k: string]: unknown;
+}
+/**
+ * URL parameters for the export URL.
+ */
+export interface DrawioExportURL {
+  params?: {
+    /**
+     * Whether all pages should be rendered 0 0 1
+     */
+    allPages?: string;
+    /**
+     * Whether the response data should be base64 (and png embedded data) encoded 0 or 1
+     */
+    base64?: string;
+    /**
+     * The background colour for the image #ff8888
+     */
+    bg?: string;
+    /**
+     * The size of the border for the page 0 10
+     */
+    border?: number;
+    /**
+     * The data to embed into the png -
+     */
+    data?: string;
+    /**
+     * The key to use when embedding the data into the png myKey
+     */
+    dataHeader?: string;
+    /**
+     * Embed data in the png with the dataHeader key null 0 or 1
+     */
+    embedData?: string;
+    /**
+     * Embed the diagram data in the png 0 or 1
+     */
+    embedXml?: string;
+    /**
+     * Additional detail how what should be rendered, e.g. layer-names
+     */
+    extras?: {
+      [k: string]: unknown;
+    };
+    /**
+     * The filename to included in the content-disposition header myFile.png
+     */
+    filename?: string;
+    /**
+     * The renderering format for the diagram png pdf
+     */
+    format?: string;
+    /**
+     * The index of the page to start rendering from 1
+     */
+    from?: number;
+    /**
+     * Set the view port width 0 10
+     */
+    h?: number;
+    /**
+     * The id of the page to render page id
+     */
+    pageId?: string;
+    /**
+     * The scale for the rendered diagram 1 1.5
+     */
+    scale?: number;
+    /**
+     * The index of the page to finish rendering at 2
+     */
+    to?: number;
+    /**
+     * Set the view port height 0 10
+     */
+    w?: number;
+    [k: string]: unknown;
+  };
+  /**
+   * URL for (local) drawio-export server https://github.com/jgraph/draw-image-export2
+   */
+  url?: string;
   [k: string]: unknown;
 }
 /**

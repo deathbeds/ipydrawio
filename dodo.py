@@ -69,12 +69,14 @@ def task_all():
         uptodate=[lambda: False],
         task_dep=["check"],
         file_dep=[
+            *[P.OK_CONDA_TEST / f"{name}.ok" for name in P.CONDA_PKGS],
             *P.OK_PYTEST.values(),
+            P.DOCS_BUILDINFO,
             P.OK_ATEST,
             P.OK_INTEGRITY,
+            P.OK_LINK_CHECK,
             P.OK_PROVISION,
             P.SHA256SUMS,
-            P.DOCS_BUILDINFO,
         ],
         actions=[(_show, ["nothing left to do"], {"shasums": P.SHA256SUMS.read_text})],
     )
@@ -675,18 +677,21 @@ def task_docs():
 @doit.create_after("docs")
 def task_check():
     file_dep = [*P.DOCS_BUILD.rglob("*.html")]
-    yield dict(
-        name="links",
-        file_dep=[*file_dep, P.DOCS_BUILDINFO],
-        actions=[
-            [
-                "pytest-check-links",
-                "--check-anchors",
-                "--check-links-ignore",
-                "^https?://",
-                *[p for p in file_dep if p.name != "schema.html"],
-            ]
-        ],
+    yield _ok(
+        dict(
+            name="links",
+            file_dep=[*file_dep, P.DOCS_BUILDINFO],
+            actions=[
+                [
+                    "pytest-check-links",
+                    "--check-anchors",
+                    "--check-links-ignore",
+                    "^https?://",
+                    *[p for p in file_dep if p.name != "schema.html"],
+                ]
+            ],
+        ),
+        P.OK_LINK_CHECK,
     )
 
 
