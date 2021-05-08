@@ -12,7 +12,6 @@
       "type": "array"
     },
     "drawio-config": {
-      "title": "Drawio Configuration",
       "autosaveDelay": {
         "description": "Defines the delay (in ms) between the last change and the autosave of the file",
         "type": "number"
@@ -119,6 +118,7 @@
         "description": "Defines the width for the entries in the left panel",
         "type": "number"
       },
+      "title": "Drawio Configuration",
       "type": "object",
       "version": {
         "description": "The current version of the configuration (any string, e.g. 1.0). If this is different from the last used version, then the current settings on the client-side (.drawio-config) will be reset. The default is null. Change this to force the stored settings in the client to be reset and apply the current configuration",
@@ -126,7 +126,6 @@
       }
     },
     "drawio-url-params": {
-      "title": "Drawio URL Params",
       "properties": {
         "base": {
           "description": "url: Sets the base URL to use for links (use this if `document.referrer` is not available in embed mode).",
@@ -489,6 +488,7 @@
           "type": "string"
         }
       },
+      "title": "Drawio URL Params",
       "type": "object"
     },
     "font-set": {
@@ -499,7 +499,6 @@
       "type": "array"
     },
     "library": {
-      "title": "Drawio Library",
       "properties": {
         "data": {
           "properties": {
@@ -530,6 +529,7 @@
           "type": "string"
         }
       },
+      "title": "Drawio Library",
       "type": "object"
     },
     "library-def-list": {
@@ -621,8 +621,8 @@
       "type": "array"
     },
     "ui-theme": {
-      "title": "UI Theme",
       "enum": ["min", "atlas", "dark", "kennedy", "sketch"],
+      "title": "UI Theme",
       "type": "string"
     },
     "url-param-mode": {
