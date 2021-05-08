@@ -12,6 +12,7 @@
       "type": "array"
     },
     "drawio-config": {
+      "title": "Drawio Configuration",
       "autosaveDelay": {
         "description": "Defines the delay (in ms) between the last change and the autosave of the file",
         "type": "number"
@@ -125,6 +126,7 @@
       }
     },
     "drawio-url-params": {
+      "title": "Drawio URL Params",
       "properties": {
         "base": {
           "description": "url: Sets the base URL to use for links (use this if `document.referrer` is not available in embed mode).",
@@ -497,6 +499,7 @@
       "type": "array"
     },
     "library": {
+      "title": "Drawio Library",
       "properties": {
         "data": {
           "properties": {
@@ -618,6 +621,7 @@
       "type": "array"
     },
     "ui-theme": {
+      "title": "UI Theme",
       "enum": ["min", "atlas", "dark", "kennedy", "sketch"],
       "type": "string"
     },

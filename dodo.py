@@ -353,7 +353,13 @@ def task_build():
     yield _ok(
         dict(
             name="js:pre",
-            file_dep=[P.YARN_INTEGRITY, P.IPDW_IGNORE, P.OK_SUBMODULES, *P.IPDW_PY],
+            file_dep=[
+                P.YARN_INTEGRITY,
+                P.IPDW_IGNORE,
+                P.OK_SUBMODULES,
+                *P.IPDW_PY,
+                *P.PACKAGES.glob("*/schema/*.json"),
+            ],
             actions=[[*P.LERNA, "run", "build:pre", "--stream"]],
             targets=[P.IPDW_APP],
         ),

@@ -46,6 +46,7 @@ import {
   PLUGIN_ID,
   DIAGRAM_MENU_RANK,
   UI_THEMES,
+  ISetUrlParamsArgs,
 } from './tokens';
 import { DiagramManager } from './manager';
 import { RenderedDiagram } from './mime';
@@ -117,14 +118,25 @@ function activate(
   if (launcher) {
     launcher.add({
       command: CommandIds.createNew,
+      args: {
+        drawioUrlParams: { ui: 'kennedy' },
+      },
       rank: 1,
-      category: 'Other',
+      category: 'Diagrams',
+    });
+    launcher.add({
+      command: CommandIds.createNew,
+      args: {
+        drawioUrlParams: { ui: 'sketch' },
+      },
+      rank: 1,
+      category: 'Diagrams',
     });
   }
 
   commands.addCommand(CommandIds.setUrlParams, {
     label: (args) => {
-      const { drawioUrlParams } = args;
+      const { drawioUrlParams } = (args as any) as ISetUrlParamsArgs;
       const entries = Object.entries(drawioUrlParams || {});
       if (entries.length == 1 && args.justValue) {
         return entries.map(([k, v]) => v).join(', ');

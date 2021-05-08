@@ -48,7 +48,8 @@ export const DRAWIO_ICON_SVG = ICON_SVG;
 
 export const IPYDRAWIO_METADATA = NS;
 
-import SCHEMA from '../schema/plugin.json';
+import SCHEMA from './_schema';
+import SCHEMA_JSON from '../schema/plugin.json';
 
 /**
  * Escape hatch for runtime debugging.
@@ -71,13 +72,26 @@ export const DRAWIO_ICON_CLASS_RE = /jp-icon-warn0/;
 export const DIAGRAM_MENU_RANK = 99;
 
 // TODO: this is duplicated in schema
-export const UI_THEMES = SCHEMA.definitions['ui-theme']['enum'];
+export type TUIThemes = SCHEMA.UITheme;
+export const UI_THEMES = SCHEMA_JSON.definitions['ui-theme']['enum'] as TUIThemes[];
 
 export const IDiagramManager = new Token<IDiagramManager>(PLUGIN_ID);
 
 export namespace CommandIds {
   export const createNew = 'drawio:create-new';
   export const setUrlParams = 'drawio:url-params';
+}
+
+
+export interface ISetUrlParamsArgs {
+  drawioUrlParams: SCHEMA.DrawioURLParams;
+}
+
+export interface ICreateNewArgs extends ISetUrlParamsArgs {
+  /**
+   * The path in which to create a new untitled file.
+   */
+  cwd: string;
 }
 
 export namespace IDiagramManager {

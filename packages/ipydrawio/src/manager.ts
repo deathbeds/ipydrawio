@@ -29,6 +29,7 @@ import {
   CommandIds,
   DEBUG,
   IFormat,
+  ICreateNewArgs,
 } from './tokens';
 import { Diagram } from './editor';
 import { DiagramFactory, DiagramDocument } from './document';
@@ -69,12 +70,15 @@ export class DiagramManager implements IDiagramManager {
   protected _initCommands() {
     // Add a command for creating a new diagram file.
     this._app.commands.addCommand(CommandIds.createNew, {
-      label: IO.XML_NATIVE.label,
+      label: (args) => {
+        const {drawioUrlParams} = args as any as ICreateNewArgs;
+        return `${IO.XML_NATIVE.label} (${drawioUrlParams?.ui})`
+      },
       icon: IO.drawioIcon,
       caption: `Create a new ${IO.XML_NATIVE.name} file`,
-      execute: () => {
+      execute: async (args) => {
         let cwd = this._browserFactory.defaultBrowser.model.path;
-        return this.createNew(cwd);
+        return this.createNew({ ...(args as any), cwd });
       },
     });
   }
@@ -135,7 +139,10 @@ export class DiagramManager implements IDiagramManager {
 
   // Function to create a new untitled diagram file, given
   // the current working directory.
-  createNew(cwd: string) {
+  createNew(args: ICreateNewArgs) {
+    console.log(args);
+    const { cwd, drawioUrlParams } = args;
+
     this._status.status = `Creating Diagram in ${cwd}...`;
 
     const result = this._app.commands
@@ -145,11 +152,18 @@ export class DiagramManager implements IDiagramManager {
         ext: IO.XML_NATIVE.ext,
       })
       .then((model: Contents.IModel) => {
+        console.log('model created', model);
         this._status.status = `Opening Diagram...`;
         return this._app.commands.execute('docmanager:open', {
           path: model.path,
           factory: TEXT_FACTORY,
         });
+      })
+      .then((diagram: DiagramDocument) => {
+        console.log('model created', diagram);
+        if (drawioUrlParams) {
+          diagram.urlParams = drawioUrlParams;
+        }
       });
     return result;
   }
