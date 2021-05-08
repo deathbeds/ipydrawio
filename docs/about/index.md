@@ -2,6 +2,7 @@
 
 ```{toctree}
 ../ROADMAP.dio.ipynb
+changelog
 ```
 
 <!--

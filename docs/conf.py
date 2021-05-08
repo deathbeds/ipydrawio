@@ -42,11 +42,10 @@ version = ".".join(release.rsplit(".", 1))
 
 # sphinx config
 extensions = [
+    "myst_nb",
     "sphinx.ext.autosectionlabel",
-    # "sphinxext.rediraffe",
     "sphinx.ext.autodoc",
     "sphinx-jsonschema",
-    "myst_nb",
 ]
 
 autosectionlabel_prefix_document = True

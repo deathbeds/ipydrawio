@@ -1,8 +1,15 @@
 # Making Diagrams
 
-IPyDrawio lets you build and interact with diagrams comptible with
-[diagrams.net](https://diagrams.net). The same renderer powers different kinds
-of Jupyter outputs.
+IPyDrawio lets you build and interact with diagram [documents] compatible with
+[diagrams.net](https://diagrams.net), or hosted drawio integrations in
+Confluence and other tools.
+
+The same renderer powers different kinds of Jupyter outputs, including Jupyter
+[rich displays] and [widgets].
+
+[documents]: ../Diagram%20Document.ipynb
+[rich displays]: ../Diagram%20Rich%20Display.ipynb
+[widgets]: ../Diagram%20Widget.ipynb
 
 ```{toctree}
 ../Diagram Document

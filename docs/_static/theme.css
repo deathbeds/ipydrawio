@@ -105,7 +105,7 @@ footer .container > .footer-item,
 #bd-toc-nav,
 div.cell div.cell_input {
   flex: 1;
-  min-width: calc(10 * var(--ipd-card-padding));
+  min-width: calc(20 * var(--ipd-card-padding));
   max-width: calc(30 * var(--ipd-card-padding));
   list-style: none;
   border: var(--ipd-card-border);

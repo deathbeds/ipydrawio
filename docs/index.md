@@ -1,12 +1,30 @@
-# IPyDrawio Documentation
+# IPyDrawio
+
+![](./_static/what-can-you-draw.svg)
+
+## Get Started
+
+Install `ipydrawio` (and optionally `ipydrawio-export`) with `pip`, `mamba`, or
+`conda`:
+
+```bash
+pip install ipydrawio
+# or
+mamba install -c conda-forge ipydrawio
+# or
+conda install -c conda-forge ipydrawio
+```
+
+Start JupyterLab and [start making diagrams](./diagrams/index.md)!
+
+## Learn More
 
 ```{toctree}
 :maxdepth: 2
-about/index
 diagrams/index
+about/index
 api/index
 about/contributing
-about/changelog
 ```
 
 <!--
