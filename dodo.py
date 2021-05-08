@@ -363,13 +363,10 @@ def task_build():
                 P.YARN_INTEGRITY,
                 P.IPDW_IGNORE,
                 P.OK_SUBMODULES,
-                *P.IPDW_PY,
-                *P.PACKAGES.glob("*/schema/*.json"),
+                *sum(P.JS_PY_SCRIPTS.values(), []),
+                *sum(P.JS_SCHEMAS.values(), []),
             ],
-            actions=[
-                [*P.LERNA, "run", "build:pre", "--stream"],
-                [*P.JLPM, "prettier", "--write", P.PACKAGES / "ipydrawio/src/_schema.d.ts"]
-            ],
+            actions=[[*P.LERNA, "run", "build:pre", "--stream"]],
             targets=[P.IPDW_APP],
         ),
         P.OK_JS_BUILD_PRE,

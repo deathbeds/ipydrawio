@@ -68,7 +68,7 @@
     "url": "https://github.com/deathbeds/ipydrawio.git"
   },
   "scripts": {
-    "build:pre": "json2ts schema/plugin.json > src/_schema.d.ts"
+    "build:pre": "python scripts/schema.py"
   },
   "types": "lib/index.d.ts",
   "version": "1.1.0"

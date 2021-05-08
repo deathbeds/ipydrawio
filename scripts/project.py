@@ -190,6 +190,12 @@ JS_PY_SCRIPTS = {
     if (v.parent / "scripts").exists()
 }
 
+JS_SCHEMAS = {
+    k: sorted((v.parent / "schema").glob("*.json"))
+    for k, v in JS_PKG_JSON.items()
+    if (v.parent / "schema").exists()
+}
+
 # special things for ipydrawio-webpack
 IPDW = JS_PKG_JSON["ipydrawio-webpack"].parent
 IPDW_APP = IPDW / "dio/js/app.min.js"
