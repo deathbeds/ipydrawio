@@ -16,11 +16,12 @@
 
 #### @deathbeds/ipydrawio-pdf 1.1.0
 
-#### @deathbeds/ipydrawio-webpack 14.6.1000
+#### @deathbeds/ipydrawio-webpack 14.6.1100
 
-- drawio 14.6.10
+- drawio 14.6.11
   - improved pipeline for updating schema from drawio documentation for settings
-  - adds `sketch` theme for `ui`
+  - adds `sketch` theme for `ui`, enabled as a separate _Launcher_/_Open With_
+    option
 
 ---
 

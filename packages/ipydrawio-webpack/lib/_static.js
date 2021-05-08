@@ -1735,7 +1735,6 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/grapheditor/Sh
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/grapheditor/Sidebar.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/grapheditor/Toolbar.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/jscolor/jscolor.js';
-import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/json/json2.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/jszip/jszip.min.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/math-print.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/js/mermaid/mermaid.min.js';
@@ -2709,6 +2708,12 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/softwar
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/eip.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/entity_relationship.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/entity_relationship.xml';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/git_flow_1.png';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/git_flow_1.xml';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/git_flow_2.png';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/git_flow_2.xml';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/git_flow_3.png';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/git_flow_3.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/tables/authority_matrix.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/tables/authority_matrix.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/tables/gantt_1.png';
