@@ -14,7 +14,9 @@
   limitations under the License.
 */
 
-import * as PACKAGE from '../package.json';
+import * as PACKAGE_ from '../package.json';
+
+export const PACKAGE = PACKAGE_;
 
 export const NS = PACKAGE.name;
 export const PLUGIN_ID = `${NS}:plugin`;

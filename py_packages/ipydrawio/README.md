@@ -150,7 +150,7 @@ limitations under the License.
 [workflow]:
   https://github.com/deathbeds/ipydrawio/actions?query=branch%3Amaster+workflow%3A.github%2Fworkflows%2Fci.yml
 [roadmap]:
-  https://github.com/deathbeds/ipydrawio/blob/master/docs/ROADMAP.dio.ipynb
+  https://github.com/deathbeds/ipydrawio/blob/master/docs/ROADMAP.ipynb
 [conda-badge]: https://img.shields.io/conda/vn/conda-forge/ipydrawio
 [conda]: https://anaconda.org/conda-forge/ipydrawio
 [pypi-badge]: https://img.shields.io/pypi/v/ipydrawio
@@ -178,7 +178,7 @@ limitations under the License.
 [poster]:
   https://raw.githubusercontent.com/deathbeds/ipydrawio/master/docs/Poster.dio.svg
 [roadmap]:
-  https://nbviewer.jupyter.org/github/deathbeds/ipydrawio/blob/master/docs/ROADMAP.dio.ipynb
+  https://nbviewer.jupyter.org/github/deathbeds/ipydrawio/blob/master/docs/ROADMAP.ipynb
 [command palette]:
   https://jupyterlab.readthedocs.io/en/stable/user/commands.html?highlight=command%20palette
 [launcher]:

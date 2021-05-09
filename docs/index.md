@@ -1,6 +1,8 @@
 # IPyDrawio
 
-![](./_static/what-can-you-draw.svg)
+[![What is IPyDrawio?][poster]][poster]
+
+[poster]: ./Poster.dio.svg
 
 ## Get Started
 
@@ -16,6 +18,10 @@ conda install -c conda-forge ipydrawio
 ```
 
 Start JupyterLab and [start making diagrams](./diagrams/index.md)!
+
+[![What can you draw with IPyDrawio?][what-can-you-draw]][what-can-you-draw]
+
+[what-can-you-draw]: ./_static/what-can-you-draw.dio.svg
 
 ## Learn More
 

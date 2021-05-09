@@ -2,7 +2,7 @@
 
 ## Help Wanted
 
-- tackling [roadmap](./docs/ROADMAP.dio.ipynb) issues
+- tackling [roadmap](./docs/ROADMAP.ipynb) issues
 - improving testing
 - improving (self-hosted) documentation
 - improving the binder demo

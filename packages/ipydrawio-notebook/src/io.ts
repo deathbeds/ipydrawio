@@ -39,7 +39,7 @@ export const IPYNB_PLAIN: IFormat<any> = {
   key: 'ipynb',
   format: 'json',
   icon: drawioIpynbIcon,
-  label: 'Diagram Notebook',
+  label: 'Notebook',
   mimetype: 'application/x-ipynb+json',
   name: 'dionotebook',
   pattern: '\\.*\\.ipynb$',
