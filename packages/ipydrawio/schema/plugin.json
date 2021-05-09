@@ -832,6 +832,10 @@
   "jupyter.lab.setting-icon": "drawio:drawio",
   "jupyter.lab.setting-icon-label": "Diagram Documents",
   "properties": {
+    "disableEscapeFocus": {
+      "default": false,
+      "description": "disable returning focus to the main frame when the `escape` key is pressed"
+    },
     "drawioConfig": {
       "$ref": "#/definitions/drawio-config",
       "default": {

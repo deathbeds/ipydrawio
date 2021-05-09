@@ -4,13 +4,22 @@
 
 ### ipydrawio 1.1.0
 
-- the `sketch` theme is now the default `ui`
-  - additional configuration defaults have been added to `urlParams`
-- plugin schema updated
+- new documentation site at https://ipydrawio.rtfd.io [#40]
+- no longer depends on `lxml` [#40]
 
 #### ipydrawio-export 1.1.0
 
+- depends on `lxml` [#40]
+
 #### @deathbeds/ipydrawio 1.1.0
+
+- the `sketch` theme is now the available `ui`, and all themes are available as
+  launcher items [#40]
+- additional configuration defaults added to `urlParams` [#40]
+- the <kbd>Esc</kbd> button now shifts focus back to the main application
+  allowing for use of more keyboard shortcuts. [#40]
+  - the previous inescapable behavior can be restored in _Adanced Settings_ by
+    setting `"disableEscapeFocus": true`
 
 #### @deathbeds/ipydrawio-notebook 1.1.0
 
@@ -18,10 +27,9 @@
 
 #### @deathbeds/ipydrawio-webpack 14.6.1100
 
-- drawio 14.6.11
-  - improved pipeline for updating schema from drawio documentation for settings
-  - adds `sketch` theme for `ui`, enabled as a separate _Launcher_/_Open With_
-    option
+- drawio 14.6.11 [#40]
+
+[#40]: https://github.com/deathbeds/ipydrawio/pull/40
 
 ---
 

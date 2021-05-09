@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-
+import { Widget } from '@lumino/widgets';
 import {
   IWidgetTracker,
   WidgetTracker,
@@ -147,7 +147,6 @@ export class DiagramManager implements IDiagramManager {
   // Function to create a new untitled diagram file, given
   // the current working directory.
   createNew(args: ICreateNewArgs) {
-    console.log(args);
     const { cwd, drawioUrlParams } = args;
 
     this._status.status = `Creating Diagram in ${cwd}...`;
@@ -159,7 +158,6 @@ export class DiagramManager implements IDiagramManager {
         ext: IO.XML_NATIVE.ext,
       })
       .then((model: Contents.IModel) => {
-        console.log('model created', model);
         this._status.status = `Opening Diagram...`;
         return this._app.commands.execute('docmanager:open', {
           path: model.path,
@@ -167,7 +165,6 @@ export class DiagramManager implements IDiagramManager {
         });
       })
       .then((diagram: DiagramDocument) => {
-        console.log('model created', diagram);
         if (drawioUrlParams) {
           diagram.urlParams = drawioUrlParams;
         }
@@ -216,6 +213,18 @@ export class DiagramManager implements IDiagramManager {
 
   protected updateWidgetSettings(widget: DiagramDocument) {
     widget.updateSettings();
+  }
+
+  escapeCurrent(widget: Widget) {
+    if (this._settings.composite['disableEscapeFocus']) {
+      return;
+    }
+    this._app.shell.activateById(widget.id);
+    const { status } = this.status;
+
+    this.status.status = 'Escaped';
+    setTimeout(() => (this.status.status = status), 1000);
+    window.focus();
   }
 
   protected _initExportCommands(exportFormat: IFormat) {

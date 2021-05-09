@@ -180,6 +180,9 @@ export class DiagramFactory extends ABCWidgetFactory<
       getSettings: this.getSettings,
       manager: this.manager,
     });
+    doc.content.escaped.connect(() => {
+      this.manager.escapeCurrent(doc);
+    });
     return doc;
   }
 }

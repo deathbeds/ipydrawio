@@ -16,16 +16,16 @@
   limitations under the License.
 */
 
-import * as _PACKAGE from '../package.json';
-
-export const PACKAGE = _PACKAGE;
-
-import { Token } from '@lumino/coreutils';
+import { Widget } from '@lumino/widgets';
+import { ReadonlyPartialJSONObject, Token } from '@lumino/coreutils';
 import { Contents } from '@jupyterlab/services';
 import { LabIcon } from '@jupyterlab/ui-components';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
-import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
+
+import * as _PACKAGE from '../package.json';
+
+export const PACKAGE = _PACKAGE;
 
 export const NS = PACKAGE.name;
 export const VERSION = PACKAGE.version;
@@ -65,6 +65,7 @@ export interface IDiagramManager {
   activeWidget: DiagramDocument | null;
   drawioURL: string;
   settings: ISettingRegistry.ISettings;
+  escapeCurrent(widget: Widget): void;
 }
 
 export const DRAWIO_ICON_CLASS_RE = /jp-icon-warn0/;

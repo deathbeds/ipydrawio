@@ -33,6 +33,10 @@ export interface DiagramDocuments {
   drawioConfig?: DrawioConfiguration;
   drawioExportUrl?: DrawioExportURL;
   drawioUrlParams?: DrawioURLParams;
+  /**
+   * disable returning focus to the main frame when the `escape` key is pressed
+   */
+  'disable-escape-focus'?: boolean;
   [k: string]: unknown;
 }
 /**

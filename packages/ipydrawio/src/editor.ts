@@ -18,7 +18,7 @@
 
 import { PromiseDelegate } from '@lumino/coreutils';
 import { Message } from '@lumino/messaging';
-import { Signal } from '@lumino/signaling';
+import { Signal, ISignal } from '@lumino/signaling';
 
 import { IFrame } from '@jupyterlab/apputils';
 
@@ -75,6 +75,7 @@ export class Diagram extends IFrame {
   private _frameClicked = new Signal<Diagram, void>(this);
   private _app: IMXApp;
   private _appChanged = new Signal<Diagram, void>(this);
+  private _escaped = new Signal<Diagram, void>(this);
 
   constructor(options: Diagram.IOptions) {
     super({ sandbox: SANDBOX_EXCEPTIONS, ...options });
@@ -120,8 +121,18 @@ export class Diagram extends IFrame {
     // }
   }
 
+  /**
+   * A signal emitted when the underlying drawio app changes
+   */
   get appChanged() {
     return this._appChanged;
+  }
+
+  /**
+   * A signal emitted when the user indicates they want to return focus to the main app
+   */
+  get escaped(): ISignal<Diagram, void> {
+    return this._escaped;
   }
 
   /**
@@ -299,6 +310,16 @@ export class Diagram extends IFrame {
       this.url = url;
       this._initialLoad = false;
       this._frame.onload = () => {
+        this._frame.contentDocument?.addEventListener('keydown', (evt) => {
+          switch (evt.keyCode) {
+            case 27: // escape
+              this._escaped.emit(void 0);
+              break;
+            default:
+              break;
+          }
+        });
+
         if (this._frame.contentDocument == null) {
           console.warn('contentDocument not ready');
           return;
