@@ -149,8 +149,7 @@ limitations under the License.
   https://github.com/deathbeds/ipydrawio/workflows/.github/workflows/ci.yml/badge.svg
 [workflow]:
   https://github.com/deathbeds/ipydrawio/actions?query=branch%3Amaster+workflow%3A.github%2Fworkflows%2Fci.yml
-[roadmap]:
-  https://github.com/deathbeds/ipydrawio/blob/master/docs/ROADMAP.ipynb
+[roadmap]: https://github.com/deathbeds/ipydrawio/blob/master/docs/ROADMAP.ipynb
 [conda-badge]: https://img.shields.io/conda/vn/conda-forge/ipydrawio
 [conda]: https://anaconda.org/conda-forge/ipydrawio
 [pypi-badge]: https://img.shields.io/pypi/v/ipydrawio

@@ -207,6 +207,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/update16.p
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/update32.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/update80.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/youtube.png';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/img/LICENSE';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/img/clipart/Battery_0_128x128.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/img/clipart/Battery_100_128x128.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/img/clipart/Battery_50_128x128.png';
@@ -2256,6 +2257,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../dio/shapes/pid2/mxPid
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/shapes/pid2/mxPidValves.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/shapes/rack/mxRack.js';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/shortcuts.svg';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/stencils/LICENSE';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/stencils/android/android.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/stencils/arrows.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/stencils/atlassian.xml';
@@ -2463,6 +2465,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../dio/styles/sprites.pn
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/styles/thumb_horz.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/styles/thumb_vertical.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/styles/up.gif';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/LICENSE';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/basic/classes.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/basic/classes.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/basic/cross.png';
