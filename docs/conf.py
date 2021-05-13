@@ -17,6 +17,7 @@ import datetime
 import json
 import os
 import re
+import sys
 
 # import subprocess
 from pathlib import Path
@@ -24,6 +25,9 @@ from pathlib import Path
 from sphinx.application import Sphinx
 
 HERE = Path(__file__).parent
+
+sys.path += [str(HERE / "vendor")]
+
 ROOT = HERE.parent
 APP_PKG = ROOT / "packages/ipydrawio/package.json"
 APP_DATA = json.loads(APP_PKG.read_text(encoding="utf-8"))
@@ -43,9 +47,11 @@ version = ".".join(release.rsplit(".", 1))
 # sphinx config
 extensions = [
     "myst_nb",
+    "sphinx.ext.intersphinx",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.autodoc",
     "sphinx-jsonschema",
+    "autodoc_traits",
 ]
 
 autosectionlabel_prefix_document = True
@@ -96,8 +102,11 @@ html_context = {
 }
 
 
-# if RTD:
-#     subprocess.check_call(["doit", "build", "docs:typedoc:mystify"], cwd=str(ROOT))
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+    "traitlets": ("https://traitlets.readthedocs.io/en/stable/", None),
+    "ipywidgets": ("https://ipywidgets.readthedocs.io/en/stable/", None),
+}
 
 
 def clean_schema(app: Sphinx, error):

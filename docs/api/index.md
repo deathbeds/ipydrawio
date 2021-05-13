@@ -2,6 +2,7 @@
 
 ```{toctree}
 schema
+widgets
 ```
 
 <!--
