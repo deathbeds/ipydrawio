@@ -30,13 +30,13 @@ export type UITheme = 'min' | 'atlas' | 'dark' | 'kennedy' | 'sketch';
  * Configure Diagram Settings
  */
 export interface DiagramDocuments {
-  drawioConfig?: DrawioConfiguration;
-  drawioExportUrl?: DrawioExportURL;
-  drawioUrlParams?: DrawioURLParams;
   /**
    * disable returning focus to the main frame when the `escape` key is pressed
    */
-  'disable-escape-focus'?: boolean;
+  disableEscapeFocus?: boolean;
+  drawioConfig?: DrawioConfiguration;
+  drawioExportUrl?: DrawioExportURL;
+  drawioUrlParams?: DrawioURLParams;
   [k: string]: unknown;
 }
 /**

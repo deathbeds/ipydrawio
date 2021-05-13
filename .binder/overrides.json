@@ -1,8 +1,8 @@
 {
-  "@jupyterlab/extensionmanager-extension:plugin": {
-    "enabled": false
-  },
   "@jupyterlab/apputils-extension:palette": {
     "modal": false
+  },
+  "@jupyterlab/extensionmanager-extension:plugin": {
+    "enabled": false
   }
 }
