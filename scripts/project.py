@@ -252,6 +252,10 @@ DOCS_CONF = DOCS / "conf.py"
 ENV_DOCS = DOCS / "environment.yml"
 DOCS_BUILD = BUILD / "docs"
 DOCS_BUILDINFO = DOCS_BUILD / ".buildinfo"
+DOCS_MD = [*DOCS.rglob("*.md")]
+DOCS_RST = [*DOCS.rglob("*.md")]
+DOCS_IPYNB = [*DOCS.rglob("*.ipynb")]
+DOCS_SRC = [*DOCS_MD, *DOCS_RST, *DOCS_IPYNB]
 DOCS_STATIC = DOCS / "_static"
 DOCS_FAVICON_SVG = DOCS_STATIC / "icon.svg"
 DOCS_FAVICON_ICO = DOCS_STATIC / "favicon.ico"
@@ -281,7 +285,7 @@ ALL_JSON = [
     *ATEST.glob("fixtures/*.json"),
     *BINDER.glob("*.json"),
 ]
-ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md"), *DOCS.rglob("*.md")]
+ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md"), *DOCS_MD]
 ALL_SETUP_CFG = [SETUP_CFG, *PY_SETUP_CFG.values()]
 ALL_JS = [PACKAGES / ".eslintrc.js"]
 ALL_TS = sum(JS_TSSRC.values(), [])

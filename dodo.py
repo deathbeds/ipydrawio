@@ -634,7 +634,7 @@ def task_watch():
         name="docs",
         doc="watch docs for changes, rebuilding",
         uptodate=[lambda: False],
-        file_dep=[P.DOCS_BUILDINFO],
+        file_dep=[P.DOCS_BUILDINFO, P.OK_PIP_CHECK],
         actions=[["sphinx-autobuild", "-a", "-j8", P.DOCS, P.DOCS_BUILD]],
     )
 
@@ -670,7 +670,7 @@ def task_docs():
     yield dict(
         name="sphinx",
         doc="build the documentation site with sphinx",
-        file_dep=[P.DOCS_CONF, P.DOCS_FAVICON_ICO],
+        file_dep=[P.DOCS_CONF, P.DOCS_FAVICON_ICO, P.OK_PIP_CHECK, *P.DOCS_SRC],
         actions=[["sphinx-build", "-j8", "-b", "html", P.DOCS, P.DOCS_BUILD]],
         targets=[P.DOCS_BUILDINFO],
     )
