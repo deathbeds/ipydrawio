@@ -122,16 +122,22 @@ function activate(
       category: IO.XML_NATIVE.label,
     });
 
-    for (const ui of UI_THEMES) {
-      launcher.add({
-        command: CommandIds.createNew,
-        args: {
-          drawioUrlParams: { ui },
-        },
-        rank: 2,
-        category: IO.XML_NATIVE.label,
-      });
-    }
+    launcher.add({
+      command: CommandIds.createNewCustom,
+      rank: 2,
+      category: IO.XML_NATIVE.label,
+    });
+
+    // for (const ui of UI_THEMES) {
+    //   launcher.add({
+    //     command: CommandIds.createNew,
+    //     args: {
+    //       drawioUrlParams: { ui },
+    //     },
+    //     rank: 2,
+    //     category: IO.XML_NATIVE.label,
+    //   });
+    // }
   }
 
   commands.addCommand(CommandIds.setUrlParams, {

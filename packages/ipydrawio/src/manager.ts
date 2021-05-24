@@ -19,17 +19,18 @@ import {
   IWidgetTracker,
   WidgetTracker,
   ICommandPalette,
+  MainAreaWidget,
 } from '@jupyterlab/apputils';
 import { JupyterLab, ILayoutRestorer } from '@jupyterlab/application';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
-import { PathExt } from '@jupyterlab/coreutils';
+import { URLExt, PathExt } from '@jupyterlab/coreutils';
 import {
   IDiagramManager,
-  TEXT_FACTORY,
   CommandIds,
   DEBUG,
   IFormat,
   ICreateNewArgs,
+  ITemplate,
 } from './tokens';
 import { Diagram } from './editor';
 import { DiagramFactory, DiagramDocument } from './document';
@@ -38,6 +39,7 @@ import { DrawioStatus } from './status';
 import * as IO from './io';
 import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
 import { DRAWIO_URL } from '@deathbeds/ipydrawio-webpack';
+import { CreateAdvanced } from './createAdvanced';
 
 const DEFAULT_EXPORTER = async (
   drawio: Diagram,
@@ -68,8 +70,9 @@ export class DiagramManager implements IDiagramManager {
   }
 
   protected _initCommands() {
+    const { commands } = this._app;
     // Add a command for creating a new diagram file.
-    this._app.commands.addCommand(CommandIds.createNew, {
+    commands.addCommand(CommandIds.createNew, {
       label: (args) => {
         const { drawioUrlParams } = (args as any) as ICreateNewArgs;
         const { ui } = drawioUrlParams || {};
@@ -82,12 +85,36 @@ export class DiagramManager implements IDiagramManager {
         const { ui } = drawioUrlParams || {};
         return ui ? IO.drawioThemeIcons[ui] : IO.drawioIcon;
       },
-      caption: `Create a new ${IO.XML_NATIVE.name} file`,
+      caption: `Create a blank ${IO.XML_NATIVE.name} file`,
       execute: async (args) => {
         let cwd = this._browserFactory.defaultBrowser.model.path;
         return this.createNew({ ...(args as any), cwd });
       },
     });
+
+    commands.addCommand(CommandIds.createNewCustom, {
+      label: `Advanced ${IO.XML_NATIVE.label}...`,
+      caption: 'Create a diagram with customized formats, templates, and UI',
+      execute: () => {
+        const model = new CreateAdvanced.Model({ manager: this });
+        const settingsChanged = () => model.stateChanged.emit(void 0);
+        this._settings.changed.connect(settingsChanged);
+        const content = new CreateAdvanced(model);
+        const main = new MainAreaWidget({ content });
+        model.documentRequested.connect(async () => {
+          await commands.execute(CommandIds.createNew, model.args as any);
+          main.dispose();
+          model.dispose();
+          this._settings.changed.disconnect(settingsChanged);
+        });
+        this._app.shell.add(main);
+      },
+      icon: IO.drawioIcon,
+    });
+  }
+
+  get formats() {
+    return [...this._formats.values()];
   }
 
   formatForModel(contentsModel: Partial<Contents.IModel>) {
@@ -147,7 +174,10 @@ export class DiagramManager implements IDiagramManager {
   // Function to create a new untitled diagram file, given
   // the current working directory.
   createNew(args: ICreateNewArgs) {
-    const { cwd, drawioUrlParams } = args;
+    let { cwd, drawioUrlParams } = args;
+
+    const format =
+      (args.format ? this._formats.get(args.format) : null) || IO.XML_NATIVE;
 
     this._status.status = `Creating Diagram in ${cwd}...`;
 
@@ -155,18 +185,25 @@ export class DiagramManager implements IDiagramManager {
       .execute('docmanager:new-untitled', {
         path: cwd,
         type: 'file',
-        ext: IO.XML_NATIVE.ext,
+        ext: format.ext,
       })
       .then((model: Contents.IModel) => {
         this._status.status = `Opening Diagram...`;
         return this._app.commands.execute('docmanager:open', {
           path: model.path,
-          factory: TEXT_FACTORY,
+          factory: format.factoryName,
         });
       })
-      .then((diagram: DiagramDocument) => {
+      .then(async (diagram: DiagramDocument) => {
         if (drawioUrlParams) {
           diagram.urlParams = drawioUrlParams;
+          const template = drawioUrlParams['template-filename'];
+          if (template) {
+            await diagram.content.ready;
+            const response = await fetch(template);
+            const xml = await response.text();
+            diagram.content.load(xml);
+          }
         }
       });
     return result;
@@ -177,6 +214,38 @@ export class DiagramManager implements IDiagramManager {
     for (const tracker of this._trackers.values()) {
       tracker.forEach(this.updateWidgetSettings);
     }
+  }
+
+  /**
+   * Retrieve all available templates
+   */
+  async templates(): Promise<ITemplate[]> {
+    const templates: ITemplate[] = [];
+    const response = await fetch(
+      URLExt.join(DRAWIO_URL, '../templates/index.xml')
+    );
+    const xmlStr = await response.text();
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(xmlStr, 'application/xml');
+    for (const tmpl of xml.querySelectorAll('template')) {
+      let url = tmpl.getAttribute('url');
+      if (!url) {
+        continue;
+      }
+      const [group, label] = url
+        .replace(/.xml$/, '')
+        .replace(/_/g, ' ')
+        .split('/')
+        .slice(-2);
+      url = URLExt.join(DRAWIO_URL, '../templates/', url);
+      templates.push({
+        url,
+        label,
+        thumbnail: url.replace(/.xml$/, '.png'),
+        tags: [group],
+      });
+    }
+    return templates;
   }
 
   addFormat(format: IFormat) {

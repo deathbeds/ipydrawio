@@ -137,9 +137,10 @@ export class DiagramFactory extends ABCWidgetFactory<
             return doc.format;
           },
           urlParams: () => {
+            const settingsUrlParams = this.getSettings()
+              ?.drawioUrlParams as ReadonlyPartialJSONObject;
             return {
-              ...(this.getSettings()
-                ?.drawioUrlParams as ReadonlyPartialJSONObject),
+              ...settingsUrlParams,
               ...doc.urlParams,
             } as any;
           },

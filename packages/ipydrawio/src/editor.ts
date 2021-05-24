@@ -369,6 +369,13 @@ export class Diagram extends IFrame {
     }
   }
 
+  load(xml: string) {
+    this.postMessage({
+      action: 'load',
+      xml,
+    });
+  }
+
   get format(): IFormat | null {
     return this.adapter.format();
   }

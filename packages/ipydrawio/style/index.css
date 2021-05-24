@@ -41,3 +41,148 @@
 .jp-DiagramMedia {
   min-height: 300px;
 }
+
+.jp-IPyDiagram-CreateAdvanced {
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.jp-IPyDiagram-CreateAdvanced header {
+  flex: 0;
+  background-color: var(--jp-layout-color0);
+  padding: var(--jp-notebook-padding);
+  display: flex;
+  border-bottom: solid 1px var(--jp-border-color0);
+  align-items: center;
+}
+
+.jp-IPyDiagram-CreateAdvanced header h1 {
+  flex: 1;
+  padding: 0;
+  margin: 0 !important;
+}
+
+.jp-IPyDiagram-CreateAdvanced header button {
+  display: flex;
+  align-items: center;
+  padding: 1.5em;
+}
+
+.jp-IPyDiagram-CreateAdvanced header button > * {
+  flex: 1;
+  white-space: nowrap;
+}
+
+.jp-IPyDiagram-CreateAdvanced header button > span:first-child {
+  line-height: 0;
+  margin-right: 0.5em;
+}
+
+.jp-IPyDiagram-CreateAdvanced form {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--jp-notebook-padding);
+}
+
+.jp-IPyDiagram-CreateAdvanced input[type='text'] {
+  font-size: var(--jp-ui-font-size1);
+  padding: 0.5em;
+  width: 100%;
+  margin: 1em 0;
+}
+
+.jp-IPyDiagram-CreateAdvanced section {
+  display: flex;
+}
+
+.jp-IPyDiagram-CreateAdvanced section > h2 {
+  min-width: 10em;
+  flex: 0;
+}
+
+.jp-IPyDiagram-CreateAdvanced section > ul {
+  flex: 1;
+}
+
+.jp-IPyDiagram-cards {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.jp-IPyDiagram-cards > li {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 1em 1em 0;
+  font-weight: bold;
+}
+
+.jp-IPyDiagram-cards > li input[type='radio'] {
+  display: none;
+}
+
+.jp-IPyDiagram-cards > li label {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  border: solid 1px var(--jp-border-color0);
+  padding: 0.5em;
+  min-width: 10em;
+  min-height: 10em;
+  width: 10em;
+  height: 10em;
+  cursor: pointer;
+  background-color: var(--jp-layout-color1);
+  box-shadow: var(--jp-elevation-z2);
+}
+
+.jp-IPyDiagram-cards > li label:hover,
+.jp-IPyDiagram-cards > li label:active,
+.jp-IPyDiagram-cards > li label:focus {
+  box-shadow: var(--jp-elevation-z6);
+}
+
+.jp-IPyDiagram-cards > li input:checked ~ label {
+  border-color: var(--jp-brand-color0);
+  box-shadow: var(--jp-elevation-z6);
+}
+
+.jp-IPyDiagram-cards > li > label > * {
+  flex: 0;
+}
+
+.jp-IPyDiagram-cards > li > label img {
+  max-width: 100%;
+  flex: 1;
+  object-fit: contain;
+  background: #fff;
+}
+
+.jp-IPyDiagram-tags {
+  list-style: none;
+  display: flex;
+  position: absolute;
+  bottom: 0.25em;
+  right: 0.25em;
+  left: 0.25em;
+  justify-content: flex-end;
+}
+
+.jp-IPyDiagram-tags li {
+  color: #fff;
+  list-style: none;
+  flex: 0;
+  background-color: var(--jp-icon-contrast-color0);
+  border-radius: 0.25em;
+  font-weight: normal;
+  padding: 0 0.25em;
+  margin-left: 0.25em;
+}

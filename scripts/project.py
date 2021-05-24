@@ -258,7 +258,11 @@ DOCS_CONF = DOCS / "conf.py"
 ENV_DOCS = DOCS / "environment.yml"
 DOCS_BUILD = BUILD / "docs"
 DOCS_BUILDINFO = DOCS_BUILD / ".buildinfo"
-DOCS_MD = [*DOCS.rglob("*.md")]
+DOCS_MD = [
+    p
+    for p in DOCS.rglob("*.md")
+    if not p.parent.name == "ts" or p.parent.parent.name == "ts"
+]
 DOCS_RST = [*DOCS.rglob("*.md")]
 DOCS_IPYNB = [*DOCS.rglob("*.ipynb")]
 DOCS_SRC = [*DOCS_MD, *DOCS_RST, *DOCS_IPYNB]

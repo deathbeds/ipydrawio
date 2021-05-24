@@ -59,13 +59,22 @@ export const DEBUG_LEVEL = DEBUG
   ? window.location.href.indexOf('DRAWIO_DEBUG')
   : 0;
 
+export interface ITemplate {
+  label: string;
+  thumbnail: string;
+  url: string;
+  tags: string[];
+}
+
 export interface IDiagramManager {
   addFormat(format: IFormat): void;
+  formats: IFormat[];
   formatForModel(contentsModel: Partial<Contents.IModel>): IFormat | null;
   activeWidget: DiagramDocument | null;
   drawioURL: string;
   settings: ISettingRegistry.ISettings;
   escapeCurrent(widget: Widget): void;
+  templates(): Promise<ITemplate[]>;
 }
 
 export const DRAWIO_ICON_CLASS_RE = /jp-icon-warn0/;
@@ -94,6 +103,7 @@ export const IDiagramManager = new Token<IDiagramManager>(PLUGIN_ID);
 
 export namespace CommandIds {
   export const createNew = 'drawio:create-new';
+  export const createNewCustom = 'drawio:create-new-custom';
   export const setUrlParams = 'drawio:url-params';
 }
 
@@ -106,6 +116,10 @@ export interface ICreateNewArgs extends ISetUrlParamsArgs {
    * The path in which to create a new untitled file.
    */
   cwd: string;
+  /**
+   * The format to use for a new untitled file
+   */
+  format?: string;
 }
 
 export namespace IDiagramManager {

@@ -22,6 +22,9 @@ module.exports = {
     node: true,
   },
   root: true,
+  globals: {
+    JSX: true,
+  },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
