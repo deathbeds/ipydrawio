@@ -301,3 +301,15 @@ Launch Untitled Diagram
     Sleep    1s
     Unselect Frame
     Wait Until Element is Visible    ${CSS DIO IFRAME}    timeout=20s
+
+Launch Advanced Diagram
+    Lab Command    New Launcher
+    Ensure Sidebar Is Closed
+    Click Element    ${XP LAUNCH TAB}
+    Wait Until Element is Enabled    ${CSS LAUNCH ADVANCED}
+    Click Element    ${CSS LAUNCH ADVANCED}
+    Wait Until Element is Visible    ${CSS CREATE ADVANCED}
+
+Accept Advanced Options
+    Click Element    ${CSS ACCEPT ADVANCED}
+    Wait Until Element is Visible    ${CSS DIO IFRAME}    timeout=20s

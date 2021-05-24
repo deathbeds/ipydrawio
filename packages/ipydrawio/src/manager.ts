@@ -85,7 +85,7 @@ export class DiagramManager implements IDiagramManager {
         const { ui } = drawioUrlParams || {};
         return ui ? IO.drawioThemeIcons[ui] : IO.drawioIcon;
       },
-      caption: `Create a blank ${IO.XML_NATIVE.name} file`,
+      caption: `Create a blank ${IO.XML_NATIVE.ext} file`,
       execute: async (args) => {
         let cwd = this._browserFactory.defaultBrowser.model.path;
         return this.createNew({ ...(args as any), cwd });

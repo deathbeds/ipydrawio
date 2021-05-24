@@ -346,11 +346,13 @@ RFLINT_OPTS = sum(
     [
         ["--ignore", c]
         for c in [
+            "FileTooLong",
             "LineTooLong",
             "RequireKeywordDocumentation",
-            "TooFewKeywordSteps",
             "RequireKeywordDocumentation",
+            "TooFewKeywordSteps",
             "TooFewTestSteps",
+            "TooManyTestSteps",
         ]
     ],
     [],
