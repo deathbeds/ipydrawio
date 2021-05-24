@@ -495,14 +495,17 @@ def typedoc_conf():
 
     tsconfig = json.loads(TSCONFIG_TYPEDOC.read_text(**ENC))
     original_references = tsconfig["references"]
-    new_references = sum([
+    new_references = sum(
         [
-            {"path": f"./{p.parent.name}/src"},
-            {"path": f"./{p.parent.name}"},
-        ]
-        for p in JS_PKG_JSON.values()
-        if p.parent.name not in NO_TYPEDOC
-    ], [])
+            [
+                {"path": f"./{p.parent.name}/src"},
+                {"path": f"./{p.parent.name}"},
+            ]
+            for p in JS_PKG_JSON.values()
+            if p.parent.name not in NO_TYPEDOC
+        ],
+        [],
+    )
 
     if json.dumps(original_references) != json.dumps(new_references):
         tsconfig["references"] = new_references

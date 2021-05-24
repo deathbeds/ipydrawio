@@ -5,7 +5,8 @@
 ### ipydrawio 1.1.0
 
 - new documentation site at https://ipydrawio.rtfd.io [#40]
-- no longer depends on `lxml` [#40]
+- no longer depends on `lxml`, future XML-based features will support the
+  standard library `xml` module [#40]
 
 #### ipydrawio-export 1.1.0
 
