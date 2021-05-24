@@ -190,10 +190,10 @@ class IPyDrawioExportManager(LoggingConfigurable):
                     self.log.warning(
                         f"[ipydrawio-export] HTTP {res.status_code}: {res.text}"
                     )
-                else:
+                else:  # pragma: no cover
                     self.log.warning("[ipydrawio-export] retrying...")
 
-            retries -= 1
+            retries -= 1  # pragma: no cover
 
         if res:
             self.log.debug(f"[ipydrawio-export] {len(res.text)} bytes")

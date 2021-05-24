@@ -275,7 +275,25 @@ DOCS_TS_MODULES = [
 
 DOCS_RAW_TYPEDOC = BUILD / "typedoc"
 DOCS_RAW_TYPEDOC_README = DOCS_RAW_TYPEDOC / "README.md"
+MD_FOOTER = """
+```
+Copyright 2021 ipydrawio contributors
 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
+"""
+
+# collections, mostly for linting
 ALL_PY = [
     *ATEST.rglob("*.py"),
     *BINDER.glob("*.py"),
@@ -568,6 +586,8 @@ def mystify():
             flags=re.M | re.S,
         )
 
+        out_text += MD_FOOTER
+
         out_doc.write_text(out_text, **ENC)
 
     for mod, sections in mods.items():
@@ -580,6 +600,7 @@ def mystify():
                 ":maxdepth: 1",
                 *contents,
                 "```\n",
+                MD_FOOTER,
             ]
         out_doc.write_text("\n".join(mod_lines))
 
@@ -591,6 +612,7 @@ def mystify():
                 ":maxdepth: 1",
                 *[mod_md_name(mod) for mod in sorted(mods)],
                 "```",
+                MD_FOOTER,
             ]
         ),
         **ENC,
