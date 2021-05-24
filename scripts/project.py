@@ -23,6 +23,7 @@ import platform
 import re
 import shutil
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 _SESSION = None
@@ -34,6 +35,7 @@ WIN = PLATFORM == "Windows"
 OSX = PLATFORM == "Darwin"
 UNIX = not WIN
 PREFIX = Path(sys.prefix)
+ENC = dict(encoding="utf-8")
 
 BUILDING_IN_CI = bool(json.loads(os.environ.get("BUILDING_IN_CI", "0")))
 TESTING_IN_CI = bool(json.loads(os.environ.get("TESTING_IN_CI", "0")))
@@ -133,6 +135,10 @@ ATEST_OUT_XML = "output.xml"
 JS_NS = "deathbeds"
 IPYDIO = PACKAGES / "ipydrawio"
 TSCONFIGBASE = PACKAGES / "tsconfigbase.json"
+TSCONFIG_TYPEDOC = PACKAGES / "tsconfig.typedoc.json"
+TYPEDOC_JSON = PACKAGES / "typedoc.json"
+TYPEDOC_CONF = [TSCONFIG_TYPEDOC, TYPEDOC_JSON]
+NO_TYPEDOC = ["_meta", "ipydrawio-webpack"]
 
 # so many js packages
 JS_PKG_JSON = {p.parent.name: p for p in PACKAGES.glob("*/package.json")}
@@ -259,6 +265,16 @@ DOCS_SRC = [*DOCS_MD, *DOCS_RST, *DOCS_IPYNB]
 DOCS_STATIC = DOCS / "_static"
 DOCS_FAVICON_SVG = DOCS_STATIC / "icon.svg"
 DOCS_FAVICON_ICO = DOCS_STATIC / "favicon.ico"
+DOCS_TS = DOCS / "api/ts"
+DOCS_TS_MYST_INDEX = DOCS_TS / "index.md"
+DOCS_TS_MODULES = [
+    ROOT / "docs/api/ts" / f"{p.parent.name}.md"
+    for p in JS_PKG_JSON.values()
+    if p.parent.name not in NO_TYPEDOC
+]
+
+DOCS_RAW_TYPEDOC = BUILD / "typedoc"
+DOCS_RAW_TYPEDOC_README = DOCS_RAW_TYPEDOC / "README.md"
 
 ALL_PY = [
     *ATEST.rglob("*.py"),
@@ -451,6 +467,130 @@ def patch_one_env(source, target):
                 old_target[2],
             ]
         )
+    )
+
+
+def typedoc_conf():
+    typedoc = json.loads(TYPEDOC_JSON.read_text(**ENC))
+    original_entry_points = sorted(typedoc["entryPoints"])
+    new_entry_points = sorted(
+        [
+            str(
+                (
+                    p.parent / "src/index.ts"
+                    if (p.parent / "src/index.ts").exists()
+                    else p.parent / "lib/index.d.ts"
+                )
+                .relative_to(ROOT)
+                .as_posix()
+            )
+            for p in JS_PKG_JSON.values()
+            if p.parent.name not in NO_TYPEDOC
+        ]
+    )
+
+    if json.dumps(original_entry_points) != json.dumps(new_entry_points):
+        typedoc["entryPoints"] = new_entry_points
+        TYPEDOC_JSON.write_text(json.dumps(typedoc, indent=2, sort_keys=True), **ENC)
+
+    tsconfig = json.loads(TSCONFIG_TYPEDOC.read_text(**ENC))
+    original_references = tsconfig["references"]
+    new_references = sum([
+        [
+            {"path": f"./{p.parent.name}/src"},
+            {"path": f"./{p.parent.name}"},
+        ]
+        for p in JS_PKG_JSON.values()
+        if p.parent.name not in NO_TYPEDOC
+    ], [])
+
+    if json.dumps(original_references) != json.dumps(new_references):
+        tsconfig["references"] = new_references
+        TSCONFIG_TYPEDOC.write_text(
+            json.dumps(tsconfig, indent=2, sort_keys=True), **ENC
+        )
+
+
+def mystify():
+    """unwrap monorepo docs into per-module docs"""
+    mods = defaultdict(lambda: defaultdict(list))
+    if DOCS_TS.exists():
+        shutil.rmtree(DOCS_TS)
+
+    def mod_md_name(mod):
+        return mod.replace("@jupyterlite/", "") + ".md"
+
+    for doc in sorted(DOCS_RAW_TYPEDOC.rglob("*.md")):
+        if doc.parent == DOCS_RAW_TYPEDOC:
+            continue
+        if doc.name == "README.md":
+            continue
+        doc_text = doc.read_text(**ENC)
+        doc_lines = doc_text.splitlines()
+        mod_chunks = doc_lines[0].split(" / ")
+        src = mod_chunks[1]
+        if src.startswith("["):
+            src = re.findall(r"\[(.*)/src\]", src)[0]
+        else:
+            src = src.replace("/src", "")
+        pkg = f"""@jupyterlite/{src.replace("/src", "")}"""
+        mods[pkg][doc.parent.name] += [
+            str(doc.relative_to(DOCS_RAW_TYPEDOC).as_posix())[:-3]
+        ]
+
+        # rewrite doc and write back out
+        out_doc = DOCS_TS / doc.relative_to(DOCS_RAW_TYPEDOC)
+        if not out_doc.parent.exists():
+            out_doc.parent.mkdir(parents=True)
+
+        out_text = "\n".join([*doc_lines[1:], ""]).replace("README.md", "index.md")
+        out_text = re.sub(
+            r"## Table of contents(.*?)\n## ",
+            "\n## ",
+            out_text,
+            flags=re.M | re.S,
+        )
+        out_text = out_text.replace("/src]", "]")
+        out_text = re.sub("/src$", "", out_text, flags=re.M)
+        out_text = re.sub(
+            r"^((Implementation of|Overrides|Inherited from):)",
+            "_\\1_",
+            out_text,
+            flags=re.M | re.S,
+        )
+        out_text = re.sub(
+            r"^Defined in: ([^\n]+)$",
+            "_Defined in:_ `\\1`",
+            out_text,
+            flags=re.M | re.S,
+        )
+
+        out_doc.write_text(out_text, **ENC)
+
+    for mod, sections in mods.items():
+        out_doc = DOCS_TS / mod_md_name(mod)
+        mod_lines = [f"""# `{mod.replace("@jupyterlite/", "")}`\n"""]
+        for label, contents in sections.items():
+            mod_lines += [
+                f"## {label.title()}\n",
+                "```{toctree}",
+                ":maxdepth: 1",
+                *contents,
+                "```\n",
+            ]
+        out_doc.write_text("\n".join(mod_lines))
+
+    DOCS_TS_MYST_INDEX.write_text(
+        "\n".join(
+            [
+                "# `@deathbeds/ipydrawio`\n",
+                "```{toctree}",
+                ":maxdepth: 1",
+                *[mod_md_name(mod) for mod in sorted(mods)],
+                "```",
+            ]
+        ),
+        **ENC,
     )
 
 

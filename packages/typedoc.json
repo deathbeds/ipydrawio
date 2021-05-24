@@ -1,0 +1,12 @@
+{
+    "entryPoints": [
+        "packages/ipydrawio/src/index.ts",
+        "packages/ipydrawio-notebook/src/index.ts",
+        "packages/ipydrawio-pdf/src/index.ts"
+    ],
+    "exclude": ["*.spec.ts", "**/node_modules/**", "**/test/**", "**/lib/**"],
+    "name": "@deathbeds/ipydrawio",
+    "out": "./build/typedoc",
+    "readme": "none",
+    "tsconfig": "./packages/tsconfig.typedoc.json"
+  }

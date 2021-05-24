@@ -668,6 +668,38 @@ def task_docs():
         )
 
     yield dict(
+        name="typedoc:ensure",
+        file_dep=[*P.JS_PKG_JSON.values()],
+        actions=[P.typedoc_conf],
+        targets=[P.TYPEDOC_JSON, P.TSCONFIG_TYPEDOC],
+    )
+
+    yield dict(
+        name="typedoc:build",
+        doc="build the TS API documentation with typedoc",
+        file_dep=[*P.JS_TSBUILDINFO.values(), *P.TYPEDOC_CONF],
+        actions=[["jlpm", "typedoc", "--options", P.TYPEDOC_JSON]],
+        targets=[P.DOCS_RAW_TYPEDOC_README],
+    )
+
+    yield dict(
+        name="typedoc:mystify",
+        doc="transform raw typedoc into myst markdown",
+        file_dep=[P.DOCS_RAW_TYPEDOC_README],
+        targets=[P.DOCS_TS_MYST_INDEX, *P.DOCS_TS_MODULES],
+        actions=[
+            P.mystify,
+            [
+                "jlpm",
+                "prettier",
+                "--list-different",
+                "--write",
+                P.DOCS_TS_MYST_INDEX.parent,
+            ],
+        ],
+    )
+
+    yield dict(
         name="sphinx",
         doc="build the documentation site with sphinx",
         file_dep=[P.DOCS_CONF, P.DOCS_FAVICON_ICO, P.OK_PIP_CHECK, *P.DOCS_SRC],

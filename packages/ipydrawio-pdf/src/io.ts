@@ -20,7 +20,7 @@ import {
   IFormat,
 } from '@deathbeds/ipydrawio';
 
-import { stripDataURI } from '@deathbeds/ipydrawio/lib/utils';
+import { stripDataURI } from '@deathbeds/ipydrawio';
 
 import { LabIcon } from '@jupyterlab/ui-components';
 

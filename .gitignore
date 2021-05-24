@@ -16,6 +16,7 @@ __pycache__
 atest/output/
 build/
 dist/
+docs/api/ts
 envs/
 htmlcov/
 node_modules/

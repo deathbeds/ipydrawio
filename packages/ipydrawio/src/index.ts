@@ -16,6 +16,9 @@
   limitations under the License.
 */
 
-export * from './tokens';
+export * from './document';
+export * from './editor';
 export * from './io';
+export * from './tokens';
 export * from './widgets';
+export * from './utils';

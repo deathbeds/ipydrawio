@@ -11,7 +11,9 @@
     "eslint-plugin-react": "^7.21.5",
     "lerna": "^3.22.1",
     "prettier": "^2.1.1",
-    "prettier-plugin-sort-json": "^0.0.2"
+    "prettier-plugin-sort-json": "^0.0.2",
+    "typedoc": "^0.20.36",
+    "typedoc-plugin-markdown": "^3.7.2"
   },
   "prettier": {
     "singleQuote": true,

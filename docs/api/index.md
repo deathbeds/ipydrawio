@@ -3,6 +3,7 @@
 ```{toctree}
 schema
 widgets
+ts/index
 ```
 
 <!--
