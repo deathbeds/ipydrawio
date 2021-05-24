@@ -17,14 +17,14 @@ import datetime
 import json
 import os
 import re
+import subprocess
 import sys
-
-# import subprocess
 from pathlib import Path
 
 from sphinx.application import Sphinx
 
 HERE = Path(__file__).parent
+RTD = json.loads(os.environ.get("READTHEDOCS", "False").lower())
 
 sys.path += [str(HERE / "vendor")]
 
@@ -118,10 +118,16 @@ def clean_schema(app: Sphinx, error):
         if text != new_text:
             schema_html.write_text(new_text, encoding="utf-8")
 
-    # decide which labextensions to install
-    # if RTD:
-    #     subprocess.check_call(["doit", "docs:extensions"], cwd=str(ROOT))
+
+def before_rtd_build(app: Sphinx, error):
+    """performs the full frontend build, and ensures the typedoc"""
+    subprocess.check_call(
+        ["doit", "-n4", "build", "docs:typedoc:mystify"],
+        cwd=str(ROOT),
+    )
 
 
 def setup(app):
     app.connect("build-finished", clean_schema)
+    if RTD:
+        app.connect("config-inited", before_rtd_build)

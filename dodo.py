@@ -677,7 +677,7 @@ def task_docs():
     yield dict(
         name="typedoc:build",
         doc="build the TS API documentation with typedoc",
-        file_dep=[*P.JS_TSBUILDINFO.values(), *P.TYPEDOC_CONF],
+        file_dep=[*P.JS_TSBUILDINFO.values(), *P.TYPEDOC_CONF, P.YARN_INTEGRITY],
         actions=[["jlpm", "typedoc", "--options", P.TYPEDOC_JSON]],
         targets=[P.DOCS_RAW_TYPEDOC_README],
     )
