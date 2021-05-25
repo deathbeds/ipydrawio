@@ -64,6 +64,7 @@ doit dist
 - [ ] start a release issue with a checklist (maybe like this one)
 - [ ] ensure the versions have been bumped (check with `doit test:integrity`)
 - [ ] validate on binder
+- [ ] validate on ReadTheDocs
 - [ ] wait for a successful build of `master`
 - [ ] download the `dist` archive and unpack somewhere (maybe a fresh `dist`)
 - [ ] create a new release through the GitHub UI
@@ -83,7 +84,9 @@ doit dist
 - [ ] postmortem
   - [ ] handle `conda-forge` feedstock tasks
   - [ ] validate on binder via simplest-possible gists
+  - [ ] activate the version on ReadTheDocs
   - [ ] bump to next development version
+  - [ ] update release procedures
 
 ```
 Copyright 2021 ipydrawio contributors
