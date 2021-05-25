@@ -22,6 +22,12 @@
   "extends": "./tsconfigbase",
   "references": [
     {
+      "path": "./ipydrawio-jupyter-templates/src"
+    },
+    {
+      "path": "./ipydrawio-jupyter-templates"
+    },
+    {
       "path": "./ipydrawio/src"
     },
     {
