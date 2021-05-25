@@ -1,0 +1,53 @@
+{
+  "author": "IPyDrawio Contributors",
+  "bugs": {
+    "url": "https://github.com/deathbeds/ipydrawio/issues"
+  },
+  "homepage": "https://ipydrawio.rtfd.io",
+  "dependencies": {
+    "@jupyterlab/application": "3",
+    "@deathbeds/ipydrawio": "^1.1.1"
+  },
+  "description": "Jupyter Templates for IPyDrawio",
+  "devDependencies": {
+    "@jupyterlab/builder": "^3.0.2",
+    "typescript": "~4.2.4"
+  },
+  "peerDependencies": {},
+  "files": [
+    "{lib,schema,style,src}/**/*.{ts,tsx,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css,dio}",
+    "LICENSE.txt"
+  ],
+  "jupyterlab": {
+    "extension": "lib/plugin.js",
+    "schemaDir": "schema",
+    "outputDir": "../../py_packages/ipydrawio/src/ipydrawio/ext/ipjt",
+    "discovery": {
+      "server": {
+        "base": {
+          "name": "ipydrawio"
+        },
+        "managers": [
+          "pip",
+          "conda"
+        ]
+      }
+    }
+  },
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension",
+    "ipydrawio"
+  ],
+  "license": "Apache-2.0",
+  "main": "lib/index.js",
+  "name": "@deathbeds/ipydrawio-jupyter-templates",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deathbeds/ipydrawio.git"
+  },
+  "scripts": {},
+  "types": "lib/index.d.ts",
+  "version": "1.1.1"
+}

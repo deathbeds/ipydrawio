@@ -14,7 +14,25 @@
   limitations under the License.
 */
 
-import '@deathbeds/ipydrawio';
-import '@deathbeds/ipydrawio-pdf';
-import '@deathbeds/ipydrawio-notebook';
-import '@deathbeds/ipydrawio-jupyter-templates';
+import { JupyterLab, JupyterFrontEndPlugin } from '@jupyterlab/application';
+
+import { IDiagramManager } from '@deathbeds/ipydrawio';
+
+import { PLUGIN_ID, TEMPLATES } from './tokens';
+
+/**
+ * The Jupyter template plugin.
+ */
+const plugin: JupyterFrontEndPlugin<void> = {
+  activate,
+  id: PLUGIN_ID,
+  requires: [IDiagramManager],
+  autoStart: true,
+};
+
+/** Activate the Jupyter templates plugin */
+function activate(app: JupyterLab, diagrams: IDiagramManager) {
+  diagrams.addTemplates(...TEMPLATES);
+}
+
+export default plugin;

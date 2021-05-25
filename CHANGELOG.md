@@ -10,9 +10,15 @@
 
 #### @deathbeds/ipydrawio-webpack 14.7.101
 
+#### @deathbeds/ipydrawio-jupyter-templates 1.1.1
+
+- adds some (unofficial) Jupyter-branded templates [#44]
+
 ### ipydrawio-export 1.1.1
 
 #### @deathbeds/ipydrawio-pdf 1.1.1
+
+[#44]: https://github.com/deathbeds/ipydrawio/issues/44
 
 ---
 

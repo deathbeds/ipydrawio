@@ -8,19 +8,8 @@
   "include": ["./**/*"],
   "references": [
     {
-      "path": "..",
-    },
-    {
       "path": "../../ipydrawio/src"
     },
-    {
-      "path": "../../ipydrawio-pdf/src"
-    },
-    {
-      "path": "../../ipydrawio-notebook/src"
-    },
-    {
-      "path": "../../ipydrawio-jupyter-templates/src"
-    }
+    {"path": "../"}
   ]
 }
