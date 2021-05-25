@@ -1,5 +1,5 @@
 {% set name = "ipydrawio" %}
-{% set version = "1.1.0" %}
+{% set version = "1.1.1" %}
 
 {% set build_number = 0 %}
 
