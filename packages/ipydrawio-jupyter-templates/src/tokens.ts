@@ -40,7 +40,7 @@ export const PLUGIN_ID = `${NS}:plugin`;
 export const TEMPLATE_BASE = URLExt.join(
   PageConfig.getOption('fullLabextensionsUrl'),
   NS,
-  'static/templates'
+  'static/style/templates'
 );
 
 /** The static templates */
