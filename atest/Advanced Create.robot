@@ -29,15 +29,15 @@ Defaults
 
 Min Classes Notebook
     [Documentation]    Does Min Classes Notebook?
-    Validate Advanced Create    mcn    .ipynb    min    basic/classes.xml
+    Validate Advanced Create    mcn    ipynb    min    classes.xml
 
 Kennedy Flowchart PNG
     [Documentation]    Kennedy Classes PNG?
-    Validate Advanced Create    kfp    .dio.png    kennedy    basic/flowchart.xml
+    Validate Advanced Create    kfp    dio.png    kennedy    flowchart.xml
 
 Sketch Business Model SVG
     [Documentation]    Kennedy Classes PNG?
-    Validate Advanced Create    kfp    .dio.svg    sketch    business/business_model_1.xml
+    Validate Advanced Create    kfp    dio.svg    sketch    business_model_1.xml
 
 *** Keywords ***
 Validate Advanced Create
@@ -58,7 +58,7 @@ Clean up After Advanced Test
 
 Choose Format
     [Arguments]    ${ext}
-    Click Element    css:li[data-ipydrawio-format="${ext}"]
+    Click Element    css:li[data-ipydrawio-format=".${ext}"]
 
 Choose Theme
     [Arguments]    ${ui}

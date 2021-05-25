@@ -49,6 +49,13 @@ export class CreateAdvanced extends VDomRenderer<CreateAdvanced.Model> {
     return [
       <header key="header">
         <h1>New Diagram</h1>
+        <input
+          type="text"
+          className="jp-mod-styled"
+          defaultValue={this.model.name}
+          placeholder="untitled"
+          onChange={(evt) => (this.model.name = evt.currentTarget.value)}
+        />
         <button
           onClick={this.model.requestDocument}
           type="button"
@@ -171,7 +178,10 @@ export class CreateAdvanced extends VDomRenderer<CreateAdvanced.Model> {
   protected renderTemplate = (template: ITemplate, index: number = -1) => {
     const id = `ipydrawio-template-${index}`;
     return (
-      <li key={template.url || '__blank__'}  data-ipydrawio-template={template.url}>
+      <li
+        key={template.url || '__blank__'}
+        data-ipydrawio-template={template.url}
+      >
         <input
           type="radio"
           name="ipydrawio-template"
@@ -211,6 +221,7 @@ export namespace CreateAdvanced {
     private _templateSearchText = '';
     private _documentRequested = new Signal<Model, void>(this);
     private _format: IFormat = IO.XML_NATIVE;
+    private _name: string = '';
 
     constructor(options: IOptions) {
       super();
@@ -226,6 +237,7 @@ export namespace CreateAdvanced {
 
     get args() {
       return {
+        name: this._name,
         format: this._format.key,
         drawioUrlParams: {
           ...(this._ui ? { ui: this._ui } : {}),
@@ -238,6 +250,15 @@ export namespace CreateAdvanced {
 
     get manager() {
       return this._manager;
+    }
+
+    get name() {
+      return this._name;
+    }
+
+    set name(name: string) {
+      this._name = name;
+      this.stateChanged.emit(void 0);
     }
 
     get templates() {

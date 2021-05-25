@@ -180,7 +180,7 @@ export class DiagramManager implements IDiagramManager {
 
     this._status.status = `Creating Diagram in ${cwd}...`;
 
-    const model: Contents.IModel = await this._app.commands.execute(
+    let model: Contents.IModel = await this._app.commands.execute(
       'docmanager:new-untitled',
       {
         path: cwd,
@@ -189,7 +189,17 @@ export class DiagramManager implements IDiagramManager {
       }
     );
 
-    this._status.status = `Opening Diagram...`;
+    if (args.name && args.name.trim()) {
+      model = await this._app.serviceManager.contents.rename(
+        model.path,
+        PathExt.join(
+          PathExt.dirname(model.path),
+          `${args.name.trim()}${format.ext}`
+        )
+      );
+    }
+
+    this._status.status = `Opening Diagram ${model.path}...`;
 
     const diagram: DiagramDocument = await this._app.commands.execute(
       'docmanager:open',

@@ -50,6 +50,11 @@
   padding: 0;
 }
 
+.jp-IPyDiagram-CreateAdvanced.jp-RenderedHTMLCommon ul {
+  padding: 0;
+  margin: 0;
+}
+
 .jp-IPyDiagram-CreateAdvanced header {
   flex: 0;
   background-color: var(--jp-layout-color0);
@@ -60,15 +65,25 @@
 }
 
 .jp-IPyDiagram-CreateAdvanced header h1 {
-  flex: 1;
+  flex: 0;
   padding: 0;
   margin: 0 !important;
+}
+
+.jp-RenderedHTMLCommon.jp-IPyDiagram-CreateAdvanced h1,
+.jp-RenderedHTMLCommon.jp-IPyDiagram-CreateAdvanced h2 {
+  min-width: 260px;
 }
 
 .jp-IPyDiagram-CreateAdvanced header button {
   display: flex;
   align-items: center;
   padding: 1.5em;
+}
+
+.jp-IPyDiagram-CreateAdvanced input {
+  flex: 1;
+  margin-right: 1em;
 }
 
 .jp-IPyDiagram-CreateAdvanced header button > * {
@@ -90,16 +105,14 @@
 .jp-IPyDiagram-CreateAdvanced input[type='text'] {
   font-size: var(--jp-ui-font-size1);
   padding: 0.5em;
-  width: 100%;
-  margin: 1em 0;
 }
 
 .jp-IPyDiagram-CreateAdvanced section {
   display: flex;
+  margin-bottom: 1em;
 }
 
 .jp-IPyDiagram-CreateAdvanced section > h2 {
-  min-width: 10em;
   flex: 0;
 }
 
@@ -120,7 +133,6 @@
   display: flex;
   flex-direction: column;
   margin: 0 1em 1em 0;
-  font-weight: bold;
 }
 
 .jp-IPyDiagram-cards > li input[type='radio'] {
@@ -151,8 +163,10 @@
 }
 
 .jp-IPyDiagram-cards > li input:checked ~ label {
+  font-weight: bold;
   border-color: var(--jp-brand-color0);
   box-shadow: var(--jp-elevation-z6);
+  background-color: var(--jp-layout-color2);
 }
 
 .jp-IPyDiagram-cards > li > label > * {
@@ -174,6 +188,8 @@
   right: 0.25em;
   left: 0.25em;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .jp-IPyDiagram-tags li {
@@ -184,5 +200,5 @@
   border-radius: 0.25em;
   font-weight: normal;
   padding: 0 0.25em;
-  margin-left: 0.25em;
+  margin: 0.25em 0 0 0.25em;
 }

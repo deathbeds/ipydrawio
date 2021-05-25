@@ -117,9 +117,13 @@ export interface ICreateNewArgs extends ISetUrlParamsArgs {
    */
   cwd: string;
   /**
-   * The format to use for a new untitled file
+   * The format to use for a new file
    */
   format?: string;
+  /**
+   * The base name for a new file (without extension)
+   */
+  name?: string;
 }
 
 export namespace IDiagramManager {
