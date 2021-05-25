@@ -15,7 +15,7 @@
   },
   "peerDependencies": {},
   "files": [
-    "{lib,schema,style,src}/**/*.{ts,tsx,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css,dio}",
+    "{lib,schema,style,src,tmpl}/**/*.{ts,tsx,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,css,dio}",
     "LICENSE.txt"
   ],
   "jupyterlab": {

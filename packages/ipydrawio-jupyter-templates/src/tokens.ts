@@ -19,8 +19,8 @@ import * as PACKAGE_ from '../package.json';
 
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 
-import '!!file-loader?name=[path][name].[ext]&context=.!../style/templates/JupyterLab Wireframes.dio';
-import '!!file-loader?name=[path][name].[ext]&context=.!../style/templates/JupyterLab Wireframes.png';
+import '!!file-loader?name=[path][name].[ext]&context=.!../tmpl/JupyterLab Wireframes.dio';
+import '!!file-loader?name=[path][name].[ext]&context=.!../tmpl/JupyterLab Wireframes.png';
 
 /**
  * The hoisted `package.json`
@@ -40,7 +40,7 @@ export const PLUGIN_ID = `${NS}:plugin`;
 export const TEMPLATE_BASE = URLExt.join(
   PageConfig.getOption('fullLabextensionsUrl'),
   NS,
-  'static/style/templates'
+  'static/tmpl'
 );
 
 /** The static templates */
