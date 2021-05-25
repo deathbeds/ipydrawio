@@ -17,6 +17,7 @@
 */
 
 import { Widget } from '@lumino/widgets';
+import { ISignal } from '@lumino/signaling';
 import { ReadonlyPartialJSONObject, Token } from '@lumino/coreutils';
 import { Contents } from '@jupyterlab/services';
 import { LabIcon } from '@jupyterlab/ui-components';
@@ -35,30 +36,54 @@ import { Diagram } from './editor';
 import { DiagramDocument } from './document';
 
 import ICON_SVG from '../style/img/drawio.svg';
+
+/**
+ * A namespace for commands
+ */
 export const CMD_NS = 'ipydrawio';
 
 /**
- * The name of the factory that creates text editor widgets.
+ * The name of the factory that creates text-based diagram widgets.
  */
 export const TEXT_FACTORY = 'Diagram';
+
+/**
+ * The name of the factory that creates binary-based diagram widgets.
+ */
 export const BINARY_FACTORY = 'Diagram Image';
+
+/**
+ * The name of the factory that creates JSON-based diagram widgets.
+ */
 export const JSON_FACTORY = 'Diagram Notebook';
 
+/**
+ * The raw icon SVG
+ */
 export const DRAWIO_ICON_SVG = ICON_SVG;
 
+/**
+ * The metadata key for diagrams in notebooks
+ */
 export const IPYDRAWIO_METADATA = NS;
 
+/**
+ * The extracted schema type
+ */
 import SCHEMA from './_schema';
+/**
+ * The concrete schema
+ */
 import SCHEMA_JSON from '../schema/plugin.json';
 
 /**
  * Escape hatch for runtime debugging.
  */
 export const DEBUG = window.location.href.indexOf('DRAWIO_DEBUG') > -1;
-export const DEBUG_LEVEL = DEBUG
-  ? window.location.href.indexOf('DRAWIO_DEBUG')
-  : 0;
 
+/**
+ * A template which will appear in _Custom Diagram..._
+ */
 export interface ITemplate {
   label: string;
   thumbnail: string;
@@ -66,6 +91,9 @@ export interface ITemplate {
   tags: string[];
 }
 
+/**
+ * The main manager interface
+ */
 export interface IDiagramManager {
   addFormat(format: IFormat): void;
   formats: IFormat[];
@@ -75,42 +103,87 @@ export interface IDiagramManager {
   settings: ISettingRegistry.ISettings;
   escapeCurrent(widget: Widget): void;
   templates(): Promise<ITemplate[]>;
+  addTemplates(...template: ITemplate[]): void;
+  templatesChanged: ISignal<IDiagramManager, void>;
 }
 
+/**
+ * A namespace for diagram manager concerns
+ */
+export namespace IDiagramManager {
+  /**
+   * Initialization options
+   */
+  export interface IOptions {}
+}
+
+/**
+ * A regular expression for rewriting icons
+ */
 export const DRAWIO_ICON_CLASS_RE = /jp-icon-warn0/;
 
+/**
+ * A rank for adding to menus
+ */
 export const DIAGRAM_MENU_RANK = 99;
 
-// TODO: this is duplicated in schema
+/**
+ * A hoisted set definition of theme elements
+ */
 export type TUIThemes = SCHEMA.UITheme;
+
+/**
+ * A concrete list of themes
+ */
 export const UI_THEMES = SCHEMA_JSON.definitions['ui-theme'][
   'enum'
 ] as TUIThemes[];
+
+/**
+ * The theme color to replace
+ */
 export const UI_THEME_BASE_COLOR = '#f08705';
 
-export type TStringReplacement = [string, string];
-export type TUIThemeOverrides = Record<SCHEMA.UITheme, TStringReplacement[]>;
+/**
+ * A type for describing how to transform a UI theme branding
+ */
+export type TUIThemeOverrides = Record<SCHEMA.UITheme, [string, string][]>;
 
+/**
+ * Override colors for theme icons
+ */
 export const UI_THEME_COLORS: TUIThemeOverrides = {
   sketch: [[UI_THEME_BASE_COLOR, '#fff2a1']],
   dark: [[UI_THEME_BASE_COLOR, '#666']],
   min: [[UI_THEME_BASE_COLOR, '#eee']],
   kennedy: [[UI_THEME_BASE_COLOR, '#0052cc']],
-  atlas: [['UI_THEME_BASE_COLOR', '#0049B0']],
+  atlas: [[UI_THEME_BASE_COLOR, '#0049B0']],
 };
 
+/**
+ * The token for the main extension, which can be used by other extensions
+ */
 export const IDiagramManager = new Token<IDiagramManager>(PLUGIN_ID);
 
+/**
+ * A namespace for capturing extension commands
+ */
 export namespace CommandIds {
   export const createNew = 'drawio:create-new';
   export const createNewCustom = 'drawio:create-new-custom';
   export const setUrlParams = 'drawio:url-params';
 }
 
+/**
+ * The shape of a setUrlParams command
+ */
 export interface ISetUrlParamsArgs {
   drawioUrlParams: SCHEMA.DrawioURLParams;
 }
 
+/**
+ * The shape of a createNew command
+ */
 export interface ICreateNewArgs extends ISetUrlParamsArgs {
   /**
    * The path in which to create a new untitled file.
@@ -124,10 +197,6 @@ export interface ICreateNewArgs extends ISetUrlParamsArgs {
    * The base name for a new file (without extension)
    */
   name?: string;
-}
-
-export namespace IDiagramManager {
-  export interface IOptions {}
 }
 
 export interface IFormat<T = string> {

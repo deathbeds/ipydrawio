@@ -42,7 +42,7 @@
   min-height: 300px;
 }
 
-.jp-IPyDiagram-CreateAdvanced {
+.jp-IPyDiagram-CreateCustom {
   overflow-y: auto;
   position: relative;
   display: flex;
@@ -50,12 +50,12 @@
   padding: 0;
 }
 
-.jp-IPyDiagram-CreateAdvanced.jp-RenderedHTMLCommon ul {
+.jp-IPyDiagram-CreateCustom.jp-RenderedHTMLCommon ul {
   padding: 0;
   margin: 0;
 }
 
-.jp-IPyDiagram-CreateAdvanced header {
+.jp-IPyDiagram-CreateCustom header {
   flex: 0;
   background-color: var(--jp-layout-color0);
   padding: var(--jp-notebook-padding);
@@ -64,59 +64,59 @@
   align-items: center;
 }
 
-.jp-IPyDiagram-CreateAdvanced header h1 {
+.jp-IPyDiagram-CreateCustom header h1 {
   flex: 0;
   padding: 0;
   margin: 0 !important;
 }
 
-.jp-RenderedHTMLCommon.jp-IPyDiagram-CreateAdvanced h1,
-.jp-RenderedHTMLCommon.jp-IPyDiagram-CreateAdvanced h2 {
+.jp-RenderedHTMLCommon.jp-IPyDiagram-CreateCustom h1,
+.jp-RenderedHTMLCommon.jp-IPyDiagram-CreateCustom h2 {
   min-width: 260px;
 }
 
-.jp-IPyDiagram-CreateAdvanced header button {
+.jp-IPyDiagram-CreateCustom header button {
   display: flex;
   align-items: center;
   padding: 1.5em;
 }
 
-.jp-IPyDiagram-CreateAdvanced input {
+.jp-IPyDiagram-CreateCustom input {
   flex: 1;
   margin-right: 1em;
 }
 
-.jp-IPyDiagram-CreateAdvanced header button > * {
+.jp-IPyDiagram-CreateCustom header button > * {
   flex: 1;
   white-space: nowrap;
 }
 
-.jp-IPyDiagram-CreateAdvanced header button > span:first-child {
+.jp-IPyDiagram-CreateCustom header button > span:first-child {
   line-height: 0;
   margin-right: 0.5em;
 }
 
-.jp-IPyDiagram-CreateAdvanced form {
+.jp-IPyDiagram-CreateCustom form {
   flex: 1;
   overflow-y: auto;
   padding: var(--jp-notebook-padding);
 }
 
-.jp-IPyDiagram-CreateAdvanced input[type='text'] {
+.jp-IPyDiagram-CreateCustom input[type='text'] {
   font-size: var(--jp-ui-font-size1);
   padding: 0.5em;
 }
 
-.jp-IPyDiagram-CreateAdvanced section {
+.jp-IPyDiagram-CreateCustom section {
   display: flex;
   margin-bottom: 1em;
 }
 
-.jp-IPyDiagram-CreateAdvanced section > h2 {
+.jp-IPyDiagram-CreateCustom section > h2 {
   flex: 0;
 }
 
-.jp-IPyDiagram-CreateAdvanced section > ul {
+.jp-IPyDiagram-CreateCustom section > ul {
   flex: 1;
 }
 

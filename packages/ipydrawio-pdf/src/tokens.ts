@@ -16,12 +16,27 @@
 
 import * as PACKAGE_ from '../package.json';
 
+/**
+ * The hoisted `package.json`
+ */
 export const PACKAGE = PACKAGE_;
 
+/**
+ * The namespace for PDF diagram cocnerns
+ */
 export const NS = PACKAGE.name;
-export const PLUGIN_ID = `${NS}:plugin`;
-export const CMD_NS = `ipydrawio-pdf`;
 
+/**
+ * The PDF diagram plugin id
+ */
+export const PLUGIN_ID = `${NS}:plugin`;
+
+/**
+ * A namespace for PDF diagram commands
+ */
+export const CMD_NS = 'ipydrawio-pdf';
+
+/** The concrete command IDs for diagram commands */
 export namespace CommandIds {
   export const provision = `${CMD_NS}:provision`;
 }

@@ -33,12 +33,12 @@ let THEME_TAGS: Record<SCHEMA.UITheme, string[]> = {
   atlas: [...FULL_UI, ...LIGHT],
 };
 
-export class CreateAdvanced extends VDomRenderer<CreateAdvanced.Model> {
-  constructor(model: CreateAdvanced.Model) {
+export class CreateCustom extends VDomRenderer<CreateCustom.Model> {
+  constructor(model: CreateCustom.Model) {
     super(model);
     this.title.icon = IO.drawioIcon;
     this.title.label = 'New Diagram';
-    this.addClass('jp-IPyDiagram-CreateAdvanced');
+    this.addClass('jp-IPyDiagram-CreateCustom');
     this.addClass('jp-RenderedHTMLCommon');
   }
 
@@ -208,7 +208,7 @@ export class CreateAdvanced extends VDomRenderer<CreateAdvanced.Model> {
   };
 }
 
-export namespace CreateAdvanced {
+export namespace CreateCustom {
   export interface IOptions {
     manager: IDiagramManager;
   }

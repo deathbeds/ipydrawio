@@ -58,14 +58,16 @@ pip install ipydrawio ipydrawio
     JupyterLab**
 - Import a `drawio` from [diagrams.net](https://diagrams.net) with the _[File
   Manager][]_
-  - or create a new
-    <img src="./packages/ipydrawio/style/img/drawio.svg" width="24"/> _Diagram_
-    from the [Launcher][]
+  - or create a new blank (or customized)
+    <img src="https://raw.githubusercontent.com/deathbeds/ipydrawio/master/packages/ipydrawio/style/img/drawio.svg" width="24"/>
+    _Diagram_ from the [Launcher][]
 - Use the _[Command Palette][]_ to _Export Diagram_ to various formats
   - > **NOTE**: some of the built-in UI features of drawio don't work properly
     > inside an IFrame in JupyterLab, and are difficult to robustly disable:
     > please see _Diagram_ options available in the _Command Palette_ and
     > various _Main Menu_ menus.
+- Build interactive diagrams with `ipydrawio.Diagram` from `IPython`
+- Use the `application/x-drawio` MIME renderer
 
 ## Configuring
 

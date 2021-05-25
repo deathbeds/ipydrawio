@@ -24,7 +24,7 @@ import { ALL_FORMATS, IPYNB_DIO } from './io';
 import { INotebookTracker } from '@jupyterlab/notebook';
 
 /**
- * The editor tracker extension.
+ * The notebook diagram plugin.
  */
 const plugin: JupyterFrontEndPlugin<void> = {
   activate,
@@ -33,8 +33,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
 };
 
-export default plugin;
-
+/** Activate the notebook diagram plugin */
 function activate(
   app: JupyterLab,
   diagrams: IDiagramManager,
@@ -60,3 +59,5 @@ function activate(
     },
   });
 }
+
+export default plugin;

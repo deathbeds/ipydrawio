@@ -48,7 +48,7 @@ ${JLAB XP CLOSE SETTINGS}    ${JLAB XP DOCK TAB}\[contains(., 'Settings')]/*[con
 ${XP LAUNCH TAB}    ${JLAB XP DOCK TAB}//*[contains(text(), 'Launcher')]
 ${CSS LAUNCHER}    css:.jp-Launcher-body
 ${CSS LAUNCH DIO}    css:.jp-LauncherCard[title='Create a blank .dio file'] svg
-${CSS LAUNCH ADVANCED}    css:.jp-LauncherCard[title='Create a diagram with customized formats, templates, and UI'] svg
+${CSS LAUNCH CUSTOM}    css:.jp-LauncherCard[title='Create a diagram with customized formats, templates, and UI'] svg
 ${CSS LAUNCH IPYNB}    css:.jp-LauncherCard[data-category='Notebook'][title='Python 3'] .jp-LauncherCard-icon
 ${CSS DIO READY}    css:.jp-Diagram-ready
 ${CSS DIO IFRAME}    ${CSS DIO READY} iframe
@@ -58,8 +58,8 @@ ${CSS DIO SHAPE POPUP}    css:.geToolbarContainer.geSidebarContainer.geSidebar
 ${CSS DIO SHAPE POPUP SHAPE}    ${CSS DIO SHAPE POPUP} .geItem
 ${CSS DIO EDITABLE}    css:.mxCellEditor.geContentEditable
 # advanced
-${CSS CREATE ADVANCED}    css:.jp-IPyDiagram-CreateAdvanced
-${CSS ACCEPT ADVANCED}    ${CSS CREATE ADVANCED} header .jp-mod-accept
+${CSS CREATE CUSTOM}    css:.jp-IPyDiagram-CreateCustom
+${CSS ACCEPT CUSTOM}    ${CSS CREATE CUSTOM} header .jp-mod-accept
 # from jupyterlibrary
 ${JLAB CSS ACCEPT}    .jp-mod-accept
 ${JLAB CSS ACTIVE DOC}    .jp-Document:not(.jp-mod-hidden)

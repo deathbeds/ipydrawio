@@ -13,46 +13,47 @@
 # limitations under the License.
 
 *** Settings ***
-Documentation     Does advanced create work?
+Documentation     Does custom create work?
 Resource          _Keywords.robot
 Library           OperatingSystem
-Force Tags        component:document    component:advanced-create
-Suite Setup       Set Screenshot Directory    ${OUTPUT DIR}${/}screenshots${/}advanced-create
+Force Tags        component:document    component:custom
+Suite Setup       Set Screenshot Directory    ${OUTPUT DIR}${/}screenshots${/}custom
 
 *** Test Cases ***
 Defaults
     [Documentation]    Does taking the defaults work?
-    Launch Advanced Diagram
+    Launch Custom Diagram
     Capture Page Screenshot    00-configured.png
-    Accept Advanced Options
+    Accept Custom Options
     Capture Page Screenshot    10-launched.png
+    [Teardown]    Clean up After Custom Test
 
 Min Classes Notebook
     [Documentation]    Does Min Classes Notebook?
-    Validate Advanced Create    mcn    ipynb    min    classes.xml
+    Validate Custom Create    mcn    ipynb    min    classes.xml
 
 Kennedy Flowchart PNG
     [Documentation]    Kennedy Classes PNG?
-    Validate Advanced Create    kfp    dio.png    kennedy    flowchart.xml
+    Validate Custom Create    kfp    dio.png    kennedy    flowchart.xml
 
 Sketch Business Model SVG
     [Documentation]    Kennedy Classes PNG?
-    Validate Advanced Create    kfp    dio.svg    sketch    business_model_1.xml
+    Validate Custom Create    kfp    dio.svg    sketch    business_model_1.xml
 
 *** Keywords ***
-Validate Advanced Create
+Validate Custom Create
     [Arguments]    ${stem}    ${ext}    ${ui}    ${template}
     Set Tags    format:${ext}    ui:${ui}    template:${template}
-    Launch Advanced Diagram
+    Launch Custom Diagram
     Choose Format    ${ext}
     Choose Theme    ${ui}
     Choose Template    ${template}
     Capture Page Screenshot    ${stem}-00-configured.png
-    Accept Advanced Options
+    Accept Custom Options
     Capture Page Screenshot    ${stem}-10-launched.png
-    [Teardown]    Clean Up After Advanced Test
+    [Teardown]    Clean up After Custom Test
 
-Clean up After Advanced Test
+Clean up After Custom Test
     Unselect Frame
     Remove File    ${HOME}${/}untitled*
 

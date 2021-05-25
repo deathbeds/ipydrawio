@@ -15,6 +15,7 @@
   limitations under the License.
 */
 import { Widget } from '@lumino/widgets';
+import { ISignal, Signal } from '@lumino/signaling';
 import {
   IWidgetTracker,
   WidgetTracker,
@@ -39,7 +40,7 @@ import { DrawioStatus } from './status';
 import * as IO from './io';
 import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
 import { DRAWIO_URL } from '@deathbeds/ipydrawio-webpack';
-import { CreateAdvanced } from './createAdvanced';
+import { CreateCustom } from './createCustom';
 
 const DEFAULT_EXPORTER = async (
   drawio: Diagram,
@@ -49,6 +50,9 @@ const DEFAULT_EXPORTER = async (
   return await drawio.exportAs(key);
 };
 
+/**
+ * The default manager of Diagram concerns
+ */
 export class DiagramManager implements IDiagramManager {
   private _formats = new Map<string, IFormat>();
   private _trackers = new Map<string, IWidgetTracker<DiagramDocument>>();
@@ -59,6 +63,8 @@ export class DiagramManager implements IDiagramManager {
   private _app: JupyterLab;
   private _status: DrawioStatus.Model;
   private _mimeExport = new Map<string, IFormat>();
+  private _templates = new Map<string, ITemplate>();
+  private _templatesChanged = new Signal<IDiagramManager, void>(this);
 
   constructor(options: DiagramManager.IOptions) {
     this._app = options.app;
@@ -67,6 +73,7 @@ export class DiagramManager implements IDiagramManager {
     this._browserFactory = options.browserFactory;
     this._status = new DrawioStatus.Model();
     this._initCommands();
+    this.initTemplates().catch(console.warn);
   }
 
   protected _initCommands() {
@@ -93,19 +100,21 @@ export class DiagramManager implements IDiagramManager {
     });
 
     commands.addCommand(CommandIds.createNewCustom, {
-      label: `Advanced ${IO.XML_NATIVE.label}...`,
+      label: `Custom ${IO.XML_NATIVE.label}...`,
       caption: 'Create a diagram with customized formats, templates, and UI',
       execute: () => {
-        const model = new CreateAdvanced.Model({ manager: this });
-        const settingsChanged = () => model.stateChanged.emit(void 0);
-        this._settings.changed.connect(settingsChanged);
-        const content = new CreateAdvanced(model);
+        const model = new CreateCustom.Model({ manager: this });
+        const onChange = () => model.stateChanged.emit(void 0);
+        this._settings.changed.connect(onChange);
+        this._templatesChanged.connect(onChange);
+        const content = new CreateCustom(model);
         const main = new MainAreaWidget({ content });
         model.documentRequested.connect(async () => {
           await commands.execute(CommandIds.createNew, model.args as any);
+          this._settings.changed.disconnect(onChange);
+          this._templatesChanged.disconnect(onChange);
           main.dispose();
           model.dispose();
-          this._settings.changed.disconnect(settingsChanged);
         });
         this._app.shell.add(main);
       },
@@ -113,10 +122,16 @@ export class DiagramManager implements IDiagramManager {
     });
   }
 
+  /**
+   * Retrieve a list of the supported formats
+   */
   get formats() {
     return [...this._formats.values()];
   }
 
+  /**
+   * Get the best diagram format for this contents model
+   */
   formatForModel(contentsModel: Partial<Contents.IModel>) {
     DEBUG && console.warn('getting format', contentsModel);
     const { path } = contentsModel;
@@ -141,18 +156,30 @@ export class DiagramManager implements IDiagramManager {
     return candidateFmt || null;
   }
 
+  /**
+   * The location of the drawio app's `index.html`
+   */
   get drawioURL() {
     return DRAWIO_URL;
   }
 
+  /**
+   * A status message
+   */
   get status() {
     return this._status;
   }
 
+  /**
+   * Update the status message
+   */
   set status(status) {
     this._status = status;
   }
 
+  /**
+   * Get the current settings
+   */
   get settings() {
     return this._settings;
   }
@@ -161,6 +188,10 @@ export class DiagramManager implements IDiagramManager {
     this._settings = settings;
     this._settings.changed.connect(this._onSettingsChanged, this);
   }
+
+  /**
+   * Get the current diagram widget
+   */
   get activeWidget() {
     const { currentWidget } = this._app.shell;
     for (const tracker of this._trackers.values()) {
@@ -171,7 +202,9 @@ export class DiagramManager implements IDiagramManager {
     return null;
   }
 
-  // Create a new untitled diagram file, given the current working directory.
+  /**
+   * Create a new untitled diagram file, given the current working directory.
+   */
   async createNew(args: ICreateNewArgs) {
     let { cwd } = args;
 
@@ -228,9 +261,30 @@ export class DiagramManager implements IDiagramManager {
   }
 
   /**
+   * A signal emitted when new templates are made available
+   */
+  get templatesChanged(): ISignal<IDiagramManager, void> {
+    return this._templatesChanged;
+  }
+
+  /**
    * Retrieve all available templates
    */
   async templates(): Promise<ITemplate[]> {
+    return [...this._templates.values()];
+  }
+
+  /**
+   * Register new templates available in _Custom Create..._
+   */
+  addTemplates(...templates: ITemplate[]): void {
+    for (const template of templates) {
+      this._templates.set(template.url, template);
+    }
+    this._templatesChanged.emit(void 0);
+  }
+
+  protected async initTemplates(): Promise<void> {
     const templates: ITemplate[] = [];
     const response = await fetch(
       URLExt.join(DRAWIO_URL, '../templates/index.xml')
@@ -253,12 +307,15 @@ export class DiagramManager implements IDiagramManager {
         url,
         label,
         thumbnail: url.replace(/.xml$/, '.png'),
-        tags: [group],
+        tags: [group, 'builtin'],
       });
     }
-    return templates;
+    this.addTemplates(...templates);
   }
 
+  /**
+   * Add a new supported diagram format, which must have a unique `key`
+   */
   addFormat(format: IFormat) {
     DEBUG && console.warn(`adding format ${format.name}`, format);
     if (this._formats.has(format.key)) {
@@ -295,6 +352,9 @@ export class DiagramManager implements IDiagramManager {
     widget.updateSettings();
   }
 
+  /**
+   * Restore focus to the main application, showing a brief message
+   */
   escapeCurrent(widget: Widget) {
     if (this._settings.composite['disableEscapeFocus']) {
       return;
@@ -509,7 +569,13 @@ export class DiagramManager implements IDiagramManager {
   }
 }
 
+/**
+ * A namespace for Diagram concerns
+ */
 export namespace DiagramManager {
+  /**
+   * Initiaization options for a Diagram manager
+   */
   export interface IOptions extends IDiagramManager.IOptions {
     app: JupyterLab;
     restorer: ILayoutRestorer;

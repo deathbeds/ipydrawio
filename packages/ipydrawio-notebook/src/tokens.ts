@@ -16,12 +16,29 @@
 
 import * as PACKAGE_ from '../package.json';
 
+/**
+ * The hoisted `package.json`
+ */
 export const PACKAGE = PACKAGE_;
 
+/**
+ * The namespace for notebook-level concerns
+ */
 export const NS = PACKAGE.name;
-export const PLUGIN_ID = `${NS}:plugin`;
-export const CMD_NS = 'ipydrawio';
 
+/**
+ * The plugin id
+ */
+export const PLUGIN_ID = `${NS}:plugin`;
+
+/**
+ * The command namespace
+ */
+export const CMD_NS = 'ipydrawio-notebook';
+
+/**
+ * A namespace for diagram notebook commands
+ */
 export namespace CommandIds {
   export const open = `${CMD_NS}:open`;
 }
