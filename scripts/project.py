@@ -261,7 +261,7 @@ DOCS_BUILDINFO = DOCS_BUILD / ".buildinfo"
 DOCS_MD = [
     p
     for p in DOCS.rglob("*.md")
-    if not p.parent.name == "ts" or p.parent.parent.name == "ts"
+    if not (p.parent.name == "ts" or p.parent.parent.name == "ts")
 ]
 DOCS_RST = [*DOCS.rglob("*.md")]
 DOCS_IPYNB = [*DOCS.rglob("*.ipynb")]

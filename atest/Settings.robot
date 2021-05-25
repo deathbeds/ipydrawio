@@ -43,7 +43,7 @@ Sketch
 Validate a Diagram Theme
     [Arguments]    ${ui}
     [Documentation]    Change the theme
-    Set Tags    settings:urlparams:ui    settings:urlparams:ui:${ui}
+    Set Tags    settings:urlparams:ui    ui:${ui}
     Set Screenshot Directory    ${OUTPUT DIR}${/}settings${/}ui${/}${ui}
     Reset Plugin Settings
     Launch Untitled Diagram

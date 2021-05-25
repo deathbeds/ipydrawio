@@ -23,5 +23,47 @@ Suite Setup       Set Screenshot Directory    ${OUTPUT DIR}${/}screenshots${/}ad
 Defaults
     [Documentation]    Does taking the defaults work?
     Launch Advanced Diagram
+    Capture Page Screenshot    00-configured.png
     Accept Advanced Options
-    Capture Page Screenshot    00-defaults.png
+    Capture Page Screenshot    10-launched.png
+
+Min Classes Notebook
+    [Documentation]    Does Min Classes Notebook?
+    Validate Advanced Create    mcn    .ipynb    min    basic/classes.xml
+
+Kennedy Flowchart PNG
+    [Documentation]    Kennedy Classes PNG?
+    Validate Advanced Create    kfp    .dio.png    kennedy    basic/flowchart.xml
+
+Sketch Business Model SVG
+    [Documentation]    Kennedy Classes PNG?
+    Validate Advanced Create    kfp    .dio.svg    sketch    business/business_model_1.xml
+
+*** Keywords ***
+Validate Advanced Create
+    [Arguments]    ${stem}    ${ext}    ${ui}    ${template}
+    Set Tags    format:${ext}    ui:${ui}    template:${template}
+    Launch Advanced Diagram
+    Choose Format    ${ext}
+    Choose Theme    ${ui}
+    Choose Template    ${template}
+    Capture Page Screenshot    ${stem}-00-configured.png
+    Accept Advanced Options
+    Capture Page Screenshot    ${stem}-10-launched.png
+    [Teardown]    Clean Up After Advanced Test
+
+Clean up After Advanced Test
+    Unselect Frame
+    Remove File    ${HOME}${/}untitled*
+
+Choose Format
+    [Arguments]    ${ext}
+    Click Element    css:li[data-ipydrawio-format="${ext}"]
+
+Choose Theme
+    [Arguments]    ${ui}
+    Click Element    css:li[data-ipydrawio-theme="${ui}"]
+
+Choose Template
+    [Arguments]    ${template}
+    Click Element    css:li[data-ipydrawio-template*="${template}"]

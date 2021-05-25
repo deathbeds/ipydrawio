@@ -171,42 +171,43 @@ export class DiagramManager implements IDiagramManager {
     return null;
   }
 
-  // Function to create a new untitled diagram file, given
-  // the current working directory.
-  createNew(args: ICreateNewArgs) {
-    let { cwd, drawioUrlParams } = args;
+  // Create a new untitled diagram file, given the current working directory.
+  async createNew(args: ICreateNewArgs) {
+    let { cwd } = args;
 
     const format =
       (args.format ? this._formats.get(args.format) : null) || IO.XML_NATIVE;
 
     this._status.status = `Creating Diagram in ${cwd}...`;
 
-    const result = this._app.commands
-      .execute('docmanager:new-untitled', {
+    const model: Contents.IModel = await this._app.commands.execute(
+      'docmanager:new-untitled',
+      {
         path: cwd,
-        type: 'file',
+        type: format.contentType || 'file',
         ext: format.ext,
-      })
-      .then((model: Contents.IModel) => {
-        this._status.status = `Opening Diagram...`;
-        return this._app.commands.execute('docmanager:open', {
-          path: model.path,
-          factory: format.factoryName,
-        });
-      })
-      .then(async (diagram: DiagramDocument) => {
-        if (drawioUrlParams) {
-          diagram.urlParams = drawioUrlParams;
-          const template = drawioUrlParams['template-filename'];
-          if (template) {
-            await diagram.content.ready;
-            const response = await fetch(template);
-            const xml = await response.text();
-            diagram.content.load(xml);
-          }
-        }
-      });
-    return result;
+      }
+    );
+
+    this._status.status = `Opening Diagram...`;
+
+    const diagram: DiagramDocument = await this._app.commands.execute(
+      'docmanager:open',
+      { path: model.path, factory: format.factoryName }
+    );
+
+    if (args.drawioUrlParams) {
+      diagram.urlParams = args.drawioUrlParams;
+      const template = args.drawioUrlParams['template-filename'];
+      if (template) {
+        await diagram.content.ready;
+        const response = await fetch(template);
+        const xml = await response.text();
+        diagram.content.load(xml);
+      }
+    }
+
+    return diagram;
   }
 
   protected _onSettingsChanged() {

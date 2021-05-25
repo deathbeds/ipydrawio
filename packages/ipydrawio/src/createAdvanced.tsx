@@ -125,7 +125,7 @@ export class CreateAdvanced extends VDomRenderer<CreateAdvanced.Model> {
       tags.push('json');
     }
     return (
-      <li key={format.name}>
+      <li key={format.name} data-ipydrawio-format={format.ext}>
         <input
           type="radio"
           name="ipydrawio-format"
@@ -151,7 +151,7 @@ export class CreateAdvanced extends VDomRenderer<CreateAdvanced.Model> {
     const id = `ipydrawio-theme-${index}`;
     const tags = [...THEME_TAGS[effectiveTheme], ...(theme ? [] : ['default'])];
     return (
-      <li key={theme}>
+      <li key={theme} data-ipydrawio-theme={theme}>
         <input
           type="radio"
           name="ipydrawio-theme"
@@ -171,7 +171,7 @@ export class CreateAdvanced extends VDomRenderer<CreateAdvanced.Model> {
   protected renderTemplate = (template: ITemplate, index: number = -1) => {
     const id = `ipydrawio-template-${index}`;
     return (
-      <li key={template.url || '__blank__'}>
+      <li key={template.url || '__blank__'}  data-ipydrawio-template={template.url}>
         <input
           type="radio"
           name="ipydrawio-template"
