@@ -19,6 +19,9 @@ import * as PACKAGE_ from '../package.json';
 
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 
+import '!!file-loader?name=[path][name].[ext]&context=.!../style/templates/JupyterLab Wireframes.dio';
+import '!!file-loader?name=[path][name].[ext]&context=.!../style/templates/JupyterLab Wireframes.png';
+
 /**
  * The hoisted `package.json`
  */
