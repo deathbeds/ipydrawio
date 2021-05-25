@@ -22,6 +22,12 @@
     "extension": "lib/plugin.js",
     "schemaDir": "schema",
     "outputDir": "../../py_packages/ipydrawio/src/ipydrawio/ext/ipjt",
+    "sharedPackages": {
+      "@deathbeds/ipydrawio": {
+        "bundled": false,
+        "singleton": true
+      }
+    },
     "discovery": {
       "server": {
         "base": {
