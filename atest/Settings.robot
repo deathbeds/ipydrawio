@@ -58,3 +58,4 @@ Validate a Diagram Theme
 Clean Up after Settings Test
     Unselect Frame
     Remove File    ${HOME}${/}untitled*
+    Remove File    ${HOME}${/}Untitled*

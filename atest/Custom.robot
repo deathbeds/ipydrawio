@@ -56,6 +56,7 @@ Validate Custom Create
 Clean up After Custom Test
     Unselect Frame
     Remove File    ${HOME}${/}untitled*
+    Remove File    ${HOME}${/}Untitled*
 
 Choose Format
     [Arguments]    ${ext}

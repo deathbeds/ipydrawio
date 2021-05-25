@@ -155,6 +155,7 @@ IPyDrawio Export Server Should be Provisioned
 Clean Up After Export Test
     Unselect Frame
     Remove File    ${HOME}${/}untitled*
+    Remove File    ${HOME}${/}Untitled*
 
 Validate Editable Format
     [Arguments]    ${format}    ${ext}    ${doc id}
