@@ -142,7 +142,7 @@ function activate(
 
   commands.addCommand(CommandIds.setUrlParams, {
     label: (args) => {
-      const { drawioUrlParams } = (args as any) as ISetUrlParamsArgs;
+      const { drawioUrlParams } = args as any as ISetUrlParamsArgs;
       const entries = Object.entries(drawioUrlParams || {});
       if (entries.length == 1 && args.justValue) {
         return entries.map(([k, v]) => v).join(', ');

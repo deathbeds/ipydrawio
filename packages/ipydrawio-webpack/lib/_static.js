@@ -32,6 +32,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/close.png'
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/cloud-connector-atlas.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/collapsed.gif';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/connector.png';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/default-user.jpg';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/delete.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/document-google-drive-icon-80.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/download.png';
@@ -186,6 +187,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/sidebar-um
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/sidebar-veeam.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/sidebar-vvd.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/sidebar-webIcons.png';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/sketch-logo128.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/spin.gif';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/sprites.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/images/stop-flat-icon-80.png';

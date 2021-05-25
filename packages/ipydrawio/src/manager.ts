@@ -81,14 +81,14 @@ export class DiagramManager implements IDiagramManager {
     // Add a command for creating a new diagram file.
     commands.addCommand(CommandIds.createNew, {
       label: (args) => {
-        const { drawioUrlParams } = (args as any) as ICreateNewArgs;
+        const { drawioUrlParams } = args as any as ICreateNewArgs;
         const { ui } = drawioUrlParams || {};
         return !ui
           ? IO.XML_NATIVE.label
           : `${IO.XML_NATIVE.label} [${drawioUrlParams?.ui}]`;
       },
       icon: (args) => {
-        const { drawioUrlParams } = (args as any) as ICreateNewArgs;
+        const { drawioUrlParams } = args as any as ICreateNewArgs;
         const { ui } = drawioUrlParams || {};
         return ui ? IO.drawioThemeIcons[ui] : IO.drawioIcon;
       },
@@ -137,7 +137,7 @@ export class DiagramManager implements IDiagramManager {
     const { path } = contentsModel;
 
     let longestExt: string = '';
-    let candidateFmt = (null as any) as IFormat;
+    let candidateFmt = null as any as IFormat;
 
     for (const fmt of this._formats.values()) {
       if (fmt.wantsModel != null && fmt.wantsModel(contentsModel)) {

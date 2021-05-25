@@ -27,7 +27,8 @@ import { CommandIds } from './tokens';
  * A notebook widget extension that adds a button to the toolbar.
  */
 export class IPyDrawioNotebookButton
-  implements DocumentRegistry.IWidgetExtension<NotebookPanel, INotebookModel> {
+  implements DocumentRegistry.IWidgetExtension<NotebookPanel, INotebookModel>
+{
   commands: CommandRegistry;
 
   createNew(
