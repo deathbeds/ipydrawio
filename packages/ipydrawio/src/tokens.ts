@@ -85,10 +85,14 @@ export const DEBUG = window.location.href.indexOf('DRAWIO_DEBUG') > -1;
  * A template which will appear in _Custom Diagram..._
  */
 export interface ITemplate {
-  label: string;
-  thumbnail: string;
+  /** A unique URL for template */
   url: string;
-  tags: string[];
+  /** The human-readable name for the template */
+  label: string;
+  /** The path to a thumbnail image */
+  thumbnail?: string;
+  /** A list of tags to help describe the template */
+  tags?: string[];
 }
 
 /**

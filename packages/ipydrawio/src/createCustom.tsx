@@ -192,8 +192,8 @@ export class CreateCustom extends VDomRenderer<CreateCustom.Model> {
         ></input>
         <label htmlFor={id}>
           {template.label}
-          <img src={template.thumbnail}></img>
-          {this.renderTags(template.tags)}
+          {template.thumbnail ? <img src={template.thumbnail}></img> : []}
+          {this.renderTags(template.tags || [])}
         </label>
       </li>
     );
@@ -271,7 +271,7 @@ export namespace CreateCustom {
 
       for (const template of this._templates) {
         let hits = 0;
-        const text = `${template.label} ${template.tags.join(' ')}`;
+        const text = `${template.label} ${(template.tags || []).join(' ')}`;
 
         for (const q of query) {
           if (text.indexOf(q) !== -1) {

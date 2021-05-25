@@ -110,8 +110,8 @@ outputs:
         - jupyter serverextension list
         - jupyter serverextension list 1>serverextensions 2>&1
         - cat serverextensions | grep "ipydrawio_export.*OK"  # [unix]
-        {% set pytest_args = "--cov-fail-under=96" %}
-        {% set pytest_args = pytest_args + " -k not merged" %}  # [win]
+        {% set pytest_args = "--cov-fail-under=96" %}  # [unix]
+        {% set pytest_args = "-k 'not merged'" %}  # [win]
         # TODO: investigate potential docker/locale issues upstream to restore coverage
         # {% set pytest_args = "--cov-fail-under=54 -k 'not (export_empty or export_merged or serverextension_export)'" %}  # [linux]
         - pytest -vv {{ pytest_args }} --pyargs ipydrawio_export --script-launch-mode=subprocess --cov=ipydrawio_export --cov-report=term-missing:skip-covered
