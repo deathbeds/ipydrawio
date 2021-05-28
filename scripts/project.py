@@ -254,6 +254,7 @@ SERVER_EXT = {
 
 
 # docs
+SPHINX_ARGS = json.loads(os.environ.get("SPHINX_ARGS", "[]"))
 DOCS_CONF = DOCS / "conf.py"
 ENV_DOCS = DOCS / "environment.yml"
 DOCS_BUILD = BUILD / "docs"

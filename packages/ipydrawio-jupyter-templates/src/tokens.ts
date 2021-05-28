@@ -19,8 +19,8 @@ import * as PACKAGE_ from '../package.json';
 
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 
-import '!!file-loader?name=[path][name].[ext]&context=.!../tmpl/JupyterLab Wireframes.dio';
-import '!!file-loader?name=[path][name].[ext]&context=.!../tmpl/JupyterLab Wireframes.png';
+import '!!file-loader?name=[path][name].[ext]&context=.!../tmpl/JupyterLab Mockups.dio';
+import '!!file-loader?name=[path][name].[ext]&context=.!../tmpl/JupyterLab Mockups.png';
 
 /**
  * The hoisted `package.json`
@@ -46,7 +46,7 @@ export const TEMPLATE_BASE = URLExt.join(
 /** The static templates */
 export const TEMPLATES: ITemplate[] = [
   {
-    url: 'JupyterLab Wireframes.dio',
+    url: 'JupyterLab Mockups.dio',
     tags: ['jupyter', 'mockup', 'lab'],
   },
 ].map((tmpl) => {
