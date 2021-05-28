@@ -42,7 +42,7 @@ Sketch Business Model SVG
 
 Atlas JupyterLab Diagram Notebook
     [Documentation]    Atlas JupyterLab Diagram Notebook?
-    Validate Custom Create    ajn    dio.ipynb    atlas    JupyterLab Wireframes.dio
+    Validate Custom Create    ajn    dio.ipynb    atlas    JupyterLab Mockups.dio
 
 *** Keywords ***
 Validate Custom Create
