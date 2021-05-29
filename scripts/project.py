@@ -332,14 +332,18 @@ ALL_CSS = [*sum(JS_STYLE.values(), []), *DOCS.rglob("*.css")]
 ALL_ROBOT = [*ATEST.rglob("*.robot")]
 ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS, *ALL_CSS, *ALL_JS]
 ALL_HEADERS = [
-    *ALL_SETUP_CFG,
-    *ALL_PY,
-    *ALL_TS,
-    *ALL_CSS,
-    *ALL_JS,
-    *ALL_MD,
-    *ALL_YML,
-    *ALL_ROBOT,
+    p
+    for p in [
+        *ALL_SETUP_CFG,
+        *ALL_PY,
+        *ALL_TS,
+        *ALL_CSS,
+        *ALL_JS,
+        *ALL_MD,
+        *ALL_YML,
+        *ALL_ROBOT,
+    ]
+    if "checkpoint" not in str(p)
 ]
 ESLINTRC = PACKAGES / ".eslintrc.js"
 
