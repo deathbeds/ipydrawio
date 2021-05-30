@@ -2,7 +2,7 @@
 
 ```{toctree}
 :maxdepth: 2
-designing-labextensions
+designing-jupyter-extensions/index
 ```
 
 <!--
