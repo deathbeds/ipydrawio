@@ -217,7 +217,7 @@ ALL_IPDW_JS = IPDW_LIB.glob("*.js")
 
 PY_PACKAGES = ROOT / "py_packages"
 
-PY_SETUP = {p.parent.name: p for p in (ROOT / "py_packages").glob("*/setup.py")}
+PY_SETUP = {p.parent.name: p for p in sorted((ROOT / "py_packages").glob("*/setup.py"))}
 PY_SRC = {k: sorted((v.parent / "src").rglob("*.py")) for k, v in PY_SETUP.items()}
 PY_SETUP_CFG = {k: v.parent / "setup.cfg" for k, v in PY_SETUP.items()}
 
@@ -343,7 +343,7 @@ ALL_HEADERS = [
         *ALL_YML,
         *ALL_ROBOT,
     ]
-    if "checkpoint" not in str(p)
+    if "checkpoint" not in str(p) and "pytest_cache" not in str(p)
 ]
 ESLINTRC = PACKAGES / ".eslintrc.js"
 

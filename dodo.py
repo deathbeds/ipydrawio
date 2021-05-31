@@ -174,10 +174,13 @@ def task_setup():
                 P.OK_PYSETUP[pkg],
             )
         else:
+            extra_deps = []
+            if pkg != "ipydrawio":
+                extra_deps += [P.OK_PYSETUP["ipydrawio"]]
             yield _ok(
                 dict(
                     name=f"py:{pkg}",
-                    file_dep=[pkg_setup, P.PY_SETUP_CFG[pkg], *ext_deps],
+                    file_dep=[pkg_setup, P.PY_SETUP_CFG[pkg], *ext_deps, *extra_deps],
                     actions=[
                         CmdAction(
                             [
