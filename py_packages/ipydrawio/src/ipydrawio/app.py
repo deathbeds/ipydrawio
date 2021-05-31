@@ -17,14 +17,13 @@
 from pathlib import Path
 
 import traitlets as T
-from jupyter_core.application import base_flags
-from traitlets.config import Application
+from jupyter_core.application import JupyterApp, base_aliases, base_flags
 
 from ._version import __version__
-from .utils import clean_drawio_file
+from .utils import MX_CLEAN_ATTRS, clean_drawio_file
 
 
-class BaseApp(Application):
+class BaseApp(JupyterApp):
     version = __version__
 
     @property
@@ -36,8 +35,24 @@ class CleanApp(BaseApp):
     """clean drawio files"""
 
     dio_files = T.Tuple()
+    pretty = T.Bool(True, help="pretty-print the XML").tag(config=True)
+    mx_attrs = T.Tuple(MX_CLEAN_ATTRS, help="attributes to clean").tag(config=True)
+    indent = T.Unicode("  ", help="if pretty-printing, the indent level").tag(
+        config=True
+    )
 
-    flags = dict(**base_flags)
+    flags = dict(
+        **base_flags,
+        **{
+            "pretty": (
+                {"CleanApp": {"pretty": True}},
+                "Pretty-print the XML. May not always return the same diagram.",
+            )
+        }
+    )
+    aliases = dict(
+        **base_aliases, **{"mx-attrs": "CleanApp.mx_attrs", "indent": "CleanApp.indent"}
+    )
 
     def parse_command_line(self, argv=None):
         super().parse_command_line(argv)
@@ -45,7 +60,9 @@ class CleanApp(BaseApp):
 
     def start(self):
         for path in self.dio_files:
-            clean_drawio_file(path)
+            clean_drawio_file(
+                path, pretty=self.pretty, mx_attrs=self.mx_attrs, indent=self.indent
+            )
 
 
 class IPyDrawioApp(BaseApp):

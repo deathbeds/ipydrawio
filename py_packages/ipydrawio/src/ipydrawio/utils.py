@@ -22,24 +22,33 @@ MX_CLEAN_ATTRS = ["host", "modified", "agent", "etag"]
 MX_PRESERVE_ENTITIES = dict(ATTR_NEWLINE="&#10;")
 
 
-def clean_drawio_file(path: Path, indent="  ", mx_attrs=MX_CLEAN_ATTRS):
+def clean_drawio_file(path: Path, pretty=True, indent="  ", mx_attrs=MX_CLEAN_ATTRS):
     """strip headers and identifying information from drawio files"""
-    raw = path.read_text(encoding="utf-8")
+    in_xml = path.read_text(encoding="utf-8")
+    out_xml = clean_drawio_xml(in_xml, pretty, indent, mx_attrs)
+    path.write_text(out_xml, encoding="utf-8")
 
-    # inject placeholders
-    for name, entity in MX_PRESERVE_ENTITIES.items():
-        raw = raw.replace(entity, f"__IPYDRAWIO__{name}")
 
-    mx = minidom.parseString(raw).firstChild
+def clean_drawio_xml(in_xml: str, pretty=True, indent="  ", mx_attrs=MX_CLEAN_ATTRS):
+    if pretty:
+        # inject placeholders
+        for name, entity in MX_PRESERVE_ENTITIES.items():
+            in_xml = in_xml.replace(entity, f"__IPYDRAWIO__{name}")
 
-    for key in mx_attrs:
-        if key in mx.attributes:
-            del mx.attributes[key]
+    mx = minidom.parseString(in_xml).firstChild
 
-    pretty = mx.toprettyxml(indent=indent)
+    if pretty:
+        for key in mx_attrs:
+            if key in mx.attributes:
+                del mx.attributes[key]
 
-    # revert placeholders
-    for name, entity in MX_PRESERVE_ENTITIES.items():
-        pretty = pretty.replace(f"__IPYDRAWIO__{name}", entity)
+        out_xml = mx.toprettyxml(indent=indent)
 
-    path.write_text(pretty, encoding="utf-8")
+        # revert placeholders
+        for name, entity in MX_PRESERVE_ENTITIES.items():
+            pretty = out_xml.replace(f"__IPYDRAWIO__{name}", entity)
+
+    else:
+        out_xml = mx.toxml()
+
+    return out_xml
