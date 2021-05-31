@@ -34,3 +34,6 @@ DEFAULT_DRAWIO_CONFIG = {
     "showStartScreen": False,
     "override": True,
 }
+
+# key set in notebook#/metadata/
+IPYNB_METADATA = "@deathbeds/ipydrawio"
