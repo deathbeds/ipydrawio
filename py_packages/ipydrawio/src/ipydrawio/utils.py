@@ -15,40 +15,44 @@
 # limitations under the License.
 
 from pathlib import Path
-from xml.dom import minidom
+
+import lxml.etree as ET
 
 # attributes to clean from the mxfile
 MX_CLEAN_ATTRS = ["host", "modified", "agent", "etag"]
 MX_PRESERVE_ENTITIES = dict(ATTR_NEWLINE="&#10;")
 
 
-def clean_drawio_file(path: Path, pretty=True, indent="  ", mx_attrs=MX_CLEAN_ATTRS):
+def clean_drawio_file(
+    path: Path, pretty=True, indent=2, tabs=False, mx_attrs=MX_CLEAN_ATTRS
+):
     """strip headers and identifying information from drawio files"""
     in_xml = path.read_text(encoding="utf-8")
-    out_xml = clean_drawio_xml(in_xml, pretty, indent, mx_attrs)
+    out_xml = clean_drawio_xml(in_xml, pretty, indent, tabs, mx_attrs)
     path.write_text(out_xml, encoding="utf-8")
 
 
-def clean_drawio_xml(in_xml: str, pretty=True, indent="  ", mx_attrs=MX_CLEAN_ATTRS):
+def clean_drawio_xml(
+    in_xml: str, pretty=True, indent=2, tabs=False, mx_attrs=MX_CLEAN_ATTRS
+):
     if pretty:
         # inject placeholders
         for name, entity in MX_PRESERVE_ENTITIES.items():
             in_xml = in_xml.replace(entity, f"__IPYDRAWIO__{name}")
 
-    mx = minidom.parseString(in_xml).firstChild
+    mx = ET.fromstring(in_xml)
+
+    for key in mx_attrs:
+        if key in mx.attrib:
+            del mx.attrib[key]
 
     if pretty:
-        for key in mx_attrs:
-            if key in mx.attributes:
-                del mx.attributes[key]
-
-        out_xml = mx.toprettyxml(indent=indent)
+        ET.indent(mx, space=indent * ("\t" if tabs else " "))
+        out_xml = ET.tostring(mx, pretty_print=True, encoding=str)
 
         # revert placeholders
         for name, entity in MX_PRESERVE_ENTITIES.items():
             pretty = out_xml.replace(f"__IPYDRAWIO__{name}", entity)
-
     else:
-        out_xml = mx.toxml()
-
+        out_xml = ET.tostring(mx, encoding=str)
     return out_xml

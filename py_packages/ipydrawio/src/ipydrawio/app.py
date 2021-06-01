@@ -37,17 +37,20 @@ class CleanApp(BaseApp):
     dio_files = T.Tuple()
     pretty = T.Bool(True, help="pretty-print the XML").tag(config=True)
     mx_attrs = T.Tuple(MX_CLEAN_ATTRS, help="attributes to clean").tag(config=True)
-    indent = T.Unicode("  ", help="if pretty-printing, the indent level").tag(
-        config=True
-    )
+    indent = T.Int(2, help="if pretty-printing, the indent level").tag(config=True)
+    tabs = T.Bool(False, help="indent with tabs instead of spaces").tag(config=True)
 
     flags = dict(
         **base_flags,
         **{
-            "pretty": (
-                {"CleanApp": {"pretty": True}},
-                "Pretty-print the XML. May not always return the same diagram.",
-            )
+            "no-pretty": (
+                {"CleanApp": {"pretty": False}},
+                "Do not pretty-print the XML",
+            ),
+            "tabs": (
+                {"CleanApp": {"tabs": True}},
+                "Indent with tabs instead of spaces",
+            ),
         }
     )
     aliases = dict(
@@ -61,7 +64,11 @@ class CleanApp(BaseApp):
     def start(self):
         for path in self.dio_files:
             clean_drawio_file(
-                path, pretty=self.pretty, mx_attrs=self.mx_attrs, indent=self.indent
+                path,
+                pretty=self.pretty,
+                mx_attrs=self.mx_attrs,
+                indent=self.indent,
+                tabs=self.tabs,
             )
 
 
