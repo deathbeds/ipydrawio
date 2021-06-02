@@ -54,12 +54,14 @@ outputs:
         - ipywidgets >=7.6
         - jupyterlab ==3.*
         - jupyterlab_widgets >=1
+        - lxml
         - python >=3.6
     test:
       imports:
         - ipydrawio
       requires:
         - pip
+        - pytest-console-scripts
         - pytest-cov
       commands:
         - pip check
@@ -99,9 +101,9 @@ outputs:
         - ipydrawio_export
       requires:
         - pip
+        - pytest-console-scripts  # [unix]
         - pytest-cov  # [unix]
         - pytest-tornasync  # [unix]
-        - pytest-console-scripts  # [unix]
       commands:
         - pip check
         - jupyter labextension list
