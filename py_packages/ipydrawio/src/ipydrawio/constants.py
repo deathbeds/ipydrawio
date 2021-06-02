@@ -37,3 +37,8 @@ DEFAULT_DRAWIO_CONFIG = {
 
 # key set in notebook#/metadata/
 IPYNB_METADATA = "@deathbeds/ipydrawio"
+
+
+SVG_NS_TAG = "{http://www.w3.org/2000/svg}svg"
+MX_FILE_TAG = "mxfile"
+MX_GRAPH_TAG = "mxGraphModel"

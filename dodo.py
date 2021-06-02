@@ -314,6 +314,28 @@ def task_lint():
         ),
         P.OK_ESLINT,
     )
+
+    dio_tasks = []
+
+    for dio_file in P.ALL_DIO:
+        name = f"dio:clean:{dio_file.relative_to(P.ROOT)}"
+        dio_tasks += [f"lint:{name}"]
+        yield dict(
+            name=name,
+            file_dep=[dio_file, *P.OK_PYSETUP.values()],
+            actions=[["jupyter", "ipydrawio", "clean", dio_file]],
+        )
+
+    yield _ok(
+        dict(
+            name="dio:clean",
+            file_dep=[*P.ALL_DIO],
+            task_dep=dio_tasks,
+            actions=[["echo", "ok"]],
+        ),
+        P.OK_DIOLINT,
+    )
+
     yield _ok(
         dict(
             name="all",

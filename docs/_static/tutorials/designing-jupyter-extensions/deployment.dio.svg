@@ -1,1 +1,102 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1001px" height="361px" viewBox="-0.5 -0.5 1001 361" content="&lt;mxfile host=&quot;127.0.0.1&quot; modified=&quot;2021-05-31T15:36:43.470Z&quot; agent=&quot;5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36&quot; etag=&quot;13Qq9OzLyXLdeqsfpUcI&quot; version=&quot;14.7.3&quot; type=&quot;embed&quot;&gt;&lt;diagram id=&quot;5VtAhx_Kaj5QVmaxudvQ&quot; name=&quot;Page-1&quot;&gt;7VpNc5swEP01PqYjPk2OSZqmh3aaSabTY0aGtU2CESPk2PTXV4AEQsRfsTF2kxwy6LES0u57q0V4YN3MlncUJ9OfJIBoYKJgObC+DkzTsS/5/xzISmCI3BKY0DAoIaMGHsO/IEAk0HkYQNowZIRELEyaoE/iGHzWwDClZNE0G5Oo+dQET6AFPPo4aqN/woBNBWogVN/4DuFkKh7tOeLGDEtjAaRTHJCFAlm3A+uGEsLKq9nyBqLcd9IvZb9vK+5WE6MQs206eGWHVxzNxdrEvFgmFwsBX7toEsqmZEJiHN3W6DUl8ziAfETEW7XND0ISDhocfAbGMhFIPGeEQ+2pitmnZE598XDBC4bpBITVsITyaSndxPLugMyA0YwbUIgwC1+bIcMi8pPKTnS9ohRnikFCwpilysj3OcANBIdNW0Qwk9TUHL3J3mvY84tyBrKlLKWGiuAVzd8p0F+j55zcJorwiOurnHb2lGD/hfMvFZ6jAA8FnRQvyOi7yvoEMZTA4yicxPzS5wECyiPmkyjCSRqOCgtUIDHDYZzfLcJMwZ/TlDv9AdIy2GhdpF+BMliujaK4q3lPOA8tFPW5ApsqwpPd3gq74nrVs7ypOHets8MkCyhehKTp1eHZeLXyY6b58Dh+bWWjy/PLRnJLOnA6auWPam+RodJDUM5T9KqjsHNec3bMa+vtD5XXKqk9wTLhMW0qzkCDc5XccTNZu2A4dckZsr5TNeedRAng7VgCtOw7KgG23/8N1W+nrRuvV93sWAGUBO3er+Mwim5IRGgxrhVg8MY+x1NGyQsod1zfg9H4MJFwdRr3XDTIV6mzSmHSruuywXW1YA27KRv2zYWm223ZcLGAUZ4Ymzo1j5T/TkKnlf760ql5jjq1jqPToanpx0ZfkPIn53FisrXsjmUbEwYjQnTdWh9It5bZs27tc9St83/r1thRt+vtD6/bJBhrknV6kezY88F/U7Ijz7GdA72c6JLt+aVenlOdl2K7Odc/GcXuudPaZseKfZ4nGZfeBYNZwh0szw8qTh3pVPsktlwb9SzgbT7LxcFV/imTt2IS54INcDot9GqIxj1mPBhxgZjIqrwov1lyj1xvzgPvzaiakDcnBbRqG2/HTYmL80ZYJLZnqnCGWiXmaeFekRvab+FazrEsbaByza2BNuu6TZ1tDnR7os7WYt6VOsM2cxpHcEdnjq1/FTHey5xNAx2OOZKTH505q/aKnphzeSjm6AOtYM6uhY2jnzB66wsb3X7Pk782jbc5ZvoINFbPSD5p3DWN9zwJa9PY+qRx673jk8Zd03jP10zerH+7WJrXPwC1bv8B&lt;/diagram&gt;&lt;/mxfile&gt;"><defs/><g><g id="cell-8"><path d="M 160 20 L 200 20 L 200 100 L 233.63 100" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 238.88 100 L 231.88 103.5 L 233.63 100 L 231.88 96.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/></g><g id="cell-6" content="&lt;UserObject label=&quot;py_packages&quot; treeRoot=&quot;1&quot;/&gt;" data-label="py_packages" data-treeRoot="1"><rect x="0" y="0" width="160" height="40" fill="#ffffff" stroke="#000000" pointer-events="all"/><g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px"><text x="79.5" y="24.5">py_packages</text></g></g><g id="cell-7" content="&lt;UserObject label=&quot;ipydrawio&quot;/&gt;" data-label="ipydrawio"><rect x="240" y="80" width="160" height="40" fill="#ffffff" stroke="#000000" pointer-events="all"/><g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px"><text x="319.5" y="104.5">ipydrawio</text></g></g><g id="cell-9"><path d="M 160 20 L 210 20 L 233.63 20" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 238.88 20 L 231.88 23.5 L 233.63 20 L 231.88 16.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/></g><g id="cell-10" content="&lt;UserObject label=&quot;ipydrawio_export&quot;/&gt;" data-label="ipydrawio_export"><rect x="240" y="0" width="160" height="40" fill="#ffffff" stroke="#000000" pointer-events="all"/><g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px"><text x="319.5" y="24.5">ipydrawio_export</text></g></g><g id="cell-19"><path d="M 840 20 L 800 20 L 800 100 L 766.37 100" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 761.12 100 L 768.12 96.5 L 766.37 100 L 768.12 103.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/></g><g id="cell-11" content="&lt;UserObject label=&quot;packages&quot; treeRoot=&quot;1&quot;/&gt;" data-label="packages" data-treeRoot="1"><rect x="840" y="0" width="160" height="40" fill="#ffffff" stroke="#000000" pointer-events="all"/><g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px"><text x="919.5" y="24.5">packages</text></g></g><g id="cell-18" content="&lt;UserObject label=&quot;ipydrawio&quot;/&gt;" data-label="ipydrawio"><rect x="600" y="80" width="160" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/><g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px"><text x="679.5" y="104.5">ipydrawio</text></g></g><g id="cell-20"><path d="M 840 20 L 800 20 L 800 180 L 766.37 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 761.12 180 L 768.12 176.5 L 766.37 180 L 768.12 183.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/></g><g id="cell-21" content="&lt;UserObject label=&quot;ipydrawio-webpack&quot;/&gt;" data-label="ipydrawio-webpack"><rect x="600" y="160" width="160" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/><g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px"><text x="679.5" y="184.5">ipydrawio-webpack</text></g></g><g id="cell-22"><path d="M 840 20 L 800 20 L 800 260 L 766.37 260" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 761.12 260 L 768.12 256.5 L 766.37 260 L 768.12 263.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/></g><g id="cell-23" content="&lt;UserObject label=&quot;ipydrawio-notebook&quot;/&gt;" data-label="ipydrawio-notebook"><rect x="600" y="240" width="160" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/><g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px"><text x="679.5" y="264.5">ipydrawio-notebook</text></g></g><g id="cell-24"><path d="M 840 20 L 770 20 L 766.37 20" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 761.12 20 L 768.12 16.5 L 766.37 20 L 768.12 23.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/></g><g id="cell-25" content="&lt;UserObject label=&quot;ipydrawio-pdf&quot;/&gt;" data-label="ipydrawio-pdf"><rect x="600" y="0" width="160" height="40" fill="#f8cecc" stroke="#b85450" pointer-events="all"/><g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px"><text x="679.5" y="24.5">ipydrawio-pdf</text></g></g><g id="cell-26"><path d="M 840 20 L 800 20 L 800 340 L 766.37 340" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/><path d="M 761.12 340 L 768.12 336.5 L 766.37 340 L 768.12 343.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/></g><g id="cell-27" content="&lt;UserObject label=&quot;ipydrawio-jupyter-templates&quot;/&gt;" data-label="ipydrawio-jupyter-templates"><rect x="600" y="320" width="160" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/><g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px"><text x="679.5" y="344.5">ipydrawio-jupyter-templates</text></g></g><g id="cell-28"><path d="M 400 20 L 600 20" fill="none" stroke="#b85450" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="2 6" pointer-events="stroke"/></g><g id="cell-29"><path d="M 400 100 L 600 100" fill="none" stroke="#6c8ebf" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="2 6" pointer-events="stroke"/></g><g id="cell-30"><path d="M 400 100 L 510 100 Q 520 100 520 110 L 520 170 Q 520 180 530 180 L 600 180" fill="none" stroke="#6c8ebf" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="2 6" pointer-events="stroke"/></g><g id="cell-32"><path d="M 400 100 L 510 100 Q 520 100 520 110 L 520 250 Q 520 260 530 260 L 600 260" fill="none" stroke="#6c8ebf" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="2 6" pointer-events="stroke"/></g><g id="cell-33"><path d="M 400 100 L 510 100 Q 520 100 520 110 L 520 330 Q 520 340 530 340 L 600 340" fill="none" stroke="#6c8ebf" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="2 6" pointer-events="stroke"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1001px" height="361px" viewBox="-0.5 -0.5 1001 361" content="&lt;mxfile version=&quot;14.7.3&quot; type=&quot;embed&quot;&gt;&#10;  &lt;diagram id=&quot;5VtAhx_Kaj5QVmaxudvQ&quot; name=&quot;Page-1&quot;&gt;7VpNc5swEP01PqYjPk2OSZqmh3aaSabTY0aGtU2CESPk2PTXV4AEQsRfsTF2kxwy6LES0u57q0V4YN3MlncUJ9OfJIBoYKJgObC+DkzTsS/5/xzISmCI3BKY0DAoIaMGHsO/IEAk0HkYQNowZIRELEyaoE/iGHzWwDClZNE0G5Oo+dQET6AFPPo4aqN/woBNBWogVN/4DuFkKh7tOeLGDEtjAaRTHJCFAlm3A+uGEsLKq9nyBqLcd9IvZb9vK+5WE6MQs206eGWHVxzNxdrEvFgmFwsBX7toEsqmZEJiHN3W6DUl8ziAfETEW7XND0ISDhocfAbGMhFIPGeEQ+2pitmnZE598XDBC4bpBITVsITyaSndxPLugMyA0YwbUIgwC1+bIcMi8pPKTnS9ohRnikFCwpilysj3OcANBIdNW0Qwk9TUHL3J3mvY84tyBrKlLKWGiuAVzd8p0F+j55zcJorwiOurnHb2lGD/hfMvFZ6jAA8FnRQvyOi7yvoEMZTA4yicxPzS5wECyiPmkyjCSRqOCgtUIDHDYZzfLcJMwZ/TlDv9AdIy2GhdpF+BMliujaK4q3lPOA8tFPW5ApsqwpPd3gq74nrVs7ypOHets8MkCyhehKTp1eHZeLXyY6b58Dh+bWWjy/PLRnJLOnA6auWPam+RodJDUM5T9KqjsHNec3bMa+vtD5XXKqk9wTLhMW0qzkCDc5XccTNZu2A4dckZsr5TNeedRAng7VgCtOw7KgG23/8N1W+nrRuvV93sWAGUBO3er+Mwim5IRGgxrhVg8MY+x1NGyQsod1zfg9H4MJFwdRr3XDTIV6mzSmHSruuywXW1YA27KRv2zYWm223ZcLGAUZ4Ymzo1j5T/TkKnlf760ql5jjq1jqPToanpx0ZfkPIn53FisrXsjmUbEwYjQnTdWh9It5bZs27tc9St83/r1thRt+vtD6/bJBhrknV6kezY88F/U7Ijz7GdA72c6JLt+aVenlOdl2K7Odc/GcXuudPaZseKfZ4nGZfeBYNZwh0szw8qTh3pVPsktlwb9SzgbT7LxcFV/imTt2IS54INcDot9GqIxj1mPBhxgZjIqrwov1lyj1xvzgPvzaiakDcnBbRqG2/HTYmL80ZYJLZnqnCGWiXmaeFekRvab+FazrEsbaByza2BNuu6TZ1tDnR7os7WYt6VOsM2cxpHcEdnjq1/FTHey5xNAx2OOZKTH505q/aKnphzeSjm6AOtYM6uhY2jnzB66wsb3X7Pk782jbc5ZvoINFbPSD5p3DWN9zwJa9PY+qRx673jk8Zd03jP10zerH+7WJrXPwC1bv8B&lt;/diagram&gt;&#10;&lt;/mxfile&gt;&#10;">
+  <defs/>
+  <g>
+    <g id="cell-8">
+      <path d="M 160 20 L 200 20 L 200 100 L 233.63 100" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 238.88 100 L 231.88 103.5 L 233.63 100 L 231.88 96.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    </g>
+    <g id="cell-6" content="&lt;UserObject label=&quot;py_packages&quot; treeRoot=&quot;1&quot;/&gt;" data-label="py_packages" data-treeRoot="1">
+      <rect x="0" y="0" width="160" height="40" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+      <g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px">
+        <text x="79.5" y="24.5">py_packages</text>
+      </g>
+    </g>
+    <g id="cell-7" content="&lt;UserObject label=&quot;ipydrawio&quot;/&gt;" data-label="ipydrawio">
+      <rect x="240" y="80" width="160" height="40" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+      <g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px">
+        <text x="319.5" y="104.5">ipydrawio</text>
+      </g>
+    </g>
+    <g id="cell-9">
+      <path d="M 160 20 L 210 20 L 233.63 20" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 238.88 20 L 231.88 23.5 L 233.63 20 L 231.88 16.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    </g>
+    <g id="cell-10" content="&lt;UserObject label=&quot;ipydrawio_export&quot;/&gt;" data-label="ipydrawio_export">
+      <rect x="240" y="0" width="160" height="40" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+      <g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px">
+        <text x="319.5" y="24.5">ipydrawio_export</text>
+      </g>
+    </g>
+    <g id="cell-19">
+      <path d="M 840 20 L 800 20 L 800 100 L 766.37 100" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 761.12 100 L 768.12 96.5 L 766.37 100 L 768.12 103.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    </g>
+    <g id="cell-11" content="&lt;UserObject label=&quot;packages&quot; treeRoot=&quot;1&quot;/&gt;" data-label="packages" data-treeRoot="1">
+      <rect x="840" y="0" width="160" height="40" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+      <g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px">
+        <text x="919.5" y="24.5">packages</text>
+      </g>
+    </g>
+    <g id="cell-18" content="&lt;UserObject label=&quot;ipydrawio&quot;/&gt;" data-label="ipydrawio">
+      <rect x="600" y="80" width="160" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/>
+      <g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px">
+        <text x="679.5" y="104.5">ipydrawio</text>
+      </g>
+    </g>
+    <g id="cell-20">
+      <path d="M 840 20 L 800 20 L 800 180 L 766.37 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 761.12 180 L 768.12 176.5 L 766.37 180 L 768.12 183.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    </g>
+    <g id="cell-21" content="&lt;UserObject label=&quot;ipydrawio-webpack&quot;/&gt;" data-label="ipydrawio-webpack">
+      <rect x="600" y="160" width="160" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/>
+      <g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px">
+        <text x="679.5" y="184.5">ipydrawio-webpack</text>
+      </g>
+    </g>
+    <g id="cell-22">
+      <path d="M 840 20 L 800 20 L 800 260 L 766.37 260" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 761.12 260 L 768.12 256.5 L 766.37 260 L 768.12 263.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    </g>
+    <g id="cell-23" content="&lt;UserObject label=&quot;ipydrawio-notebook&quot;/&gt;" data-label="ipydrawio-notebook">
+      <rect x="600" y="240" width="160" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/>
+      <g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px">
+        <text x="679.5" y="264.5">ipydrawio-notebook</text>
+      </g>
+    </g>
+    <g id="cell-24">
+      <path d="M 840 20 L 770 20 L 766.37 20" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 761.12 20 L 768.12 16.5 L 766.37 20 L 768.12 23.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    </g>
+    <g id="cell-25" content="&lt;UserObject label=&quot;ipydrawio-pdf&quot;/&gt;" data-label="ipydrawio-pdf">
+      <rect x="600" y="0" width="160" height="40" fill="#f8cecc" stroke="#b85450" pointer-events="all"/>
+      <g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px">
+        <text x="679.5" y="24.5">ipydrawio-pdf</text>
+      </g>
+    </g>
+    <g id="cell-26">
+      <path d="M 840 20 L 800 20 L 800 340 L 766.37 340" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+      <path d="M 761.12 340 L 768.12 336.5 L 766.37 340 L 768.12 343.5 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+    </g>
+    <g id="cell-27" content="&lt;UserObject label=&quot;ipydrawio-jupyter-templates&quot;/&gt;" data-label="ipydrawio-jupyter-templates">
+      <rect x="600" y="320" width="160" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/>
+      <g fill="#000000" font-family="Helvetica" text-anchor="middle" font-size="12px">
+        <text x="679.5" y="344.5">ipydrawio-jupyter-templates</text>
+      </g>
+    </g>
+    <g id="cell-28">
+      <path d="M 400 20 L 600 20" fill="none" stroke="#b85450" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="2 6" pointer-events="stroke"/>
+    </g>
+    <g id="cell-29">
+      <path d="M 400 100 L 600 100" fill="none" stroke="#6c8ebf" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="2 6" pointer-events="stroke"/>
+    </g>
+    <g id="cell-30">
+      <path d="M 400 100 L 510 100 Q 520 100 520 110 L 520 170 Q 520 180 530 180 L 600 180" fill="none" stroke="#6c8ebf" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="2 6" pointer-events="stroke"/>
+    </g>
+    <g id="cell-32">
+      <path d="M 400 100 L 510 100 Q 520 100 520 110 L 520 250 Q 520 260 530 260 L 600 260" fill="none" stroke="#6c8ebf" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="2 6" pointer-events="stroke"/>
+    </g>
+    <g id="cell-33">
+      <path d="M 400 100 L 510 100 Q 520 100 520 110 L 520 330 Q 520 340 530 340 L 600 340" fill="none" stroke="#6c8ebf" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="2 6" pointer-events="stroke"/>
+    </g>
+  </g>
+</svg>
