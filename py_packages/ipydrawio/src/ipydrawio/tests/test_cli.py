@@ -56,7 +56,7 @@ def test_cli_clean(
         args = [*args, "--tabs"]
 
     if mx_attrs:
-        args = [*args, *sum([["--mx-attrs", attr] for attr in mx_attrs], [])]
+        args = [*args, "--mx-attrs", str(mx_attrs)]
 
     args = [*args, str(dest)]
 
