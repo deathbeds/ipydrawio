@@ -134,7 +134,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu', 'macos', 'windows']
+        os: ['ubuntu']
     steps:
       - name: configure line endings
         run: |
@@ -178,6 +178,58 @@ jobs:
         with:
           name: ipydrawio ${{ github.run_number }} conda
           path: ./build/conda-bld
+
+  conda-test:
+    needs: [build, conda-build]
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['macos', 'windows']
+    steps:
+      - name: configure line endings
+        run: |
+          git config --global core.autocrlf false
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: cache (conda)
+        uses: actions/cache@v2
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-build-${{ hashFiles('.github/environment-conda-build.yml') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-build-
+
+      - name: install (conda)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          condarc-file: .github/.condarc
+          environment-file: .github/environment-conda-build.yml
+          miniforge-variant: Mambaforge
+          use-mamba: true
+
+      - name: download (dist)
+        uses: actions/download-artifact@v2
+        with:
+          name: ipydrawio ${{ github.run_number }} dist
+          path: ./dist
+
+      - name: download (conda)
+        uses: actions/download-artifact@v2
+        with:
+          name: ipydrawio ${{ github.run_number }} conda
+          path: ./build/conda-bld
+
+      - name: build (conda)
+        shell: bash -l {0}
+        env:
+          CONDA_BUILDERER: mambabuild
+        run: |
+          conda index build/conda-bld
+          doit -s conda
 
   test:
     needs: [build]

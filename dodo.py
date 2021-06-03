@@ -538,23 +538,24 @@ def task_conda():
         "conda-forge",
     ]
 
-    yield dict(
-        name="build",
-        file_dep=[
-            P.RECIPE,
-            *[P.DIST / p.name for p in P.PY_SDIST.values()],
-        ],
-        actions=[
-            [
-                *args,
-                "--no-test",
-                "--output-folder",
-                P.CONDA_BLD,
-                P.RECIPE.parent,
-            ]
-        ],
-        targets=[*P.CONDA_PKGS.values()],
-    )
+    if not P.WIN:
+        yield dict(
+            name="build",
+            file_dep=[
+                P.RECIPE,
+                *[P.DIST / p.name for p in P.PY_SDIST.values()],
+            ],
+            actions=[
+                [
+                    *args,
+                    "--no-test",
+                    "--output-folder",
+                    P.CONDA_BLD,
+                    P.RECIPE.parent,
+                ]
+            ],
+            targets=[*P.CONDA_PKGS.values()],
+        )
 
     for name, pkg in P.CONDA_PKGS.items():
         yield _ok(
