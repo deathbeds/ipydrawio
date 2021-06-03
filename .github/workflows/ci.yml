@@ -172,7 +172,7 @@ jobs:
         env:
           CONDA_BUILDERER: mambabuild
         run: |
-          doit -s conda:build:*
+          doit -s conda:build
 
       - name: upload (conda)
         uses: actions/upload-artifact@v2
