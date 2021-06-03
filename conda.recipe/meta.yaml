@@ -46,6 +46,8 @@ outputs:
       noarch: python
       script:
         - cd ipydrawio && {{ PYTHON }} -m pip install . -vv --no-deps
+      entry_points:
+        - jupyter-ipydrawio = ipydrawio.app:main
     requirements:
       host:
         - pip

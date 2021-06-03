@@ -33,6 +33,7 @@ env:
   CACHE_EPOCH: '1'
   DOIT_N_BUILD: '-n4'
   DOIT_N_TEST: '-n4'
+  CONDA_BUILDERER: mambabuild
 
 jobs:
   build:
@@ -169,8 +170,6 @@ jobs:
 
       - name: build (conda)
         shell: bash -l {0}
-        env:
-          CONDA_BUILDERER: mambabuild
         run: |
           doit -s conda_build
 
@@ -181,12 +180,19 @@ jobs:
           path: ./build/conda-bld
 
   conda-test:
-    needs: [build, conda-build]
+    needs: [conda-build]
     runs-on: ${{ matrix.os }}-latest
     strategy:
       fail-fast: false
       matrix:
         os: ['ubuntu', 'macos', 'windows']
+        include:
+          - os: linux
+            shell: bash -l {0}
+          - os: macos
+            shell: bash -l {0}
+          - os: windows
+            shell: cmd /C CALL {0}
     steps:
       - name: configure line endings
         run: |
@@ -219,9 +225,7 @@ jobs:
           path: ./build/conda-bld
 
       - name: build (conda)
-        shell: bash -l {0}
-        env:
-          CONDA_BUILDERER: mambabuild
+        shell: ${{ matrix.shell }}
         run: |
           conda index build/conda-bld
           doit -s conda_test
