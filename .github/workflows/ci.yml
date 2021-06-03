@@ -186,13 +186,6 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu', 'macos', 'windows']
-        include:
-          - os: linux
-            shell: bash -l {0}
-          - os: macos
-            shell: bash -l {0}
-          - os: windows
-            shell: cmd /C CALL {0}
     steps:
       - name: configure line endings
         run: |
@@ -225,7 +218,7 @@ jobs:
           path: ./build/conda-bld
 
       - name: build (conda)
-        shell: ${{ matrix.shell }}
+        shell: bash -l {0}
         run: |
           conda index build/conda-bld
           doit -s conda_test
