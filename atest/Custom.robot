@@ -38,7 +38,11 @@ Kennedy Flowchart PNG
 
 Sketch Business Model SVG
     [Documentation]    Kennedy Classes PNG?
-    Validate Custom Create    kfp    dio.svg    sketch    business_model_1.xml
+    Validate Custom Create    sbp    dio.svg    sketch    business_model_1.xml
+
+Atlas JupyterLab Diagram Notebook
+    [Documentation]    Atlas JupyterLab Diagram Notebook?
+    Validate Custom Create    ajn    dio.ipynb    atlas    JupyterLab Mockups.dio
 
 *** Keywords ***
 Validate Custom Create

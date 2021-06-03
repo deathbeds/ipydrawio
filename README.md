@@ -30,6 +30,8 @@ pip install ipydrawio ipydrawio
     - in many file formats
       - Drawio/mxgraph XML, SVG, PNG
       - or Jupyter Notebooks
+    - with all the Drawio templates
+      - plus some Jupyter ones
   - Jupyter [rich display][] output
   - Jupyter [Widgets][]
 - `ipydrawio-export`

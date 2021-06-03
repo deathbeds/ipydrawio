@@ -26,4 +26,4 @@ def test_js():
 
 
 def test_labextensions():
-    assert ipydrawio._jupyter_labextension_paths(), "no labextensions"
+    assert len(ipydrawio._jupyter_labextension_paths()) == 4, "no labextensions"

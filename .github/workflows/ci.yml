@@ -26,12 +26,14 @@ env:
   PYTHONUNBUFFERED: '1'
   PYTHONIOENCODING: 'utf-8'
   PIP_DISABLE_PIP_VERSION_CHECK: '1'
+  CONDARC: .github/.condarc
 
   # our stuff
   ATEST_RETRIES: '3'
   CACHE_EPOCH: '1'
   DOIT_N_BUILD: '-n4'
   DOIT_N_TEST: '-n4'
+  CONDA_BUILDERER: mambabuild
 
 jobs:
   build:
@@ -134,7 +136,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu', 'macos', 'windows']
+        os: ['ubuntu']
     steps:
       - name: configure line endings
         run: |
@@ -168,16 +170,58 @@ jobs:
 
       - name: build (conda)
         shell: bash -l {0}
-        env:
-          CONDA_BUILDERER: mambabuild
         run: |
-          doit -s conda
+          doit -s conda_build
 
       - name: upload (conda)
         uses: actions/upload-artifact@v2
         with:
           name: ipydrawio ${{ github.run_number }} conda
           path: ./build/conda-bld
+
+  conda-test:
+    needs: [conda-build]
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu', 'macos', 'windows']
+    steps:
+      - name: configure line endings
+        run: |
+          git config --global core.autocrlf false
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: cache (conda)
+        uses: actions/cache@v2
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-build-${{ hashFiles('.github/environment-conda-build.yml') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-build-
+
+      - name: install (conda)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          condarc-file: .github/.condarc
+          environment-file: .github/environment-conda-build.yml
+          miniforge-variant: Mambaforge
+          use-mamba: true
+
+      - name: download (conda)
+        uses: actions/download-artifact@v2
+        with:
+          name: ipydrawio ${{ github.run_number }} conda
+          path: ./build/conda-bld
+
+      - name: build (conda)
+        shell: bash -l {0}
+        run: |
+          conda index build/conda-bld
+          doit -s conda_test
 
   test:
     needs: [build]

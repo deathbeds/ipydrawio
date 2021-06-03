@@ -8,11 +8,21 @@
 
 #### @deathbeds/ipydrawio-notebook 1.1.1
 
-#### @deathbeds/ipydrawio-webpack 14.7.101
+#### @deathbeds/ipydrawio-webpack 14.7.400
+
+- upgrade to drawio 14.7.4 for layer enhancements and various bugfixes
+
+#### @deathbeds/ipydrawio-jupyter-templates 1.1.1
+
+- adds some (unofficial) Jupyter-branded templates [#44]
 
 ### ipydrawio-export 1.1.1
 
+- upgrades `draw-image-export` for `xmldom` version and bugfixes [#44]
+
 #### @deathbeds/ipydrawio-pdf 1.1.1
+
+[#44]: https://github.com/deathbeds/ipydrawio/issues/44
 
 ---
 

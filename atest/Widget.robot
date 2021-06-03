@@ -70,9 +70,12 @@ Update The Diagram Widget Value
     [Arguments]    ${path}
     ${xml} =    Get File    ${path}
     Add and Run JupyterLab Code Cell    d.source.value = '''${xml.strip()}'''
+    Press Keys    None    ESC
+    Press Keys    None    UP
 
 Change Paper Size
     [Arguments]    ${size}=letter
+    Scroll Element Into View    ${CSS DIO IFRAME}
     Select Frame    ${CSS DIO IFRAME}
     Maybe Open Format Pane
     ${el} =    Get WebElement    xpath:${XP DIO PAGE SIZE}

@@ -1,2 +1,3 @@
-**/.ipynb_checkpoints
 .tsbuildinfo
+*.tgz
+**/.ipynb_checkpoints

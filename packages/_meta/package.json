@@ -6,6 +6,7 @@
     "@deathbeds/ipydrawio-notebook": "file:../ipydrawio-notebook",
     "@deathbeds/ipydrawio-pdf": "file:../ipydrawio-pdf",
     "@deathbeds/ipydrawio-webpack": "file:../ipydrawio-webpack",
+    "@deathbeds/ipydrawio-jupyter-templates": "file:../ipydrawio-jupyter-templates",
     "@deathbeds/ipydrawio": "file:../ipydrawio"
   },
   "devDependencies": {

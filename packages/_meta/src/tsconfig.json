@@ -18,6 +18,9 @@
     },
     {
       "path": "../../ipydrawio-notebook/src"
+    },
+    {
+      "path": "../../ipydrawio-jupyter-templates/src"
     }
   ]
 }

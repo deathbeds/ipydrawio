@@ -26,6 +26,24 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+SKIPS = ["checkpoint", "pytest_cache"]
+
+
+def _clean(*paths_or_globs):
+    cleaned = []
+    for p_or_g in paths_or_globs:
+        paths = [p_or_g] if isinstance(p_or_g, Path) else [*p_or_g]
+        for p in paths:
+            str_p = str(p)
+            skipped = False
+            for skip in SKIPS:
+                if skip in str_p:
+                    skipped = True
+            if not skipped:
+                cleaned += [p]
+    return cleaned
+
+
 _SESSION = None
 
 
@@ -123,11 +141,11 @@ PRETTIER = [str(NODE_MODULES / ".bin" / "prettier")]
 
 # tests
 EXAMPLES = ROOT / "notebooks"
-EXAMPLE_IPYNB = [
-    p for p in EXAMPLES.rglob("*.ipynb") if ".ipynb_checkpoints" not in str(p)
-]
+EXAMPLE_IPYNB = _clean(EXAMPLES.rglob("*.ipynb"))
+
 DIST_NBHTML = DIST / "nbsmoke"
 ATEST = ROOT / "atest"
+ATEST_DIO = _clean(ATEST.rglob("*.dio"), ATEST.rglob("*.dio.svg"))
 ATEST_OUT = BUILD / "atest"
 ATEST_OUT_XML = "output.xml"
 
@@ -215,9 +233,16 @@ IPDW_LIB = IPDW / "lib"
 IPDW_IGNORE = IPDW / ".npmignore"
 ALL_IPDW_JS = IPDW_LIB.glob("*.js")
 
+IPJT = JS_PKG_JSON["ipydrawio-jupyter-templates"].parent
+IPJT_TMPL = IPJT / "tmpl"
+IPJT_TMPL_DIO = _clean(
+    IPJT_TMPL.rglob("*.dio"),
+    IPJT_TMPL.rglob("*.dio.svg"),
+)
+
 PY_PACKAGES = ROOT / "py_packages"
 
-PY_SETUP = {p.parent.name: p for p in (ROOT / "py_packages").glob("*/setup.py")}
+PY_SETUP = {p.parent.name: p for p in sorted((ROOT / "py_packages").glob("*/setup.py"))}
 PY_SRC = {k: sorted((v.parent / "src").rglob("*.py")) for k, v in PY_SETUP.items()}
 PY_SETUP_CFG = {k: v.parent / "setup.cfg" for k, v in PY_SETUP.items()}
 
@@ -254,18 +279,22 @@ SERVER_EXT = {
 
 
 # docs
+SPHINX_ARGS = json.loads(os.environ.get("SPHINX_ARGS", "[]"))
 DOCS_CONF = DOCS / "conf.py"
 ENV_DOCS = DOCS / "environment.yml"
 DOCS_BUILD = BUILD / "docs"
 DOCS_BUILDINFO = DOCS_BUILD / ".buildinfo"
-DOCS_MD = [
-    p
-    for p in DOCS.rglob("*.md")
-    if not (p.parent.name == "ts" or p.parent.parent.name == "ts")
-]
-DOCS_RST = [*DOCS.rglob("*.md")]
-DOCS_IPYNB = [*DOCS.rglob("*.ipynb")]
-DOCS_SRC = [*DOCS_MD, *DOCS_RST, *DOCS_IPYNB]
+DOCS_MD = _clean(
+    [
+        p
+        for p in DOCS.rglob("*.md")
+        if not (p.parent.name == "ts" or p.parent.parent.name == "ts")
+    ]
+)
+DOCS_DIO = _clean(DOCS.rglob("*.dio"), DOCS.rglob("*.dio.svg"))
+DOCS_RST = _clean(DOCS.rglob("*.rst"))
+DOCS_IPYNB = _clean(DOCS.rglob("*.ipynb"))
+DOCS_SRC = _clean(DOCS_MD, DOCS_RST, DOCS_IPYNB)
 DOCS_STATIC = DOCS / "_static"
 DOCS_FAVICON_SVG = DOCS_STATIC / "icon.svg"
 DOCS_FAVICON_ICO = DOCS_STATIC / "favicon.ico"
@@ -323,6 +352,7 @@ ALL_JSON = [
     *ATEST.glob("fixtures/*.json"),
     *BINDER.glob("*.json"),
 ]
+ALL_DIO = [*DOCS_DIO, *IPJT_TMPL_DIO, *ATEST_DIO]
 ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md"), *DOCS_MD]
 ALL_SETUP_CFG = [SETUP_CFG, *PY_SETUP_CFG.values()]
 ALL_JS = [PACKAGES / ".eslintrc.js"]
@@ -330,16 +360,16 @@ ALL_TS = sum(JS_TSSRC.values(), [])
 ALL_CSS = [*sum(JS_STYLE.values(), []), *DOCS.rglob("*.css")]
 ALL_ROBOT = [*ATEST.rglob("*.robot")]
 ALL_PRETTIER = [*ALL_YML, *ALL_JSON, *ALL_MD, *ALL_TS, *ALL_CSS, *ALL_JS]
-ALL_HEADERS = [
-    *ALL_SETUP_CFG,
-    *ALL_PY,
-    *ALL_TS,
-    *ALL_CSS,
-    *ALL_JS,
-    *ALL_MD,
-    *ALL_YML,
-    *ALL_ROBOT,
-]
+ALL_HEADERS = _clean(
+    ALL_SETUP_CFG,
+    ALL_PY,
+    ALL_TS,
+    ALL_CSS,
+    ALL_JS,
+    ALL_MD,
+    ALL_YML,
+    ALL_ROBOT,
+)
 ESLINTRC = PACKAGES / ".eslintrc.js"
 
 RFLINT_OPTS = sum(
@@ -397,6 +427,7 @@ OK_SERVEREXT = {k: BUILD / f"serverext.{k}.ok" for k, v in SERVER_EXT.items()}
 OK_PROVISION = BUILD / "provision.ok"
 OK_ROBOT_DRYRUN = BUILD / "robot.dryrun.ok"
 OK_RFLINT = BUILD / "robot.rflint.ok"
+OK_DIOLINT = BUILD / "dio.lint.ok"
 OK_ATEST = BUILD / "atest.ok"
 OK_CONDA_TEST = BUILD / "conda-build.test.ok"
 OK_LINK_CHECK = BUILD / "pytest-check-links.ok"
@@ -418,8 +449,16 @@ CMD_LAB = ["jupyter", "lab", "--no-browser", "--debug"]
 # conda building
 RECIPE = ROOT / "conda.recipe/meta.yaml"
 CONDA_BLD = BUILD / "conda-bld"
+CONDARC = CI / ".condarc"
 # could be mambabuild
 CONDA_BUILDERER = os.environ.get("CONDA_BUILDERER", "build")
+CONDA_BUILD_ARGS = [
+    "conda",
+    CONDA_BUILDERER,
+    "--override-channels",
+    "-c",
+    "conda-forge",
+]
 CONDA_PKGS = {
     pkg: CONDA_BLD / f"noarch/{pkg}-{ver}-py_0.tar.bz2"
     for pkg, ver in PY_VERSION.items()
@@ -627,5 +666,7 @@ def mystify():
 
 # Late environment hacks
 os.environ.update(
-    IPYDRAWIO_DATA_DIR=str(IPYDRAWIO_DATA_DIR), PIP_DISABLE_PIP_VERSION_CHECK="1"
+    CONDARC=str(CONDARC),
+    IPYDRAWIO_DATA_DIR=str(IPYDRAWIO_DATA_DIR),
+    PIP_DISABLE_PIP_VERSION_CHECK="1",
 )

@@ -86,7 +86,7 @@ ${JW XP ACCORD CHILD HEAD}    ${JW XP ACCORD CHILD}/div[contains(@class, 'p-Coll
 ${JLAB CSS ICON ADD}    .jp-ToolbarButtonComponent [data-icon='ui-components:add']
 ${JLAB CSS ICON RUN}    .jp-ToolbarButtonComponent [data-icon='ui-components:run']
 ${XP DIO FORMAT TITLE}    //*[contains(@class, 'mxWindowTitle')][contains(text(), 'Format')]
-${XP DIO FORMAT TOGGLE}    ${XP DIO FORMAT TITLE}/div
+${XP DIO FORMAT TOGGLE}    ${XP DIO FORMAT TITLE}/div/img[@title="Normalize"]
 ${XP DIO FORMAT PANE}    ${XP DIO FORMAT TITLE}/../..//td/div[contains(@class, 'mxWindowPane')]
 ${XP DIO FORMAT PANE VISIBLE}    ${XP DIO FORMAT PANE}\[not(contains(@style, 'display: none'))]
 ${XP DIO PAGE SIZE}    //div[contains(@class, "geFormatSection")][contains(., "Paper Size")]//select

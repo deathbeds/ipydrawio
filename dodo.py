@@ -174,10 +174,13 @@ def task_setup():
                 P.OK_PYSETUP[pkg],
             )
         else:
+            extra_deps = []
+            if pkg != "ipydrawio":
+                extra_deps += [P.OK_PYSETUP["ipydrawio"]]
             yield _ok(
                 dict(
                     name=f"py:{pkg}",
-                    file_dep=[pkg_setup, P.PY_SETUP_CFG[pkg], *ext_deps],
+                    file_dep=[pkg_setup, P.PY_SETUP_CFG[pkg], *ext_deps, *extra_deps],
                     actions=[
                         CmdAction(
                             [
@@ -311,6 +314,28 @@ def task_lint():
         ),
         P.OK_ESLINT,
     )
+
+    dio_tasks = []
+
+    for dio_file in P.ALL_DIO:
+        name = f"dio:clean:{dio_file.relative_to(P.ROOT)}"
+        dio_tasks += [f"lint:{name}"]
+        yield dict(
+            name=name,
+            file_dep=[dio_file, *P.OK_PYSETUP.values()],
+            actions=[["jupyter", "ipydrawio", "clean", dio_file]],
+        )
+
+    yield _ok(
+        dict(
+            name="dio:clean",
+            file_dep=[*P.ALL_DIO],
+            task_dep=dio_tasks,
+            actions=[["echo", "ok"]],
+        ),
+        P.OK_DIOLINT,
+    )
+
     yield _ok(
         dict(
             name="all",
@@ -504,14 +529,8 @@ def task_build():
     )
 
 
-def task_conda():
+def task_conda_build():
     """test building with conda-build"""
-    args = [
-        "conda",
-        P.CONDA_BUILDERER,
-        "-c",
-        "conda-forge",
-    ]
 
     yield dict(
         name="build",
@@ -521,7 +540,7 @@ def task_conda():
         ],
         actions=[
             [
-                *args,
+                *P.CONDA_BUILD_ARGS,
                 "--no-test",
                 "--output-folder",
                 P.CONDA_BLD,
@@ -531,12 +550,14 @@ def task_conda():
         targets=[*P.CONDA_PKGS.values()],
     )
 
+
+def task_conda_test():
     for name, pkg in P.CONDA_PKGS.items():
         yield _ok(
             dict(
                 name=f"test:{name}",
                 file_dep=[pkg],
-                actions=[[*args, "--test", pkg]],
+                actions=[[*P.CONDA_BUILD_ARGS, "--test", pkg]],
             ),
             P.OK_CONDA_TEST / f"{name}.ok",
         )
@@ -635,7 +656,7 @@ def task_watch():
         doc="watch docs for changes, rebuilding",
         uptodate=[lambda: False],
         file_dep=[P.DOCS_BUILDINFO, P.OK_PIP_CHECK],
-        actions=[["sphinx-autobuild", "-a", "-j8", P.DOCS, P.DOCS_BUILD]],
+        actions=[["sphinx-autobuild", *P.SPHINX_ARGS, "-j8", P.DOCS, P.DOCS_BUILD]],
     )
 
 
@@ -703,7 +724,9 @@ def task_docs():
         name="sphinx",
         doc="build the documentation site with sphinx",
         file_dep=[P.DOCS_CONF, P.DOCS_FAVICON_ICO, P.OK_PIP_CHECK, *P.DOCS_SRC],
-        actions=[["sphinx-build", "-j8", "-b", "html", P.DOCS, P.DOCS_BUILD]],
+        actions=[
+            ["sphinx-build", *P.SPHINX_ARGS, "-j8", "-b", "html", P.DOCS, P.DOCS_BUILD]
+        ],
         targets=[P.DOCS_BUILDINFO],
     )
 

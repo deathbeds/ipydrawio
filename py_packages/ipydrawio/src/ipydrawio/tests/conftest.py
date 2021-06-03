@@ -13,3 +13,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from pathlib import Path
+
+import pytest
+
+HERE = Path(__file__).parent
+FIXTURES = HERE / "fixtures"
+
+
+@pytest.fixture(params=["dio", "dio.svg"])
+def an_empty_dio_file(request: str) -> Path:
+    return FIXTURES / f"empty.{request.param}"

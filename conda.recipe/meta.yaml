@@ -46,6 +46,8 @@ outputs:
       noarch: python
       script:
         - cd ipydrawio && {{ PYTHON }} -m pip install . -vv --no-deps
+      entry_points:
+        - jupyter-ipydrawio = ipydrawio.app:main
     requirements:
       host:
         - pip
@@ -54,19 +56,26 @@ outputs:
         - ipywidgets >=7.6
         - jupyterlab ==3.*
         - jupyterlab_widgets >=1
+        - lxml
         - python >=3.6
     test:
       imports:
         - ipydrawio
       requires:
         - pip
+        - pytest-console-scripts
         - pytest-cov
+        - m2-grep  # [win]
       commands:
         - pip check
+        - jupyter ipydrawio --version
         - jupyter labextension list
         - jupyter labextension list 1>labextensions 2>&1
-        - cat labextensions | grep "@deathbeds/ipydrawio.*OK"  # [unix]
-        - pytest -vv --pyargs ipydrawio --cov=ipydrawio --cov-fail-under=100 --cov-report=term-missing:skip-covered
+        - cat labextensions | grep -ie "@deathbeds/ipydrawio .*OK"
+        - cat labextensions | grep -ie "@deathbeds/ipydrawio-webpack .*OK"
+        - cat labextensions | grep -ie "@deathbeds/ipydrawio-notebook .*OK"
+        - cat labextensions | grep -ie "@deathbeds/ipydrawio-jupyter-templates .*OK"
+        - pytest -vv --pyargs ipydrawio --cov=ipydrawio --cov-report=term-missing:skip-covered
     about:
       home: https://github.com/deathbeds/ipydrawio
       summary: Draw.io Diagrams as Jupyter Widgets
@@ -99,21 +108,20 @@ outputs:
         - ipydrawio_export
       requires:
         - pip
+        - pytest-console-scripts  # [unix]
         - pytest-cov  # [unix]
         - pytest-tornasync  # [unix]
-        - pytest-console-scripts  # [unix]
+        - m2-grep  # [win]
       commands:
         - pip check
+        - jupyter ipydrawio-export --version
         - jupyter labextension list
         - jupyter labextension list 1>labextensions 2>&1
-        - cat labextensions | grep "@deathbeds/ipydrawio-pdf.*OK"  # [unix]
+        - cat labextensions | grep -ie "@deathbeds/ipydrawio-pdf.*OK"
         - jupyter serverextension list
         - jupyter serverextension list 1>serverextensions 2>&1
-        - cat serverextensions | grep "ipydrawio_export.*OK"  # [unix]
-        {% set pytest_args = "--cov-fail-under=96" %}  # [unix]
-        # TODO: investigate potential docker/locale issues upstream to restore coverage
-        # {% set pytest_args = "--cov-fail-under=54 -k 'not (export_empty or export_merged or serverextension_export)'" %}  # [linux]
-        - pytest -vv --pyargs ipydrawio_export --script-launch-mode=subprocess --cov=ipydrawio_export --cov-report=term-missing:skip-covered {{ pytest_args }}  # [unix]
+        - cat serverextensions | grep -ie "ipydrawio_export .*OK"
+        - pytest -vv --pyargs ipydrawio_export --script-launch-mode=subprocess --cov=ipydrawio_export --cov-report=term-missing:skip-covered  # [unix]
     about:
       home: https://github.com/deathbeds/ipydrawio
       summary: PDF export for IPyDrawio

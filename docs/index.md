@@ -28,6 +28,7 @@ Start JupyterLab and [start making diagrams](./diagrams/index.md)!
 ```{toctree}
 :maxdepth: 2
 diagrams/index
+tutorials/index
 about/index
 api/index
 about/contributing
