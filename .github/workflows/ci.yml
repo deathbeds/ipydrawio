@@ -26,6 +26,7 @@ env:
   PYTHONUNBUFFERED: '1'
   PYTHONIOENCODING: 'utf-8'
   PIP_DISABLE_PIP_VERSION_CHECK: '1'
+  CONDARC: .github/condarc
 
   # our stuff
   ATEST_RETRIES: '3'
@@ -171,7 +172,7 @@ jobs:
         env:
           CONDA_BUILDERER: mambabuild
         run: |
-          doit -s conda
+          doit -s conda:build:*
 
       - name: upload (conda)
         uses: actions/upload-artifact@v2
@@ -185,7 +186,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['macos', 'windows']
+        os: ['ubuntu', 'macos', 'windows']
     steps:
       - name: configure line endings
         run: |
@@ -211,12 +212,6 @@ jobs:
           miniforge-variant: Mambaforge
           use-mamba: true
 
-      - name: download (dist)
-        uses: actions/download-artifact@v2
-        with:
-          name: ipydrawio ${{ github.run_number }} dist
-          path: ./dist
-
       - name: download (conda)
         uses: actions/download-artifact@v2
         with:
@@ -229,7 +224,7 @@ jobs:
           CONDA_BUILDERER: mambabuild
         run: |
           conda index build/conda-bld
-          doit -s conda
+          doit -s conda:test:*
 
   test:
     needs: [build]

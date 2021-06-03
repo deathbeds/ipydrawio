@@ -449,6 +449,7 @@ CMD_LAB = ["jupyter", "lab", "--no-browser", "--debug"]
 # conda building
 RECIPE = ROOT / "conda.recipe/meta.yaml"
 CONDA_BLD = BUILD / "conda-bld"
+CONDARC = CI / ".condarc"
 # could be mambabuild
 CONDA_BUILDERER = os.environ.get("CONDA_BUILDERER", "build")
 CONDA_PKGS = {
@@ -658,5 +659,7 @@ def mystify():
 
 # Late environment hacks
 os.environ.update(
-    IPYDRAWIO_DATA_DIR=str(IPYDRAWIO_DATA_DIR), PIP_DISABLE_PIP_VERSION_CHECK="1"
+    CONDARC=str(CONDARC),
+    IPYDRAWIO_DATA_DIR=str(IPYDRAWIO_DATA_DIR),
+    PIP_DISABLE_PIP_VERSION_CHECK="1",
 )
