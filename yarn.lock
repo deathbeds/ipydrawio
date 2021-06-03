@@ -98,7 +98,7 @@
     "@jupyterlab/application" "3"
 
 "@deathbeds/ipydrawio-webpack@file:packages/ipydrawio-webpack":
-  version "14.7.300"
+  version "14.7.400"
   dependencies:
     "@jupyterlab/application" "3"
 
