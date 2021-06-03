@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import platform
 import shutil
 
 import pytest
@@ -21,10 +22,11 @@ import pytest
 from .. import __version__
 
 
+@pytest.mark.skipif(platform.system() == "Windows", reason="no capture on win")
 def test_cli_version(script_runner):
     ret = script_runner.run("jupyter", "ipydrawio", "--version")
     assert ret.success
-    assert __version__ in ret.stdout + ret.stderr
+    assert __version__ in ret.stdout
 
 
 @pytest.mark.parametrize(

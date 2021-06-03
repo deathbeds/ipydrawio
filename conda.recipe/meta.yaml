@@ -75,7 +75,7 @@ outputs:
         - cat labextensions | grep -ie "@deathbeds/ipydrawio-webpack .*OK"
         - cat labextensions | grep -ie "@deathbeds/ipydrawio-notebook .*OK"
         - cat labextensions | grep -ie "@deathbeds/ipydrawio-jupyter-templates .*OK"
-        - pytest -vv --pyargs ipydrawio --cov=ipydrawio --cov-fail-under=100 --cov-report=term-missing:skip-covered
+        - pytest -vv --pyargs ipydrawio --cov=ipydrawio --cov-report=term-missing:skip-covered
     about:
       home: https://github.com/deathbeds/ipydrawio
       summary: Draw.io Diagrams as Jupyter Widgets
@@ -121,10 +121,7 @@ outputs:
         - jupyter serverextension list
         - jupyter serverextension list 1>serverextensions 2>&1
         - cat serverextensions | grep -ie "ipydrawio_export .*OK"
-        {% set pytest_args = "--cov-fail-under=96" %}  # [unix]
-        # TODO: investigate potential docker/locale issues upstream to restore coverage
-        # {% set pytest_args = "--cov-fail-under=54 -k 'not (export_empty or export_merged or serverextension_export)'" %}  # [linux]
-        - pytest -vv --pyargs ipydrawio_export --script-launch-mode=subprocess --cov=ipydrawio_export --cov-report=term-missing:skip-covered {{ pytest_args }}  # [unix]
+        - pytest -vv --pyargs ipydrawio_export --script-launch-mode=subprocess --cov=ipydrawio_export --cov-report=term-missing:skip-covered  # [unix]
     about:
       home: https://github.com/deathbeds/ipydrawio
       summary: PDF export for IPyDrawio
