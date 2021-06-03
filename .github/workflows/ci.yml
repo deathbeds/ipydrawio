@@ -26,7 +26,7 @@ env:
   PYTHONUNBUFFERED: '1'
   PYTHONIOENCODING: 'utf-8'
   PIP_DISABLE_PIP_VERSION_CHECK: '1'
-  CONDARC: .github/condarc
+  CONDARC: .github/.condarc
 
   # our stuff
   ATEST_RETRIES: '3'
