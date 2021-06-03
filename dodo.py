@@ -529,15 +529,8 @@ def task_build():
     )
 
 
-def task_conda():
+def task_conda_build():
     """test building with conda-build"""
-    args = [
-        "conda",
-        P.CONDA_BUILDERER,
-        "--override-channels",
-        "-c",
-        "conda-forge",
-    ]
 
     yield dict(
         name="build",
@@ -547,7 +540,7 @@ def task_conda():
         ],
         actions=[
             [
-                *args,
+                *P.CONDA_BUILD_ARGS,
                 "--no-test",
                 "--output-folder",
                 P.CONDA_BLD,
@@ -557,12 +550,14 @@ def task_conda():
         targets=[*P.CONDA_PKGS.values()],
     )
 
+
+def task_conda_test():
     for name, pkg in P.CONDA_PKGS.items():
         yield _ok(
             dict(
                 name=f"test:{name}",
                 file_dep=[pkg],
-                actions=[[*args, "--test", pkg]],
+                actions=[[*P.CONDA_BUILD_ARGS, "--test", pkg]],
             ),
             P.OK_CONDA_TEST / f"{name}.ok",
         )

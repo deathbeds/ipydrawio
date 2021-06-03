@@ -452,6 +452,13 @@ CONDA_BLD = BUILD / "conda-bld"
 CONDARC = CI / ".condarc"
 # could be mambabuild
 CONDA_BUILDERER = os.environ.get("CONDA_BUILDERER", "build")
+CONDA_BUILD_ARGS = [
+    "conda",
+    CONDA_BUILDERER,
+    "--override-channels",
+    "-c",
+    "conda-forge",
+]
 CONDA_PKGS = {
     pkg: CONDA_BLD / f"noarch/{pkg}-{ver}-py_0.tar.bz2"
     for pkg, ver in PY_VERSION.items()
