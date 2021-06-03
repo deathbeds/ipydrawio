@@ -68,6 +68,7 @@ outputs:
         - m2-grep  # [win]
       commands:
         - pip check
+        - jupyter ipydrawio --version
         - jupyter labextension list
         - jupyter labextension list 1>labextensions 2>&1
         - cat labextensions | grep -ie "@deathbeds/ipydrawio .*OK"
@@ -113,6 +114,7 @@ outputs:
         - m2-grep  # [win]
       commands:
         - pip check
+        - jupyter ipydrawio-export --version
         - jupyter labextension list
         - jupyter labextension list 1>labextensions 2>&1
         - cat labextensions | grep -ie "@deathbeds/ipydrawio-pdf.*OK"

@@ -24,7 +24,7 @@ from .. import __version__
 def test_cli_version(script_runner):
     ret = script_runner.run("jupyter", "ipydrawio", "--version")
     assert ret.success
-    assert __version__ in ret.stdout
+    assert __version__ in ret.stdout + ret.stderr
 
 
 @pytest.mark.parametrize(
@@ -44,7 +44,7 @@ def test_cli_clean(
 
     before = dest.read_text(encoding="utf-8").strip()
 
-    args = "jupyter", "ipydrawio", "clean"
+    args = ["jupyter", "ipydrawio", "clean"]
 
     if not pretty:
         args = [*args, "--no-pretty"]
