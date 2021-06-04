@@ -4,8 +4,8 @@
 
 ### ipydrawio 1.1.1
 
-- adds `jupyter ipydrawio clean` for removing `host`, `agent`, `modified` attributes
-  and pretty printing [#44]
+- adds `jupyter ipydrawio clean` for removing `host`, `agent`, `modified`
+  attributes and pretty printing, restoring `lxml` as a dependency [#44]
 
 #### @deathbeds/ipydrawio 1.1.1
 
@@ -37,8 +37,8 @@
 ### ipydrawio 1.1.0
 
 - new documentation site at https://ipydrawio.rtfd.io [#40]
-- no longer depends on `lxml`, future XML-based features will support the
-  standard library `xml` module [#40]
+- no longer depends on `lxml`, future XML-based features will hopefully support
+  the standard library `xml` module [#40]
 
 #### @deathbeds/ipydrawio 1.1.0
 
