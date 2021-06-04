@@ -4,13 +4,18 @@
 
 ### ipydrawio 1.1.1
 
+- adds `jupyter ipydrawio clean` for removing `host`, `agent`, `modified` attributes
+  and pretty printing [#44]
+
 #### @deathbeds/ipydrawio 1.1.1
+
+- revert default theme from `sketch` back to `min` [#41]
 
 #### @deathbeds/ipydrawio-notebook 1.1.1
 
-#### @deathbeds/ipydrawio-webpack 14.7.500
+#### @deathbeds/ipydrawio-webpack 14.7.600
 
-- upgrade to drawio v14.7.5 for layer enhancements and various bugfixes
+- upgrade to drawio v14.7.6 for layer enhancements and various bugfixes [#51]
 
 #### @deathbeds/ipydrawio-jupyter-templates 1.1.1
 
@@ -22,6 +27,7 @@
 
 #### @deathbeds/ipydrawio-pdf 1.1.1
 
+[#41]: https://github.com/deathbeds/ipydrawio/issues/41
 [#44]: https://github.com/deathbeds/ipydrawio/issues/44
 
 ---
