@@ -122,7 +122,7 @@ def clean_schema(app: Sphinx, error):
 def before_rtd_build(app: Sphinx, error):
     """performs the full frontend build, and ensures the typedoc"""
     subprocess.check_call(
-        ["doit", "-n4", "build", "docs:typedoc:mystify"],
+        ["doit", "-n4", "build", "setup:pip:check", "docs:typedoc:mystify"],
         cwd=str(ROOT),
     )
 
