@@ -214,7 +214,7 @@ def task_setup():
         dict(
             name="pip:check",
             file_dep=[*P.OK_PYSETUP.values()],
-            actions=[[*P.PIP, "check"]],
+            actions=[P.pip_check],
         ),
         P.OK_PIP_CHECK,
     )

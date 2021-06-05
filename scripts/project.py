@@ -22,6 +22,7 @@ import os
 import platform
 import re
 import shutil
+import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -125,6 +126,7 @@ ENV_CI = CI / "environment.yml"
 PY = ["python"]
 PYM = [*PY, "-m"]
 PIP = [*PYM, "pip"]
+PIP_CHECK_IGNORE = "^(No broken|pylint) "
 
 NPM = (
     shutil.which("npm")
@@ -662,6 +664,19 @@ def mystify():
         ),
         **ENC,
     )
+
+
+def pip_check():
+    proc = subprocess.Popen([*PIP, "check"], stdout=subprocess.PIPE)
+    proc.wait()
+    out = proc.stdout.read().decode("utf-8")
+    print(out)
+    lines = [
+        line
+        for line in out.splitlines()
+        if line.strip() and not re.findall(PIP_CHECK_IGNORE, line)
+    ]
+    return not len(lines)
 
 
 # Late environment hacks

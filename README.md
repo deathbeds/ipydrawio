@@ -19,7 +19,7 @@
 ```bash
 mamba install -c conda-forge ipydrawio  # recommended, or...
 conda install -c conda-forge ipydrawio  # or...
-pip install ipydrawio ipydrawio
+pip install ipydrawio
 ```
 
 ## Features
@@ -55,27 +55,60 @@ pip install ipydrawio ipydrawio
 
 ## Usage
 
+> Please see the [docs] for full information
+
 - Try on [![binder-badge][]][binder]
   - or follow the [Installation instructions](#installation) and **Start
     JupyterLab**
-- Import a `drawio` from [diagrams.net](https://diagrams.net) with the _[File
-  Manager][]_
-  - or create a new blank (or customized)
+- Open a diagram, by doing one of:
+  - Creating a
     <img src="https://raw.githubusercontent.com/deathbeds/ipydrawio/master/packages/ipydrawio/style/img/drawio.svg" width="24"/>
-    _Diagram_ from the [Launcher][]
+    Diagram\_ from the [Launcher][]
+  - Uploading a diagram created on [diagrams.net](https://diagrams.net) with the
+    _[File Manager][]_ and double clicking it
+  - Building diagrams by interactively computing in `IPython` with
+    `ipydrawio.Diagram`
+  - Use the `application/x-drawio` MIME renderer
 - Use the _[Command Palette][]_ to _Export Diagram_ to various formats
   - > **NOTE**: some of the built-in UI features of drawio don't work properly
     > inside an IFrame in JupyterLab, and are difficult to robustly disable:
     > please see _Diagram_ options available in the _Command Palette_ and
     > various _Main Menu_ menus.
-- Build interactive diagrams with `ipydrawio.Diagram` from `IPython`
-- Use the `application/x-drawio` MIME renderer
 
 ## Configuring
 
-- Change the _Diagram Theme_ from the _Settings_
+### UI Themes
 
-> Use _Advanced Settings_ to modify drawio embedding parameters
+Your default theme can be changed in the JupyterLab Main Menu:
+
+- open _Settings_
+- open _Diagram Theme_
+- select your theme
+- all open documents will change to this theme (prompting if not saved)
+- all future documents will use this theme
+
+The different themes have some advantages and disadvantages:
+
+| theme     | default | full menu | layers | pages | light | dark | rough |
+| --------- | :-----: | :-------: | :----: | :---: | :---: | :--: | :---: |
+| `atlas`   |         |    ✔️     |   ✔️   |  ✔️   |  ✔️   |      |       |
+| `dark`    |         |    ✔️     |   ✔️   |  ✔️   |       |  ✔️  |       |
+| `kennedy` |         |    ✔️     |   ✔️   |  ✔️   |  ✔️   |      |       |
+| `min`     |   ✔️    |           |   ✔️   |  ✔️   |  ✔️   |  ⚙️  |       |
+| `sketch`  |         |           |   ✔️   |       |  ✔️   |  ⚙️  |  ✔️   |
+
+> Note that `rough` will change how many shapes look
+
+### Drawio Configuration and URL parameters
+
+Use _Advanced Settings_ to modify drawio embedding parameters
+
+> See the [schema] for full details of the (known) supported options as well as
+> the [upstream docs] for all parameters, though IPyDrawio might not support
+> them... yet.
+
+[schema]: https://ipydrawio.readthedocs.io/en/stable/api/schema.html
+[upstream docs]: https://www.diagrams.net/doc/faq/supported-url-parameters
 
 ### PDF: Lab and Server extensions
 
@@ -98,6 +131,13 @@ headless browser, powered by [@jgraph/draw-image-export2], `puppeteer`, and
 > ```bash
 > conda install -yc conda-forge ipydrawio-export
 > ```
+
+Once installed, you can use the in-browser tools _Export Diagram as PDF_ as well
+as the command line:
+
+```bash
+jupyter ipydrawio-export <name of document>
+```
 
 ## Open Source
 
