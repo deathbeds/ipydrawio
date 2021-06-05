@@ -18,14 +18,13 @@ name: ipydrawio-demo
 
 channels:
   - conda-forge
-  - nodefaults
 
 dependencies:
+  - python >=3.9
   # demo toys
   - bqplot
   - graphviz2drawio
   - jupyter-lsp-python-lsp-server
-  - jupyter-videochat
   - jupyterlab-classic
   - jupyterlab-lsp
   - jupyterlab-tour

@@ -864,7 +864,7 @@
         "svg-warning": 0,
         "thumb": 0,
         "tr": 0,
-        "ui": "sketch"
+        "ui": "min"
       },
       "description": "URL parameters for the drawio iframe https://web.archive.org/web/20210425055302/https://www.diagrams.net/doc/faq/supported-url-parameters"
     }

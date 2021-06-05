@@ -221,7 +221,7 @@ jobs:
         shell: bash -l {0}
         run: |
           conda index build/conda-bld
-          doit -s conda_test
+          doit -s conda_test || doit -s conda_test
 
   test:
     needs: [build]
