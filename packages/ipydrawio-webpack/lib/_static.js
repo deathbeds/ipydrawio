@@ -2733,6 +2733,7 @@ import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/softwar
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/class_2.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/component.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/component.xml';
+import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/data_flow_1.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/data_flow_1.xml';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/database_1.png';
 import '!!file-loader?name=[path][name].[ext]&context=.!../dio/templates/software/database_1.xml';
