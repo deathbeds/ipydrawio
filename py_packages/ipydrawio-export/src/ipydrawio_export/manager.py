@@ -176,6 +176,7 @@ class IPyDrawioExportManager(LoggingConfigurable):
                 self.start_server()
                 time.sleep(self.init_wait_sec)
             try:
+                self.log.warning(f"[ipydrawio-export] exporting ({retries} retries)...")
                 res = self._session.post(self.url, timeout=None, data=data)
                 pdf_text = res.text
                 status_code = res.status_code
