@@ -181,9 +181,28 @@ JS_LABEXT_PY_HOST = {
 
 JS_PKG_NOT_META = {k: v for k, v in JS_PKG_JSON.items() if k.startswith("_")}
 
+
+def _norm_js_version(pkg):
+    """undo some package weirdness"""
+    v = pkg["version"]
+    final = ""
+    # alphas, beta use dashes
+    for dashed in v.split("-"):
+        if final:
+            final += "-"
+        for dotted in dashed.split("."):
+            if final:
+                final += "."
+            if re.findall(r"^\d+$", dotted):
+                final += str(int(dotted))
+            else:
+                final += dotted
+    return final
+
+
 JS_TARBALL = {
     k: JS_PKG_JSON[k].parent
-    / f"""{v["name"].replace('@', '').replace("/", "-")}-{v["version"]}.tgz"""
+    / f"""{v["name"].replace('@', '').replace("/", "-")}-{_norm_js_version(v)}.tgz"""
     for k, v in JS_PKG_DATA.items()
     if k not in JS_PKG_NOT_META
 }
