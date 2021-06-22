@@ -19,7 +19,7 @@
     "json-schema-to-typescript": "^10.1.4"
   },
   "peerDependencies": {
-    "@deathbeds/ipydrawio-webpack": "^14.7.800",
+    "@deathbeds/ipydrawio-webpack": "^14.8.001",
     "@jupyter-widgets/base": "4",
     "@jupyter-widgets/controls": "3",
     "@jupyter-widgets/jupyterlab-manager": "3"
