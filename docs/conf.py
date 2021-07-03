@@ -65,9 +65,9 @@ suppress_warnings = ["autosectionlabel.*"]
 # }
 
 # files
-# templates_path = ["_templates"]
+templates_path = ["_templates"]
 html_favicon = "_static/favicon.ico"
-html_static_path = ["_static"]
+html_static_path = ["_static", "../demo/_output"]
 exclude_patterns = [
     ".ipynb_checkpoints",
     "**/.ipynb_checkpoints",
@@ -90,8 +90,7 @@ html_logo = "_static/logo.svg"
 html_theme_options = {
     "github_url": APP_DATA["repository"]["url"],
     "use_edit_page_button": True,
-    # "navbar_start": ["launch.html"],
-    # "navbar_center": ["navbar-logo.html", "navbar-nav.html"],
+    "navbar_start": ["navbar-logo.html", "launch.html"],
 }
 
 html_context = {
@@ -121,10 +120,19 @@ def clean_schema(app: Sphinx, error):
 
 def before_rtd_build(app: Sphinx, error):
     """performs the full frontend build, and ensures the typedoc"""
-    subprocess.check_call(
-        ["doit", "-n4", "build", "setup:pip:check", "docs:typedoc:mystify"],
-        cwd=str(ROOT),
-    )
+    for task in [
+        "build",
+        "setup:pip:check",
+        "docs:typedoc:mystify",
+        "demo",
+    ]:
+        subprocess.check_call(
+            [
+                "doit",
+                task,
+            ],
+            cwd=str(ROOT),
+        )
 
 
 def setup(app):

@@ -1,6 +1,7 @@
 __pycache__
+_output
 .coverage*
-.doit*
+*doit.db
 .ipynb_checkpoints
 .pabotsuitenames
 .virtual_documents/

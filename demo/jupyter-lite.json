@@ -1,0 +1,13 @@
+{
+  "jupyter-config-data": {
+    "disabledExtensions": [
+      "@deathbeds/ipydrawio-pdf",
+      "@jupyterlab-classic/lab-extension",
+      "@jupyterlab/server-proxy",
+      "@krassowski/jupyterlab-lsp",
+      "jupyterlab-server-proxy",
+      "nbdime-jupyterlab"
+    ]
+  },
+  "jupyter-lite-schema-version": 0
+}

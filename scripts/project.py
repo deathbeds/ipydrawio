@@ -17,15 +17,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 import json
 import os
 import platform
+import pprint
 import re
 import shutil
 import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
+
+print_ = pprint.pprint
+console = None
+
+try:
+    import rich.console
+    import rich.markdown
+
+    console = rich.console.Console()
+    print_ = console.print
+
+except ImportError:
+    pass
+
+LITE_PREFIX = None
+
+try:
+    __import__("jupyterlite.manager")
+    LITE_PREFIX = "demo_"
+except (ImportError, AttributeError) as err:
+    print_(err)
+    pass
+
 
 SKIPS = ["checkpoint", "pytest_cache"]
 
@@ -298,6 +323,13 @@ SERVER_EXT = {
     if sorted(v.parent.glob("src/*/serverextension.py"))
 }
 
+# demo
+DEMO = ROOT / "demo"
+DEMO_LITE_JSON = DEMO / "jupyter-lite.json"
+DEMO_APPS = ["lab"]
+DEMO_BUILD = DEMO / "_output"
+DEMO_HASHES = DEMO_BUILD / "SHA256SUMS"
+DEMO_ARCHIVE = DEMO_BUILD / "demo-jupyterlite.tgz"
 
 # docs
 SPHINX_ARGS = json.loads(os.environ.get("SPHINX_ARGS", "[]"))
@@ -372,6 +404,7 @@ ALL_JSON = [
     *PACKAGES.glob("*/schema/*.json"),
     *ATEST.glob("fixtures/*.json"),
     *BINDER.glob("*.json"),
+    *[p for p in DEMO.rglob("*.json") if "/_output/" not in str(p)],
 ]
 ALL_DIO = [*DOCS_DIO, *IPJT_TMPL_DIO, *ATEST_DIO]
 ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md"), *DOCS_MD]
@@ -696,6 +729,60 @@ def pip_check():
         if line.strip() and not re.findall(PIP_CHECK_IGNORE, line)
     ]
     return not len(lines)
+
+
+# utilities
+def _echo_ok(msg):
+    def _echo():
+        print(msg, flush=True)
+        return True
+
+    return _echo
+
+
+def _ok(task, ok):
+    task.setdefault("targets", []).append(ok)
+    task["actions"] = [
+        lambda: [ok.exists() and ok.unlink(), True][-1],
+        *task["actions"],
+        lambda: [ok.parent.mkdir(exist_ok=True), ok.write_text("ok"), True][-1],
+    ]
+    return task
+
+
+def _show(*args, **kwargs):
+    import rich.markdown
+
+    for arg in args:
+        print_(arg()) if callable(arg) else print_(arg)
+    for kw, kwarg in kwargs.items():
+        print_(rich.markdown.Markdown(f"# {kw}") if console else kw)
+        print_(kwarg()) if callable(kwarg) else print_(kwarg)
+
+
+def _copy_one(src, dest):
+    if not src.exists():
+        return False
+    if not dest.parent.exists():
+        dest.parent.mkdir(parents=True)
+    if dest.exists():
+        if dest.is_dir():
+            shutil.rmtree(dest)
+        else:
+            dest.unlink()
+    if src.is_dir():
+        shutil.copytree(src, dest)
+    else:
+        shutil.copy2(src, dest)
+
+
+def _build_lite():
+    lite = ["jupyter", "lite"]
+    args = ["--debug", "--apps", "lab", "--files", "."]
+    for act in ["build", "check", "archive"]:
+        act_args = list(map(str, [*lite, act, *args]))
+        if subprocess.call(act_args, cwd=DEMO) != 0:
+            return False
 
 
 # Late environment hacks

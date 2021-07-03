@@ -1,0 +1,5 @@
+*.dio
+*.dio.svg
+*doit.db
+_output
+files/
