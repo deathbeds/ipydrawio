@@ -43,11 +43,17 @@ except ImportError:
     pass
 
 LITE_PREFIX = None
+SOURCE_DATE_EPOCH = None
 
 try:
     __import__("jupyterlite.manager")
     LITE_PREFIX = "demo_"
-except (ImportError, AttributeError) as err:
+    SOURCE_DATE_EPOCH = (
+        subprocess.check_output(["git", "log", "-1", "--format=%ct"])
+        .decode("utf-8")
+        .strip()
+    )
+except (ImportError, AttributeError, subprocess.CalledProcessError) as err:
     print_(err)
     pass
 
@@ -778,11 +784,20 @@ def _copy_one(src, dest):
 
 def _build_lite():
     lite = ["jupyter", "lite"]
-    args = ["--debug", "--apps", "lab", "--files", "."]
+    args = [
+        "--debug",
+        "--apps",
+        "lab",
+        "--files",
+        ".",
+        "--source-date-epoch",
+        SOURCE_DATE_EPOCH,
+    ]
     for act in ["build", "check", "archive"]:
         act_args = list(map(str, [*lite, act, *args]))
-        if subprocess.call(act_args, cwd=DEMO) != 0:
-            return False
+        if subprocess.call(act_args, cwd=DEMO) == 0:
+            continue
+        return False
 
 
 # Late environment hacks

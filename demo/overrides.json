@@ -1,0 +1,55 @@
+{
+  "@jupyterlab/apputils-extension:palette": {
+    "modal": false
+  },
+  "@jupyterlab/extensionmanager-extension:plugin": {
+    "enabled": false
+  },
+  "jupyterlab-tour:user-tours": {
+    "tours": [
+      {
+        "id": "ipydrawlite",
+        "label": "IPyDrawLite",
+        "options": {
+          "styles": {
+            "options": {
+              "arrowColor": "#7b8aff",
+              "beaconSize": 48,
+              "primaryColor": "#7b8aff"
+            }
+          }
+        },
+        "steps": [
+          {
+            "content": "This is running in JupyterLite",
+            "target": "#jp-MainLogo"
+          },
+          {
+            "content": "It can open multi-page drawio XML files...",
+            "target": ".jp-DirListing-item svg[data-icon='drawio:drawio']"
+          },
+          {
+            "content": "... as well as editable SVG and PNG files",
+            "target": ".jp-DirListing-item svg[data-icon='drawio:svg']"
+          },
+          {
+            "content": "You can create new diagrams from the launcher...",
+            "target": ".jp-Launcher-sectionHeader svg[data-icon='drawio:drawio']"
+          },
+          {
+            "content": "... start with a blank canvas XML file with your default diagram theme...",
+            "target": ".jp-LauncherCard[title='Create a blank .dio file']"
+          },
+          {
+            "content": "...or one of many templates, formats, and themes",
+            "target": ".jp-LauncherCard[title='Create a diagram with customized formats, templates, and UI']"
+          },
+          {
+            "content": "The diagram theme is configurable from the Settings menu",
+            "target": ".lm-MenuBar-item:nth-last-child(2)"
+          }
+        ]
+      }
+    ]
+  }
+}
