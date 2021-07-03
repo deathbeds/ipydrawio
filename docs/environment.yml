@@ -29,6 +29,8 @@ dependencies:
   - sphinx-jsonschema
   # TODO: resolve upstream
   - sqlalchemy <1.4
+  - pip:
+      - jupyterlite ==0.1.0a2
 
   ### ipydrawio-docs-deps ###
 
@@ -71,7 +73,5 @@ dependencies:
   - robotframework-seleniumlibrary
   # reporting
   - codecov
-  - pip:
-      - jupyterlite ==0.1.0a2
 
   ### ipydrawio-dev-deps ###

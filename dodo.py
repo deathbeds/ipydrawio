@@ -271,22 +271,36 @@ def task_lint():
         ),
         P.OK_PYFLAKES,
     )
+
+    pretty_tasks = []
+    for path in sorted(p.relative_to(P.ROOT) for p in P.ALL_PRETTIER):
+        name = f"prettier:{path}"
+        pretty_tasks += [f"lint:{name}"]
+        yield dict(
+            name=name,
+            file_dep=[P.YARN_INTEGRITY, path],
+            actions=[
+                [
+                    "jlpm",
+                    "--silent",
+                    "prettier",
+                    "--list-different",
+                    "--write",
+                    path,
+                ]
+            ],
+        )
+
     yield P._ok(
         dict(
             name="prettier",
             file_dep=[P.YARN_INTEGRITY, *P.ALL_PRETTIER],
-            actions=[
-                [
-                    "jlpm",
-                    "prettier",
-                    "--list-different",
-                    "--write",
-                    *sorted(p.relative_to(P.ROOT) for p in P.ALL_PRETTIER),
-                ]
-            ],
+            task_dep=pretty_tasks,
+            actions=[["echo", "ok"]],
         ),
         P.OK_PRETTIER,
     )
+
     yield P._ok(
         dict(
             name="eslint",
