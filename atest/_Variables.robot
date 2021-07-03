@@ -49,7 +49,9 @@ ${XP LAUNCH TAB}    ${JLAB XP DOCK TAB}//*[contains(text(), 'Launcher')]
 ${CSS LAUNCHER}    css:.jp-Launcher-body
 ${CSS LAUNCH DIO}    css:.jp-LauncherCard[title='Create a blank .dio file'] svg
 ${CSS LAUNCH CUSTOM}    css:.jp-LauncherCard[title='Create a diagram with customized formats, templates, and UI'] svg
-${CSS LAUNCH IPYNB}    css:.jp-LauncherCard[data-category='Notebook'][title='Python 3 (ipykernel)'] .jp-LauncherCard-icon
+# ipykernel 5 is "Python 3". ipykernel 6 is "Python 3 (ipykernel)"... but only works on python 3.7+
+# TODO: consider capturing this information as a tag
+${CSS LAUNCH IPYNB}    css:.jp-LauncherCard[data-category='Notebook'][title^='Python 3'] .jp-LauncherCard-icon
 ${CSS DIO READY}    css:.jp-Diagram-ready
 ${CSS DIO IFRAME}    ${CSS DIO READY} iframe
 # drawio
