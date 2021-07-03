@@ -667,6 +667,8 @@ def task_demo():
 
     demo_dest = []
     for path in P.ALL_DIO:
+        if "test" in str(path).lower():
+            continue
         dest = P.DEMO / path.name
         demo_dest += [dest]
         yield dict(
