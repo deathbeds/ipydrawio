@@ -8,8 +8,8 @@
   "jupyterlab-tour:user-tours": {
     "tours": [
       {
-        "id": "ipydrawlite",
-        "label": "IPyDrawLite",
+        "id": "ipydrawiolite",
+        "label": "IPyDrawioLite",
         "options": {
           "styles": {
             "options": {

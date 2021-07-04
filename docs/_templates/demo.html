@@ -1,0 +1,20 @@
+<blockquote class="demo-sidebar">
+  <a
+    href="{{ pathto('demo/index') }}"
+    class="btn btn-primary"
+    target="_blank"
+    data-toggle="tooltip"
+    data-placement="bottom"
+    title="Try IPyDrawio in your browser. Right now."
+  >
+    <i class="fas fa-lightbulb"></i>
+    Try <strong>IPyDrawio</strong> Now
+  </a>
+  <br/>
+  <em>Powered by <a href="https://jupyterlite.rtfd.io" target="_blank">JupyterLite</a></em>
+  <script>
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
+</blockquote>

@@ -50,6 +50,8 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.autodoc",
+    # for routing
+    "sphinxext.rediraffe",
     "sphinx-jsonschema",
     "autodoc_traits",
 ]
@@ -58,11 +60,7 @@ autosectionlabel_prefix_document = True
 myst_heading_anchors = 3
 suppress_warnings = ["autosectionlabel.*"]
 
-# rediraffe_redirects = {
-#     "try/index": "_static/index",
-#     "try/lab/index": "_static/lab/index",
-#     "try/classic/index": "_static/classic/tree/index",
-# }
+rediraffe_redirects = {"demo/index": "_static/lab/index"}
 
 # files
 templates_path = ["_templates"]
@@ -90,7 +88,15 @@ html_logo = "_static/logo.svg"
 html_theme_options = {
     "github_url": APP_DATA["repository"]["url"],
     "use_edit_page_button": True,
-    "navbar_start": ["navbar-logo.html", "launch.html"],
+    # "navbar_start": ["navbar-logo.html", "launch.html"],
+}
+html_sidebars = {
+    "**": [
+        "demo.html",
+        "search-field.html",
+        "sidebar-nav-bs.html",
+        "sidebar-ethical-ads.html",
+    ]
 }
 
 html_context = {

@@ -1,8 +1,26 @@
 # IPyDrawio
 
-[![What is IPyDrawio?][poster]][poster]
+> Interactive diagram documents and [widgets] in [JupyterLab], powered by
+> [drawio].
 
-[poster]: ./Poster.dio.svg
+[drawio]: https://github.com/jgraph/drawio
+[jupyterlab]: https://github.com/jupyterlab/jupyterlab
+[widgets]: https://github.com/jupyter-widgets/ipywidgets
+
+## Try it Now
+
+Visit the [demo] to try IPyDrawio in your browser _right now_.
+
+```{hint}
+You can try parts of IPyDrawio right now in your browser. Some notes:
+
+- [jupyterlite](https://jupyterlite.rtfd.io/) is under heavy development
+  - we will likely be upgrading this site frequently, so **don't** plan on
+    using it for important work
+- widget support will
+```
+
+[demo]: ./demo/index
 
 ## Get Started
 
@@ -10,7 +28,7 @@ Install `ipydrawio` (and optionally `ipydrawio-export`) with `pip`, `mamba`, or
 `conda`:
 
 ```bash
-pip install ipydrawio
+pip install ipydrawio[all]
 # or
 mamba install -c conda-forge ipydrawio
 # or
@@ -19,9 +37,22 @@ conda install -c conda-forge ipydrawio
 
 Start JupyterLab and [start making diagrams](./diagrams/index.md)!
 
+## More Screenshots and Examples
+
+> these are editable SVG files made with IPyDrawio, and can be found in the
+> [demo].
+
+### What can you draw with IPyDrawio
+
 [![What can you draw with IPyDrawio?][what-can-you-draw]][what-can-you-draw]
 
 [what-can-you-draw]: ./_static/what-can-you-draw.dio.svg
+
+### What is IPyDrawio?
+
+[![What is IPyDrawio?][poster]][poster]
+
+[poster]: ./Poster.dio.svg
 
 ## Learn More
 

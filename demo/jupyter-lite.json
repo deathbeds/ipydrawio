@@ -1,5 +1,6 @@
 {
   "jupyter-config-data": {
+    "appName": "IPyDrawioLite",
     "disabledExtensions": [
       "@deathbeds/ipydrawio-pdf",
       "@jupyterlab-classic/lab-extension",
