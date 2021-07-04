@@ -197,3 +197,11 @@ div.cell div.cell_input {
 hr {
   clear: both;
 }
+
+.tooltip-inner {
+  background-color: var(--ipd-brand-color0);
+}
+
+.tooltip .arrow:before {
+  border-color: var(--ipd-brand-color0);
+}
