@@ -24,7 +24,7 @@ from ._version import __version__
 try:
     # the clean command isn't _critical_
     from .clean import MX_CLEAN_ATTRS, clean_drawio_file
-except ImportError:
+except ImportError:  # pragma: no cover
     clean_drawio_file = None
 
 
