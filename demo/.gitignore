@@ -1,5 +1,6 @@
+_output
 *.dio
 *.dio.svg
+*.ipynb
 *doit.db
-_output
 files/

@@ -429,6 +429,9 @@ ALL_HEADERS = _clean(
     ALL_YML,
     ALL_ROBOT,
 )
+ALL_DEMO_FILES = [d for d in ALL_DIO if "/test/" not in str(d)] + [
+    nb for nb in EXAMPLE_IPYNB if nb.name.endswith(".dio.ipynb")
+]
 ESLINTRC = PACKAGES / ".eslintrc.js"
 
 RFLINT_OPTS = sum(
@@ -783,15 +786,10 @@ def _copy_one(src, dest):
 
 def _build_lite():
     lite = ["jupyter", "lite"]
-    args = [
-        "--debug",
-        "--apps",
-        "lab",
-        "--files",
-        ".",
-        "--source-date-epoch",
-        SOURCE_DATE_EPOCH,
-    ]
+    args = ["--debug", "--apps", "lab", "--source-date-epoch", SOURCE_DATE_EPOCH, "--files", ".", "--ignore_files", '["lab/"]']
+
+
+
     for act in ["build", "check", "archive"]:
         act_args = list(map(str, [*lite, act, *args]))
         if subprocess.call(act_args, cwd=DEMO) == 0:
