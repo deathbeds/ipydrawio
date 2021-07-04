@@ -1,6 +1,5 @@
 {
   "jupyter-config-data": {
-    "faviconUrl": "../favicon.ico",
     "appName": "IPyDrawioLite",
     "disabledExtensions": [
       "@deathbeds/ipydrawio-pdf",
@@ -9,7 +8,8 @@
       "@krassowski/jupyterlab-lsp",
       "jupyterlab-server-proxy",
       "nbdime-jupyterlab"
-    ]
+    ],
+    "faviconUrl": "../favicon.ico"
   },
   "jupyter-lite-schema-version": 0
 }

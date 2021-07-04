@@ -9,18 +9,30 @@
 
 ## Try it Now
 
-Visit the [demo] to try IPyDrawio in your browser _right now_.
-
-```{hint}
-You can try parts of IPyDrawio right now in your browser. Some notes:
-
-- [jupyterlite](https://jupyterlite.rtfd.io/) is under heavy development
-  - we will likely be upgrading this site frequently, so **don't** plan on
-    using it for important work
-- widget support will
+```{warning}
+<details>
+  <summary>The demo has some <strong>pointy edges</strong>...</summary>
+  <ul>
+    <li>
+      <em>Diagram Documents</em> and <em>Rich Display</em> work properly, <em>Widgets</em> are <em>close</em>, but can't be properly installed, yet
+    </li>
+    <li>
+      <code>jupyterlite</code> is <em>alpha</em> software, and evolving quickly
+    </li>
+    <li>
+      <strong>Don't</strong> use the demo site for important work
+    </li>
+  </ul>
+</details>
 ```
 
+Click the _Try IPyDrawio Now_ button to launch a new browser tab running
+IPyDrawio. It contains all of the example _Diagrams_ from this documentation
+site.
+
 [demo]: ./demo/index
+
+---
 
 ## Get Started
 
@@ -37,6 +49,14 @@ conda install -c conda-forge ipydrawio
 
 Start JupyterLab and [start making diagrams](./diagrams/index.md)!
 
+---
+
+## Features
+
+[![What is IPyDrawio?][poster]][poster]
+
+[poster]: ./Poster.dio.svg
+
 ## More Screenshots and Examples
 
 > these are editable SVG files made with IPyDrawio, and can be found in the
@@ -48,11 +68,7 @@ Start JupyterLab and [start making diagrams](./diagrams/index.md)!
 
 [what-can-you-draw]: ./_static/what-can-you-draw.dio.svg
 
-### What is IPyDrawio?
-
-[![What is IPyDrawio?][poster]][poster]
-
-[poster]: ./Poster.dio.svg
+---
 
 ## Learn More
 

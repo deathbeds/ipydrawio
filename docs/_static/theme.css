@@ -182,3 +182,18 @@ div.cell div.cell_input {
   opacity: 1;
   transition: all 0.2s;
 }
+
+#try-it-now .warning {
+  float: right;
+  margin-left: 1em;
+  margin-top: 0 !important;
+  width: 50%;
+}
+
+#try-it-now .warning em:empty {
+  display: none;
+}
+
+hr {
+  clear: both;
+}

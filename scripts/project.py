@@ -331,7 +331,6 @@ SERVER_EXT = {
 
 # demo
 DEMO = ROOT / "demo"
-DEMO_LITE_JSON = DEMO / "jupyter-lite.json"
 DEMO_APPS = ["lab"]
 DEMO_BUILD = DEMO / "_output"
 DEMO_HASHES = DEMO_BUILD / "SHA256SUMS"
