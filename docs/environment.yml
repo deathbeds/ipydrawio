@@ -27,6 +27,8 @@ dependencies:
   - pytest-check-links
   - sphinx
   - sphinx-jsonschema
+  # for lite
+  - jupyterlab-tour
   # TODO: resolve upstream
   - sqlalchemy <1.4
   - pip:
