@@ -16,7 +16,7 @@
 Documentation     Does custom create work?
 Resource          _Keywords.robot
 Library           OperatingSystem
-Force Tags        component:document    component:custom
+Force Tags        component:document    component:custom    app:lab
 Suite Setup       Set Screenshot Directory    ${OUTPUT DIR}${/}screenshots${/}custom
 
 *** Test Cases ***

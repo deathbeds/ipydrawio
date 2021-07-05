@@ -16,7 +16,7 @@
 Documentation     Are Diagram settings usable?
 Resource          _Keywords.robot
 Library           OperatingSystem
-Force Tags        component:settings
+Force Tags        component:settings    app:lab
 
 *** Test Cases ***
 Min

@@ -58,6 +58,8 @@ def run_tests(attempt=0, extra_args=None):
         f"OS:{P.PLATFORM}",
         "--variable",
         f"PY:{P.PY_MAJOR}",
+        "--variable",
+        f"DEMO:{P.DEMO}",
         "--randomize",
         "all",
         "--xunit",

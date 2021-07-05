@@ -92,7 +92,10 @@ Tear Down Everything
     Terminate All Processes    kill=${True}
 
 Wait For Splash
-    Go To    ${URL}lab?reset&token=${TOKEN}
+    [Arguments]    ${lab url}=${EMPTY}
+    Run Keyword If    """${lab url}"""
+    ...    Go To    ${lab url}
+    ...    ELSE    Go To    ${URL}lab?reset&token=${TOKEN}
     Set Window Size    1920    1080
     Wait Until Page Contains Element    ${SPLASH}    timeout=30s
     Wait Until Page Does Not Contain Element    ${SPLASH}    timeout=10s

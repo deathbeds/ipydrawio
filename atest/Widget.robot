@@ -16,7 +16,7 @@
 Documentation     Does the Jupyter Widget work?
 Resource          _Keywords.robot
 Resource          _Notebook.robot
-Force Tags        component:widget
+Force Tags        component:widget    app:lab
 Library           OperatingSystem
 
 *** Test Cases ***

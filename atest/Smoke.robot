@@ -15,6 +15,7 @@
 *** Settings ***
 Documentation     smoke tests
 Resource          _Keywords.robot
+Force Tags        app:lab
 
 *** Test Cases ***
 Smoke

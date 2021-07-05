@@ -17,7 +17,7 @@ Documentation     Are export formats sane?
 Resource          _Keywords.robot
 Library           OperatingSystem
 Library           ./pdf.py
-Force Tags        component:document
+Force Tags        component:document    app:lab
 
 *** Variables ***
 &{EXT EDIT WITH} =
