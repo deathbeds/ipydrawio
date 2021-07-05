@@ -786,9 +786,17 @@ def _copy_one(src, dest):
 
 def _build_lite():
     lite = ["jupyter", "lite"]
-    args = ["--debug", "--apps", "lab", "--source-date-epoch", SOURCE_DATE_EPOCH, "--files", ".", "--ignore_files", '["lab/"]']
-
-
+    args = [
+        "--debug",
+        "--apps",
+        "lab",
+        "--source-date-epoch",
+        SOURCE_DATE_EPOCH,
+        "--files",
+        ".",
+        "--ignore-files",
+        "(lab/|_output|.gitignore|doit.db|.json|test|Test)",
+    ]
 
     for act in ["build", "check", "archive"]:
         act_args = list(map(str, [*lite, act, *args]))
