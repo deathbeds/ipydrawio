@@ -790,7 +790,6 @@ def task_check():
                     "--check-anchors",
                     "--check-links-ignore",
                     "^https?://",
-                    "--check-links-ignore",
                     *[p for p in file_dep if p.name not in ["schema.html"]],
                 ]
             ],
