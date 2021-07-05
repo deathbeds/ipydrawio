@@ -67,6 +67,12 @@ def run_tests(attempt=0, extra_args=None):
         ".",
     ]
 
+    try:
+        __import__("jupyterlite")
+    except Exception as err:
+        print("skipping lite tests because", err)
+        args += ["--exclude", "app:lite"]
+
     if out_dir.exists():
         print(">>> trying to clean out {}".format(out_dir), flush=True)
         try:
