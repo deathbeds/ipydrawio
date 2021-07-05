@@ -372,3 +372,21 @@ jobs:
         shell: bash -l {0}
         run: |
           doit $DOIT_N_TEST test
+
+      - name: report (atest)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name:
+            ipydrawio ${{ github.run_number }} atest ${{ matrix.os }}${{
+            matrix.python-version }}
+          path: ./build/atest
+
+      - name: report (atest)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name:
+            ipydrawio ${{ github.run_number }} docs ${{ matrix.os }}${{
+            matrix.python-version }}
+          path: ./build/docs
