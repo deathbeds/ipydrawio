@@ -14,10 +14,9 @@
 
 *** Settings ***
 Documentation     smoke tests
-Resource          _Keywords.robot
-Force Tags        app:lab
+Resource          ../_Keywords.robot
 
 *** Test Cases ***
 Smoke
     [Documentation]    Does the app even load?
-    Capture Page Screenshot    smoke.png
+    Capture Page Screenshot    00-smoke.png

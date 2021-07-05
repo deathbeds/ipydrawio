@@ -14,10 +14,10 @@
 
 *** Settings ***
 Documentation     Are export formats sane?
-Resource          _Keywords.robot
+Resource          ../_Keywords.robot
 Library           OperatingSystem
-Library           ./pdf.py
-Force Tags        component:document    app:lab
+Library           ../pdf.py
+Force Tags        component:document
 
 *** Variables ***
 &{EXT EDIT WITH} =

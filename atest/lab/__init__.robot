@@ -13,12 +13,11 @@
 # limitations under the License.
 
 *** Settings ***
-Documentation     Lite
-Library           OperatingSystem
-Force Tags        app:lite
-Resource          ./_Keywords.robot
+Documentation     Lab
 Resource          ../_Keywords.robot
-Suite Setup       Start Lite Suite
-Suite Teardown    Clean Up Lite Suite
-Test Setup        Start Lite Test
-Test Teardown     Clean Up Lite Test
+Resource          ../_Variables.robot
+Suite Setup       Setup Server and Browser
+Suite Teardown    Tear Down Everything
+Test Setup        Maybe Reset Application State
+Test Teardown     Maybe Reset Application State
+Force Tags        os:${OS.lower()}    py:${PY}    app:lab

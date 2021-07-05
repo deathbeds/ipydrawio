@@ -14,9 +14,9 @@
 
 *** Settings ***
 Documentation     Does the media type (mimerenderer) work?
-Resource          _Keywords.robot
-Resource          _Notebook.robot
-Force Tags        component:media    app:lab
+Resource          ../_Keywords.robot
+Resource          ../_Notebook.robot
+Force Tags        component:media
 Library           OperatingSystem
 
 *** Test Cases ***
