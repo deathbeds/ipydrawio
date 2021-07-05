@@ -789,7 +789,7 @@ def task_check():
                     "pytest-check-links",
                     "--check-anchors",
                     "--check-links-ignore",
-                    "^https?://",
+                    "(^https?://|tgz$)",
                     *[p for p in file_dep if p.name != "schema.html"],
                 ]
             ],

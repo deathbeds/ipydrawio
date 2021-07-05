@@ -367,3 +367,8 @@ jobs:
         shell: bash -l {0}
         run: |
           doit $DOIT_N_TEST check
+
+      - name: more tests
+        shell: bash -l {0}
+        run: |
+          doit $DOIT_N_TEST test
