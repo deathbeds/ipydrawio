@@ -431,8 +431,12 @@ ALL_HEADERS = _clean(
     ALL_YML,
     ALL_ROBOT,
 )
-ALL_DEMO_FILES = [
-    d for d in ALL_DIO if "test" not in str(d).lower() and d.name not in ["A.dio"]
+ALL_DEMO_CONTENTS = [
+    d
+    for d in ALL_DIO
+    if "test" not in str(d).lower()
+    and ".doit" not in d.name
+    and d.name not in ["A.dio"]
 ]
 
 ESLINTRC = PACKAGES / ".eslintrc.js"

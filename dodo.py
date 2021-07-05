@@ -675,7 +675,7 @@ def task_demo():
         return
 
     demo_dest = []
-    for path in P.ALL_DEMO_FILES:
+    for path in P.ALL_DEMO_CONTENTS:
         dest = P.DEMO / path.name.replace(" ", "_")
         demo_dest += [dest]
         yield dict(
@@ -688,7 +688,10 @@ def task_demo():
     lite_src_files = [
         p
         for p in P.DEMO.rglob("*")
-        if not p.is_dir() and "/_output/" not in str(p) and not p.name.endswith(".tgz")
+        if not p.is_dir()
+        and "/_output/" not in str(p)
+        and not p.name.endswith(".tgz")
+        and ".doit" not in p.name
     ]
 
     yield dict(
