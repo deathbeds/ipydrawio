@@ -867,7 +867,7 @@ def task_test():
     ]
 
     if not P.TESTING_IN_CI:
-        file_dep += [P.OK_ROBOT_DRYRUN, *P.OK_SERVEREXT.values()]
+        file_dep += [P.OK_ROBOT_DRYRUN, P.DEMO_HASHES, *P.OK_SERVEREXT.values()]
 
     yield P._ok(
         dict(

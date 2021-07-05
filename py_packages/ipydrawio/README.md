@@ -19,7 +19,7 @@
 ```bash
 mamba install -c conda-forge ipydrawio  # recommended, or...
 conda install -c conda-forge ipydrawio  # or...
-pip install ipydrawio
+pip install ipydrawio[all]
 ```
 
 ## Features

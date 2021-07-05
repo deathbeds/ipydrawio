@@ -3,7 +3,7 @@
     "apps": ["lab"],
     "files": ["."],
     "ignore_files": [
-      "(lab/|_output|.gitignore|doit.db|.json|test|Test|jupyter_config)"
+      "(lab/|_output|.gitignore|doit.db|.json|test|Test|jupyter_config|log$)"
     ],
     "log_level": "DEBUG"
   }
