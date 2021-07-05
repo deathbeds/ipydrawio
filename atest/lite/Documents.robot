@@ -3,6 +3,8 @@ Documentation     Test some diagrams in lite
 Resource          ../_Keywords.robot
 Resource          ./_Keywords.robot
 Library           OperatingSystem
+Force Tags        component:document
+Suite Setup       Set Screenshot Directory    ${OUTPUT DIR}${/}lite${/}documents
 
 *** Test Cases ***
 Test Examples
@@ -21,3 +23,4 @@ Example Should Load
     Double Click Element    css:[title*\="${file}"]
     Unselect Frame
     Wait Until Element is Visible    ${CSS DIO IFRAME}    timeout=20s
+    Capture Page Screenshot    00-${file}-loaded.png

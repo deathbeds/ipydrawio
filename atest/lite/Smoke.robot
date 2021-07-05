@@ -13,11 +13,12 @@
 # limitations under the License.
 
 *** Settings ***
-Documentation     Check the vitals of a lite site
+Documentation     Check the vitals of a Lite site
 Resource          ../_Keywords.robot
 Resource          ./_Keywords.robot
+Suite Setup       Set Screenshot Directory    ${OUTPUT DIR}${/}lite${/}smoke
 
 *** Test Cases ***
-Does it load?
+Does Lite load?
     [Documentation]    Can we load the JupyterLite site?
     Capture Page Screenshot    00-lite-smoke.png

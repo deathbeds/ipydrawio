@@ -436,6 +436,7 @@ ALL_DEMO_CONTENTS = [
     for d in ALL_DIO
     if "test" not in str(d).lower()
     and ".doit" not in d.name
+    and " " not in d.name
     and d.name not in ["A.dio"]
 ]
 
