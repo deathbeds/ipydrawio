@@ -23,7 +23,7 @@ Suite Setup       Set Screenshot Directory    ${OUTPUT DIR}${/}lite${/}documents
 *** Test Cases ***
 Test Examples
     [Documentation]    Do all of the examples work?
-    ${examples} =    List Files In Directory    ${DEMO}
+    ${examples} =    List Files In Directory    ${DEMO}    *.dio*
     FOR    ${file}    IN    @{EXAMPLES}
         Try to Close All Tabs
         Run Keyword If    ${file.__contains__('.dio')}    Example Should Load    ${file}
