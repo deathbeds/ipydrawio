@@ -432,6 +432,11 @@ ALL_HEADERS = _clean(
 ALL_DEMO_FILES = [d for d in ALL_DIO if "/test/" not in str(d)] + [
     nb for nb in EXAMPLE_IPYNB if nb.name.endswith(".dio.ipynb")
 ]
+
+ALL_DEMO_FILES = [
+    df for df in ALL_DEMO_FILES if " " not in df.name and df.name not in ["A.dio"]
+]
+
 ESLINTRC = PACKAGES / ".eslintrc.js"
 
 RFLINT_OPTS = sum(

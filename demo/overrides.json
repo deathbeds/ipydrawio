@@ -25,16 +25,8 @@
             "target": "#jp-MainLogo"
           },
           {
-            "content": "It can open multi-page drawio XML files...",
-            "target": ".jp-DirListing-item svg[data-icon='drawio:drawio']"
-          },
-          {
-            "content": "... as well as editable SVG and PNG files",
-            "target": ".jp-DirListing-item svg[data-icon='drawio:svg']"
-          },
-          {
-            "content": "... or even Jupyter Notebooks",
-            "target": ".jp-DirListing-item svg[data-icon='ui-components:notebook']"
+            "content": "It can open multi-page drawio XML files, as well as editable SVG and PNG files,  or even Jupyter Notebooks",
+            "target": ".jp-DirListing-item svg[data-icon*='drawio']"
           },
           {
             "content": "You can create new diagrams from the launcher...",
