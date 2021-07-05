@@ -58,7 +58,7 @@ except (ImportError, AttributeError, subprocess.CalledProcessError) as err:
     pass
 
 
-SKIPS = ["checkpoint", "pytest_cache"]
+SKIPS = ["checkpoint", "pytest_cache", "patched-environment"]
 
 
 def _clean(*paths_or_globs):
