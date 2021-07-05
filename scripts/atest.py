@@ -47,6 +47,12 @@ def run_tests(attempt=0, extra_args=None):
     if "--dryrun" in extra_args:
         runner = ["robot"]
 
+    try:
+        __import__("jupyterlite")
+    except Exception as err:
+        print("skipping lite tests because", err)
+        extra_args += ["--exclude", "app:lite"]
+
     args = [
         *runner,
         *extra_args,
@@ -66,12 +72,6 @@ def run_tests(attempt=0, extra_args=None):
         ".".join(["xunit", "xml"]),
         ".",
     ]
-
-    try:
-        __import__("jupyterlite")
-    except Exception as err:
-        print("skipping lite tests because", err)
-        args += ["--exclude", "app:lite"]
 
     if out_dir.exists():
         print(">>> trying to clean out {}".format(out_dir), flush=True)
