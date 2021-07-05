@@ -398,12 +398,12 @@ ALL_PY = [
     POSTBUILD_PY,
     DOCS_CONF,
 ]
-ALL_YML = [
-    *ROOT.glob("*.yml"),
-    *CI.rglob("*.yml"),
-    *BINDER.glob("*.yml"),
-    *DOCS.rglob("*.yml"),
-]
+ALL_YML = _clean(
+    ROOT.glob("*.yml"),
+    CI.rglob("*.yml"),
+    BINDER.glob("*.yml"),
+    DOCS.rglob("*.yml"),
+)
 ALL_JSON = [
     *ROOT.glob("*.json"),
     *PACKAGES.glob("*/*.json"),
