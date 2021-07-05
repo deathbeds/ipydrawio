@@ -331,6 +331,7 @@ SERVER_EXT = {
 
 # demo
 DEMO = ROOT / "demo"
+DEMO_CONFIG = DEMO / "jupyter_config.json"
 DEMO_APPS = ["lab"]
 DEMO_BUILD = DEMO / "_output"
 DEMO_HASHES = DEMO_BUILD / "SHA256SUMS"
@@ -433,9 +434,7 @@ ALL_DEMO_FILES = [d for d in ALL_DIO if "/test/" not in str(d)] + [
     nb for nb in EXAMPLE_IPYNB if nb.name.endswith(".dio.ipynb")
 ]
 
-ALL_DEMO_FILES = [
-    df for df in ALL_DEMO_FILES if " " not in df.name and df.name not in ["A.dio"]
-]
+ALL_DEMO_FILES = [df for df in ALL_DEMO_FILES if df.name not in ["A.dio"]]
 
 ESLINTRC = PACKAGES / ".eslintrc.js"
 
@@ -791,17 +790,7 @@ def _copy_one(src, dest):
 
 def _build_lite():
     lite = ["jupyter", "lite"]
-    args = [
-        "--debug",
-        "--apps",
-        "lab",
-        "--source-date-epoch",
-        SOURCE_DATE_EPOCH,
-        "--files",
-        ".",
-        "--ignore-files",
-        "(lab/|_output|.gitignore|doit.db|.json|test|Test)",
-    ]
+    args = ["--source-date-epoch", SOURCE_DATE_EPOCH]
 
     for act in ["build", "check", "archive"]:
         act_args = list(map(str, [*lite, act, *args]))

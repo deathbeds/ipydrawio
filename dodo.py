@@ -667,10 +667,10 @@ def task_demo():
 
     demo_dest = []
     for path in P.ALL_DEMO_FILES:
-        dest = P.DEMO / path.name
+        dest = P.DEMO / path.name.replace(" ", "_")
         demo_dest += [dest]
         yield dict(
-            name=f"demo:{path.name}",
+            name=f"stage:{path.name}",
             file_dep=[path],
             targets=[dest],
             actions=[(P._copy_one, [path, dest])],
@@ -678,7 +678,7 @@ def task_demo():
 
     lite_src_files = [
         p
-        for p in P.DEMO.glob("*")
+        for p in P.DEMO.rglob("*")
         if not p.is_dir() and "/_output/" not in str(p) and not p.name.endswith(".tgz")
     ]
 

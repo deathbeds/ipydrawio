@@ -1,0 +1,10 @@
+{
+  "LiteBuildConfig": {
+    "apps": ["lab"],
+    "files": ["."],
+    "ignore_files": [
+      "(lab/|_output|.gitignore|doit.db|.json|test|Test|jupyter_config)"
+    ],
+    "log_level": "DEBUG"
+  }
+}
