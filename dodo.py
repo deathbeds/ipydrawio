@@ -289,11 +289,10 @@ def task_lint():
             ),
             P.OK_PRETTIER,
         )
-
     else:
         pretty_tasks = []
-        for path in sorted(p.relative_to(P.ROOT) for p in P.ALL_PRETTIER):
-            name = f"prettier:{path}"
+        for path in P.ALL_PRETTIER:
+            name = f"prettier:{path.relative_to(P.ROOT)}"
             pretty_tasks += [f"lint:{name}"]
             yield dict(
                 name=name,

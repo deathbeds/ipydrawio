@@ -90,6 +90,7 @@ ENC = dict(encoding="utf-8")
 BUILDING_IN_CI = bool(json.loads(os.environ.get("BUILDING_IN_CI", "0")))
 TESTING_IN_CI = bool(json.loads(os.environ.get("TESTING_IN_CI", "0")))
 CI_ARTIFACT = os.environ.get("CI_ARTIFACT", "wheel")
+CI = bool(json.loads(os.environ.get("CI", "0")))
 
 # test arg pass-throughs
 ATEST_ARGS = json.loads(os.environ.get("ATEST_ARGS", "[]"))
@@ -150,8 +151,8 @@ DIA_URLS = {
 
 
 # ci
-CI = ROOT / ".github"
-ENV_CI = CI / "environment.yml"
+GH = ROOT / ".github"
+ENV_GH = GH / "environment.yml"
 
 # tools
 PY = ["python"]
@@ -400,7 +401,7 @@ ALL_PY = [
 ]
 ALL_YML = _clean(
     ROOT.glob("*.yml"),
-    CI.rglob("*.yml"),
+    GH.rglob("*.yml"),
     BINDER.glob("*.yml"),
     DOCS.rglob("*.yml"),
 )
@@ -513,7 +514,7 @@ CMD_LAB = ["jupyter", "lab", "--no-browser", "--debug"]
 # conda building
 RECIPE = ROOT / "conda.recipe/meta.yaml"
 CONDA_BLD = BUILD / "conda-bld"
-CONDARC = CI / ".condarc"
+CONDARC = GH / ".condarc"
 # could be mambabuild
 CONDA_BUILDERER = os.environ.get("CONDA_BUILDERER", "build")
 CONDA_BUILD_ARGS = [
@@ -529,7 +530,7 @@ CONDA_PKGS = {
 }
 
 # env inheritance
-ENV_INHERITS = {ENV_BINDER: [ENV_CI, ENV_DOCS], ENV_DOCS: [ENV_CI]}
+ENV_INHERITS = {ENV_BINDER: [ENV_GH, ENV_DOCS], ENV_DOCS: [ENV_GH]}
 
 
 def get_atest_stem(attempt=1, extra_args=None, browser=None):
