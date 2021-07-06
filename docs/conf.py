@@ -135,6 +135,7 @@ def clean_schema(app: Sphinx, error):
 def before_rtd_build(app: Sphinx, error):
     """performs the full frontend build, and ensures the typedoc"""
     for task in RTD_TASKS:
+        print(f"running doit {task}", flush=True)
         subprocess.check_call(["doit", task], cwd=str(ROOT))
 
 
