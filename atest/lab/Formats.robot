@@ -14,9 +14,9 @@
 
 *** Settings ***
 Documentation     Are export formats sane?
-Resource          _Keywords.robot
+Resource          ../_Keywords.robot
 Library           OperatingSystem
-Library           ./pdf.py
+Library           ../pdf.py
 Force Tags        component:document
 
 *** Variables ***

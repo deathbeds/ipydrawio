@@ -26,6 +26,7 @@
   --pst-color-inline-code: 0, 22, 192;
   --pst-color-preformatted-background: 240, 248, 255;
   --pst-color-headerlink: var(--pst-color-active-navigation);
+  --ipd-brand-color0: rgb(var(--pst-color-active-navigation));
 }
 
 code {
@@ -162,4 +163,45 @@ div.cell div.cell_input {
   max-width: unset;
   text-align: left;
   padding: calc(0.25 * var(--ipd-card-padding)) 0;
+}
+
+.demo-sidebar {
+  text-align: center;
+}
+
+.demo-sidebar .btn-primary {
+  background-color: var(--ipd-brand-color0);
+  font-size: 150%;
+  opacity: 0.5;
+  transition: all 0.2s;
+}
+
+.demo-sidebar .btn-primary:hover,
+.demo-sidebar .btn-primary:focus,
+.demo-sidebar .btn-primary:active {
+  opacity: 1;
+  transition: all 0.2s;
+}
+
+#try-it-now .warning {
+  float: right;
+  margin-left: 1em;
+  margin-top: 0 !important;
+  width: 50%;
+}
+
+#try-it-now .warning em:empty {
+  display: none;
+}
+
+hr {
+  clear: both;
+}
+
+.tooltip-inner {
+  background-color: var(--ipd-brand-color0);
+}
+
+.tooltip .arrow:before {
+  border-color: var(--ipd-brand-color0);
 }

@@ -1,0 +1,26 @@
+<div class="demo-sidebar">
+  <a
+    href="{{ pathto('demo/index') }}"
+    class="btn btn-primary"
+    target="_blank"
+    data-toggle="tooltip"
+    data-placement="right"
+    title="Try IPyDrawio in your browser. Right now."
+  >
+    <i class="fas fa-lightbulb"></i>
+    Try <strong>IPyDrawio</strong> Now
+  </a>
+  <br/>
+  or <a
+    href="{{ pathto(demo_tarball, True) }}"
+    data-toggle="tooltip"
+    data-placement="bottom"
+    title="Download the app archive"
+  >
+    <i class="fas fa-download"></i>
+    download the demo
+  </a>
+  <hr/>
+  <em>Powered by <a href="https://jupyterlite.rtfd.io" target="_blank">JupyterLite</a></em>
+  <script>$(function() {$('[data-toggle="tooltip"]').tooltip();});</script>
+</div>

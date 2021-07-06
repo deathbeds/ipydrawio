@@ -22,23 +22,35 @@ Library           ./ports.py
 
 *** Keywords ***
 Setup Server and Browser
+    ${home} =    Setup Home
     ${port} =    Get Unused Port
+    ${root} =    Get Server Root
     Set Global Variable    ${PORT}    ${port}
     Set Global Variable    ${URL}    http://localhost:${PORT}${BASE}
+    Setup Real Server    port=${port}    home=${HOME}    root=${root}
+
+Get Server Root
+    ${root} =    Normalize Path    ${OUTPUT DIR}${/}..${/}..${/}..
+    [Return]    ${root}
+
+Setup Home
     ${accel} =    Evaluate    "COMMAND" if "${OS}" == "Darwin" else "CTRL"
     Set Global Variable    ${ACCEL}    ${accel}
     ${token} =    Generate Random String
     Set Global Variable    ${TOKEN}    ${token}
     ${home} =    Set Variable    ${OUTPUT DIR}${/}home
     Set Global Variable    ${HOME}    ${home}
-    ${root} =    Normalize Path    ${OUTPUT DIR}${/}..${/}..${/}..
     Create Directory    ${home}
+    Set Screenshot Directory    ${OUTPUT DIR}${/}screenshots
+    [Return]    ${home}
+
+Setup Real Server
+    [Arguments]    ${port}    ${home}    ${root}
+    Set Global Variable    ${LAB LOG}    ${OUTPUT DIR}${/}lab.log
+    Set Global Variable    ${PREVIOUS LAB LOG LENGTH}    0
     Create Notebok Server Config    ${home}
     Initialize User Settings
     ${cmd} =    Create Lab Launch Command    ${root}
-    Set Screenshot Directory    ${OUTPUT DIR}${/}screenshots
-    Set Global Variable    ${LAB LOG}    ${OUTPUT DIR}${/}lab.log
-    Set Global Variable    ${PREVIOUS LAB LOG LENGTH}    0
     ${server} =    Start Process    ${cmd}    shell=yes    env:HOME=${home}    cwd=${home}    stdout=${LAB LOG}
     ...    stderr=STDOUT
     Set Global Variable    ${SERVER}    ${server}
@@ -86,13 +98,19 @@ Reset Plugin Settings
 
 Tear Down Everything
     Close All Browsers
+    Tear Down Real Server
+
+Tear Down Real Server
     Evaluate    __import__("urllib.request").request.urlopen("${URL}api/shutdown?token=${TOKEN}", data=[])
     Wait For Process    ${SERVER}    timeout=30s
     Terminate All Processes
     Terminate All Processes    kill=${True}
 
 Wait For Splash
-    Go To    ${URL}lab?reset&token=${TOKEN}
+    [Arguments]    ${lab url}=${EMPTY}
+    Run Keyword If    """${lab url}"""
+    ...    Go To    ${lab url}
+    ...    ELSE    Go To    ${URL}lab?reset&token=${TOKEN}
     Set Window Size    1920    1080
     Wait Until Page Contains Element    ${SPLASH}    timeout=30s
     Wait Until Page Does Not Contain Element    ${SPLASH}    timeout=10s

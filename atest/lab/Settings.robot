@@ -14,7 +14,7 @@
 
 *** Settings ***
 Documentation     Are Diagram settings usable?
-Resource          _Keywords.robot
+Resource          ../_Keywords.robot
 Library           OperatingSystem
 Force Tags        component:settings
 

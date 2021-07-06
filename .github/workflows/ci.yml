@@ -27,6 +27,7 @@ env:
   PYTHONIOENCODING: 'utf-8'
   PIP_DISABLE_PIP_VERSION_CHECK: '1'
   CONDARC: .github/.condarc
+  CI: '1'
 
   # our stuff
   ATEST_RETRIES: '3'
@@ -307,7 +308,7 @@ jobs:
       #     taskkill /F /IM python.exe || echo "no python"
       #     taskkill /F /IM node.exe || echo "no node"
 
-      - name: report (atest)
+      - name: upload (atest)
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
@@ -325,6 +326,8 @@ jobs:
       matrix:
         os: ['ubuntu']
         python-version: ['3.9']
+    env:
+      ATEST_ARGS: '["--exclude","NOTapp:lite"]'
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -367,3 +370,26 @@ jobs:
         shell: bash -l {0}
         run: |
           doit $DOIT_N_TEST check
+
+      - name: lite tests
+        shell: bash -l {0}
+        run: |
+          doit $DOIT_N_TEST test
+
+      - name: upload (atest lite)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name:
+            ipydrawio ${{ github.run_number }} atest ${{ matrix.os }}${{
+            matrix.python-version }}
+          path: ./build/atest
+
+      - name: upload (docs)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name:
+            ipydrawio ${{ github.run_number }} docs ${{ matrix.os }}${{
+            matrix.python-version }}
+          path: ./build/docs

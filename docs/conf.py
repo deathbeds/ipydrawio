@@ -50,6 +50,8 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.autodoc",
+    # for routing
+    "sphinxext.rediraffe",
     "sphinx-jsonschema",
     "autodoc_traits",
 ]
@@ -58,16 +60,12 @@ autosectionlabel_prefix_document = True
 myst_heading_anchors = 3
 suppress_warnings = ["autosectionlabel.*"]
 
-# rediraffe_redirects = {
-#     "try/index": "_static/index",
-#     "try/lab/index": "_static/lab/index",
-#     "try/classic/index": "_static/classic/tree/index",
-# }
+rediraffe_redirects = {"demo/index": "_static/lab/index"}
 
 # files
-# templates_path = ["_templates"]
+templates_path = ["_templates"]
 html_favicon = "_static/favicon.ico"
-html_static_path = ["_static"]
+html_static_path = ["_static", "../build/demo"]
 exclude_patterns = [
     ".ipynb_checkpoints",
     "**/.ipynb_checkpoints",
@@ -90,8 +88,15 @@ html_logo = "_static/logo.svg"
 html_theme_options = {
     "github_url": APP_DATA["repository"]["url"],
     "use_edit_page_button": True,
-    # "navbar_start": ["launch.html"],
-    # "navbar_center": ["navbar-logo.html", "navbar-nav.html"],
+    # "navbar_start": ["navbar-logo.html", "launch.html"],
+}
+html_sidebars = {
+    "**": [
+        "demo.html",
+        "search-field.html",
+        "sidebar-nav-bs.html",
+        "sidebar-ethical-ads.html",
+    ]
 }
 
 html_context = {
@@ -99,6 +104,7 @@ html_context = {
     "github_repo": "ipydrawio",
     "github_version": "master",
     "doc_path": "docs",
+    "demo_tarball": f"_static/ipydrawio-lite-{release}.tgz",
 }
 
 
@@ -121,10 +127,19 @@ def clean_schema(app: Sphinx, error):
 
 def before_rtd_build(app: Sphinx, error):
     """performs the full frontend build, and ensures the typedoc"""
-    subprocess.check_call(
-        ["doit", "-n4", "build", "setup:pip:check", "docs:typedoc:mystify"],
-        cwd=str(ROOT),
-    )
+    for task in [
+        "build",
+        "setup:pip:check",
+        "docs:typedoc:mystify",
+        "demo",
+    ]:
+        subprocess.check_call(
+            [
+                "doit",
+                task,
+            ],
+            cwd=str(ROOT),
+        )
 
 
 def setup(app):

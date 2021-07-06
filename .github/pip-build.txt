@@ -1,3 +1,4 @@
+# basicall ipydrawio[all,test] and ipydrawio-export... plus robot
 black
 doit
 flake8

@@ -27,7 +27,6 @@ dependencies:
   - jupyter-lsp-python-lsp-server
   - jupyterlab-classic
   - jupyterlab-lsp
-  - jupyterlab-tour
   - matplotlib-base
   - nbgitpuller
   - networkx
@@ -51,8 +50,13 @@ dependencies:
   - pytest-check-links
   - sphinx
   - sphinx-jsonschema
+  - sphinxext-rediraffe
+  # for lite
+  - jupyterlab-tour
   # TODO: resolve upstream
   - sqlalchemy <1.4
+  - pip:
+      - jupyterlite ==0.1.0a3
 
   ### ipydrawio-docs-deps ###
 

@@ -47,6 +47,12 @@ def run_tests(attempt=0, extra_args=None):
     if "--dryrun" in extra_args:
         runner = ["robot"]
 
+    try:
+        __import__("jupyterlite")
+    except Exception as err:
+        print("skipping lite tests because", err)
+        extra_args += ["--exclude", "app:lite"]
+
     args = [
         *runner,
         *extra_args,
@@ -58,6 +64,8 @@ def run_tests(attempt=0, extra_args=None):
         f"OS:{P.PLATFORM}",
         "--variable",
         f"PY:{P.PY_MAJOR}",
+        "--variable",
+        f"DEMO:{P.DEMO}",
         "--randomize",
         "all",
         "--xunit",

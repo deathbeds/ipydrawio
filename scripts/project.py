@@ -17,9 +17,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 import json
 import os
 import platform
+import pprint
 import re
 import shutil
 import subprocess
@@ -27,7 +29,36 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-SKIPS = ["checkpoint", "pytest_cache"]
+print_ = pprint.pprint
+console = None
+
+try:
+    import rich.console
+    import rich.markdown
+
+    console = rich.console.Console()
+    print_ = console.print
+
+except ImportError:
+    pass
+
+LITE_PREFIX = None
+SOURCE_DATE_EPOCH = None
+
+try:
+    __import__("jupyterlite.manager")
+    LITE_PREFIX = "demo_"
+    SOURCE_DATE_EPOCH = (
+        subprocess.check_output(["git", "log", "-1", "--format=%ct"])
+        .decode("utf-8")
+        .strip()
+    )
+except (ImportError, AttributeError, subprocess.CalledProcessError) as err:
+    print_(err)
+    pass
+
+
+SKIPS = ["checkpoint", "pytest_cache", "patched-environment"]
 
 
 def _clean(*paths_or_globs):
@@ -59,6 +90,7 @@ ENC = dict(encoding="utf-8")
 BUILDING_IN_CI = bool(json.loads(os.environ.get("BUILDING_IN_CI", "0")))
 TESTING_IN_CI = bool(json.loads(os.environ.get("TESTING_IN_CI", "0")))
 CI_ARTIFACT = os.environ.get("CI_ARTIFACT", "wheel")
+CI = bool(json.loads(os.environ.get("CI", "0")))
 
 # test arg pass-throughs
 ATEST_ARGS = json.loads(os.environ.get("ATEST_ARGS", "[]"))
@@ -119,8 +151,8 @@ DIA_URLS = {
 
 
 # ci
-CI = ROOT / ".github"
-ENV_CI = CI / "environment.yml"
+GH = ROOT / ".github"
+ENV_GH = GH / "environment.yml"
 
 # tools
 PY = ["python"]
@@ -298,6 +330,15 @@ SERVER_EXT = {
     if sorted(v.parent.glob("src/*/serverextension.py"))
 }
 
+# demo
+DEMO = ROOT / "demo"
+DEMO_CONFIG = DEMO / "jupyter_config.json"
+DEMO_APPS = ["lab"]
+DEMO_BUILD = BUILD / "demo"
+DEMO_HASHES = DEMO_BUILD / "SHA256SUMS"
+DEMO_ARCHIVE = (
+    DEMO_BUILD / f"""ipydrawio-lite-{JS_PKG_DATA["ipydrawio"]["version"]}.tgz"""
+)
 
 # docs
 SPHINX_ARGS = json.loads(os.environ.get("SPHINX_ARGS", "[]"))
@@ -360,18 +401,19 @@ ALL_PY = [
     POSTBUILD_PY,
     DOCS_CONF,
 ]
-ALL_YML = [
-    *ROOT.glob("*.yml"),
-    *CI.rglob("*.yml"),
-    *BINDER.glob("*.yml"),
-    *DOCS.rglob("*.yml"),
-]
+ALL_YML = _clean(
+    ROOT.glob("*.yml"),
+    GH.rglob("*.yml"),
+    BINDER.glob("*.yml"),
+    DOCS.rglob("*.yml"),
+)
 ALL_JSON = [
     *ROOT.glob("*.json"),
     *PACKAGES.glob("*/*.json"),
     *PACKAGES.glob("*/schema/*.json"),
     *ATEST.glob("fixtures/*.json"),
     *BINDER.glob("*.json"),
+    *[p for p in DEMO.rglob("*.json") if "/_output/" not in str(p)],
 ]
 ALL_DIO = [*DOCS_DIO, *IPJT_TMPL_DIO, *ATEST_DIO]
 ALL_MD = [*ROOT.glob("*.md"), *PACKAGES.glob("*/*.md"), *DOCS_MD]
@@ -391,6 +433,15 @@ ALL_HEADERS = _clean(
     ALL_YML,
     ALL_ROBOT,
 )
+ALL_DEMO_CONTENTS = [
+    d
+    for d in ALL_DIO
+    if "test" not in str(d).lower()
+    and ".doit" not in d.name
+    and " " not in d.name
+    and d.name not in ["A.dio"]
+]
+
 ESLINTRC = PACKAGES / ".eslintrc.js"
 
 RFLINT_OPTS = sum(
@@ -470,7 +521,7 @@ CMD_LAB = ["jupyter", "lab", "--no-browser", "--debug"]
 # conda building
 RECIPE = ROOT / "conda.recipe/meta.yaml"
 CONDA_BLD = BUILD / "conda-bld"
-CONDARC = CI / ".condarc"
+CONDARC = GH / ".condarc"
 # could be mambabuild
 CONDA_BUILDERER = os.environ.get("CONDA_BUILDERER", "build")
 CONDA_BUILD_ARGS = [
@@ -486,7 +537,7 @@ CONDA_PKGS = {
 }
 
 # env inheritance
-ENV_INHERITS = {ENV_BINDER: [ENV_CI, ENV_DOCS], ENV_DOCS: [ENV_CI]}
+ENV_INHERITS = {ENV_BINDER: [ENV_GH, ENV_DOCS], ENV_DOCS: [ENV_GH]}
 
 
 def get_atest_stem(attempt=1, extra_args=None, browser=None):
@@ -696,6 +747,62 @@ def pip_check():
         if line.strip() and not re.findall(PIP_CHECK_IGNORE, line)
     ]
     return not len(lines)
+
+
+# utilities
+def _echo_ok(msg):
+    def _echo():
+        print(msg, flush=True)
+        return True
+
+    return _echo
+
+
+def _ok(task, ok):
+    task.setdefault("targets", []).append(ok)
+    task["actions"] = [
+        lambda: [ok.exists() and ok.unlink(), True][-1],
+        *task["actions"],
+        lambda: [ok.parent.mkdir(exist_ok=True), ok.write_text("ok"), True][-1],
+    ]
+    return task
+
+
+def _show(*args, **kwargs):
+    import rich.markdown
+
+    for arg in args:
+        print_(arg()) if callable(arg) else print_(arg)
+    for kw, kwarg in kwargs.items():
+        print_(rich.markdown.Markdown(f"# {kw}") if console else kw)
+        print_(kwarg()) if callable(kwarg) else print_(kwarg)
+
+
+def _copy_one(src, dest):
+    if not src.exists():
+        return False
+    if not dest.parent.exists():
+        dest.parent.mkdir(parents=True)
+    if dest.exists():
+        if dest.is_dir():
+            shutil.rmtree(dest)
+        else:
+            dest.unlink()
+    if src.is_dir():
+        shutil.copytree(src, dest)
+    else:
+        shutil.copy2(src, dest)
+
+
+def _build_lite():
+    lite = ["jupyter", "lite"]
+    args = ["--source-date-epoch", SOURCE_DATE_EPOCH]
+
+    for act in ["build", "check", "archive"]:
+        act_args = list(map(str, [*lite, act, *args]))
+        if subprocess.call(act_args, cwd=DEMO) == 0:
+            continue
+        return False
 
 
 # Late environment hacks

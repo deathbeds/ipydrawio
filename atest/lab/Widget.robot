@@ -14,8 +14,8 @@
 
 *** Settings ***
 Documentation     Does the Jupyter Widget work?
-Resource          _Keywords.robot
-Resource          _Notebook.robot
+Resource          ../_Keywords.robot
+Resource          ../_Notebook.robot
 Force Tags        component:widget
 Library           OperatingSystem
 
