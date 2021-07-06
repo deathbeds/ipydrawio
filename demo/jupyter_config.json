@@ -5,6 +5,7 @@
     "ignore_files": [
       "(lab/|_output|.gitignore|doit.db|.json|test|Test|jupyter_config|log$)"
     ],
-    "log_level": "DEBUG"
+    "lite_dir": ".",
+    "output_dir": "../build/demo"
   }
 }

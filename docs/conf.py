@@ -65,7 +65,7 @@ rediraffe_redirects = {"demo/index": "_static/lab/index"}
 # files
 templates_path = ["_templates"]
 html_favicon = "_static/favicon.ico"
-html_static_path = ["_static", "../demo/_output"]
+html_static_path = ["_static", "../build/demo"]
 exclude_patterns = [
     ".ipynb_checkpoints",
     "**/.ipynb_checkpoints",
