@@ -36,6 +36,7 @@ RTD_TASKS = [
     "build",
     "setup:pip:check",
     "docs:typedoc:mystify",
+    "demo:stage*",
     "demo",
 ]
 
