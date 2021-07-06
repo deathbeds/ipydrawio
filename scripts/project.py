@@ -336,6 +336,7 @@ DEMO_CONFIG = DEMO / "jupyter_config.json"
 DEMO_APPS = ["lab"]
 DEMO_BUILD = BUILD / "demo"
 DEMO_HASHES = DEMO_BUILD / "SHA256SUMS"
+DEMO_CONTENTS_API = DEMO_BUILD / "api/contents/all.json"
 DEMO_ARCHIVE = (
     DEMO_BUILD / f"""ipydrawio-lite-{JS_PKG_DATA["ipydrawio"]["version"]}.tgz"""
 )

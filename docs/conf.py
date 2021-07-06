@@ -32,6 +32,12 @@ ROOT = HERE.parent
 APP_PKG = ROOT / "packages/ipydrawio/package.json"
 APP_DATA = json.loads(APP_PKG.read_text(encoding="utf-8"))
 RTD = json.loads(os.environ.get("READTHEDOCS", "False").lower())
+RTD_TASKS = [
+    "build",
+    "setup:pip:check",
+    "docs:typedoc:mystify",
+    "demo",
+]
 
 # metadata
 author = APP_DATA["author"]
@@ -127,19 +133,8 @@ def clean_schema(app: Sphinx, error):
 
 def before_rtd_build(app: Sphinx, error):
     """performs the full frontend build, and ensures the typedoc"""
-    for task in [
-        "build",
-        "setup:pip:check",
-        "docs:typedoc:mystify",
-        "demo",
-    ]:
-        subprocess.check_call(
-            [
-                "doit",
-                task,
-            ],
-            cwd=str(ROOT),
-        )
+    for task in RTD_TASKS:
+        subprocess.check_call(["doit", task], cwd=str(ROOT))
 
 
 def setup(app):
