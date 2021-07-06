@@ -20,7 +20,6 @@ Library           ../ports.py
 
 *** Variable ***
 ${NEXT LITE LOG}    ${0}
-# TODO: don't hard-code: use unused port, some nasty emoji/space prefixes, etc.
 
 *** Keywords ***
 Start JupyterLite Process
@@ -35,10 +34,12 @@ Start JupyterLite Server
     [Documentation]    Start _the_ `jupyter lite` server
     [Arguments]    ${cwd}    @{args}
     Set Environment Variable    MOZ_HEADLESS    1
-    ${port} =    Set Variable    8000
-    ${url} =    Set Variable    http://localhost:${port}/lab/index.html
+    ${prefix} =    Set Variable    /@rf/
+    ${port} =    Get Unused Port
+    ${url} =    Set Variable    http://localhost:${port}${prefix}lab/index.html
     Set Global Variable    ${LITE URL}    ${url}
-    ${p} =    Start JupyterLite Process    serve    ${cwd}    @{args}    --ServeAddon.port    ${port}
+    ${p} =    Start JupyterLite Process    serve    ${cwd}
+    ...    @{args}    --port    ${port}    --base-url    ${prefix}
     Set Global Variable    ${LITE SERVER}    ${p}
     Close All Browsers
     ${service args} =    Create List    --log    warn
