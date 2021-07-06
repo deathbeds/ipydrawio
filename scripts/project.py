@@ -336,7 +336,9 @@ DEMO_CONFIG = DEMO / "jupyter_config.json"
 DEMO_APPS = ["lab"]
 DEMO_BUILD = BUILD / "demo"
 DEMO_HASHES = DEMO_BUILD / "SHA256SUMS"
-DEMO_ARCHIVE = DEMO_BUILD / "demo-jupyterlite.tgz"
+DEMO_ARCHIVE = (
+    DEMO_BUILD / f"""ipydrawio-lite-{JS_PKG_DATA["ipydrawio"]["version"]}.tgz"""
+)
 
 # docs
 SPHINX_ARGS = json.loads(os.environ.get("SPHINX_ARGS", "[]"))

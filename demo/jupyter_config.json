@@ -6,6 +6,7 @@
       "(lab/|_output|.gitignore|doit.db|.json|test|Test|jupyter_config|log$)"
     ],
     "lite_dir": ".",
+    "output_archive": "../build/demo/ipydrawio-lite-1.1.1.tgz",
     "output_dir": "../build/demo"
   }
 }

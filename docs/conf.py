@@ -104,6 +104,7 @@ html_context = {
     "github_repo": "ipydrawio",
     "github_version": "master",
     "doc_path": "docs",
+    "demo_tarball": f"_static/ipydrawio-lite-{release}.tgz",
 }
 
 
