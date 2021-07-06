@@ -675,11 +675,16 @@ def task_demo():
         return
 
     demo_dest = []
+    demo_tasks = []
+    final_dest = []
     for path in P.ALL_DEMO_CONTENTS:
+        name = f"stage:{path.name}"
         dest = P.DEMO / path.name.replace(" ", "_")
         demo_dest += [dest]
+        demo_tasks += [f"demo:{name}"]
+        final_dest += [P.DEMO_BUILD / f"files/{path.name}"]
         yield dict(
-            name=f"stage:{path.name}",
+            name=name,
             file_dep=[path],
             targets=[dest],
             actions=[(P._copy_one, [path, dest])],
@@ -696,8 +701,9 @@ def task_demo():
 
     yield dict(
         name="archive",
+        task_dep=demo_tasks,
         file_dep=[*demo_dest, *lite_src_files],
-        targets=[P.DEMO_ARCHIVE, P.DEMO_HASHES],
+        targets=[P.DEMO_ARCHIVE, P.DEMO_HASHES, *final_dest, P.DEMO_CONTENTS_API],
         actions=[P._build_lite],
     )
 
