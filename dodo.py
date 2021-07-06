@@ -672,6 +672,7 @@ def task_watch():
 
 def task_demo():
     if not P.LITE_PREFIX:
+        print("jupyterlite not found, this might be okay", flush=True)
         return
 
     demo_dest = []
@@ -689,6 +690,10 @@ def task_demo():
             targets=[dest],
             actions=[(P._copy_one, [path, dest])],
         )
+    
+    assert demo_dest
+    assert final_dest
+    assert demo_tasks
 
     lite_src_files = [
         p
