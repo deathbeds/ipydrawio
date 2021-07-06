@@ -437,7 +437,7 @@ ALL_HEADERS = _clean(
 ALL_DEMO_CONTENTS = [
     d
     for d in ALL_DIO
-    if "test" not in str(d).lower()
+    if "test" not in str(d.relative_to(ROOT)).lower()
     and ".doit" not in d.name
     and " " not in d.name
     and d.name not in ["A.dio"]
